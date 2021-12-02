@@ -1,7 +1,7 @@
-import { firebase, FieldValue } from '../lib/firebase';
+import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
 
 export async function doesUsernameExist(username) {
-  const result = await firebase
+  const result = await firebaseLib
     .firestore()
     .collection('users')
     .where('username', '==', username)
@@ -11,7 +11,7 @@ export async function doesUsernameExist(username) {
 }
 
 export async function getUserByUsername(username) {
-  const result = await firebase
+  const result = await firebaseLib
     .firestore()
     .collection('users')
     .where('username', '==', username)
@@ -24,7 +24,7 @@ export async function getUserByUsername(username) {
 }
 
 export async function getUserByUserId(userId) {
-  const result = await firebase
+  const result = await firebaseLib
     .firestore()
     .collection('users')
     .where('userId', '==', userId)
@@ -38,7 +38,7 @@ export async function getUserByUserId(userId) {
 }
 
 export async function getSuggestedProfiles(userId, following) {
-  let query = firebase.firestore().collection('users');
+  let query = firebaseLib.firestore().collection('users');
 
   if (following.length > 0) {
     query = query.where('userId', 'not-in', [...following, userId]);
@@ -62,7 +62,7 @@ export async function updateLoggedInUserFollowing(
   profileId, // the user that alex requests to follow
   isFollowingProfile //  true/false (am i following this person())
 ) {
-  return firebase
+  return firebaseLib
     .firestore()
     .collection('users')
     .doc(loggedInUserDocId)
@@ -78,7 +78,7 @@ export async function updateFollowedUserFollowers(
   loggedInUserDocId, // the user that alex requests to follow
   isFollowingProfile //  true/false (am i following this person())
 ) {
-  return firebase
+  return firebaseLib
     .firestore()
     .collection('users')
     .doc(profileDocId)
@@ -90,7 +90,7 @@ export async function updateFollowedUserFollowers(
 }
 
 export async function getPhotos(userId, following) {
-  const result = await firebase
+  const result = await firebaseLib
     .firestore()
     .collection('photos')
     .where('userId', 'in', following)
@@ -116,7 +116,7 @@ export async function getPhotos(userId, following) {
 }
 
 export async function getUserPhotosByUserId(userId) {
-  const result = await firebase
+  const result = await firebaseLib
     .firestore()
     .collection('photos')
     .where('userId', '==', userId)
@@ -133,7 +133,7 @@ export async function isUserFollowingProfile(
   loggedInUserUsername,
   profileUserId
 ) {
-  const result = await firebase
+  const result = await firebaseLib
     .firestore()
     .collection('users')
     .where('username', '==', loggedInUserUsername)

@@ -1,7 +1,6 @@
 import { Router, Route } from 'react-router';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
-import AppMain from './Components/AppMain';
 import UserContext from './context/user';
 import useAuthListener from './hooks/use-auth-listener';
 
@@ -10,22 +9,23 @@ import ProtectedRoute from './helpers/protected-route';
 
 import './App.css';
 
-const Login = lazy(() => import('./Components/AppMain'));
+const Login = lazy(() => import('./pages/login'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
+const SignUp = lazy(() => import('./pages/signUp'));
 
 export default function App() {
   const { user } = useAuthListener();
   return (
-    <div className='App mt-24 text-center text-3xl'>
-      <UserContext.Provider value={{ user }}>
-        <AppMain />
-        <Router>
-          <Route path={ROUTES.LOGIN} element={<Login />} />
-          <ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
-            <Route element={<Dashboard />} />
-          </ProtectedRoute>
-        </Router>
-      </UserContext.Provider>
-    </div>
+    <UserContext.Provider value={{ user }}>
+        <Suspense fallback={{}}>
+          <Router>
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
+            <ProtectedRoute user={user} path={ROUTES.DASHBOARD}>
+              <Route element={<Dashboard />} />
+            </ProtectedRoute>
+          </Router>
+        </Suspense>
+    </UserContext.Provider>
   );
 }

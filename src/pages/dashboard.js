@@ -1,14 +1,21 @@
-import React from 'react';
-import AppMain from '../Components/AppMain';
-import NavBarAndHeader from '../main/navBar';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function Dashboard() {
+import AppMain from '../Components/AppMain';
+import NavBarAndHeader from '../main/navBar';
+import LoggedInUserContext from '../context/logged-in-user';
+import useUser from '../hooks/user';
+
+export default function Dashboard({ user: loggedInUser }) {
+  const { user, setActiveUser } = useUser(loggedInUser.uid);
+  useEffect(() => {
+    document.title = 'ToDoList';
+  }, []);
   return (
-    <div className='text-center '>
-      <NavBarAndHeader />
-      <AppMain />
-    </div>
+      <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
+        <NavBarAndHeader />
+        <AppMain />
+      </LoggedInUserContext.Provider>
   );
 }
 
