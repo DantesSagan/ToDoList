@@ -15,6 +15,7 @@ export default function ProtectedRoute({ user, children, ...rest }) {
         if (!user) {
           return (
             <Navigate
+              replace
               to={{
                 pathname: ROUTES.LOGIN,
                 state: { from: location },

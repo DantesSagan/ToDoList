@@ -7,7 +7,7 @@ import LoggedInUserContext from '../context/logged-in-user';
 import useUser from '../hooks/user';
 
 export default function Dashboard({ user: loggedInUser }) {
-  const { user, setActiveUser } = useUser(loggedInUser.uid);
+  const { user, setActiveUser } = useUser(loggedInUser);
   useEffect(() => {
     document.title = 'ToDoList';
   }, []);

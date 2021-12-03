@@ -3,7 +3,9 @@ export function seedDatabse(firebase) {
   const users = [
     {
       country: 'Russia',
-      phoneNumber: '+7918886692',
+      city: 'Ufa',
+      gender: 'male',
+      phoneNumber: '+79188866923',
       userId: 'D5psSVAkNWPhReliPnnFPuFGoex1',
       username: 'alex',
       fullName: 'Alex Mikh',
@@ -18,8 +20,8 @@ export function seedDatabse(firebase) {
   }
 
   // eslint-disable-next-line prefer-const
-  for (let i = 1; i <= 10; ++i) {
-    for (let username = 1; username <= 10; ++username) {
+  for (let i = 1; i <= 20; ++i) {
+    for (let username = 1; username <= 20; ++username) {
       firebase
         .firestore()
         .collection('todos')
@@ -27,7 +29,6 @@ export function seedDatabse(firebase) {
           toDosId: i,
           userId: '1',
           titleOfToDo: 'CreateApp',
-          likes: [],
           toDosAdditional: [
             {
               title: '2nd',
@@ -38,6 +39,7 @@ export function seedDatabse(firebase) {
               toDo: 'Get 3d todo',
             },
           ],
+          imageSrc: `/images/users/${username}/${i}.jpg`,
           dateCreated: Date.now(),
         });
     }

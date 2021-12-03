@@ -7,12 +7,16 @@ import * as ROUTES from '../constants/routes';
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { firebase } = useContext(FirebaseContext);
+  const { firebaseLib } = useContext(FirebaseContext);
 
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
+  const [country, setCountry] = useState('');
+  const [phone, setPhone] = useState('');
+  const [city, setCity] = useState('');
+  const [gender, setGender] = useState('');
 
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
@@ -23,17 +27,21 @@ export default function SignUp() {
     const usernameExists = await doesUsernameExist(username);
     if (!usernameExists) {
       try {
-        const createdUserResult = await firebase
+        const createdUserResult = await firebaseLib
           .auth()
           .createUserWithEmailAndPassword(emailAddress, password);
         await createdUserResult.user.updateProfile({
           displayName: username,
         });
 
-        await firebase
+        await firebaseLib
           .firestore()
           .collection('users')
           .add({
+            gender: gender,
+            city: city,
+            phone: phone,
+            country: country,
             userId: createdUserResult.user.uid,
             username: username.toLowerCase(),
             fullName,
@@ -45,6 +53,8 @@ export default function SignUp() {
 
         navigate(ROUTES.DASHBOARD);
       } catch (error) {
+        setCity('');
+        setPhone('');
         setFullName('');
         setEmailAddress('');
         setPassword('');
@@ -61,14 +71,8 @@ export default function SignUp() {
   }, []);
 
   return (
-    <div className='container flex mx-auto max-w-screen-md items-center h-screen'>
-      <div className='flex w-3/5'>
-        {/* <img
-          src='/images/iphone-with-profile.jpg'
-          alt='iPhone with Instagram app'
-        /> */}
-      </div>
-      <div className='flex flex-col w-2/5'>
+    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
+      <div className='flex flex-col w-2/4'>
         <div className='flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded'>
           <h1 className='flex justify-center w-full'>
             {/* <img
@@ -81,7 +85,65 @@ export default function SignUp() {
           {error && <p className='mb-4 text-xs text-red-primary'>{error}</p>}
 
           <form onSubmit={handleSignUp} method='POST'>
+            <div className='h-full w-full mr-3 py-5 px-4 h-2 mb-2' id='gender'>
+              <label>
+                Gender<span class='text-danger'></span>
+              </label>
+              <br />
+              <label id='male'>
+                <input
+                  className='form-radio'
+                  onChange={({ target }) => setGender(target.value)}
+                  type='radio'
+                  name='user-prefer'
+                  unchecked
+                  value={gender}
+                />
+                Male
+              </label>
+              <br />
+              <label>
+                <input
+                  className='form-radio'
+                  onChange={({ target }) => setGender(target.value)}
+                  id='female'
+                  type='radio'
+                  name='user-prefer'
+                  unchecked
+                  value={gender}
+                />
+                Female
+              </label>
+            </div>
             <input
+              required
+              aria-label='Enter your city'
+              type='text'
+              placeholder='City'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setCity(target.value)}
+              value={city}
+            />
+            <input
+              required
+              aria-label='Enter your Country'
+              type='text'
+              placeholder='Country'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setCountry(target.value)}
+              value={country}
+            />
+            <input
+              required
+              aria-label='Enter your phone number'
+              type='tele'
+              placeholder='Phone Number'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setPhone(target.value)}
+              value={phone}
+            />
+            <input
+              required
               aria-label='Enter your username'
               type='text'
               placeholder='Username'
@@ -90,6 +152,7 @@ export default function SignUp() {
               value={username}
             />
             <input
+              required
               aria-label='Enter your full name'
               type='text'
               placeholder='Full name'
@@ -98,35 +161,37 @@ export default function SignUp() {
               value={fullName}
             />
             <input
+              required
               aria-label='Enter your email address'
-              type='text'
+              type='email'
               placeholder='Email address'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setEmailAddress(target.value)}
               value={emailAddress}
             />
             <input
+              required
               aria-label='Enter your password'
               type='password'
               placeholder='Password'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setPassword(target.value)}
               value={password}
-            />
+            />{' '}
             <button
               disabled={isInvalid}
               type='submit'
-              className={`bg-blue-medium text-white w-full rounded h-8 font-bold
-            ${isInvalid && 'opacity-50'}`}
+              className={`bg-black hover:bg-gray-600 text-white w-full rounded h-8 font-bold
+            ${isInvalid && 'opacity-40'}`}
             >
               Sign Up
             </button>
           </form>
         </div>
-        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
+        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray'>
           <p className='text-sm'>
             Have an account?{' '}
-            <Link to={ROUTES.LOGIN} className='font-bold text-blue-medium'>
+            <Link to={ROUTES.LOGIN} className='font-bold text-blue'>
               Login
             </Link>
           </p>

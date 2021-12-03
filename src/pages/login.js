@@ -5,7 +5,7 @@ import * as ROUTES from '../constants/routes';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { firebase } = useContext(FirebaseContext);
+  const { firebaseLib } = useContext(FirebaseContext);
 
   const [emailAddress, setEmailAddress] = useState();
   const [password, setPassword] = useState('');
@@ -17,7 +17,7 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+      await firebaseLib.auth().signInWithEmailAndPassword(emailAddress, password);
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
       setEmailAddress('');
@@ -30,14 +30,8 @@ export default function Login() {
     document.title = 'Login - ToDoList';
   }, []);
   return (
-    <div className='container flex mx-auto max-w-screen-md items-center h-screen'>
-      <div className='flex w-3/5'>
-        {/* <img
-          src='/images/iphone-with-profile.jpg'
-          alt='iPhone with instagram'
-        /> */}
-      </div>
-      <div className='flex flex-col w-2/5'>
+    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
+      <div className='flex flex-col w-2/4'>
         <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded'>
           <h1 className='flex justify-center w-full'>
             {/* <img
@@ -67,7 +61,7 @@ export default function Login() {
             <button
               disabled={isInvalid}
               type='submit'
-              className={`bg-blue-medium text-white w-full rounded h-8 font-bold 
+              className={`bg-black hover:bg-gray-600 text-white w-full rounded h-8 font-bold 
             ${isInvalid && 'opacity-50'}`}
             >
               Login
