@@ -17,7 +17,9 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      await firebaseLib.auth().signInWithEmailAndPassword(emailAddress, password);
+      await firebaseLib
+        .auth()
+        .signInWithEmailAndPassword(emailAddress, password);
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
       setEmailAddress('');
@@ -42,33 +44,54 @@ export default function Login() {
           </h1>
           {error && <p className='mb-4 text-xs text-red-primary'>{error}</p>}
           <form onSubmit={handleLogin} method='POST'>
-            <input
-              aria-label='Enter your email address'
-              type='text'
-              placeholder='Email address (ex: Dantes@gmail.com)'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-              onChange={({ target }) => setEmailAddress(target.value)}
-              value={emailAddress}
-            />
-            <input
-              aria-label='Enter your email password'
-              type='password'
-              placeholder='Password (ex: DanteskillsPushkin1837)'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-              onChange={({ target }) => setPassword(target.value)}
-              value={password}
-            />
-            <button
-              disabled={isInvalid}
-              type='submit'
-              className={`bg-black hover:bg-gray-600 text-white w-full rounded h-8 font-bold 
+            <fieldset className='border border-gray-primary p-4'>
+              <legend className='block m-auto'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  class='h-12 w-12'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='black'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
+                  />
+                </svg>
+              </legend>
+              <div className='text-3xl text-center text-black underline mb-6'>
+                Log-In
+              </div>
+              <input
+                aria-label='Enter your email address'
+                type='text'
+                placeholder='Email address (ex: Dantes@gmail.com)'
+                className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                onChange={({ target }) => setEmailAddress(target.value)}
+                value={emailAddress}
+              />
+              <input
+                aria-label='Enter your email password'
+                type='password'
+                placeholder='Password (ex: DanteskillsPushkin1837)'
+                className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                onChange={({ target }) => setPassword(target.value)}
+                value={password}
+              />
+              <button
+                disabled={isInvalid}
+                type='submit'
+                className={`bg-black hover:bg-gray-600 text-white w-full rounded h-8 font-bold 
             ${isInvalid && 'opacity-50'}`}
-            >
-              Login
-            </button>
+              >
+                Login
+              </button>
+            </fieldset>
           </form>
         </div>
-        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary '>
+        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary mt-1'>
           <p className='text-sm'>
             Don't have an account?{' '}
             <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
