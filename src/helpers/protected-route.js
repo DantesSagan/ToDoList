@@ -1,5 +1,5 @@
 import React, { cloneElement } from 'react';
-import { Route, Navigate } from 'react-router';
+import { Route, Navigate, Routes } from 'react-router';
 import PropTypes from 'prop-types';
 
 import * as ROUTES from '../constants/routes';
@@ -15,10 +15,9 @@ export default function ProtectedRoute({ user, children, ...rest }) {
         if (!user) {
           return (
             <Navigate
-              replace
               to={{
                 pathname: ROUTES.LOGIN,
-                state: { from: location },
+                state: { from: location, error: 'You need to login first!' },
               }}
             />
           );

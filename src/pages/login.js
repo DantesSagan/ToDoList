@@ -33,7 +33,7 @@ export default function Login() {
   }, []);
   return (
     <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
-      <div className='flex flex-col w-2/4'>
+      <div className='flex flex-col w-2/4 border-t border-8 border-red-600'>
         <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded'>
           <h1 className='flex justify-center w-full'>
             {/* <img
@@ -83,7 +83,7 @@ export default function Login() {
               <button
                 disabled={isInvalid}
                 type='submit'
-                className={`bg-black hover:bg-gray-600 text-white w-full rounded h-8 font-bold 
+                className={`bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold 
             ${isInvalid && 'opacity-50'}`}
               >
                 Login
