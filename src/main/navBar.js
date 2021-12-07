@@ -65,7 +65,7 @@ export default function NavBarAndHeader() {
                 <Link to={ROUTES.LOGIN}>
                   <button
                     type='button'
-                    className='bg-black font-bold text-sm rounded-lg text-white w-20 h-8'
+                    className='bg-white font-bold text-sm rounded-lg text-black p-2 w-22 h-10'
                   >
                     Log In{' '}
                   </button>
@@ -73,9 +73,9 @@ export default function NavBarAndHeader() {
                 <Link to={ROUTES.SIGN_UP}>
                   <button
                     type='button'
-                    className='bg-black font-bold text-sm rounded-lg text-white w-20 h-8'
+                    className='bg-black font-bold text-sm rounded-lg text-white w-22 h-10 p-2'
                   >
-                    Log In{' '}
+                   Sign-Up
                   </button>
                 </Link>
               </>

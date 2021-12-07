@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense } from 'react';
 import UserContext from './context/user';
 import useAuthListener from './hooks/use-auth-listener';
 
@@ -17,7 +17,6 @@ const NotFound = lazy(() => import('./pages/not-found'));
 const Profile = lazy(() => import('./Components/profile/index'));
 export default function App() {
   const { user } = useAuthListener();
-  const { token } = useState(null);
   return (
     <UserContext.Provider value={{ user }}>
       <BrowserRouter>
@@ -25,9 +24,17 @@ export default function App() {
           <Routes>
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
-            <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
-            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
+            <Route
+              path={ROUTES.DASHBOARD}
+              element={
+                <ProtectedRoute user={user}>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

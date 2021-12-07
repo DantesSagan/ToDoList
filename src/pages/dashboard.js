@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import AppMain from '../Components/toDoApp';
 import NavBarAndHeader from '../main/navBar';
 import LoggedInUserContext from '../context/logged-in-user';
 import useUser from '../hooks/user';
+import AddToDo from '../Components/toDoApp/add-to-do';
 
 export default function Dashboard({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser);
@@ -12,10 +12,10 @@ export default function Dashboard({ user: loggedInUser }) {
     document.title = 'ToDoList';
   }, []);
   return (
-      <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
-        <NavBarAndHeader />
-        <AppMain />
-      </LoggedInUserContext.Provider>
+    <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
+      <NavBarAndHeader />
+      <AddToDo />
+    </LoggedInUserContext.Provider>
   );
 }
 

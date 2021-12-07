@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import FirebaseContext from '../context/firebaseContext';
-import firebase from '@firebase/app-compat';
 
 export default function useAuthListener() {
   const [user, setUser] = useState(
@@ -17,7 +16,7 @@ export default function useAuthListener() {
         localStorage.removeItem('authUser');
         setUser(null);
       }
-    });
+    }); 
     return () => listener();
   }, [firebaseLib]);
   return { user };
