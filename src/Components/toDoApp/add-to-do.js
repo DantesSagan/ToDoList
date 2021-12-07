@@ -1,54 +1,108 @@
 import React, { useState, useContext } from 'react';
-// import FirebaseContext from '../../context/firebaseContext';
-// import UserContext from '../../context/user';
+import FirebaseContext from '../../context/firebaseContext';
+import UserContext from '../../context/user';
 
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-export default function AddToDo() {
+export default function AddToDo({
+  docId,
+  toDosAdditional,
+  setToDosAdditional,
+  toDoTextArea,
+}) {
   const [userInput, setUserInput] = useState('');
-  const [toDos, setToDo] = useState([]);
-  const itemsArray = userInput.split(',');
-  const items = toDos.map((x) => <li className='p-2'>{x}</li>);
-  // const { firebaseLib, FieldValue } = useContext(FirebaseContext);
-  // const {
-  //   user: { toDo },
-  // } = useContext(UserContext);
+  const [title, setTitle] = useState('');
+  // const [toDos, setToDoS] = useState([]);
 
-  // const handleSubmitToDo = (event) => {
-  //   event.preventDefault();
-  //   setUserInput([...toDosAdditional, { toDo, userInput }]);
-  //   setUserInput('');
+  // const itemsArray = userInput.split(',');
+  // const items = toDos.map((x) => <li className='p-2'>{x}</li>);
+  // const titleItems = toDos.map((x) => <h1 className='p-2'>{x}</h1>);
 
-  //   return firebaseLib
-  //     .firestore()
-  //     .collection('todos')
-  //     .doc(docId)
-  //     .update({
-  //       toDosAdditional: FieldValue.arrayUnion({ toDo, userInput }),
-  //     });
+  const { firebaseLib, FieldValue } = useContext(FirebaseContext);
+  const {
+    user: { toDo },
+  } = useContext(UserContext);
 
+  const handleSubmitToDo = (event) => {
+    event.preventDefault();
+    setToDosAdditional([...toDosAdditional, { toDo, userInput }]);
+    setUserInput('');
+
+    return firebaseLib
+      .firestore()
+      .collection('todos')
+      .doc(docId)
+      .update({
+        toDosAdditional: FieldValue.arrayUnion({ toDo, userInput }),
+      });
+  };
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
       <div className='flex flex-col w-2/4'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl '>
-            <textarea
-              className='flex flex-col w-4/5'
-              onChange={(e) => setUserInput(e.target.value)}
-              placeholder='Separate items with commas'
-            />
-            <br />
-            <button
-              className='bg-black hover:bg-red-600 text-white rounded-lg h-8 font-bold'
-              onClick={() => setToDo(itemsArray)}
+            <form
+              className='flex justify-between pl-0 pr-5'
+              method='POST'
+              onSubmit={(event) =>
+                userInput.length >= 1
+                  ? handleSubmitToDo(event)
+                  : event.preventDefault()
+              }
             >
-              Create List
-            </button>
-            <h1>My "To Do" List:</h1>
-            <ul className='p-4'>{items}</ul>
+              <textarea
+                aria-label='Add a comment'
+                autoComplete='off'
+                className='text-sm text-gray-base w-full mr-3 py-5 px-4'
+                type='text'
+                name='add-comment'
+                placeholder='Напишите задачу...'
+                value={userInput}
+                onChange={({ target }) => setUserInput(target.value)}
+                ref={toDoTextArea}
+              />
+              <div className='transform hover: rotate-0 transition duration-300'>
+                <button
+                  className={`w-full h-full text-sm font-bold text-red-medium ${
+                    !userInput && 'opacity-25'
+                  }`}
+                  type='button'
+                  disabled={userInput.length < 1}
+                  onClick={handleSubmitToDo}
+                >
+                  Добавить задачу
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   );
+  // return (
+  //   <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
+  //     <div className='flex flex-col w-2/4'>
+  //       <div className='flex flex-col items-center'>
+  //         <div className='h-full w-full py-5 px-4 text-xl '>
+  //           <textarea onChange={(e) => setTitle(e.target.value)} />
+  //           <textarea
+  //             className='flex flex-col w-4/5'
+  //             onChange={(e) => setUserInput(e.target.value)}
+  //             placeholder='Separate items with commas'
+  //           />
+  //           <br />
+  //           <button
+  //             className='bg-black hover:bg-red-600 text-white rounded-lg h-8 font-bold'
+  //             onClick={() => setToDoS(itemsArray, titleItems)}
+  //           >
+  //             Create List
+  //           </button>
+  //           <h1 className='p-4'>My "To Do" List:</h1>
+  //           <h1>{title}</h1>
+  //           <ul className='p-4'>{items}</ul>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 }

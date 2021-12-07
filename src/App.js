@@ -33,7 +33,6 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
           </Routes>
         </Suspense>
