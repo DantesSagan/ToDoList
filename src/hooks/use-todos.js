@@ -6,14 +6,14 @@ export default function useToDo(user) {
   const [toDoS, setToDoS] = useState(null);
 
   useEffect(() => {
-    async function getTimeLinePhotos() {
-      if (user?.toDoS?.length > 0) {
-        const usersToDo = await getToDo(user.userId, user.toDosAdditional);
-         usersToDo.sort((a, b) => b.dateCreated - a.dateCreated);
+    async function getTimeLineToDos() {
+      if (user?.toDoList?.length > 0) {
+        const usersToDo = await getToDo(user.userId, user.toDoList);
+        usersToDo.sort((a, b) => b.dateCreated - a.dateCreated);
         setToDoS(usersToDo);
       }
     }
-    getTimeLinePhotos();
+    getTimeLineToDos();
   }, [user?.userId]);
 
   return { toDoS };

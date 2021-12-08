@@ -23,7 +23,7 @@ export default function TimeLine() {
         </>
       ) : (
         toDoS.map((content) => (
-          <TodoApp key={content.docId} content={content} />
+          <TodoApp key={content.docid} content={content} />
         ))
       )}
     </div>

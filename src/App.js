@@ -15,6 +15,7 @@ const Dashboard = lazy(() => import('./pages/dashboard'));
 const SignUp = lazy(() => import('./pages/signUp'));
 const NotFound = lazy(() => import('./pages/not-found'));
 const Profile = lazy(() => import('./Components/profile/index'));
+
 export default function App() {
   const { user } = useAuthListener();
   return (

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import ToDo from './toDo';
 
@@ -10,8 +11,16 @@ export default function TodoApp({ content }) {
       <ToDo
         docId={content.docId}
         toDosAdditional={content.toDosAdditional}
-        toDoTextArea={content.toDoTextArea}
+        posted={content.dateCreated}
+        toDoTextArea={toDoTextArea}
       />
     </div>
   );
 }
+TodoApp.propTypes = {
+  content: PropTypes.shape({
+    docId: PropTypes.string.isRequired,
+    dateCreated: PropTypes.number.isRequired,
+    toDosAdditional: PropTypes.array.isRequired,
+  }),
+};

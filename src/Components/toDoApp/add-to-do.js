@@ -11,21 +11,21 @@ export default function AddToDo({
   toDoTextArea,
 }) {
   const [userInput, setUserInput] = useState('');
-  const [title, setTitle] = useState('');
+  // const [title, setTitle] = useState('');
   // const [toDos, setToDoS] = useState([]);
 
   // const itemsArray = userInput.split(',');
-  // const items = toDos.map((x) => <li className='p-2'>{x}</li>);
+
   // const titleItems = toDos.map((x) => <h1 className='p-2'>{x}</h1>);
 
   const { firebaseLib, FieldValue } = useContext(FirebaseContext);
   const {
-    user: { toDo },
+    user: { title },
   } = useContext(UserContext);
 
   const handleSubmitToDo = (event) => {
     event.preventDefault();
-    setToDosAdditional([...toDosAdditional, { toDo, userInput }]);
+    setToDosAdditional([...toDosAdditional, { title, userInput }]);
     setUserInput('');
 
     return firebaseLib
@@ -33,9 +33,10 @@ export default function AddToDo({
       .collection('todos')
       .doc(docId)
       .update({
-        toDosAdditional: FieldValue.arrayUnion({ toDo, userInput }),
+        toDosAdditional: FieldValue.arrayUnion({ title, userInput }),
       });
   };
+  // const items = toDosAdditional.map((x) => <li className='p-2'>{x}</li>);
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
       <div className='flex flex-col w-2/4'>
@@ -73,12 +74,14 @@ export default function AddToDo({
                   Добавить задачу
                 </button>
               </div>
+              {/* <ul className='p-4'>{items}</ul> */}
             </form>
           </div>
         </div>
       </div>
     </div>
   );
+
   // return (
   //   <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
   //     <div className='flex flex-col w-2/4'>
@@ -106,3 +109,8 @@ export default function AddToDo({
   //   </div>
   // );
 }
+AddToDo.propTypes = {
+  toDosAdditional: PropTypes.array.isRequired,
+  userInput: PropTypes.string.isRequired,
+  toDoTextArea: PropTypes.object.isRequired,
+};

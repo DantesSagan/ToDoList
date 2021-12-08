@@ -10,6 +10,7 @@ export function seedDatabse(firebase) {
       username: 'alex',
       fullName: 'Alex Mikh',
       emailAddress: 'mihaleksval@gmail.com',
+      toDoList: ['I need something to Do '],
       dateCreated: Date.now(),
     },
     {
@@ -21,6 +22,7 @@ export function seedDatabse(firebase) {
       username: 'Violetta',
       fullName: 'Bjornsson',
       emailAddress: 'bj@gmail.com',
+      toDoList: [],
       dateCreated: Date.now(),
     },
   ];
