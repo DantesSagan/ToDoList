@@ -1,6 +1,7 @@
+// import { addDoc } from 'firebase/firestore';
 import React, { useState, useContext } from 'react';
-import FirebaseContext from '../../context/firebaseContext';
-import UserContext from '../../context/user';
+// import FirebaseContext from '../../context/firebaseContext';
+// import UserContext from '../../context/user';
 
 import PropTypes from 'prop-types';
 
@@ -16,26 +17,49 @@ export default function AddToDoTwo() {
   const items = toDos.map((x) => <div className='p-2'>{x}</div>);
   const itemsTitle = toDos.map((x) => <h1 className='p-2'>{x}</h1>);
 
-  //   const handleSubmitToDo = (event) => {
-  //     event.preventDefault();
-  //     setToDosAdditional([...toDosAdditional, { title, userInput }]);
-  //     setUserInput('');
+  // const { firebaseLib, FieldValue } = useContext(FirebaseContext);
+  // const {
+  //   user: { displayName },
+  // } = useContext(UserContext);
 
-  //     return firebaseLib
-  //       .firestore()
-  //       .collection('todos')
-  //       .doc(docId)
-  //       .update({
-  //         toDosAdditional: FieldValue.arrayUnion({ title, userInput }),
-  //       });
-  //   };
+  // const addTodo = document.querySelector('.add');
+
+  // const handleSubmitToDo = (event) => {
+  //   event.preventDefault();
+
+  //   addDoc(firebaseLib, {
+  //     title: addTodo.title.value,
+  //     userInput: addTodo.userInput.value,
+  //   }).then(() => {
+  //     addTodo.reset();
+  //   });
+
+  //   setToDoS([...toDos, { displayName, userInput }]);
+  //   setUserInput('');
+
+  //   return firebaseLib
+  //     .firestore()
+  //     .collection('todos')
+  //     .doc()
+  //     .update({
+  //       toDos: FieldValue.arrayUnion({ displayName, userInput }),
+  //     });
+  // };
 
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
       <div className='flex flex-col w-2/4'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl '>
-            <form className='block justify-between pl-0 pr-5 hover:bg-black '>
+            <form
+              className='block justify-between pl-0 pr-5 hover:bg-black '
+              // method='POST'
+              // onSubmit={(event) =>
+              //   userInput.length >= 1
+              //     ? handleSubmitToDo(event)
+              //     : event.preventDefault()
+              // }
+            >
               <textarea
                 aria-label='Add a comment'
                 autoComplete='off'
@@ -108,8 +132,8 @@ export default function AddToDoTwo() {
   //   </div>
   // );
 }
-AddToDoTwo.propTypes = {
-  toDosAdditional: PropTypes.array.isRequired,
-  userInput: PropTypes.string.isRequired,
-  toDoTextArea: PropTypes.object.isRequired,
-};
+// AddToDoTwo.propTypes = {
+//   toDosAdditional: PropTypes.array.isRequired,
+//   userInput: PropTypes.string.isRequired,
+//   toDoTextArea: PropTypes.object.isRequired,
+// };

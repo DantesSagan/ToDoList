@@ -9,7 +9,7 @@ import TimeLine from '../Components/timeLineToDo';
 import AddToDoTwo from '../Components/toDoApp/add-to-do.withoutFirebase.testOne';
 
 export default function Dashboard({ user: loggedInUser }) {
-  const { user, setActiveUser } = useUser(loggedInUser);
+  const { user, setActiveUser } = useUser(loggedInUser?.uid);
   useEffect(() => {
     document.title = 'ToDoList';
   }, []);
