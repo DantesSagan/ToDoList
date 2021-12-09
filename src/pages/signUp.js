@@ -34,22 +34,17 @@ export default function SignUp() {
           displayName: username,
         });
 
-        await firebaseLib
-          .firestore()
-          .collection('users')
-          .add({
-            gender: gender,
-            city: city,
-            phone: phone,
-            country: country,
-            userId: createdUserResult.user.uid,
-            username: username.toLowerCase(),
-            fullName,
-            emailAddress: emailAddress.toLowerCase(),
-            following: ['2'],
-            followers: [],
-            dateCreated: Date.now(),
-          });
+        await firebaseLib.firestore().collection('users').add({
+          gender: gender,
+          city: city,
+          phone: phone,
+          country: country,
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          dateCreated: Date.now(),
+        });
 
         navigate(ROUTES.DASHBOARD);
       } catch (error) {
@@ -111,7 +106,7 @@ export default function SignUp() {
                 id='gender'
               >
                 <label>
-                  Gender<span class='text-danger'></span>
+                  Gender<span className='text-danger'></span>
                 </label>
                 <br />
                 <label id='male'>
@@ -120,7 +115,7 @@ export default function SignUp() {
                     onChange={({ target }) => setGender(target.value)}
                     type='radio'
                     name='user-prefer'
-                    unchecked
+                    checked
                     value={gender}
                   />
                   Male
@@ -140,7 +135,6 @@ export default function SignUp() {
                 </label>
               </div>
               <input
-                required
                 aria-label='Enter your city'
                 type='text'
                 placeholder='City'
@@ -149,7 +143,6 @@ export default function SignUp() {
                 value={city}
               />
               <input
-                required
                 aria-label='Enter your Country'
                 type='text'
                 placeholder='Country'
@@ -158,7 +151,6 @@ export default function SignUp() {
                 value={country}
               />
               <input
-                required
                 aria-label='Enter your phone number'
                 type='tele'
                 placeholder='Phone Number'
@@ -202,15 +194,15 @@ export default function SignUp() {
                 onChange={({ target }) => setPassword(target.value)}
                 value={password}
               />{' '}
-              <button
-                disabled={isInvalid}
-                type='submit'
-                className={`bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold
-            ${isInvalid && 'opacity-40'}`}
-              >
-                Sign Up
-              </button>
             </fieldset>
+            <button
+              disabled={isInvalid}
+              type='submit'
+              className={`bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold
+            ${isInvalid && 'opacity-40'}`}
+            >
+              Sign Up
+            </button>
           </form>
         </div>
         <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray mt-1'>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import FirebaseContext from '../../context/firebaseContext';
 import UserContext from '../../context/user';
 
@@ -17,8 +17,25 @@ export default function AddToDo({
   // const itemsArray = userInput.split(',');
 
   // const titleItems = toDos.map((x) => <h1 className='p-2'>{x}</h1>);
-
   const { firebaseLib, FieldValue } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    async function getToDoS(todo) {
+      const result = await firebaseLib
+        .firestore()
+        .collection('todos')
+        .where('userId', 'in', todo)
+        .get();
+
+      const getDo = result.docs.map((item) => ({
+        ...item.data(),
+        docId: item.id,
+      }));
+      return getDo;
+    }
+    getToDoS();
+  }, []);
+
   const {
     user: { title },
   } = useContext(UserContext);

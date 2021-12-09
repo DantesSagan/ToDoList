@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import NavBarAndHeader from '../main/navBar';
 import LoggedInUserContext from '../context/logged-in-user';
 import useUser from '../hooks/user';
-import AddToDo from '../Components/toDoApp/add-to-do';
-import TimeLine from '../Components/timeLineToDo';
 import AddToDoTwo from '../Components/toDoApp/add-to-do.withoutFirebase.testOne';
 
 export default function Dashboard({ user: loggedInUser }) {
@@ -16,9 +14,7 @@ export default function Dashboard({ user: loggedInUser }) {
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <NavBarAndHeader />
-      {/* <TimeLine /> */}
       <AddToDoTwo />
-      {/* <AddToDo /> */}
     </LoggedInUserContext.Provider>
   );
 }

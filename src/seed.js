@@ -39,11 +39,12 @@ export function seedDatabse(firebase) {
         firebase
           .firestore()
           .collection('todos')
-          .add({
+          .doc('todoList')
+          .set({
             toDosId: i,
             userId: '1',
             titleOfToDo: 'CreateApp',
-            toDosAdditional: [
+            toDosArray: [
               {
                 title: '2nd',
                 toDo: 'Get 2nd todo',

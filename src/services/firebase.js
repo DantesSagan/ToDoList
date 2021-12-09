@@ -34,18 +34,6 @@ export async function getUserByUserId(userId) {
     docId: item.id,
   }));
 
-  return user;  
+  return user;
 }
 
-export async function getToDo(userId, toDoList) {
-  const result = await firebaseLib
-    .firestore()
-    .collection('todos')
-    .where('userId', 'in', toDoList)
-    .get();
-
-  return result.docs.map((toDos) => ({
-    ...toDos.data(),
-    docId: toDos.id,
-  }));
-}

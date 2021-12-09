@@ -1,50 +1,64 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
-import React, { useState, useContext } from 'react';
-// import FirebaseContext from '../../context/firebaseContext';
-// import UserContext from '../../context/user';
+import React, { useState, useContext, useEffect } from 'react';
+import FirebaseContext from '../../context/firebaseContext';
+import UserContext from '../../context/user';
 
 import PropTypes from 'prop-types';
 
 export default function AddToDoTwo() {
-  const [userInput, setUserInput] = useState('');
+  const [toDo, setToDo] = useState('');
   const [title, setTitle] = useState('');
 
-  const [toDos, setToDoS] = useState([]);
+  const [toDosArray, setToDoSArray] = useState([]);
 
-  const itemsArray = userInput.split(',');
-  const itemsArrayTitle = title.split(',');
+  // const toDoSplit = toDo.split(',');
+  // const titleSplit = title.split(',');
 
-  const items = toDos.map((x) => <div className='p-2'>{x}</div>);
-  const itemsTitle = toDos.map((x) => <h1 className='p-2'>{x}</h1>);
+  // const items = toDosArray.map((x) => <div className='p-2'>{x}</div>);
+  // const itemsTitle = toDosArray.map((x) => <h1 className='p-2'>{x}</h1>);
 
-  // const { firebaseLib, FieldValue } = useContext(FirebaseContext);
-  // const {
-  //   user: { displayName },
-  // } = useContext(UserContext);
+  const { firebaseLib, FieldValue } = useContext(FirebaseContext);
+  const {
+    user: { displayName },
+  } = useContext(UserContext);
 
-  // const addTodo = document.querySelector('.add');
+  useEffect(() => {
+    firebaseLib
+      .firestore()
+      .collection('todos')
+      .onSnapshot((serverUpdate) => {
+        const todolist = serverUpdate.docs.map((_doc) => {
+          const data = _doc.data();
+          data['id'] = _doc.id;
+          return data;
+        });
+        console.log(todolist);
+        setToDoSArray({
+          todolist: todolist,
+        });
+      });
+  }, []);
 
-  // const handleSubmitToDo = (event) => {
-  //   event.preventDefault();
+  const handleSubmitToDo = (event) => {
+    event.preventDefault();
 
-  //   addDoc(firebaseLib, {
-  //     title: addTodo.title.value,
-  //     userInput: addTodo.userInput.value,
-  //   }).then(() => {
-  //     addTodo.reset();
-  //   });
+    setToDoSArray([...toDo, { displayName, title, toDo }]);
+    setToDo('');
 
-  //   setToDoS([...toDos, { displayName, userInput }]);
-  //   setUserInput('');
-
-  //   return firebaseLib
-  //     .firestore()
-  //     .collection('todos')
-  //     .doc()
-  //     .update({
-  //       toDos: FieldValue.arrayUnion({ displayName, userInput }),
-  //     });
-  // };
+    return firebaseLib
+      .firestore()
+      .collection('todos')
+      .doc('todoList')
+      .update({
+        toDosArray: FieldValue.arrayUnion({
+          displayName,
+          title,
+          toDo,
+        }),
+      });
+  };
+  console.log(toDosArray);
 
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
@@ -53,12 +67,12 @@ export default function AddToDoTwo() {
           <div className='h-full w-full py-5 px-4 text-xl '>
             <form
               className='block justify-between pl-0 pr-5 hover:bg-black '
-              // method='POST'
-              // onSubmit={(event) =>
-              //   userInput.length >= 1
-              //     ? handleSubmitToDo(event)
-              //     : event.preventDefault()
-              // }
+              method='POST'
+              onSubmit={(event) =>
+                toDo.length >= 1
+                  ? handleSubmitToDo(event)
+                  : event.preventDefault()
+              }
             >
               <textarea
                 aria-label='Add a comment'
@@ -69,9 +83,7 @@ export default function AddToDoTwo() {
                 placeholder='Заголовок задачи...'
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
-              >
-                {itemsTitle}
-              </textarea>
+              />
               <textarea
                 aria-label='Add a comment'
                 autoComplete='off'
@@ -79,25 +91,27 @@ export default function AddToDoTwo() {
                 type='text'
                 name='add-comment'
                 placeholder='Напишите задачу...'
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
+                value={toDo}
+                onChange={(e) => setToDo(e.target.value)}
                 // ref={toDoTextArea}
               />
             </form>
             <div className='transform hover:rotate-0 transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
               <button
                 className={`w-full h-full text-sm font-bold text-white ${
-                  !userInput && !title && 'opacity-25'
+                  !toDo && !title && 'opacity-25'
                 }`}
                 type='button'
-                disabled={userInput.length < 1 && title.length < 1}
-                onClick={() => setToDoS([itemsArrayTitle, itemsArray])}
+                disabled={toDo.length < 1 && title.length < 1}
+                // onClick={() => setToDoS([itemsArrayTitle, itemsArray])}
+                onClick={handleSubmitToDo}
               >
                 Добавить задачу
               </button>
             </div>
             <form className='justrify-center text-2xl border-2 border-red-600 pl-0 pr-5 bg-gray-300'>
-              <ul className='p-4'>{items}</ul>
+              <div className='p-4'>{title}</div>
+              <ul className='p-4'>{toDo}</ul>
             </form>
           </div>
         </div>
