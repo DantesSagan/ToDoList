@@ -37,27 +37,17 @@ export async function getUserByUserId(userId) {
   return user;
 }
 
-// export async function getToDo(request, response) {
-//   const result = await firebaseLib
-//     .firestore()
-//     .collection('todos')
-//     .where('username', '==', request.user.username)
-//     .orderBy('createdAt', 'desc')
-//     .get()
-//     .then((data) => {
-//       let todos = [];
-//       data.forEach((doc) => {
-//         todos.push({
-//           todoId: doc.id,
-//           title: doc.data().title,
-//           username: doc.data().username,
-//           createdAt: doc.data().createdAt,
-//         });
-//       });
-//       return response.json(todos);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       return response.status(500).json({ error: err.code });
-//     });
-// }
+export async function getToDo(setToDoSArray) {
+  const result = await firebaseLib
+    .firestore()
+    .collection('todos')
+    .get()
+    .then((serverUpdate) => {
+      let todolist = [];
+      serverUpdate.docs.forEach((_doc) => {
+        todolist.push(_doc.data());
+      });
+      setToDoSArray(todolist);
+    });
+  return result;
+}

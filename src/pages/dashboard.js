@@ -5,9 +5,7 @@ import NavBarAndHeader from '../main/navBar';
 import LoggedInUserContext from '../context/logged-in-user';
 import useUser from '../hooks/user';
 
-import TodoApp from '../Components/toDoApp';
-import AddToDoTwo from '../Components/toDoApp/add-to-do.withoutFirebase.testOne';
-
+import IndexToDo from '../Components/toDoApp/index';
 export default function Dashboard({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
   useEffect(() => {
@@ -17,9 +15,8 @@ export default function Dashboard({ user: loggedInUser }) {
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <NavBarAndHeader />
       <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
-        <AddToDoTwo />
+        <IndexToDo />
       </div>
-      {/* <TodoApp /> */}
     </LoggedInUserContext.Provider>
   );
 }
