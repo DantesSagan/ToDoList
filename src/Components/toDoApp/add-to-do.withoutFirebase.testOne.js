@@ -1,60 +1,73 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
 import React, { useState, useContext, useEffect } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+
 import FirebaseContext from '../../context/firebaseContext';
 import UserContext from '../../context/user';
+import useUser from '../../hooks/user';
 
 import PropTypes from 'prop-types';
 
+import { DEFAULT_IMAGE_PATH } from '../../constants/defaultPaths';
 export default function AddToDoTwo() {
   const [toDo, setToDo] = useState('');
   const [title, setTitle] = useState('');
 
   const [toDosArray, setToDoSArray] = useState([]);
 
-  // const toDoSplit = toDo.split(',');
-  // const titleSplit = title.split(',');
-
-  // const items = toDosArray.map((x) => <div className='p-2'>{x}</div>);
-  // const itemsTitle = toDosArray.map((x) => <h1 className='p-2'>{x}</h1>);
-
   const { firebaseLib, FieldValue } = useContext(FirebaseContext);
+
   const {
     user: { displayName },
   } = useContext(UserContext);
 
+  const { user } = useUser(displayName?.uid);
+
   useEffect(() => {
-    firebaseLib
+    getToDo();
+  }, []);
+
+  async function getToDo() {
+    const result = await firebaseLib
       .firestore()
       .collection('todos')
-      .onSnapshot((serverUpdate) => {
-        const todolist = serverUpdate.docs.map((_doc) => {
-          const data = _doc.data();
-          data['id'] = _doc.id;
-          return data;
+      .get()
+      .then((serverUpdate) => {
+        let todolist = [];
+        serverUpdate.docs.forEach((_doc) => {
+          todolist.push(_doc.data());
         });
-        console.log(todolist);
-        setToDoSArray({
-          todolist: todolist,
-        });
+        setToDoSArray(todolist);
       });
-  }, []);
+    return result;
+  }
+
+  // async function getNesteDataOfToDo() {
+  //   const result = await firebaseLib
+  //     .firestore()
+  //     .collection('todos')
+  //     .get()
+  //     .child('title')
+  //   return result;
+  // }
 
   const handleSubmitToDo = (event) => {
     event.preventDefault();
 
     setToDoSArray([...toDo, { displayName, title, toDo }]);
     setToDo('');
+    setTitle('');
 
     return firebaseLib
       .firestore()
       .collection('todos')
-      .doc('todoList')
-      .update({
+      .add({
         toDosArray: FieldValue.arrayUnion({
           displayName,
           title,
           toDo,
+          createdAt: new Date().toISOString(),
         }),
       });
   };
@@ -65,6 +78,24 @@ export default function AddToDoTwo() {
       <div className='flex flex-col w-2/4'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl '>
+            {/* {displayName ? (
+              <> */}
+            {user && (
+              <div className='flex border-b border-gray-primary h-4 p-4 py-8'>
+                <div className='flex items-center'>
+                  <Link to={`/p/${user?.username}`}>
+                    <img
+                      className='rounded-full h-8 w-8 flex'
+                      src={`/images/avatars/${user?.username}.jpg`}
+                      alt={`${user?.username} profile`}
+                      onError={(e) => {
+                        e.target.src = DEFAULT_IMAGE_PATH;
+                      }}
+                    />
+                  </Link>
+                </div>
+              </div>
+            )}
             <form
               className='block justify-between pl-0 pr-5 hover:bg-black '
               method='POST'
@@ -110,44 +141,48 @@ export default function AddToDoTwo() {
               </button>
             </div>
             <form className='justrify-center text-2xl border-2 border-red-600 pl-0 pr-5 bg-gray-300'>
-              <div className='p-4'>{title}</div>
-              <ul className='p-4'>{toDo}</ul>
+              <div>
+                {toDosArray.map((item) => (
+                  <div>
+                    <div key={item}>
+                      {item.toDosArray.map((itemOne) => (
+                        <div key={itemOne.title}>{itemOne.title}</div>
+                      ))}
+                    </div>
+                    <div key={item}>
+                      {item.toDosArray.map((itemTwo) => (
+                        <div key={itemTwo.toDo}>{itemTwo.toDo}</div>
+                      ))}
+                    </div>
+                    <div key={item}>
+                      {item.toDosArray.map((itemThree) => (
+                        <div key={itemThree.createdAt}>
+                          {itemThree.createdAt}
+                        </div>
+                      ))}
+                    </div>
+                    {/* <div key={item}>
+                    {item.toDosArray.map((itemFour) => (
+                      <div key={itemFour.displayName}>{itemFour.displayName}</div>
+                    ))}
+                  </div> */}
+                  </div>
+                ))}
+              </div>
             </form>
+            {/* </>
+            ) : (
+              <Outlet />
+            )} */}
           </div>
         </div>
       </div>
     </div>
   );
-
-  // return (
-  //   <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
-  //     <div className='flex flex-col w-2/4'>
-  //       <div className='flex flex-col items-center'>
-  //         <div className='h-full w-full py-5 px-4 text-xl '>
-  //           <textarea onChange={(e) => setTitle(e.target.value)} />
-  //           <textarea
-  //             className='flex flex-col w-4/5'
-  //             onChange={(e) => setUserInput(e.target.value)}
-  //             placeholder='Separate items with commas'
-  //           />
-  //           <br />
-  //           <button
-  //             className='bg-black hover:bg-red-600 text-white rounded-lg h-8 font-bold'
-  //             onClick={() => setToDoS(itemsArray, titleItems)}
-  //           >
-  //             Create List
-  //           </button>
-  //           <h1 className='p-4'>My "To Do" List:</h1>
-  //           <h1>{title}</h1>
-  //           <ul className='p-4'>{items}</ul>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }
-// AddToDoTwo.propTypes = {
-//   toDosAdditional: PropTypes.array.isRequired,
-//   userInput: PropTypes.string.isRequired,
-//   toDoTextArea: PropTypes.object.isRequired,
-// };
+
+AddToDoTwo.propTypes = {
+  toDosArray: PropTypes.array.isRequired,
+  toDo: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};

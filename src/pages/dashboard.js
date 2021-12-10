@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import NavBarAndHeader from '../main/navBar';
 import LoggedInUserContext from '../context/logged-in-user';
 import useUser from '../hooks/user';
+
+import TodoApp from '../Components/toDoApp';
 import AddToDoTwo from '../Components/toDoApp/add-to-do.withoutFirebase.testOne';
 
 export default function Dashboard({ user: loggedInUser }) {
@@ -14,7 +16,10 @@ export default function Dashboard({ user: loggedInUser }) {
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <NavBarAndHeader />
-      <AddToDoTwo />
+      <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
+        <AddToDoTwo />
+      </div>
+      {/* <TodoApp /> */}
     </LoggedInUserContext.Provider>
   );
 }
