@@ -37,17 +37,24 @@ export async function getUserByUserId(userId) {
   return user;
 }
 
-export async function getToDo(setToDoSArray) {
+export async function getToDo(setToDoSArray, setIsLoading, setError) {
   const result = await firebaseLib
     .firestore()
     .collection('todos')
     .get()
     .then((serverUpdate) => {
       let todolist = [];
-      serverUpdate.docs.forEach((_doc) => {
-        todolist.push(_doc.data());
+      serverUpdate.docs.forEach((doc) => {
+        todolist.push(doc.data());
       });
       setToDoSArray(todolist);
+    })
+    .catch((err) => {
+      setError(err.message);
+      console.log(err.message);
+    })
+    .finally(() => {
+      setIsLoading(false);
     });
   return result;
 }

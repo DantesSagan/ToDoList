@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
-import React, { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { getToDo } from '../../services/firebase';
 // import { formatDistance } from 'date-fns';
 import PropTypes from 'prop-types';
+
+import Loader from '../../fallback/loader';
 
 export default function FormToDo({
   toDo,
@@ -17,15 +18,29 @@ export default function FormToDo({
   FieldValue,
   displayName,
   refTodo,
+  createdAt,
 }) {
+  const [loading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
   useEffect(() => {
-    getToDo(setToDoSArray);
+    getToDo(setToDoSArray, setIsLoading, setError);
   }, []);
 
+  if (loading) {
+    return (
+      <div className='p-4 text-2xl font-bold'>
+        Data is loading... {<Loader />}
+      </div>
+    );
+  }
+  if (error) {
+    return <div className='p-4 text-2xl font-bold'> {error}</div>;
+  }
   const handleSubmitToDo = (event) => {
     event.preventDefault();
 
-    setToDoSArray([...toDo, { displayName, title, toDo }]);
+    setToDoSArray([...toDosArray, { displayName, title, toDo, createdAt }]);
     setToDo('');
     setTitle('');
 
@@ -48,7 +63,7 @@ export default function FormToDo({
       {/* {displayName ? (
               <> */}
       <form
-        className='block justify-between pl-0 pr-5 hover:bg-black border border-gray-300 rounded-xl mt-2'
+        className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-black border border-gray-300 rounded-xl mt-2 pt-5'
         method='POST'
         onSubmit={(event) =>
           toDo.length >= 1 ? handleSubmitToDo(event) : event.preventDefault()
@@ -57,7 +72,7 @@ export default function FormToDo({
         <textarea
           aria-label='Add a comment'
           autoComplete='off'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4'
+          className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
           type='text'
           name='add-comment'
           placeholder='Заголовок задачи...'
@@ -68,7 +83,7 @@ export default function FormToDo({
         <textarea
           aria-label='Add a comment'
           autoComplete='off'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4'
+          className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
           type='text'
           name='add-comment'
           placeholder='Напишите задачу...'

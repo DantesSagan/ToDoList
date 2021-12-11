@@ -21,6 +21,6 @@ const FallbackContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(0.5turn);
-  background: #fad0c4;
+  background: red;
   border-radius: 40px;
 `;
