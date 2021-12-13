@@ -8,9 +8,11 @@ import useUser from '../hooks/user';
 import IndexToDo from '../Components/toDoApp/index';
 export default function Dashboard({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
+
   useEffect(() => {
     document.title = 'ToDoList';
   }, []);
+  
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <NavBarAndHeader />

@@ -10,6 +10,9 @@ import HeaderToDo from './header.toDo';
 import ListOfToDo from './list.toDo';
 
 export default function IndexToDo() {
+  const [loading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
   const [toDo, setToDo] = useState('');
   const [title, setTitle] = useState('');
 
@@ -44,9 +47,30 @@ export default function IndexToDo() {
               displayName={displayName}
               user={user}
               refTodo={refTodo}
-              createdAt
+              createdAt={createdAt}
+              loading={loading}
+              setIsLoading={setIsLoading}
+              error={error}
+              setError={setError}
             />
-            <ListOfToDo toDosArray={toDosArray} />
+            <ListOfToDo
+              toDo={toDo}
+              setToDo={setToDo}
+              title={title}
+              setTitle={setTitle}
+              toDosArray={toDosArray}
+              setToDoSArray={setToDoSArray}
+              firebaseLib={firebaseLib}
+              FieldValue={FieldValue}
+              displayName={displayName}
+              user={user}
+              refTodo={refTodo}
+              createdAt={createdAt}
+              loading={loading}
+              setIsLoading={setIsLoading}
+              error={error}
+              setError={setError}
+            />
           </div>
         </div>
       </div>

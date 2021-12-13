@@ -19,10 +19,11 @@ export default function FormToDo({
   displayName,
   refTodo,
   createdAt,
+  loading,
+  setIsLoading,
+  error,
+  setError,
 }) {
-  const [loading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-
   useEffect(() => {
     getToDo(setToDoSArray, setIsLoading, setError);
   }, []);
@@ -54,7 +55,13 @@ export default function FormToDo({
           toDo,
           createdAt: new Date().toISOString(),
         }),
-      });
+      })
+      .then(function (docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function (error) {
+        console.error('Error adding document: ', error);
+      });;
   };
   console.log(toDosArray);
 
@@ -74,7 +81,7 @@ export default function FormToDo({
           autoComplete='off'
           className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
           type='text'
-          name='add-comment'
+          name='title'
           placeholder='Заголовок задачи...'
           onChange={(e) => setTitle(e.target.value)}
           value={title}
@@ -85,7 +92,7 @@ export default function FormToDo({
           autoComplete='off'
           className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
           type='text'
-          name='add-comment'
+          name='toDo'
           placeholder='Напишите задачу...'
           value={toDo}
           onChange={(e) => setToDo(e.target.value)}
