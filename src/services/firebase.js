@@ -38,7 +38,7 @@ export async function getUserByUserId(userId) {
 }
 
 export async function getToDo(setToDoSArray, setIsLoading, setError) {
-  const result = await firebaseLib
+  const docId = await firebaseLib
     .firestore()
     .collection('todos')
     .get()
@@ -56,6 +56,6 @@ export async function getToDo(setToDoSArray, setIsLoading, setError) {
     .finally(() => {
       setIsLoading(false);
     });
-  return result;
+  return docId;
 }
 

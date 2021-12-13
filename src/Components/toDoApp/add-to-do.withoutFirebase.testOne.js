@@ -61,7 +61,7 @@ export default function FormToDo({
       })
       .catch(function (error) {
         console.error('Error adding document: ', error);
-      });;
+      });
   };
   console.log(toDosArray);
 
