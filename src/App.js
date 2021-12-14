@@ -14,7 +14,8 @@ const Login = lazy(() => import('./pages/login'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
 const SignUp = lazy(() => import('./pages/signUp'));
 const NotFound = lazy(() => import('./pages/not-found'));
-const Profile = lazy(() => import('./Components/profile/index'));
+const Profile = lazy(() => import('./pages/profile'));
+const Setting = lazy(() => import('./Components/profile/setting'));
 
 export default function App() {
   const { user } = useAuthListener();
@@ -35,6 +36,7 @@ export default function App() {
               }
             />
             <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
+            <Route path={ROUTES.SETTINGS} element={<Setting user={user} />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

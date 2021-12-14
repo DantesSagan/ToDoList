@@ -1,5 +1,5 @@
 import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
-
+import { updateDoc, doc } from 'firebase/firestore';
 export async function doesUsernameExist(username) {
   const result = await firebaseLib
     .firestore()
@@ -59,3 +59,70 @@ export async function getToDo(setToDoSArray, setIsLoading, setError) {
   return docId;
 }
 
+export async function deleteTodo() {
+  const batch = firebaseLib.firestore().batch();
+  const getTodos = await firebaseLib
+    .firestore()
+    .collection('todos')
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        batch.delete(doc.ref);
+        console.log(doc);
+      });
+    });
+
+  await batch
+    .commit()
+    .then((docRef) => {
+      console.log('Document was deleted with ID: ', docRef);
+      alert('Document was deleted with ID: ', docRef);
+    })
+    .catch((error) => {
+      console.error('Error deleting document: ', error);
+    });
+  return getTodos;
+
+  // const todoRef = doc(firebaseLib.firestore(), 'todos', 'ToDoList');
+  // await updateDoc(todoRef, {
+  //   title: deleteField(),
+  // });
+
+  // const test = await firebaseLib
+  //   .firestore()
+  //   .collection('todos')
+  //   .get()
+  //   .then((item) => {
+  //     item.forEach((doc) => {
+  //       doc.ref.delete(doc.ref);
+  //       console.log(doc);
+  //     });
+  //   })
+  //   .then((docRef) => {
+  //     console.log('Document was deleted with ID: ', docRef);
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error deleting document: ', error);
+  //   });
+
+  // return test;
+}
+
+// export async function editToDo(title, toDo, displayName) {
+//   const editRef = doc(firebaseLib.firestore(), 'todos', 'ToDoList');
+
+//   await updateDoc(editRef, {
+//     'toDosArray.displayName': displayName,
+//     'toDosArray.timestamp': new Date().toISOString(),
+//     'toDosArray.title': title,
+//     'toDosArray.toDo': toDo,
+//   })
+//     .then((updated) => {
+//       console.log('Document updated was successfully: ', updated);
+//       alert('Document updated was successfully: ', updated);
+//     })
+//     .catch((error) => {
+//       console.error('Document updated error: ', error);
+//       alert('Document updated error: ', error);
+//     });
+// }
