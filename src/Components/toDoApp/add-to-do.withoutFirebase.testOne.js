@@ -48,7 +48,8 @@ export default function FormToDo({
     return firebaseLib
       .firestore()
       .collection('todos')
-      .add({
+      .doc('ToDoList')
+      .set({
         toDosArray: FieldValue.arrayUnion({
           displayName,
           title,
@@ -56,10 +57,11 @@ export default function FormToDo({
           createdAt: new Date().toISOString(),
         }),
       })
-      .then(function (docRef) {
-        console.log('Document written with ID: ', docRef.id);
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef);
+        alert('Document written with ID: ', docRef);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error('Error adding document: ', error);
       });
   };
