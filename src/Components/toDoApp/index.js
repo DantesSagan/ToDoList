@@ -10,9 +10,6 @@ import HeaderToDo from './header.toDo';
 import ListOfToDo from './list.toDo';
 
 export default function IndexToDo() {
-  const [loading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-
   const [toDo, setToDo] = useState('');
   const [title, setTitle] = useState('');
 
@@ -48,10 +45,6 @@ export default function IndexToDo() {
               user={user}
               refTodo={refTodo}
               createdAt={createdAt}
-              loading={loading}
-              setIsLoading={setIsLoading}
-              error={error}
-              setError={setError}
             />
             <ListOfToDo
               toDo={toDo}
@@ -66,10 +59,6 @@ export default function IndexToDo() {
               user={user}
               refTodo={refTodo}
               createdAt={createdAt}
-              loading={loading}
-              setIsLoading={setIsLoading}
-              error={error}
-              setError={setError}
             />
           </div>
         </div>

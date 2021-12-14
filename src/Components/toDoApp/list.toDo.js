@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 import {
   doc,
-  deleteDoc,
   updateDoc,
   serverTimestamp,
   arrayUnion,
@@ -20,19 +19,25 @@ export default function ListOfToDo({
   setTitle,
   setToDo,
   displayName,
+  setToDoSArray,
+  createdAt,
 }) {
-  async function editToDo() {
+  async function editToDo(event) {
+    event.preventDefault();
+
+    setToDoSArray([...toDosArray, { displayName, title, toDo, createdAt }]);
+    setToDo('');
+    setTitle('');
+
     const editRef = doc(firebaseLib.firestore(), 'todos', 'ToDoList');
 
-    const timestamp = await updateDoc(editRef, {
-      timestamp: serverTimestamp(),
-    });
-    
     await updateDoc(editRef, {
-      'toDosArray.displayName': displayName,
-      'toDosArray.timestamp': new Date().toISOString(),
-      'toDosArray.title': title,
-      'toDosArray.toDo': toDo,
+      toDosArray: arrayUnion({
+        displayName,
+        timestamp: new Date().toISOString(),
+        title,
+        toDo,
+      }),
     })
       .then((updated) => {
         console.log('Document updated was successfully: ', updated);
@@ -42,7 +47,6 @@ export default function ListOfToDo({
         console.error('Document updated error: ', error);
         alert('Document updated error: ', error);
       });
-    return timestamp;
   }
 
   return (
@@ -82,7 +86,18 @@ export default function ListOfToDo({
                   onChange={(e) => setToDo(e.target.value)}
                 />{' '}
               </div>
-              <button onClick={editToDo}>edit</button>
+              <div className=' duration-200 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
+                <button
+                  className={`w-full h-full text-lg font-bold text-white ${
+                    !toDo && !title && 'opacity-25'
+                  }`}
+                  type='button'
+                  disabled={toDo.length < 1 && title.length < 1}
+                  onClick={editToDo}
+                >
+                  Edit
+                </button>
+              </div>
               <div className='text-lg'>{second?.createdAt}</div>
               <div
                 className='text-sm font-bold p-2 underline'

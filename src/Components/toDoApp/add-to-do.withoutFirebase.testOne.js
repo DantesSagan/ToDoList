@@ -6,6 +6,7 @@ import { getToDo } from '../../services/firebase';
 import PropTypes from 'prop-types';
 
 import Loader from '../../fallback/loader';
+import { serverTimestamp } from 'firebase/firestore';
 
 export default function FormToDo({
   toDo,
@@ -20,24 +21,12 @@ export default function FormToDo({
   refTodo,
   createdAt,
   loading,
-  setIsLoading,
   error,
-  setError,
 }) {
   useEffect(() => {
-    getToDo(setToDoSArray, setIsLoading, setError);
+    getToDo(setToDoSArray);
   }, []);
 
-  if (loading) {
-    return (
-      <div className='p-4 text-2xl font-bold'>
-        Data is loading... {<Loader />}
-      </div>
-    );
-  }
-  if (error) {
-    return <div className='p-4 text-2xl font-bold'> {error}</div>;
-  }
   const handleSubmitToDo = (event) => {
     event.preventDefault();
 
@@ -54,7 +43,7 @@ export default function FormToDo({
           displayName,
           title,
           toDo,
-          createdAt: new Date().toISOString(),
+          timestamp: new Date().toISOString(),
         }),
       })
       .then((docRef) => {
@@ -103,7 +92,7 @@ export default function FormToDo({
       </form>
       <div className='transform hover:rotate-0 transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
         <button
-          className={`w-full h-full text-sm font-bold text-white ${
+          className={`w-full h-full text-lg font-bold text-white ${
             !toDo && !title && 'opacity-25'
           }`}
           type='button'

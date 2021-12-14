@@ -37,7 +37,7 @@ export async function getUserByUserId(userId) {
   return user;
 }
 
-export async function getToDo(setToDoSArray, setIsLoading, setError) {
+export async function getToDo(setToDoSArray) {
   const docId = await firebaseLib
     .firestore()
     .collection('todos')
@@ -49,13 +49,13 @@ export async function getToDo(setToDoSArray, setIsLoading, setError) {
       });
       setToDoSArray(todolist);
     })
-    .catch((err) => {
-      setError(err.message);
-      console.log(err.message);
+    .then((docRef) => {
+      console.log('Document with ID: ', docRef);
     })
-    .finally(() => {
-      setIsLoading(false);
+    .catch((error) => {
+      console.error('Error to set document: ', error);
     });
+
   return docId;
 }
 
