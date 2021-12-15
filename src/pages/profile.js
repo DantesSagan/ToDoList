@@ -1,4 +1,4 @@
-import NavBarAndHeader from '../main/navBar';
+import NavBarAndHeader from '../pages/navBar';
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ export default function Profile() {
       <div className='mx-auto max-w-screen-lg'>
         <nav className='text-black font-bold'>
           <button className='bg-red-600 hover:bg-red-800 p-2 rounded-lg'>
-            <Link to={ROUTES.SETTINGS}>Settings</Link>
+            <Link to={`/p/${user?.username}/settings`}>Settings</Link>
           </button>
         </nav>
       </div>

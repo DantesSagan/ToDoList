@@ -2,11 +2,9 @@
 // import { addDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { getToDo } from '../../services/firebase';
-// import { formatDistance } from 'date-fns';
 import PropTypes from 'prop-types';
 
-import Loader from '../../fallback/loader';
-import { serverTimestamp } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 
 export default function FormToDo({
   toDo,
@@ -16,36 +14,31 @@ export default function FormToDo({
   toDosArray,
   setToDoSArray,
   firebaseLib,
-  FieldValue,
   displayName,
   refTodo,
   createdAt,
-  loading,
-  error,
 }) {
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
 
-  const handleSubmitToDo = (event) => {
+  const handleSubmitToDo = async (event) => {
     event.preventDefault();
 
     setToDoSArray([...toDosArray, { displayName, title, toDo, createdAt }]);
     setToDo('');
     setTitle('');
 
-    return firebaseLib
-      .firestore()
-      .collection('todos')
-      .doc('ToDoList')
-      .set({
-        toDosArray: FieldValue.arrayUnion({
-          displayName,
-          title,
-          toDo,
-          timestamp: new Date().toISOString(),
-        }),
-      })
+    const editRef = doc(firebaseLib.firestore(), 'todos', 'ToDoList');
+
+    await setDoc(editRef, {
+      toDosArray: arrayUnion({
+        displayName: displayName,
+        createdAt: new Date().toISOString(),
+        title: title,
+        toDo: toDo,
+      }),
+    })
       .then((docRef) => {
         console.log('Document written with ID: ', docRef);
         alert('Document written with ID: ', docRef);
