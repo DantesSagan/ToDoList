@@ -98,42 +98,16 @@ export default function SignUp() {
                   />
                 </svg>
               </legend>
-              <div className='text-3xl text-center text-black underline'>
+              <div className='text-3xl text-center text-black underline p-4'>
                 Sign-Up Form
               </div>
-              <div
-                className='h-full w-full mr-3 py-5 px-4 h-2 mb-2'
-                id='gender'
-              >
-                <label>
-                  Gender<span className='text-danger'></span>
-                </label>
-                <br />
-                <label id='male'>
-                  <input
-                    className='form-radio'
-                    onChange={({ target }) => setGender(target.value)}
-                    type='radio'
-                    name='user-prefer'
-                    checked
-                    value={gender}
-                  />
-                  Male
-                </label>
-                <br />
-                <label>
-                  <input
-                    className='form-radio'
-                    onChange={({ target }) => setGender(target.value)}
-                    id='female'
-                    type='radio'
-                    name='user-prefer'
-                    unchecked
-                    value={gender}
-                  />
-                  Female
-                </label>
-              </div>
+              <input
+                className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                onChange={({ target }) => setGender(target.value)}
+                type='text'
+                placeholder='Pick you gender/sex/ground or wh u like'
+                value={gender}
+              />
               <input
                 aria-label='Enter your city'
                 type='text'

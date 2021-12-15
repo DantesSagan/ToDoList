@@ -12,7 +12,7 @@ export default function Dashboard({ user: loggedInUser }) {
   useEffect(() => {
     document.title = 'ToDoList';
   }, []);
-  
+
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <NavBarAndHeader />
@@ -24,5 +24,5 @@ export default function Dashboard({ user: loggedInUser }) {
 }
 
 Dashboard.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
 };

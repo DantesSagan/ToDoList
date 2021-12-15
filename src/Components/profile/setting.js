@@ -6,8 +6,8 @@ import NavBarAndHeader from '../../pages/navBar';
 
 import * as ROUTES from '../../constants/routes';
 
-import { doc, updateDoc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { doc, updateDoc, addDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
 import { updateProfile } from 'firebase/auth';
 import { getDocs } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
@@ -31,19 +31,8 @@ export default function Setting({ user }) {
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
 
-  const handleEditToDo = async (event) => {
-    event.preventDefault();
-    const usernameExists = await doesUsernameExist(username);
+  const editUser = async () => {
     const auth = getAuth();
-
-    const querySnapshot = await getDocs(
-      collection(firebaseLib.firestore(), 'users')
-    );
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, ' => ', doc.data());
-    });
-
     const currentUser = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -56,11 +45,13 @@ export default function Setting({ user }) {
         // ...
       }
     });
-
-    // const createdUserResult = await firebaseLib
-    //   .auth()
-    //   .createUserWithEmailAndPassword(emailAddress, password);
-
+    const querySnapshot = await getDocs(
+      collection(firebaseLib.firestore(), 'users')
+    );
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, ' => ', doc.data());
+    });
     await updateDoc(querySnapshot, {
       gender: gender,
       city: city,
@@ -78,11 +69,69 @@ export default function Setting({ user }) {
       .catch((error) => {
         console.error('Error with changed: ', error);
       });
+  };
+
+  const handleEditToDo = async (event) => {
+    event.preventDefault();
+
+    const usernameExists = await doesUsernameExist(username);
+
+    const auth = getAuth();
+
+    const querySnapshot = await getDocs(
+      collection(firebaseLib.firestore(), 'users')
+    );
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, ' => ', doc.data());
+    });
+
+    const currentUser = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        const uid = user.uid;
+        // ...
+        console.log(uid);
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
 
     if (!usernameExists) {
       try {
+        await updateEmail(auth.currentUser, {
+          emailAddress: emailAddress.toLowerCase(),
+        })
+          .then((docRef) => {
+            console.log('Changes successfully: ', docRef);
+            alert('Changes successfully: ', docRef);
+          })
+          .catch((error) => {
+            console.error('Error with changed: ', error);
+          });
+
         await updateProfile(auth.currentUser, {
           displayName: username,
+        })
+          .then((docRef) => {
+            console.log('Changes successfully: ', docRef);
+            alert('Changes successfully: ', docRef);
+          })
+          .catch((error) => {
+            console.error('Error with changed: ', error);
+          });
+
+        await updateDoc(currentUser, {
+          gender: gender,
+          city: city,
+          phone: phone,
+          country: country,
+          userId: currentUser.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          dateCreated: Date.now(),
         })
           .then((docRef) => {
             console.log('Changes successfully: ', docRef);
@@ -147,39 +196,17 @@ export default function Setting({ user }) {
               />
             </svg>
           </legend>
-          <div className='text-3xl text-center text-black underline'>
+          <div className='text-3xl text-center text-black underline p-4'>
             Change data Form
           </div>
-          <div className='h-full w-full mr-3 py-5 px-4 h-2 mb-2' id='gender'>
-            <label>
-              Gender<span className='text-danger'></span>
-            </label>
-            <br />
-            <label id='male'>
-              <input
-                className='form-radio'
-                onChange={({ target }) => setGender(target.value)}
-                type='radio'
-                name='user-prefer'
-                checked
-                value={gender}
-              />
-              Male
-            </label>
-            <br />
-            <label>
-              <input
-                className='form-radio'
-                onChange={({ target }) => setGender(target.value)}
-                id='female'
-                type='radio'
-                name='user-prefer'
-                unchecked
-                value={gender}
-              />
-              Female
-            </label>
-          </div>
+          <input
+            placeholder='Gender/sex/floor/ground xd'
+            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+            onChange={({ target }) => setGender(target.value)}
+            type='text'
+            checked
+            value={gender}
+          />
           <input
             aria-label='Enter your city'
             type='text'
