@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import FirebaseContext from '../../context/firebaseContext';
 import NavBarAndHeader from '../../pages/navBar';
 
-import * as ROUTES from '../../constants/routes';
-
+import useUser from '../../hooks/user';
 import {
   doc,
   updateDoc,
@@ -14,7 +13,7 @@ import {
   deleteDoc,
   setDoc,
 } from 'firebase/firestore';
-import { deleteUser } from 'firebase/auth';
+import { deleteUser, updateCurrentUser } from 'firebase/auth';
 import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
 import { updateProfile } from 'firebase/auth';
 import { getDocs } from 'firebase/firestore';
@@ -24,7 +23,12 @@ import {
   getUserByUserId,
   getUserByUsername,
 } from '../../services/firebase';
-export default function Setting({ user }) {
+import UserContext from '../../context/user';
+
+export default function Setting() {
+  const { user: loggedIn } = useContext(UserContext);
+  const { user } = useUser(loggedIn?.uid);
+
   const { firebaseLib } = useContext(FirebaseContext);
 
   const [username, setUsername] = useState('');
@@ -39,6 +43,10 @@ export default function Setting({ user }) {
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
 
+  useEffect(() => {
+    document.title = 'Settings - ToDoList';
+  }, []);
+  
   const editUser = async () => {
     const auth = getAuth();
     const currentUser = onAuthStateChanged(auth, (user) => {
@@ -99,24 +107,31 @@ export default function Setting({ user }) {
       if (user) {
         // User is signed in, see docs for a list of available properties
         const uid = user.uid;
-        updateDoc(querySnapshot, {
-          gender: gender,
-          city: city,
-          phone: phone,
-          country: country,
-          userId: uid,
-          username: username.toLowerCase(),
-          fullName,
-          emailAddress: emailAddress.toLowerCase(),
-          dateCreated: Date.now(),
-        })
-          .then((docRef) => {
-            console.log('Changes docProfile successfully: ', docRef);
-            alert('Changes docProfile successfully: ', docRef);
-          })
-          .catch((error) => {
-            console.error('Error with docProfile changes: ', error);
-          });
+        updateCurrentUser(uid, {
+          email: emailAddress.toLowerCase(),
+          phoneNumber: phone,
+          password: password,
+          displayName: username,
+          disabled: true,
+        });
+        // updateDoc(querySnapshot, {
+        //   gender: gender,
+        //   city: city,
+        //   phone: phone,
+        //   country: country,
+        //   userId: uid,
+        //   username: username.toLowerCase(),
+        //   fullName,
+        //   emailAddress: emailAddress.toLowerCase(),
+        //   dateCreated: Date.now(),
+        // })
+        //   .then((docRef) => {
+        //     console.log('Changes docProfile successfully: ', docRef);
+        //     alert('Changes docProfile successfully: ', docRef);
+        //   })
+        //   .catch((error) => {
+        //     console.error('Error with docProfile changes: ', error);
+        //   });
         console.log(uid);
       } else {
         // User is signed out
@@ -176,42 +191,25 @@ export default function Setting({ user }) {
     }
     console.log(user);
   };
-  useEffect(() => {
-    document.title = 'Settings - ToDoList';
-  }, []);
 
   const deleteUserAccount = async () => {
     const userAuth = getAuth();
+    const userDel = userAuth.currentUser;
 
-    // const userDel = userAuth.currentUser;
-
-    const getUsername = await getUserByUsername(username);
-    const batch = firebaseLib.firestore().batch();
-    // const identity = getDocs(
-    //   doc(
-    //     firebaseLib.firestore(),
-    //     'users',
-    //     where('username', '==', username),
-    //     username
-    //   )
-    // );
     const getTodos = await firebaseLib
       .firestore()
       .collection('users')
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          if (doc.ref === user?.username) {
-            batch.delete(doc.ref);
+          if (doc.id === user?.username) {
+            doc.ref.delete(doc.id);
           } else {
             return null;
           }
-          console.log(doc);
+          console.log(doc.id);
         });
-      });
-
-    await batch
-      .commit()
+      })
       .then((docRef) => {
         console.log('Document was deleted with ID: ', docRef);
         alert('Document was deleted with ID: ', docRef);
@@ -219,55 +217,17 @@ export default function Setting({ user }) {
       .catch((error) => {
         console.error('Error deleting document: ', error);
       });
+
+    await deleteUser(userDel)
+      .then((del) => {
+        console.log('User deleted successfully: ', del);
+        alert('User deleted successfully: ', del);
+      })
+      .catch((error) => {
+        console.log('User deleted error: ', error);
+        alert('User deleted error: ', error);
+      });
     return getTodos;
-    // deleteDoc(doc(firebaseLib.firestore(), 'users', 'alex'))
-    // const batch = firebaseLib.firestore().batch();
-    // const getTodos = firebaseLib
-    //   .firestore()
-    //   .collection('users')
-    //   .get()
-    //   .then((querySnapshot) => {
-    //     querySnapshot.forEach((doc) => {
-    //       if (user?.username === doc.ref) {
-    //         batch.delete(doc.ref);
-    //       } else {
-    //         return null;
-    //       }
-    //       console.log(doc.id);
-    //     });
-    //   });
-
-    // batch
-    //   .commit()
-    //   .then((docRef) => {
-    //     console.log('Document was deleted with ID: ', docRef);
-    //     alert('Document was deleted with ID: ', docRef);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error deleting document: ', error);
-    //   });
-    // return getTodos;
-    // const currentUserAuth = onAuthStateChanged(userAuth, (user) => {
-    //   if (user) {
-    //     // User is signed in, see docs for a list of available properties
-    //     const uid = user.uid;
-
-    //     return getTodos;
-    //   } else {
-    //     // User is signed out
-    //     // ...
-    //     return null;
-    //   }
-    // });
-    // await deleteUser(userDel)
-    //   .then((del) => {
-    //     console.log('User deleted successfully: ', del);
-    //     alert('User deleted successfully: ', del);
-    //   })
-    //   .catch((error) => {
-    //     console.log('User deleted error: ', error);
-    //     alert('User deleted error: ', error);
-    //   });
   };
 
   return (

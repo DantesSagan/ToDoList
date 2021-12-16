@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Outlet } from 'react-router-dom';
 import { getToDo } from '../../services/firebase';
 import PropTypes from 'prop-types';
 
 import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
-
+import UserContext from '../../context/user';
+import useUser from '../../hooks/user';
 export default function FormToDo({
   toDo,
   setToDo,
@@ -18,6 +20,8 @@ export default function FormToDo({
   refTodo,
   createdAt,
 }) {
+  const { user: loggedIn } = useContext(UserContext);
+  const { user } = useUser(loggedIn?.uid);
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
@@ -51,55 +55,56 @@ export default function FormToDo({
 
   return (
     <div>
-      {/* {displayName ? (
-              <> */}
-      <form
-        className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-black border border-gray-300 rounded-xl mt-2 pt-5'
-        method='POST'
-        onSubmit={(event) =>
-          toDo.length >= 1 ? handleSubmitToDo(event) : event.preventDefault()
-        }
-      >
-        <textarea
-          aria-label='Add a comment'
-          autoComplete='off'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
-          type='text'
-          name='title'
-          placeholder='Заголовок задачи...'
-          onChange={({ e }) => setTitle(e.target.value)}
-          value={title}
-          ref={refTodo}
-        />
-        <textarea
-          aria-label='Add a comment'
-          autoComplete='off'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
-          type='text'
-          name='toDo'
-          placeholder='Напишите задачу...'
-          value={toDo}
-          onChange={({ e }) => setToDo(e.target.value)}
-          ref={refTodo}
-        />
-      </form>
-      <div className='transform hover:rotate-0 transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
-        <button
-          className={`w-full h-full text-lg font-bold text-white ${
-            !toDo && !title && 'opacity-25'
-          }`}
-          type='button'
-          disabled={toDo.length < 1 && title.length < 1}
-          // onClick={() => setToDoS([itemsArrayTitle, itemsArray])}
-          onClick={handleSubmitToDo}
-        >
-          Добавить задачу
-        </button>
-      </div>
-      {/* </>
-            ) : (
-              <Outlet />
-            )} */}
+      {loggedIn ? (
+        <>
+          <form
+            className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-black border border-gray-300 rounded-xl mt-2 pt-5'
+            method='POST'
+            onSubmit={(event) =>
+              toDo.length >= 1
+                ? handleSubmitToDo(event)
+                : event.preventDefault()
+            }
+          >
+            <textarea
+              aria-label='Add a comment'
+              autoComplete='off'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
+              type='text'
+              name='title'
+              placeholder='Заголовок задачи...'
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              ref={refTodo}
+            />
+            <textarea
+              aria-label='Add a comment'
+              autoComplete='off'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
+              type='text'
+              name='toDo'
+              placeholder='Напишите задачу...'
+              value={toDo}
+              onChange={(e) => setToDo(e.target.value)}
+              ref={refTodo}
+            />
+          </form>
+          <div className='transform hover:rotate-0 transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
+            <button
+              className={`w-full h-full text-lg font-bold text-white ${
+                !toDo && !title && 'opacity-25'
+              }`}
+              type='button'
+              disabled={toDo.length < 1 && title.length < 1}
+              onClick={handleSubmitToDo}
+            >
+              Добавить задачу
+            </button>
+          </div>
+        </>
+      ) : (
+        <Outlet />
+      )}
     </div>
   );
 }
