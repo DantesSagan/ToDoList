@@ -46,7 +46,7 @@ export default function Setting() {
   useEffect(() => {
     document.title = 'Settings - ToDoList';
   }, []);
-  
+
   const editUser = async () => {
     const auth = getAuth();
     const currentUser = onAuthStateChanged(auth, (user) => {
@@ -202,12 +202,17 @@ export default function Setting() {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          if (doc.id === user?.username) {
-            doc.ref.delete(doc.id);
-          } else {
-            return null;
+          var userSelect = window.confirm(
+            `Are you sure you want to delete this user = ${user?.username}? Вы уверены, что хотите удалить пользователя${user?.username}?`
+          );
+          if (userSelect === true) {
+            if (doc.id === user?.username) {
+              doc.ref.delete(doc.id);
+            } else {
+              return null;
+            }
+            console.log(doc.id);
           }
-          console.log(doc.id);
         });
       })
       .then((docRef) => {

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DEFAULT_IMAGE_PATH } from '../../constants/defaultPaths';
 
-export default function HeaderToDo({ user }) {
+import UserContext from '../../context/user';
+import useUser from '../../hooks/user';
+
+export default function HeaderToDo() {
+  const { user: loggedIn } = useContext(UserContext);
+  const { user } = useUser(loggedIn?.uid);
   return (
     <div>
       {user && (
