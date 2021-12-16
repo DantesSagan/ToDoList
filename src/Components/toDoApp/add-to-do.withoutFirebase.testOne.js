@@ -67,7 +67,7 @@ export default function FormToDo({
           type='text'
           name='title'
           placeholder='Заголовок задачи...'
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={({ e }) => setTitle(e.target.value)}
           value={title}
           ref={refTodo}
         />
@@ -79,7 +79,7 @@ export default function FormToDo({
           name='toDo'
           placeholder='Напишите задачу...'
           value={toDo}
-          onChange={(e) => setToDo(e.target.value)}
+          onChange={({ e }) => setToDo(e.target.value)}
           ref={refTodo}
         />
       </form>

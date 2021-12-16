@@ -1,5 +1,6 @@
 import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
 import { updateDoc, doc } from 'firebase/firestore';
+
 export async function doesUsernameExist(username) {
   const result = await firebaseLib
     .firestore()

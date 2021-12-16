@@ -34,7 +34,7 @@ export default function SignUp() {
           displayName: username,
         });
 
-        await firebaseLib.firestore().collection('users').add({
+        await firebaseLib.firestore().collection('users').doc(username).set({
           gender: gender,
           city: city,
           phone: phone,

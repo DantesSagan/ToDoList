@@ -6,7 +6,15 @@ import NavBarAndHeader from '../../pages/navBar';
 
 import * as ROUTES from '../../constants/routes';
 
-import { doc, updateDoc, addDoc } from 'firebase/firestore';
+import {
+  doc,
+  updateDoc,
+  where,
+  addDoc,
+  deleteDoc,
+  setDoc,
+} from 'firebase/firestore';
+import { deleteUser } from 'firebase/auth';
 import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
 import { updateProfile } from 'firebase/auth';
 import { getDocs } from 'firebase/firestore';
@@ -75,6 +83,7 @@ export default function Setting({ user }) {
     event.preventDefault();
 
     const usernameExists = await doesUsernameExist(username);
+    const getUsername = await getUserByUsername(username);
 
     const auth = getAuth();
 
@@ -86,11 +95,28 @@ export default function Setting({ user }) {
       console.log(doc.id, ' => ', doc.data());
     });
 
-    const currentUser = onAuthStateChanged(auth, (user) => {
+    const currentUserAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         const uid = user.uid;
-        // ...
+        updateDoc(querySnapshot, {
+          gender: gender,
+          city: city,
+          phone: phone,
+          country: country,
+          userId: uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          dateCreated: Date.now(),
+        })
+          .then((docRef) => {
+            console.log('Changes docProfile successfully: ', docRef);
+            alert('Changes docProfile successfully: ', docRef);
+          })
+          .catch((error) => {
+            console.error('Error with docProfile changes: ', error);
+          });
         console.log(uid);
       } else {
         // User is signed out
@@ -102,44 +128,25 @@ export default function Setting({ user }) {
       try {
         await updateEmail(auth.currentUser, {
           emailAddress: emailAddress.toLowerCase(),
-        })
-          .then((docRef) => {
-            console.log('Changes successfully: ', docRef);
-            alert('Changes successfully: ', docRef);
-          })
-          .catch((error) => {
-            console.error('Error with changed: ', error);
-          });
+        });
+        // .then((docRef) => {
+        //   console.log('Changes email successfully: ', docRef);
+        //   alert('Changes email successfully: ', docRef);
+        // })
+        // .catch((error) => {
+        //   console.error('Error with email changes: ', error);
+        // });
 
         await updateProfile(auth.currentUser, {
           displayName: username,
-        })
-          .then((docRef) => {
-            console.log('Changes successfully: ', docRef);
-            alert('Changes successfully: ', docRef);
-          })
-          .catch((error) => {
-            console.error('Error with changed: ', error);
-          });
-
-        await updateDoc(currentUser, {
-          gender: gender,
-          city: city,
-          phone: phone,
-          country: country,
-          userId: currentUser.user.uid,
-          username: username.toLowerCase(),
-          fullName,
-          emailAddress: emailAddress.toLowerCase(),
-          dateCreated: Date.now(),
-        })
-          .then((docRef) => {
-            console.log('Changes successfully: ', docRef);
-            alert('Changes successfully: ', docRef);
-          })
-          .catch((error) => {
-            console.error('Error with changed: ', error);
-          });
+        });
+        // .then((docRef) => {
+        //   console.log('Changes name successfully: ', docRef);
+        //   alert('Changes name successfully: ', docRef);
+        // })
+        // .catch((error) => {
+        //   console.error('Error with name changes: ', error);
+        // });
       } catch (error) {
         setCity('');
         setPhone('');
@@ -152,6 +159,7 @@ export default function Setting({ user }) {
       setUsername('');
       setError('That username is already taken, please try another.');
     }
+    return currentUserAuth;
   };
 
   const checkUserProfile = () => {
@@ -171,6 +179,96 @@ export default function Setting({ user }) {
   useEffect(() => {
     document.title = 'Settings - ToDoList';
   }, []);
+
+  const deleteUserAccount = async () => {
+    const userAuth = getAuth();
+
+    // const userDel = userAuth.currentUser;
+
+    const getUsername = await getUserByUsername(username);
+    const batch = firebaseLib.firestore().batch();
+    // const identity = getDocs(
+    //   doc(
+    //     firebaseLib.firestore(),
+    //     'users',
+    //     where('username', '==', username),
+    //     username
+    //   )
+    // );
+    const getTodos = await firebaseLib
+      .firestore()
+      .collection('users')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.ref === user?.username) {
+            batch.delete(doc.ref);
+          } else {
+            return null;
+          }
+          console.log(doc);
+        });
+      });
+
+    await batch
+      .commit()
+      .then((docRef) => {
+        console.log('Document was deleted with ID: ', docRef);
+        alert('Document was deleted with ID: ', docRef);
+      })
+      .catch((error) => {
+        console.error('Error deleting document: ', error);
+      });
+    return getTodos;
+    // deleteDoc(doc(firebaseLib.firestore(), 'users', 'alex'))
+    // const batch = firebaseLib.firestore().batch();
+    // const getTodos = firebaseLib
+    //   .firestore()
+    //   .collection('users')
+    //   .get()
+    //   .then((querySnapshot) => {
+    //     querySnapshot.forEach((doc) => {
+    //       if (user?.username === doc.ref) {
+    //         batch.delete(doc.ref);
+    //       } else {
+    //         return null;
+    //       }
+    //       console.log(doc.id);
+    //     });
+    //   });
+
+    // batch
+    //   .commit()
+    //   .then((docRef) => {
+    //     console.log('Document was deleted with ID: ', docRef);
+    //     alert('Document was deleted with ID: ', docRef);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error deleting document: ', error);
+    //   });
+    // return getTodos;
+    // const currentUserAuth = onAuthStateChanged(userAuth, (user) => {
+    //   if (user) {
+    //     // User is signed in, see docs for a list of available properties
+    //     const uid = user.uid;
+
+    //     return getTodos;
+    //   } else {
+    //     // User is signed out
+    //     // ...
+    //     return null;
+    //   }
+    // });
+    // await deleteUser(userDel)
+    //   .then((del) => {
+    //     console.log('User deleted successfully: ', del);
+    //     alert('User deleted successfully: ', del);
+    //   })
+    //   .catch((error) => {
+    //     console.log('User deleted error: ', error);
+    //     alert('User deleted error: ', error);
+    //   });
+  };
 
   return (
     <div>
@@ -278,6 +376,15 @@ export default function Setting({ user }) {
             className='bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold'
           >
             Check User Profile
+          </button>
+        </div>
+        <div className='p-4'>
+          <button
+            onClick={deleteUserAccount}
+            type='button'
+            className='bg-red-700 hover:bg-red-600 text-white w-full rounded h-8 font-bold'
+          >
+            Delete user account
           </button>
         </div>
       </form>

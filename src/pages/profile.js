@@ -28,9 +28,10 @@ export default function Profile() {
   return user?.username ? (
     <div>
       <NavBarAndHeader />
-      <div className='mx-auto max-w-screen-lg'>
-        <nav className='text-black font-bold'>
-          <button className='bg-red-600 hover:bg-red-800 p-2 rounded-lg'>
+      <div className='container block mx-auto max-w-screen-lg item-center justify-center'>
+        <div className='text-2xl font-bold'>{`User Profile ${user?.username}`}</div>
+        <nav className='text-white font-bold'>
+          <button className='bg-black hover:bg-red-600 p-4 rounded-lg'>
             <Link to={`/p/${user?.username}/settings`}>Settings</Link>
           </button>
         </nav>

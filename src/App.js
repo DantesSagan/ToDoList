@@ -26,7 +26,6 @@ export default function App() {
           <Routes>
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
-            <Route path={ROUTES.PROFILE} element={<Profile />} />
             <Route
               path={ROUTES.DASHBOARD}
               element={
@@ -35,8 +34,23 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path={ROUTES.PROFILE}
+              element={
+                <ProtectedRoute user={user}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.SETTINGS}
+              element={
+                <ProtectedRoute user={user}>
+                  <Setting />
+                </ProtectedRoute>
+              }
+            />
             <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
-            <Route path={ROUTES.SETTINGS} element={<Setting user={user} />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
