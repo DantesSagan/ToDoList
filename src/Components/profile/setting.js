@@ -1,36 +1,12 @@
-import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-import FirebaseContext from '../../context/firebaseContext';
 import NavBarAndHeader from '../../pages/navBar';
 
-import useUser from '../../hooks/user';
-import {
-  doc,
-  updateDoc,
-  where,
-  addDoc,
-  deleteDoc,
-  setDoc,
-} from 'firebase/firestore';
-import { deleteUser, updateCurrentUser } from 'firebase/auth';
-import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
-import { updateProfile } from 'firebase/auth';
-import { getDocs } from 'firebase/firestore';
-import { collection } from 'firebase/firestore';
-import {
-  doesUsernameExist,
-  getUserByUserId,
-  getUserByUsername,
-} from '../../services/firebase';
-import UserContext from '../../context/user';
+import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
+import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
+import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
 
 export default function Setting() {
-  const { user: loggedIn } = useContext(UserContext);
-  const { user } = useUser(loggedIn?.uid);
-
-  const { firebaseLib } = useContext(FirebaseContext);
-
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
@@ -43,198 +19,11 @@ export default function Setting() {
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
 
+  const { DUA } = DeleteUserAccount();
+  const { handleEditToDo } = HandleEditToDoConst();
   useEffect(() => {
     document.title = 'Settings - ToDoList';
   }, []);
-
-  const editUser = async () => {
-    const auth = getAuth();
-    const currentUser = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        // ...
-        console.log(uid);
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
-    const querySnapshot = await getDocs(
-      collection(firebaseLib.firestore(), 'users')
-    );
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, ' => ', doc.data());
-    });
-    await updateDoc(querySnapshot, {
-      gender: gender,
-      city: city,
-      phone: phone,
-      country: country,
-      userId: currentUser.user.uid,
-      username: username.toLowerCase(),
-      fullName,
-      dateCreated: Date.now(),
-    })
-      .then((docRef) => {
-        console.log('Changes successfully: ', docRef);
-        alert('Changes successfully: ', docRef);
-      })
-      .catch((error) => {
-        console.error('Error with changed: ', error);
-      });
-  };
-
-  const handleEditToDo = async (event) => {
-    event.preventDefault();
-
-    const usernameExists = await doesUsernameExist(username);
-    const getUsername = await getUserByUsername(username);
-
-    const auth = getAuth();
-
-    const querySnapshot = await getDocs(
-      collection(firebaseLib.firestore(), 'users')
-    );
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, ' => ', doc.data());
-    });
-
-    const currentUserAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        const uid = user.uid;
-        updateCurrentUser(uid, {
-          email: emailAddress.toLowerCase(),
-          phoneNumber: phone,
-          password: password,
-          displayName: username,
-          disabled: true,
-        });
-        // updateDoc(querySnapshot, {
-        //   gender: gender,
-        //   city: city,
-        //   phone: phone,
-        //   country: country,
-        //   userId: uid,
-        //   username: username.toLowerCase(),
-        //   fullName,
-        //   emailAddress: emailAddress.toLowerCase(),
-        //   dateCreated: Date.now(),
-        // })
-        //   .then((docRef) => {
-        //     console.log('Changes docProfile successfully: ', docRef);
-        //     alert('Changes docProfile successfully: ', docRef);
-        //   })
-        //   .catch((error) => {
-        //     console.error('Error with docProfile changes: ', error);
-        //   });
-        console.log(uid);
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
-
-    if (!usernameExists) {
-      try {
-        await updateEmail(auth.currentUser, {
-          emailAddress: emailAddress.toLowerCase(),
-        });
-        // .then((docRef) => {
-        //   console.log('Changes email successfully: ', docRef);
-        //   alert('Changes email successfully: ', docRef);
-        // })
-        // .catch((error) => {
-        //   console.error('Error with email changes: ', error);
-        // });
-
-        await updateProfile(auth.currentUser, {
-          displayName: username,
-        });
-        // .then((docRef) => {
-        //   console.log('Changes name successfully: ', docRef);
-        //   alert('Changes name successfully: ', docRef);
-        // })
-        // .catch((error) => {
-        //   console.error('Error with name changes: ', error);
-        // });
-      } catch (error) {
-        setCity('');
-        setPhone('');
-        setFullName('');
-        setEmailAddress('');
-        setPassword('');
-        setError(error.message);
-      }
-    } else {
-      setUsername('');
-      setError('That username is already taken, please try another.');
-    }
-    return currentUserAuth;
-  };
-
-  const checkUserProfile = () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user !== null) {
-      user.providerData.forEach((profile) => {
-        console.log('Sign-in provider: ' + profile.providerId);
-        console.log('  Provider-specific UID: ' + profile.uid);
-        console.log('  Name: ' + profile.displayName);
-        console.log('  Email: ' + profile.email);
-        console.log('  Telephone: ' + profile.phone);
-      });
-    }
-    console.log(user);
-  };
-
-  const deleteUserAccount = async () => {
-    const userAuth = getAuth();
-    const userDel = userAuth.currentUser;
-
-    const getTodos = await firebaseLib
-      .firestore()
-      .collection('users')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var userSelect = window.confirm(
-            `Are you sure you want to delete this user = ${user?.username}? Вы уверены, что хотите удалить пользователя${user?.username}?`
-          );
-          if (userSelect === true) {
-            if (doc.id === user?.username) {
-              doc.ref.delete(doc.id);
-            } else {
-              return null;
-            }
-            console.log(doc.id);
-          }
-        });
-      })
-      .then((docRef) => {
-        console.log('Document was deleted with ID: ', docRef);
-        alert('Document was deleted with ID: ', docRef);
-      })
-      .catch((error) => {
-        console.error('Error deleting document: ', error);
-      });
-
-    await deleteUser(userDel)
-      .then((del) => {
-        console.log('User deleted successfully: ', del);
-        alert('User deleted successfully: ', del);
-      })
-      .catch((error) => {
-        console.log('User deleted error: ', error);
-        alert('User deleted error: ', error);
-      });
-    return getTodos;
-  };
-
   return (
     <div>
       <NavBarAndHeader />
@@ -336,7 +125,7 @@ export default function Setting() {
         </button>
         <div className='p-4'>
           <button
-            onClick={checkUserProfile}
+            onClick={CheckUserProfile}
             type='button'
             className='bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold'
           >
@@ -345,7 +134,7 @@ export default function Setting() {
         </div>
         <div className='p-4'>
           <button
-            onClick={deleteUserAccount}
+            onClick={DUA}
             type='button'
             className='bg-red-700 hover:bg-red-600 text-white w-full rounded h-8 font-bold'
           >

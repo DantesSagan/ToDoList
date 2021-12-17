@@ -32,8 +32,22 @@ export default function FormToDo({
     setToDoSArray([...toDosArray, { displayName, title, toDo, createdAt }]);
     setToDo('');
     setTitle('');
-
-    const editRef = doc(firebaseLib.firestore(), 'todos', 'ToDoList');
+    // await addDoc(collection(firebaseLib.firestore(), 'todos'), {
+    //   toDosArray: arrayUnion({
+    //     displayName: displayName,
+    //     createdAt: new Date().toISOString(),
+    //     title: title,
+    //     toDo: toDo,
+    //   }),
+    // })
+    //   .then((docRef) => {
+    //     console.log('Document written with ID: ', docRef);
+    //     alert('Document written with ID: ', docRef);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error adding document: ', error);
+    //   });
+    const editRef = doc(firebaseLib.firestore(), 'todos', title);
 
     await setDoc(editRef, {
       toDosArray: arrayUnion({

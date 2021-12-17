@@ -36,24 +36,30 @@ export default function ListOfToDo({
     setToDo('');
     setTitle('');
 
-    const editRef = doc(firebaseLib.firestore(), 'todos', 'ToDoList');
+    const editRef = doc(firebaseLib.firestore(), 'todos');
 
-    await updateDoc(editRef, {
-      toDosArray: arrayUnion({
-        displayName: displayName,
-        createdAt: new Date().toISOString(),
-        title: title,
-        toDo: toDo,
-      }),
-    })
-      .then((updated) => {
-        console.log('Array updated was successfully: ', updated);
-        alert('Array updated was successfully: ', updated);
-      })
-      .catch((error) => {
-        console.error('Array updated error: ', error);
-        alert('Array updated error: ', error);
-      });
+    await editRef.forEach((doc) => {
+      if (doc.id === title) {
+        updateDoc(doc.ref, {
+          toDosArray: arrayUnion({
+            displayName: displayName,
+            createdAt: new Date().toISOString(),
+            title: title,
+            toDo: toDo,
+          }),
+        })
+          .then((updated) => {
+            console.log('Array updated was successfully: ', updated);
+            alert('Array updated was successfully: ', updated);
+          })
+          .catch((error) => {
+            console.error('Array updated error: ', error);
+            alert('Array updated error: ', error);
+          });
+      } else {
+        return null;
+      }
+    });
   }
 
   async function deleteToDo(event) {
