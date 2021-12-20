@@ -1,26 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import NavBarAndHeader from '../../pages/navBar';
 
 import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
+
 import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
 import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
 
 export default function Setting() {
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
-  const [country, setCountry] = useState('');
-  const [phone, setPhone] = useState('');
-  const [city, setCity] = useState('');
-  const [gender, setGender] = useState('');
+  const {
+    handleEditToDo,
+    username,
+    setUsername,
+    fullName,
+    setFullName,
+    emailAddress,
+    setEmailAddress,
+    password,
+    setPassword,
+    country,
+    setCountry,
+    phone,
+    setPhone,
+    city,
+    setCity,
+    gender,
+    setGender,
+  } = HandleEditToDoConst();
 
-  const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
 
   const { DUA } = DeleteUserAccount();
-  const { handleEditToDo } = HandleEditToDoConst();
   useEffect(() => {
     document.title = 'Settings - ToDoList';
   }, []);

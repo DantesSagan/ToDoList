@@ -1,24 +1,33 @@
-import { useState, useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { doesUsernameExist } from '../services/firebase';
 
-import FirebaseContext from '../context/firebaseContext';
 import * as ROUTES from '../constants/routes';
+import IndexSetting from '../Components/profile/toDoSettings/index.setting';
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { firebaseLib } = useContext(FirebaseContext);
-
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
-  const [country, setCountry] = useState('');
-  const [phone, setPhone] = useState('');
-  const [city, setCity] = useState('');
-  const [gender, setGender] = useState('');
-
-  const [error, setError] = useState('');
+  const {
+    firebaseLib,
+    username,
+    setUsername,
+    fullName,
+    setFullName,
+    emailAddress,
+    setEmailAddress,
+    password,
+    setPassword,
+    country,
+    setCountry,
+    phone,
+    setPhone,
+    city,
+    setCity,
+    gender,
+    setGender,
+    error,
+    setError,
+  } = IndexSetting();
   const isInvalid = password === '' || emailAddress === '';
 
   const handleSignUp = async (event) => {

@@ -1,9 +1,3 @@
-import { useState, useContext } from 'react';
-
-import FirebaseContext from '../../../context/firebaseContext';
-import UserContext from '../../../context/user';
-import useUser from '../../../hooks/user';
-
 import { updateDoc } from 'firebase/firestore';
 import { getDocs } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
@@ -14,26 +8,31 @@ import { updateProfile } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 
 import { doesUsernameExist } from '../../../services/firebase';
-import { getUserByUsername } from '../../../services/firebase';
+import IndexSetting from './index.setting';
 
 export default function HandleEditToDoConst() {
-  // this need to rework coz = doesn't work
-  // need check why data doesn't updated
-  const { user: loggedIn } = useContext(UserContext);
-  const { user } = useUser(loggedIn?.uid);
-
-  const { firebaseLib } = useContext(FirebaseContext);
-
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [password, setPassword] = useState('');
-  const [country, setCountry] = useState('');
-  const [phone, setPhone] = useState('');
-  const [city, setCity] = useState('');
-  const [gender, setGender] = useState('');
-
-  const [error, setError] = useState('');
+  const {
+    user,
+    firebaseLib,
+    username,
+    setUsername,
+    fullName,
+    setFullName,
+    emailAddress,
+    setEmailAddress,
+    password,
+    setPassword,
+    country,
+    setCountry,
+    phone,
+    setPhone,
+    city,
+    setCity,
+    gender,
+    setGender,
+    error,
+    setError,
+  } = IndexSetting();
 
   const handleEditToDo = async (event) => {
     event.preventDefault();
@@ -46,12 +45,36 @@ export default function HandleEditToDoConst() {
     setFullName('');
     setEmailAddress('');
 
+    const usernameExist = await doesUsernameExist(username);
+
     const querySnapshot = await getDocs(
       collection(firebaseLib.firestore(), 'users')
     );
 
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
+      if (!usernameExist) {
+        try {
+          if (doc && doc.exists) {
+            var data = doc.data();
+            // saves the data to 'name'
+            firebaseLib
+              .firestore()
+              .collection('users')
+              .doc(username)
+              .set(data)
+              .then(() => {
+                // deletes the old document
+                firebaseLib
+                  .firestore()
+                  .collection('users')
+                  .doc(username)
+                  .delete();
+              });
+          }
+        } catch {
+          setError(error);
+        }
+      }
 
       if (doc.id === user?.username) {
         updateDoc(doc.ref, {
@@ -64,25 +87,25 @@ export default function HandleEditToDoConst() {
           fullName,
           dateCreated: Date.now(),
         })
-          // .then((doc) => {
-          //   if (doc && doc.exists) {
-          //     var data = doc.data();
-          //     // saves the data to 'name'
-          //     firebaseLib
-          //       .firestore()
-          //       .collection('users')
-          //       .doc(username)
-          //       .set(data)
-          //       .then(() => {
-          //         // deletes the old document
-          //         firebaseLib
-          //           .firestore()
-          //           .collection(doc.id === user?.username)
-          //           .doc(username)
-          //           .delete();
-          //       });
-          //   }
-          // })
+          .then(() => {
+            if (doc && doc.exists) {
+              var data = doc.data();
+              // saves the data to 'name'
+              firebaseLib
+                .firestore()
+                .collection('users')
+                .doc(username)
+                .set(data)
+                .then(() => {
+                  // deletes the old document
+                  firebaseLib
+                    .firestore()
+                    .collection('users')
+                    .doc(username)
+                    .delete();
+                });
+            }
+          })
           .then((docRef) => {
             console.log('Changes successfully: ', docRef);
             alert('Changes successfully: ', docRef);
@@ -96,56 +119,59 @@ export default function HandleEditToDoConst() {
       console.log(doc.id, ' => ', doc.data());
     });
 
-    // const usernameExists = await doesUsernameExist(username);
-    // const getUsername = await getUserByUsername(username);
-    // const auth = getAuth();
+    const usernameExists = await doesUsernameExist(username);
+    const auth = getAuth();
 
-    // if (!usernameExists) {
-    //   await updatePassword(auth.currentUser, {
-    //     password: password,
-    //   })
-    //     .then((docRef) => {
-    //       console.log('Changes password successfully: ', docRef);
-    //       alert('Changes password successfully: ', docRef);
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error with password changes: ', error);
-    //     });
-
-    //   await updateEmail(auth.currentUser, {
-    //     emailAddress: emailAddress,
-    //   })
-    //     .then((docRef) => {
-    //       console.log('Changes email successfully: ', docRef);
-    //       alert('Changes email successfully: ', docRef);
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error with email changes: ', error);
-    //     });
-
-    //   await updateProfile(auth.currentUser, {
-    //     displayName: username,
-    //   })
-    //     .then((docRef) => {
-    //       console.log('Changes name successfully: ', docRef);
-    //       alert('Changes name successfully: ', docRef);
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error with name changes: ', error);
-    //     });
-    //   try {
-    //   } catch (error) {
-    //     setCity('');
-    //     setPhone('');
-    //     setFullName('');
-    //     setEmailAddress('');
-    //     setPassword('');
-    //     setError(error.message);
-    //   }
-    // } else {
-    //   setUsername('');
-    //   setError('That username is already taken, please try another.');
-    // }
+    if (!usernameExists) {
+      await updateEmail(auth.currentUser, emailAddress).then((item) => {
+        console.log('Changes email successfully: ', item);
+        alert('Changes email successfully: ', item);
+      });
+      await updatePassword(auth.currentUser, password).then((item) => {
+        console.log('Changes password successfully: ', item);
+        alert('Changes password successfully: ', item);
+      });
+      await updateProfile(auth.currentUser, {
+        displayName: username,
+      })
+        .then((docRef) => {
+          console.log('Changes name successfully: ', docRef);
+          alert('Changes name successfully: ', docRef);
+        })
+        .catch((error) => {
+          console.error('Error with name changes: ', error);
+        });
+      try {
+      } catch (error) {
+        setCity('');
+        setPhone('');
+        setFullName('');
+        setEmailAddress('');
+        setPassword('');
+        setError(error.message);
+      }
+    } else {
+      setUsername('');
+      setError('That username is already taken, please try another.');
+    }
   };
-  return { handleEditToDo };
+  return {
+    handleEditToDo,
+    username,
+    setUsername,
+    fullName,
+    setFullName,
+    emailAddress,
+    setEmailAddress,
+    password,
+    setPassword,
+    country,
+    setCountry,
+    phone,
+    setPhone,
+    city,
+    setCity,
+    gender,
+    setGender,
+  };
 }
