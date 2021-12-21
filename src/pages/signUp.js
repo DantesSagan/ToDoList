@@ -28,7 +28,7 @@ export default function SignUp() {
     error,
     setError,
   } = IndexSetting();
-  const isInvalid = password === '' || emailAddress === '';
+  const isInvalid = password === '' || emailAddress === '' || username === '';
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -58,6 +58,9 @@ export default function SignUp() {
             emailAddress: emailAddress.toLowerCase(),
             dateCreated: Date.now(),
           });
+
+        alert(`${username} was create successfully!`);
+        console.log(`${username} was create successfully!`);
 
         navigate(ROUTES.DASHBOARD);
       } catch (error) {
@@ -146,6 +149,8 @@ export default function SignUp() {
                 value={phone}
               />
               <input
+                minLength={4}
+                maxLength={30}
                 required
                 aria-label='Enter your username'
                 type='text'
@@ -164,6 +169,8 @@ export default function SignUp() {
                 value={fullName}
               />
               <input
+                minLength={12}
+                maxLength={50}
                 required
                 aria-label='Enter your email address'
                 type='email'
@@ -173,6 +180,8 @@ export default function SignUp() {
                 value={emailAddress}
               />
               <input
+                minLength={6}
+                maxLength={30}
                 required
                 aria-label='Enter your password'
                 type='password'

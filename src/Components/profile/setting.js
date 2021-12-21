@@ -94,6 +94,8 @@ export default function Setting() {
             value={phone}
           />
           <input
+            minLength={4}
+            maxLength={30}
             aria-label='Enter your username'
             type='text'
             placeholder='Username'
@@ -110,6 +112,8 @@ export default function Setting() {
             value={fullName}
           />
           <input
+            minLength={12}
+            maxLength={50}
             aria-label='Enter your email address'
             type='email'
             placeholder='Email address'
@@ -118,6 +122,8 @@ export default function Setting() {
             value={emailAddress}
           />
           <input
+            minLength={6}
+            maxLength={30}
             aria-label='Enter your password'
             type='password'
             placeholder='Password'

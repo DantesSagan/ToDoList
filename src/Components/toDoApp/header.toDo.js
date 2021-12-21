@@ -12,7 +12,7 @@ export default function HeaderToDo() {
   return (
     <div>
       {user && (
-        <div className='flex border-b border-gray-primary h-4 p-4 py-8'>
+        <div className='flex border-b border-red-600 h-4 p-4 py-8'>
           <div className='flex items-center'>
             <Link to={`/p/${user?.username}`}>
               <img

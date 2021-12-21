@@ -40,7 +40,7 @@ export default function ListOfToDo({
 
     await editRef.forEach((doc) => {
       if (doc.id === title) {
-        updateDoc(doc.ref, {
+        updateDoc(editRef, {
           toDosArray: arrayUnion({
             displayName: displayName,
             createdAt: new Date().toISOString(),
@@ -84,16 +84,12 @@ export default function ListOfToDo({
         alert('Array deleted error: ', error);
       });
   }
-  const getDataFromDb = () => {
-    
-  };
-
   return (
     <div>
       {loggedIn ? (
         <div>
           <div className='p-4 mx-auto justify-center'>
-            Now is loggedIn - {user?.username} USER?
+            Now is loggedIn - {user?.username} - USER.
           </div>
           {/* {user?.username === currentAuthUserDisplayName ? (
             <div>false</div>

@@ -20,6 +20,7 @@ export default function IndexSetting() {
   const [gender, setGender] = useState('');
 
   const [error, setError] = useState('');
+
   return {
     user,
     firebaseLib,
