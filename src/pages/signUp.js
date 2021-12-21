@@ -43,17 +43,21 @@ export default function SignUp() {
           displayName: username,
         });
 
-        await firebaseLib.firestore().collection('users').doc(username).set({
-          gender: gender,
-          city: city,
-          phone: phone,
-          country: country,
-          userId: createdUserResult.user.uid,
-          username: username.toLowerCase(),
-          fullName,
-          emailAddress: emailAddress.toLowerCase(),
-          dateCreated: Date.now(),
-        });
+        await firebaseLib
+          .firestore()
+          .collection('users')
+          .doc(createdUserResult.user.uid)
+          .set({
+            gender: gender,
+            city: city,
+            phone: phone,
+            country: country,
+            userId: createdUserResult.user.uid,
+            username: username.toLowerCase(),
+            fullName,
+            emailAddress: emailAddress.toLowerCase(),
+            dateCreated: Date.now(),
+          });
 
         navigate(ROUTES.DASHBOARD);
       } catch (error) {

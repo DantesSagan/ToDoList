@@ -84,28 +84,10 @@ export default function ListOfToDo({
         alert('Array deleted error: ', error);
       });
   }
-  const auth = getAuth();
-  const userAuth = auth.currentUser;
-  const currentAuthUserDisplayName = (
-    <div>
-      {toDosArray.map((item) => {
-        return (
-          <div key={item.id}>
-            {item.toDosArray.map((itemSecond) => {
-              return (
-                <div key={itemSecond.toDosArray}>
-                  <div key={itemSecond.displayName}>
-                    {itemSecond.displayName}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
-    </div>
-  );
-  console.log(currentAuthUserDisplayName);
+  const getDataFromDb = () => {
+    
+  };
+
   return (
     <div>
       {loggedIn ? (
