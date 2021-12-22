@@ -23,7 +23,7 @@ export default function HandlePassword() {
           alert('Changes password successfully: ', item);
         })
         .catch((error) => {
-          console.log('wrong pass', error);
+          console.log('Error with password changed', error);
           setError(error);
         });
       console.log('Password confirmed');

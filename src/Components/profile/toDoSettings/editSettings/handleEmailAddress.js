@@ -26,7 +26,7 @@ export default function HandleEmailAddress() {
             alert('Email changed successfully: ', docRef);
           })
           .catch((error) => {
-            console.error('Error with changed email: ', error);
+            console.error('Error with email changed: ', error);
           });
       } else {
         return null;

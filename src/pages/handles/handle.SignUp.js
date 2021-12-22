@@ -50,7 +50,7 @@ export default function HandleSingUp() {
           await createdUserResult.user.updateProfile({
             displayName: username,
           });
-
+          
           await firebaseLib
             .firestore()
             .collection('users')

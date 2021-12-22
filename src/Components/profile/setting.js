@@ -10,18 +10,11 @@ import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
 import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
 
 import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
+import HandlePhone from './toDoSettings/editSettings/handlePhone';
 
 export default function Setting() {
-  const {
-    country,
-    setCountry,
-    phone,
-    setPhone,
-    city,
-    setCity,
-    gender,
-    setGender,
-  } = HandleEditToDoConst();
+  const { country, setCountry, city, setCity, gender, setGender } =
+    HandleEditToDoConst();
 
   const { handlePass, password, setPassword, passOne, passTwo, setCheckPass } =
     HandlePassword();
@@ -29,13 +22,14 @@ export default function Setting() {
     HandleEmailAddress();
   const { handleFullName, fullName, setFullName } = HandleFullName();
   const { handleUsername, username, setUsername } = HandleUsername();
+  const { handlePhone, phone, setPhone } = HandlePhone();
+  const { DUA } = DeleteUserAccount();
 
   const isInvalidPassword = password === '';
   const isInvalidEmailAddress = emailAddress === '';
   const isInvalidFullName = fullName === '';
   const isInvalidUsername = username === '';
-
-  const { DUA } = DeleteUserAccount();
+  const isInvalidPhone = phone === '';
 
   useEffect(() => {
     document.title = 'Settings - ToDoList';
@@ -96,14 +90,24 @@ export default function Setting() {
             value={country}
           />
           {/* PHONE */}
-          <input
-            aria-label='Enter your phone number'
-            type='tele'
-            placeholder='Phone Number'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setPhone(target.value)}
-            value={phone}
-          />
+          <div className={`${isInvalidPhone && 'opacity-60'}`}>
+            <input
+              aria-label='Enter your phone number'
+              type='tele'
+              placeholder='Phone Number'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setPhone(target.value)}
+              value={phone}
+            />
+            <button
+              disabled={isInvalidPhone}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handlePhone}
+            >
+              Change phone
+            </button>
+          </div>
           {/* USERNAME */}
           <div className={`${isInvalidUsername && 'opacity-60'}`}>
             <input
@@ -197,6 +201,7 @@ export default function Setting() {
           </div>
         </fieldset>
         <div className='p-4'>
+          {/* CHECK USER PROFILE */}
           <button
             onClick={CheckUserProfile}
             type='button'
@@ -206,6 +211,7 @@ export default function Setting() {
           </button>
         </div>
         <div className='p-4'>
+          {/* DELETE USER ACCOUNT */}
           <button
             onClick={DUA}
             type='button'

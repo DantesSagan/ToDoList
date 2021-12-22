@@ -25,7 +25,7 @@ export default function HandleUsername() {
           username: username.toLowerCase(),
         })
           .then((docRef) => {
-            console.log('Username changed successfully: ', docRef);
+            console.log('Username changed successfully: ', user?.username);
             alert('Username changed successfully: ', docRef);
           })
           .catch((error) => {
@@ -43,7 +43,7 @@ export default function HandleUsername() {
           displayName: username,
         })
           .then((docRef) => {
-            console.log('Changes name successfully: ', docRef);
+            console.log('Changes name successfully: ', user?.username);
             alert('Changes name successfully: ', docRef);
           })
           .catch((error) => {
