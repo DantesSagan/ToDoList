@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import NavBarAndHeader from '../../pages/navBar';
 import HandleEmailAddress from './toDoSettings/editSettings/handleEmailAddress';
+import HandleFullName from './toDoSettings/editSettings/handleFullName';
 import HandlePassword from './toDoSettings/editSettings/handlePassword';
 
 import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
@@ -11,11 +12,8 @@ import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
 
 export default function Setting() {
   const {
-    handleEditToDo,
     username,
     setUsername,
-    fullName,
-    setFullName,
     country,
     setCountry,
     phone,
@@ -30,9 +28,11 @@ export default function Setting() {
     HandlePassword();
   const { handleEmailAddress, emailAddress, setEmailAddress } =
     HandleEmailAddress();
+  const { handleFullName, fullName, setFullName } = HandleFullName();
 
   const isInvalidPassword = password === '';
   const isInvalidEmailAddress = emailAddress === '';
+  const isInvalidFullName = fullName === '';
 
   const { DUA } = DeleteUserAccount();
 
@@ -115,15 +115,23 @@ export default function Setting() {
             value={username}
           />
           {/* FULL NAME */}
-          <div>
+          <div className={`${isInvalidFullName && 'opacity-60'}`}>
             <input
               aria-label='Enter your full name'
               type='text'
               placeholder='Full name'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setFullName(target.value)}
               value={fullName}
             />
+            <button
+              disabled={isInvalidFullName}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handleFullName}
+            >
+              Change full name
+            </button>
           </div>
           {/* EMAIL ADDRESS */}
           <div className={`${isInvalidEmailAddress && 'opacity-60'}`}>
@@ -133,7 +141,7 @@ export default function Setting() {
               aria-label='Enter your email address'
               type='email'
               placeholder='Change you email address'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setEmailAddress(target.value)}
               value={emailAddress}
             />
@@ -144,7 +152,6 @@ export default function Setting() {
             >
               Change email address
             </button>
-            <hr />
           </div>
           {/* PASSWORD */}
           <div className={`${isInvalidPassword && 'opacity-60'}`}>
