@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { doesUsernameExist } from '../services/firebase';
 
@@ -28,6 +28,9 @@ export default function SignUp() {
     error,
     setError,
   } = IndexSetting();
+  const [checkPass, setCheckPass] = useState('');
+  const passOne = password;
+  const passTwo = checkPass;
   const isInvalid = password === '' || emailAddress === '' || username === '';
 
   const handleSignUp = async (event) => {
@@ -36,33 +39,38 @@ export default function SignUp() {
     const usernameExists = await doesUsernameExist(username);
     if (!usernameExists) {
       try {
-        const createdUserResult = await firebaseLib
-          .auth()
-          .createUserWithEmailAndPassword(emailAddress, password);
-        await createdUserResult.user.updateProfile({
-          displayName: username,
-        });
-
-        await firebaseLib
-          .firestore()
-          .collection('users')
-          .doc(createdUserResult.user.uid)
-          .set({
-            gender: gender,
-            city: city,
-            phone: phone,
-            country: country,
-            userId: createdUserResult.user.uid,
-            username: username.toLowerCase(),
-            fullName,
-            emailAddress: emailAddress.toLowerCase(),
-            dateCreated: Date.now(),
+        if (passOne !== passTwo) {
+          console.log('Wrong password, confirm pass');
+          return null;
+        } else {
+          const createdUserResult = await firebaseLib
+            .auth()
+            .createUserWithEmailAndPassword(emailAddress, password);
+          await createdUserResult.user.updateProfile({
+            displayName: username,
           });
 
-        alert(`${username} was create successfully!`);
-        console.log(`${username} was create successfully!`);
+          await firebaseLib
+            .firestore()
+            .collection('users')
+            .doc(createdUserResult.user.uid)
+            .set({
+              gender: gender,
+              city: city,
+              phone: phone,
+              country: country,
+              userId: createdUserResult.user.uid,
+              username: username.toLowerCase(),
+              fullName,
+              emailAddress: emailAddress.toLowerCase(),
+              dateCreated: Date.now(),
+            });
 
-        navigate(ROUTES.DASHBOARD);
+          alert(`${username} was create successfully!`);
+          console.log(`${username} was create successfully!`);
+
+          navigate(ROUTES.DASHBOARD);
+        }
       } catch (error) {
         setCity('');
         setPhone('');
@@ -179,17 +187,32 @@ export default function SignUp() {
                 onChange={({ target }) => setEmailAddress(target.value)}
                 value={emailAddress}
               />
-              <input
-                minLength={6}
-                maxLength={30}
-                required
-                aria-label='Enter your password'
-                type='password'
-                placeholder='Password'
-                className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                onChange={({ target }) => setPassword(target.value)}
-                value={password}
-              />{' '}
+              <div
+                className={`border-t border-4 border-red-600 p-1 ${
+                  isInvalid && 'opacity-40'
+                }`}
+              >
+                <input
+                  minLength={6}
+                  maxLength={30}
+                  aria-label='Enter your password'
+                  type='password'
+                  placeholder='Enter your password'
+                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                  onChange={({ target }) => setPassword(target.value)}
+                  value={passOne}
+                />
+                <input
+                  minLength={6}
+                  maxLength={30}
+                  aria-label='Confirm your password'
+                  type='password'
+                  placeholder='Confirm your password'
+                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                  onChange={({ target }) => setCheckPass(target.value)}
+                  value={passTwo}
+                />
+              </div>
             </fieldset>
             <button
               disabled={isInvalid}

@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import NavBarAndHeader from '../../pages/navBar';
+import HandlePassword from './toDoSettings/editSettings/handlePassword';
 
 import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
 
@@ -16,8 +17,6 @@ export default function Setting() {
     setFullName,
     emailAddress,
     setEmailAddress,
-    password,
-    setPassword,
     country,
     setCountry,
     phone,
@@ -28,7 +27,9 @@ export default function Setting() {
     setGender,
   } = HandleEditToDoConst();
 
-  const isInvalid = password === '' || emailAddress === '';
+  const { handlePass, password, setPassword, passOne, passTwo, setCheckPass } =
+    HandlePassword();
+  const isInvalidPassword = password === '';
 
   const { DUA } = DeleteUserAccount();
   useEffect(() => {
@@ -121,16 +122,41 @@ export default function Setting() {
             onChange={({ target }) => setEmailAddress(target.value)}
             value={emailAddress}
           />
-          <input
-            minLength={6}
-            maxLength={30}
-            aria-label='Enter your password'
-            type='password'
-            placeholder='Password'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setPassword(target.value)}
-            value={password}
-          />{' '}
+          <div
+            className={`border-t border-4 border-red-600 p-1 ${
+              isInvalidPassword && 'opacity-40'
+            }`}
+          >
+            <input
+              minLength={6}
+              maxLength={30}
+              aria-label='Enter your password'
+              type='password'
+              placeholder='Enter your password'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setPassword(target.value)}
+              value={passOne}
+            />
+            <input
+              minLength={6}
+              maxLength={30}
+              aria-label='Confirm your password'
+              type='password'
+              placeholder='Confirm your password'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setCheckPass(target.value)}
+              value={passTwo}
+            />
+
+            <button
+              disabled={isInvalidPassword}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 rounded h-8 font-bold `}
+              type='submit'
+              onClick={handlePass}
+            >
+              Change password
+            </button>
+          </div>{' '}
         </fieldset>
         <button
           onClick={handleEditToDo}
