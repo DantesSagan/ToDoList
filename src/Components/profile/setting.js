@@ -4,16 +4,15 @@ import NavBarAndHeader from '../../pages/navBar';
 import HandleEmailAddress from './toDoSettings/editSettings/handleEmailAddress';
 import HandleFullName from './toDoSettings/editSettings/handleFullName';
 import HandlePassword from './toDoSettings/editSettings/handlePassword';
-
-import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
+import HandleUsername from './toDoSettings/editSettings/handleUsername';
 
 import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
 import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
 
+import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
+
 export default function Setting() {
   const {
-    username,
-    setUsername,
     country,
     setCountry,
     phone,
@@ -29,10 +28,12 @@ export default function Setting() {
   const { handleEmailAddress, emailAddress, setEmailAddress } =
     HandleEmailAddress();
   const { handleFullName, fullName, setFullName } = HandleFullName();
+  const { handleUsername, username, setUsername } = HandleUsername();
 
   const isInvalidPassword = password === '';
   const isInvalidEmailAddress = emailAddress === '';
   const isInvalidFullName = fullName === '';
+  const isInvalidUsername = username === '';
 
   const { DUA } = DeleteUserAccount();
 
@@ -104,16 +105,26 @@ export default function Setting() {
             value={phone}
           />
           {/* USERNAME */}
-          <input
-            minLength={4}
-            maxLength={30}
-            aria-label='Enter your username'
-            type='text'
-            placeholder='Username'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setUsername(target.value)}
-            value={username}
-          />
+          <div className={`${isInvalidUsername && 'opacity-60'}`}>
+            <input
+              minLength={4}
+              maxLength={30}
+              aria-label='Enter your username'
+              type='text'
+              placeholder='Username'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setUsername(target.value)}
+              value={username}
+            />
+            <button
+              disabled={isInvalidUsername}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handleUsername}
+            >
+              Change username
+            </button>
+          </div>
           {/* FULL NAME */}
           <div className={`${isInvalidFullName && 'opacity-60'}`}>
             <input
