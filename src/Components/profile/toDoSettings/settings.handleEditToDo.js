@@ -1,4 +1,4 @@
-import { setDoc, updateDoc } from 'firebase/firestore';
+import { updateDoc } from 'firebase/firestore';
 import { getDocs } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 
@@ -30,7 +30,6 @@ export default function HandleEditToDoConst() {
     setCity,
     gender,
     setGender,
-    error,
     setError,
   } = IndexSetting();
 

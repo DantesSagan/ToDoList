@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { doesUsernameExist } from '../services/firebase';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import * as ROUTES from '../constants/routes';
-import IndexSetting from '../Components/profile/toDoSettings/index.setting';
+import HandleSingUp from './handles/handle.SignUp';
 
 export default function SignUp() {
-  const navigate = useNavigate();
   const {
-    firebaseLib,
+    SignUp,
     username,
     setUsername,
     fullName,
@@ -26,64 +24,12 @@ export default function SignUp() {
     gender,
     setGender,
     error,
-    setError,
-  } = IndexSetting();
-  const [checkPass, setCheckPass] = useState('');
-  const passOne = password;
-  const passTwo = checkPass;
+    passOne,
+    passTwo,
+    setCheckPass,
+  } = HandleSingUp();
+
   const isInvalid = password === '' || emailAddress === '' || username === '';
-
-  const handleSignUp = async (event) => {
-    event.preventDefault();
-
-    const usernameExists = await doesUsernameExist(username);
-    if (!usernameExists) {
-      try {
-        if (passOne !== passTwo) {
-          console.log('Wrong password, confirm pass');
-          return null;
-        } else {
-          const createdUserResult = await firebaseLib
-            .auth()
-            .createUserWithEmailAndPassword(emailAddress, password);
-          await createdUserResult.user.updateProfile({
-            displayName: username,
-          });
-
-          await firebaseLib
-            .firestore()
-            .collection('users')
-            .doc(createdUserResult.user.uid)
-            .set({
-              gender: gender,
-              city: city,
-              phone: phone,
-              country: country,
-              userId: createdUserResult.user.uid,
-              username: username.toLowerCase(),
-              fullName,
-              emailAddress: emailAddress.toLowerCase(),
-              dateCreated: Date.now(),
-            });
-
-          alert(`${username} was create successfully!`);
-          console.log(`${username} was create successfully!`);
-
-          navigate(ROUTES.DASHBOARD);
-        }
-      } catch (error) {
-        setCity('');
-        setPhone('');
-        setFullName('');
-        setEmailAddress('');
-        setPassword('');
-        setError(error.message);
-      }
-    } else {
-      setUsername('');
-      setError('That username is already taken, please try another.');
-    }
-  };
 
   useEffect(() => {
     document.title = 'Sign Up - ToDoList';
@@ -103,7 +49,7 @@ export default function SignUp() {
 
           {error && <p className='mb-4 text-xs text-red-primary'>{error}</p>}
 
-          <form onSubmit={handleSignUp} method='POST'>
+          <form onSubmit={SignUp} method='POST'>
             {' '}
             <fieldset className='border border-gray-primary p-4'>
               <legend className='block m-auto'>

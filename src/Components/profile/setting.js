@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import NavBarAndHeader from '../../pages/navBar';
+import HandleEmailAddress from './toDoSettings/editSettings/handleEmailAddress';
 import HandlePassword from './toDoSettings/editSettings/handlePassword';
 
 import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
@@ -15,8 +16,6 @@ export default function Setting() {
     setUsername,
     fullName,
     setFullName,
-    emailAddress,
-    setEmailAddress,
     country,
     setCountry,
     phone,
@@ -29,12 +28,18 @@ export default function Setting() {
 
   const { handlePass, password, setPassword, passOne, passTwo, setCheckPass } =
     HandlePassword();
+  const { handleEmailAddress, emailAddress, setEmailAddress } =
+    HandleEmailAddress();
+
   const isInvalidPassword = password === '';
+  const isInvalidEmailAddress = emailAddress === '';
 
   const { DUA } = DeleteUserAccount();
+
   useEffect(() => {
     document.title = 'Settings - ToDoList';
   }, []);
+
   return (
     <div>
       <NavBarAndHeader />
@@ -62,6 +67,7 @@ export default function Setting() {
           <div className='text-3xl text-center text-black underline p-4'>
             Change data Form
           </div>
+          {/* GENDER */}
           <input
             placeholder='Gender/sex/floor/ground xd'
             className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
@@ -70,6 +76,7 @@ export default function Setting() {
             checked
             value={gender}
           />
+          {/* CITY */}
           <input
             aria-label='Enter your city'
             type='text'
@@ -78,6 +85,7 @@ export default function Setting() {
             onChange={({ target }) => setCity(target.value)}
             value={city}
           />
+          {/* COUNTRY */}
           <input
             aria-label='Enter your Country'
             type='text'
@@ -86,6 +94,7 @@ export default function Setting() {
             onChange={({ target }) => setCountry(target.value)}
             value={country}
           />
+          {/* PHONE */}
           <input
             aria-label='Enter your phone number'
             type='tele'
@@ -94,6 +103,7 @@ export default function Setting() {
             onChange={({ target }) => setPhone(target.value)}
             value={phone}
           />
+          {/* USERNAME */}
           <input
             minLength={4}
             maxLength={30}
@@ -104,36 +114,47 @@ export default function Setting() {
             onChange={({ target }) => setUsername(target.value)}
             value={username}
           />
-          <input
-            aria-label='Enter your full name'
-            type='text'
-            placeholder='Full name'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setFullName(target.value)}
-            value={fullName}
-          />
-          <input
-            minLength={12}
-            maxLength={50}
-            aria-label='Enter your email address'
-            type='email'
-            placeholder='Email address'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setEmailAddress(target.value)}
-            value={emailAddress}
-          />
-          <div
-            className={`border-t border-4 border-red-600 p-1 ${
-              isInvalidPassword && 'opacity-40'
-            }`}
-          >
+          {/* FULL NAME */}
+          <div>
+            <input
+              aria-label='Enter your full name'
+              type='text'
+              placeholder='Full name'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setFullName(target.value)}
+              value={fullName}
+            />
+          </div>
+          {/* EMAIL ADDRESS */}
+          <div className={`${isInvalidEmailAddress && 'opacity-60'}`}>
+            <input
+              minLength={6}
+              maxLength={50}
+              aria-label='Enter your email address'
+              type='email'
+              placeholder='Change you email address'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setEmailAddress(target.value)}
+              value={emailAddress}
+            />
+            <button
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handleEmailAddress}
+            >
+              Change email address
+            </button>
+            <hr />
+          </div>
+          {/* PASSWORD */}
+          <div className={`${isInvalidPassword && 'opacity-60'}`}>
             <input
               minLength={6}
               maxLength={30}
               aria-label='Enter your password'
               type='password'
               placeholder='Enter your password'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setPassword(target.value)}
               value={passOne}
             />
@@ -143,28 +164,20 @@ export default function Setting() {
               aria-label='Confirm your password'
               type='password'
               placeholder='Confirm your password'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setCheckPass(target.value)}
               value={passTwo}
             />
-
             <button
               disabled={isInvalidPassword}
-              className={`float-right bg-black hover:bg-red-600 text-white m-3 rounded h-8 font-bold `}
+              className={`float-right bg-black hover:bg-red-600 text-white rounded-lg m-3 p-1 font-bold `}
               type='submit'
               onClick={handlePass}
             >
               Change password
             </button>
-          </div>{' '}
+          </div>
         </fieldset>
-        <button
-          onClick={handleEditToDo}
-          type='submit'
-          className={`bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold `}
-        >
-          Change
-        </button>
         <div className='p-4'>
           <button
             onClick={CheckUserProfile}

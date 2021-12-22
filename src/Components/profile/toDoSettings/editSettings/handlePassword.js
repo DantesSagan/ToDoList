@@ -1,15 +1,12 @@
-import { useState } from 'react';
-
 import { updatePassword } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 
 import IndexSetting from '../index.setting';
 
 export default function HandlePassword() {
-  const { password, setPassword, setError } = IndexSetting();
-  const [checkPass, setCheckPass] = useState('');
-  const passOne = password;
-  const passTwo = checkPass;
+  const { password, setPassword, setError, setCheckPass, passOne, passTwo } =
+    IndexSetting();
+
   const handlePass = async (event) => {
     event.preventDefault();
 

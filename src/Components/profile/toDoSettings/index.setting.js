@@ -18,8 +18,11 @@ export default function IndexSetting() {
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
   const [gender, setGender] = useState('');
-
   const [error, setError] = useState('');
+  const [checkPass, setCheckPass] = useState('');
+  
+  const passOne = password;
+  const passTwo = checkPass;
 
   return {
     user,
@@ -42,5 +45,8 @@ export default function IndexSetting() {
     setGender,
     error,
     setError,
+    passOne,
+    passTwo,
+    setCheckPass
   };
 }

@@ -1,22 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import useUser from '../../hooks/user';
 
 import UserContext from '../../context/user';
 
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
-import {
-  doc,
-  updateDoc,
-  serverTimestamp,
-  arrayUnion,
-  arrayRemove,
-} from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
-import { Outlet } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
-// import { editToDo } from '../../services/firebase';
 export default function ListOfToDo({
   toDosArray,
   title,
