@@ -24,9 +24,9 @@ export default function HandleUsername() {
         updateDoc(doc.ref, {
           username: username.toLowerCase(),
         })
-          .then((docRef) => {
-            console.log('Username changed successfully: ', user?.username);
-            alert('Username changed successfully: ', docRef);
+          .then(() => {
+            console.log('Username changed successfully: ', username);
+            alert('Username changed successfully: ', username);
           })
           .catch((error) => {
             console.error('Error with username changed: ', error);

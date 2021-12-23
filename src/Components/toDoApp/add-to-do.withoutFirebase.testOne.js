@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getToDo } from '../../services/firebase';
 import PropTypes from 'prop-types';
 
-import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import { doc, arrayUnion, setDoc } from 'firebase/firestore';
 import UserContext from '../../context/user';
 import useUser from '../../hooks/user';
 export default function FormToDo({
@@ -19,6 +19,7 @@ export default function FormToDo({
   displayName,
   refTodo,
   createdAt,
+  toDoID,
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
@@ -29,7 +30,10 @@ export default function FormToDo({
   const handleSubmitToDo = async (event) => {
     event.preventDefault();
 
-    setToDoSArray([...toDosArray, { displayName, title, toDo, createdAt }]);
+    setToDoSArray([
+      ...toDosArray,
+      { displayName, title, toDo, createdAt, toDoID },
+    ]);
     setToDo('');
     setTitle('');
     // await addDoc(collection(firebaseLib.firestore(), 'todos'), {
@@ -47,7 +51,12 @@ export default function FormToDo({
     //   .catch((error) => {
     //     console.error('Error adding document: ', error);
     //   });
-    const editRef = doc(firebaseLib.firestore(), 'todos', title);
+
+    // function getRandomNumber(max, min) {
+    //   return Math.max(Math.random() * (max - min) + min).toFixed(0);
+    // }
+    // let resultID = getRandomNumber(2000000000000, 5);
+    const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
 
     await setDoc(editRef, {
       toDosArray: arrayUnion({
@@ -55,11 +64,12 @@ export default function FormToDo({
         createdAt: new Date().toISOString(),
         title: title,
         toDo: toDo,
+        toDoID: toDoID,
       }),
     })
       .then((docRef) => {
-        console.log('Document written with ID: ', docRef);
-        alert('Document written with ID: ', docRef);
+        console.log('Document written with ID: ', toDoID);
+        alert('Document written with ID: ', toDoID);
       })
       .catch((error) => {
         console.error('Error adding document: ', error);

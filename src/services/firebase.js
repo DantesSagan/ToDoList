@@ -69,7 +69,7 @@ export async function deleteTodo() {
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         batch.delete(doc.ref);
-        console.log(doc);
+        console.log(doc.ref);
       });
     });
 

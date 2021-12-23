@@ -26,6 +26,20 @@ export default function IndexToDo() {
 
   const { user } = useUser(displayName?.uid);
 
+  const getRandomNumber = () => {
+    var alphanumeric =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var twentyEight = 28;
+    for (let i = 0; i < twentyEight; ++i) {
+      result += alphanumeric.charAt(Math.random() * alphanumeric.length);
+    }
+
+    return result;
+  };
+
+  let toDoID = getRandomNumber();
+
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
       <div className='flex flex-col w-2/2'>
@@ -45,6 +59,7 @@ export default function IndexToDo() {
               user={user}
               refTodo={refTodo}
               createdAt={createdAt}
+              toDoID={toDoID}
             />
             <ListOfToDo
               toDo={toDo}
@@ -59,6 +74,7 @@ export default function IndexToDo() {
               user={user}
               refTodo={refTodo}
               createdAt={createdAt}
+              toDoID={toDoID}
             />
           </div>
         </div>

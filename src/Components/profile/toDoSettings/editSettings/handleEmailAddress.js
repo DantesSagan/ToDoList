@@ -22,8 +22,8 @@ export default function HandleEmailAddress() {
           emailAddress: emailAddress.toLowerCase(),
         })
           .then((docRef) => {
-            console.log('Email changed successfully: ', docRef);
-            alert('Email changed successfully: ', docRef);
+            console.log('Email changed successfully: ', emailAddress);
+            alert('Email changed successfully: ', emailAddress);
           })
           .catch((error) => {
             console.error('Error with email changed: ', error);

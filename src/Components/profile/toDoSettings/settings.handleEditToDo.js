@@ -36,6 +36,7 @@ export default function HandleEditToDoConst() {
   const handleEditToDo = async (event) => {
     event.preventDefault();
 
+    // UPDATE INPUT WHEN A DATA WAS EDIT SUCCESSFULLY
     setCity('');
     setCountry('');
     setGender('');
@@ -77,14 +78,17 @@ export default function HandleEditToDoConst() {
     });
 
     if (!usernameExists) {
+      // UPDATE EMAIL
       await updateEmail(auth.currentUser, emailAddress).then((item) => {
         console.log('Changes email successfully: ', item);
         alert('Changes email successfully: ', item);
       });
+      // UPDATE PASSWORD 
       await updatePassword(auth.currentUser, password).then((item) => {
         console.log('Changes password successfully: ', item);
         alert('Changes password successfully: ', item);
       });
+      // UPDATE PROFILE
       await updateProfile(auth.currentUser, {
         displayName: username,
       })

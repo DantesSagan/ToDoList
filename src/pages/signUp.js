@@ -71,6 +71,7 @@ export default function SignUp() {
               <div className='text-3xl text-center text-black underline p-4'>
                 Sign-Up Form
               </div>
+              {/* SET GENDER */}
               <input
                 className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
                 onChange={({ target }) => setGender(target.value)}
@@ -78,6 +79,7 @@ export default function SignUp() {
                 placeholder='Pick you gender/sex/ground or wh u like'
                 value={gender}
               />
+              {/* SET CITY */}
               <input
                 aria-label='Enter your city'
                 type='text'
@@ -86,6 +88,7 @@ export default function SignUp() {
                 onChange={({ target }) => setCity(target.value)}
                 value={city}
               />
+              {/* SET COUNTRY */}
               <input
                 aria-label='Enter your Country'
                 type='text'
@@ -94,6 +97,7 @@ export default function SignUp() {
                 onChange={({ target }) => setCountry(target.value)}
                 value={country}
               />
+              {/* SET PHONE */}
               <input
                 aria-label='Enter your phone number'
                 type='tele'
@@ -102,6 +106,7 @@ export default function SignUp() {
                 onChange={({ target }) => setPhone(target.value)}
                 value={phone}
               />
+              {/* SET USERNAME */}
               <input
                 minLength={4}
                 maxLength={30}
@@ -113,6 +118,7 @@ export default function SignUp() {
                 onChange={({ target }) => setUsername(target.value)}
                 value={username}
               />
+              {/* SET FULLNAME */}
               <input
                 required
                 aria-label='Enter your full name'
@@ -122,6 +128,7 @@ export default function SignUp() {
                 onChange={({ target }) => setFullName(target.value)}
                 value={fullName}
               />
+              {/* SET EMAIL ADDRESS */}
               <input
                 minLength={12}
                 maxLength={50}
@@ -133,6 +140,7 @@ export default function SignUp() {
                 onChange={({ target }) => setEmailAddress(target.value)}
                 value={emailAddress}
               />
+              {/* SET PASSWORD */}
               <div
                 className={`border-t border-4 border-red-600 p-1 ${
                   isInvalid && 'opacity-40'

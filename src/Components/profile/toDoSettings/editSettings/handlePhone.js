@@ -23,9 +23,9 @@ export default function HandlePhone() {
         updateDoc(doc.ref, {
           phone: phone,
         })
-          .then((docRef) => {
-            console.log('Phone changes successfully: ', docRef);
-            alert('Phone changes successfully: ', docRef);
+          .then(() => {
+            console.log('Phone changes successfully: ', phone);
+            alert('Phone changes successfully: ', phone);
           })
           .catch((error) => {
             console.error('Error with phone changed: ', error);

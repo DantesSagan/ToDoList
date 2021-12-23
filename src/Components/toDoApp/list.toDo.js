@@ -6,7 +6,14 @@ import useUser from '../../hooks/user';
 import UserContext from '../../context/user';
 
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
-import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDocs,
+  collection,
+} from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
 export default function ListOfToDo({
   toDosArray,
@@ -17,21 +24,28 @@ export default function ListOfToDo({
   displayName,
   setToDoSArray,
   createdAt,
+  toDoID,
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+
   async function editToDo(event) {
     event.preventDefault();
 
-    setToDoSArray([...toDosArray, { displayName, title, toDo, createdAt }]);
+    setToDoSArray([
+      ...toDosArray,
+      { displayName, title, toDo, createdAt, toDoID },
+    ]);
     setToDo('');
     setTitle('');
 
-    const editRef = doc(firebaseLib.firestore(), 'todos');
+    const getDocTodos = await getDocs(
+      collection(firebaseLib.firestore(), 'todos')
+    );
 
-    await editRef.forEach((doc) => {
-      if (doc.id === title) {
-        updateDoc(editRef, {
+    getDocTodos.forEach((doc) => {
+      if (doc.id === toDoID) {
+        updateDoc(doc.ref, {
           toDosArray: arrayUnion({
             displayName: displayName,
             createdAt: new Date().toISOString(),
@@ -39,15 +53,16 @@ export default function ListOfToDo({
             toDo: toDo,
           }),
         })
-          .then((updated) => {
-            console.log('Array updated was successfully: ', updated);
-            alert('Array updated was successfully: ', updated);
+          .then(() => {
+            console.log('Array updated was successfully: ', toDosArray);
+            alert('Array updated was successfully: ', toDosArray);
           })
           .catch((error) => {
             console.error('Array updated error: ', error);
             alert('Array updated error: ', error);
           });
       } else {
+        console.log('Something wrong with edit doc data');
         return null;
       }
     });
@@ -67,8 +82,8 @@ export default function ListOfToDo({
       }),
     })
       .then((updated) => {
-        console.log('Array was deleted successfully: ', updated);
-        alert('Array was deleted successfully: ', updated);
+        console.log('Array was deleted successfully: ', toDosArray);
+        alert('Array was deleted successfully: ', toDosArray);
       })
       .catch((error) => {
         console.error('Array deleted error: ', error);

@@ -18,9 +18,9 @@ export default function HandleFullName() {
         updateDoc(doc.ref, {
           fullName,
         })
-          .then((docRef) => {
-            console.log('FullName changed successfully: ', docRef);
-            alert('FullName changes successfully: ', docRef);
+          .then(() => {
+            console.log('FullName changed successfully: ', fullName);
+            alert('FullName changes successfully: ', fullName);
           })
           .catch((error) => {
             console.error('Error with fullName changes: ', error);
