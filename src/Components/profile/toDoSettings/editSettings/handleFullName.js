@@ -20,10 +20,10 @@ export default function HandleFullName() {
         })
           .then(() => {
             console.log('FullName changed successfully: ', fullName);
-            alert('FullName changes successfully: ', fullName);
+            alert('FullName changed successfully: ', fullName);
           })
           .catch((error) => {
-            console.error('Error with fullName changes: ', error);
+            console.error('Error with FullName changed: ', error);
           });
       } else {
         return null;

@@ -5,18 +5,16 @@ import HandleEmailAddress from './toDoSettings/editSettings/handleEmailAddress';
 import HandleFullName from './toDoSettings/editSettings/handleFullName';
 import HandlePassword from './toDoSettings/editSettings/handlePassword';
 import HandleUsername from './toDoSettings/editSettings/handleUsername';
-
-import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
-import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
-
-import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
 import HandlePhone from './toDoSettings/editSettings/handlePhone';
 import HandleGender from './toDoSettings/editSettings/handleGender';
 import HandleCity from './toDoSettings/editSettings/handleCity';
+import HandleCountry from './toDoSettings/editSettings/handleCountry';
+
+import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
+
+import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
 
 export default function Setting() {
-  const { country, setCountry } = HandleEditToDoConst();
-
   const { handlePass, password, setPassword, passOne, passTwo, setCheckPass } =
     HandlePassword();
   const { handleEmailAddress, emailAddress, setEmailAddress } =
@@ -26,6 +24,7 @@ export default function Setting() {
   const { handlePhone, phone, setPhone } = HandlePhone();
   const { handleGender, gender, setGender } = HandleGender();
   const { handleCity, city, setCity } = HandleCity();
+  const { handleCountry, country, setCountry } = HandleCountry();
   const { DUA } = DeleteUserAccount();
 
   const isInvalidPassword = password === '';
@@ -35,6 +34,7 @@ export default function Setting() {
   const isInvalidPhone = phone === '';
   const isInvalidGender = gender === '';
   const isInvalidCity = city === '';
+  const isInvalidCountry = country === '';
 
   useEffect(() => {
     document.title = 'Settings - ToDoList';
@@ -83,7 +83,7 @@ export default function Setting() {
               type='submit'
               onClick={handleGender}
             >
-              Change phone
+              Change gender
             </button>
           </div>
           {/* CITY */}
@@ -92,7 +92,7 @@ export default function Setting() {
               aria-label='Enter your city'
               type='text'
               placeholder='City'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setCity(target.value)}
               value={city}
             />
@@ -106,14 +106,24 @@ export default function Setting() {
             </button>
           </div>
           {/* COUNTRY */}
-          <input
-            aria-label='Enter your Country'
-            type='text'
-            placeholder='Country'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setCountry(target.value)}
-            value={country}
-          />
+          <div className={`${isInvalidCountry && 'opacity-60'}`}>
+            <input
+              aria-label='Enter your Country'
+              type='text'
+              placeholder='Country'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setCountry(target.value)}
+              value={country}
+            />{' '}
+            <button
+              disabled={isInvalidCountry}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handleCountry}
+            >
+              Change country
+            </button>
+          </div>
           {/* PHONE */}
           <div className={`${isInvalidPhone && 'opacity-60'}`}>
             <input

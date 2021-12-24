@@ -20,11 +20,11 @@ export default function HandleCity() {
           city: city,
         })
           .then((docRef) => {
-            console.log('Changes successfully: ', docRef);
-            alert('Changes successfully: ', docRef);
+            console.log('City changed successfully: ', docRef);
+            alert('City changed successfully: ', docRef);
           })
           .catch((error) => {
-            console.error('Error with changed: ', error);
+            console.error('Error with city changed: ', error);
           });
       } else {
         return null;

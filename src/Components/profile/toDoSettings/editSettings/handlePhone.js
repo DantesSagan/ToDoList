@@ -1,11 +1,9 @@
 import IndexSetting from '../index.setting';
 
-import { getAuth, updatePhoneNumber, } from 'firebase/auth';
-
 import { getDocs, collection, updateDoc } from 'firebase/firestore';
 
 export default function HandlePhone() {
-  const { user, firebaseLib, phone, setPhone, setError } = IndexSetting();
+  const { user, firebaseLib, phone, setPhone } = IndexSetting();
 
   const handlePhone = async (event) => {
     event.preventDefault();
@@ -24,8 +22,8 @@ export default function HandlePhone() {
           phone: phone,
         })
           .then(() => {
-            console.log('Phone changes successfully: ', phone);
-            alert('Phone changes successfully: ', phone);
+            console.log('Phone changed successfully: ', phone);
+            alert('Phone changed successfully: ', phone);
           })
           .catch((error) => {
             console.error('Error with phone changed: ', error);

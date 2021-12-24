@@ -19,8 +19,8 @@ export default function HandlePassword() {
     } else {
       await updatePassword(auth.currentUser, password)
         .then((item) => {
-          console.log('Changes password successfully: ', item);
-          alert('Changes password successfully: ', item);
+          console.log('Password changed successfully: ', item);
+          alert('Password changed successfully: ', item);
         })
         .catch((error) => {
           console.log('Error with password changed', error);
