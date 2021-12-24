@@ -37,21 +37,6 @@ export default function FormToDo({
     ]);
     setToDo('');
     setTitle('');
-    // await addDoc(collection(firebaseLib.firestore(), 'todos'), {
-    //   toDosArray: arrayUnion({
-    //     displayName: displayName,
-    //     createdAt: new Date().toISOString(),
-    //     title: title,
-    //     toDo: toDo,
-    //   }),
-    // })
-    //   .then((docRef) => {
-    //     console.log('Document written with ID: ', docRef);
-    //     alert('Document written with ID: ', docRef);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error adding document: ', error);
-    //   });
 
     // function getRandomNumber(max, min) {
     //   return Math.max(Math.random() * (max - min) + min).toFixed(0);

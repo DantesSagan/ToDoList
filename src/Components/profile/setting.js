@@ -11,10 +11,11 @@ import HandleEditToDoConst from './toDoSettings/settings.handleEditToDo';
 
 import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
 import HandlePhone from './toDoSettings/editSettings/handlePhone';
+import HandleGender from './toDoSettings/editSettings/handleGender';
+import HandleCity from './toDoSettings/editSettings/handleCity';
 
 export default function Setting() {
-  const { country, setCountry, city, setCity, gender, setGender } =
-    HandleEditToDoConst();
+  const { country, setCountry } = HandleEditToDoConst();
 
   const { handlePass, password, setPassword, passOne, passTwo, setCheckPass } =
     HandlePassword();
@@ -23,6 +24,8 @@ export default function Setting() {
   const { handleFullName, fullName, setFullName } = HandleFullName();
   const { handleUsername, username, setUsername } = HandleUsername();
   const { handlePhone, phone, setPhone } = HandlePhone();
+  const { handleGender, gender, setGender } = HandleGender();
+  const { handleCity, city, setCity } = HandleCity();
   const { DUA } = DeleteUserAccount();
 
   const isInvalidPassword = password === '';
@@ -30,6 +33,8 @@ export default function Setting() {
   const isInvalidFullName = fullName === '';
   const isInvalidUsername = username === '';
   const isInvalidPhone = phone === '';
+  const isInvalidGender = gender === '';
+  const isInvalidCity = city === '';
 
   useEffect(() => {
     document.title = 'Settings - ToDoList';
@@ -63,23 +68,43 @@ export default function Setting() {
             Change data Form
           </div>
           {/* GENDER */}
-          <input
-            placeholder='Gender/sex/floor/ground xd'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setGender(target.value)}
-            type='text'
-            checked
-            value={gender}
-          />
+          <div className={`${isInvalidGender && 'opacity-60'}`}>
+            <input
+              placeholder='Gender/sex/floor/ground xd'
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setGender(target.value)}
+              type='text'
+              checked
+              value={gender}
+            />
+            <button
+              disabled={isInvalidGender}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handleGender}
+            >
+              Change phone
+            </button>
+          </div>
           {/* CITY */}
-          <input
-            aria-label='Enter your city'
-            type='text'
-            placeholder='City'
-            className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-            onChange={({ target }) => setCity(target.value)}
-            value={city}
-          />
+          <div className={`${isInvalidCity && 'opacity-60'}`}>
+            <input
+              aria-label='Enter your city'
+              type='text'
+              placeholder='City'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setCity(target.value)}
+              value={city}
+            />
+            <button
+              disabled={isInvalidCity}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handleCity}
+            >
+              Change phone
+            </button>
+          </div>
           {/* COUNTRY */}
           <input
             aria-label='Enter your Country'

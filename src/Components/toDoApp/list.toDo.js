@@ -16,7 +16,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 export default function ListOfToDo({
   toDosArray,
   title,
@@ -119,16 +119,31 @@ export default function ListOfToDo({
     //     </div>
     //   );
     // });
-    const findValue = toDosArray.find((item) => {
-      return item.userId;
-    });
-    console.log(findValue);
+    // console.log(getData);
+    // return getData;
   };
-  const getU = getUID();
+  const auth = getAuth();
+  const getU = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is login
+      console.log(`User Login ${user.displayName}`);
+      const uid = user.uid;
+      const userAuthID = uid;
+      const findValue = toDosArray.find((item) => {
+        return (item.userId = userAuthID);
+      });
+      console.log(findValue);
+      return findValue;
+    } else {
+      // User is signed out
+      // ...
+      console.log('User was signed out');
+    }
+  });
   const GetToDoData = () => {
     return (
       <div>
-        {user?.userId === getU && (
+        {user?.userId && (
           <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
             {toDosArray.map((item) => (
               <div className='m-4 p-4 shadow-inner rounded-lg' key={item.id}>
