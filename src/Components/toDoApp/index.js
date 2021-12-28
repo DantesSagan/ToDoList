@@ -4,6 +4,7 @@ import FirebaseContext from '../../context/firebaseContext';
 import UserContext from '../../context/user';
 
 import useUser from '../../hooks/user';
+// import CheckUserTodo from './actions/checkUserTodo';
 import FormToDo from './add-to-do.withoutFirebase.testOne';
 
 import HeaderToDo from './header.toDo';
@@ -77,6 +78,7 @@ export default function IndexToDo() {
               toDoID={toDoID}
               userId={userId}
             />
+            {/* <CheckUserTodo firebaseLib={firebaseLib} user={user} /> */}
           </div>
         </div>
       </div>

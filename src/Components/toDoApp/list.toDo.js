@@ -37,56 +37,82 @@ export default function ListOfToDo({
   // This is comparison for checking strict-equality parameters
   // what needed for comparison and get data exaclty what comparison do
   const checkComparison = async () => {
-    const toDoRef = collection(firebaseLib.firestore(), 'todos');
-    const qToDo = query(
-      collection(toDoRef, where('toDoSArray', 'array-contains', 'toDoID'))
+    // DOC ID IN TODOS
+    const resultDocId = await firebaseLib.firestore().collection('todos').get();
+    const usersDocId = resultDocId.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
+
+    const mapDocID = usersDocId.map((item) => item.docId);
+
+    // console.log(usersDocId);
+    // console.log(usersDocId.map((item) => item.docId));
+
+    // TODOID IN TODOSARRAY IN TODOS
+    const result = await firebaseLib.firestore().collection('todos').get();
+    const users = result.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
+
+    const mapToDoID = users.map((item) =>
+      item.toDosArray.map((item) => item.userId)
     );
+    const twoMapToDoID = mapToDoID.map((item) => item[0] === user?.userId);
+    // console.log(
+    //   users.map((item) =>
+    //     item.toDosArray.map((itemTwo, i) =>
+    //       itemTwo[i].map((itemThree) => itemThree.toDoID)
+    //     )
+    //   )
+    // );
+    console.log(users);
+    console.log(users.map((item) => item.docId));
+    console.log(users.map((item) => item.toDosArray));
+    console.log(twoMapToDoID);
+    // console.log(
+    //   users.map((item) =>
+    //     item.toDosArray.map((itemTwo, i) =>
+    //       itemTwo.map((itemThree) =>
+    //         itemThree.map((itemFour) => itemFour.toDoID)
+    //       )
+    //     )
+    //   )
+    // );
 
-    const querySnapshotToDo = await getDocs(qToDo);
-    querySnapshotToDo.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      if (doc) {
-        console.log('Yes, its comparable');
-      } else {
-        console.log('No, its no');
-      }
-      console.log(doc, ' => ', doc.data());
-    });
-    console.log(querySnapshotToDo);
+    if (user?.userId === twoMapToDoID) {
+      console.log('Yes, its comparable');
+    } else {
+      console.log('No, its no');
+    }
 
-    const qCollection = query(collection(firebaseLib.firestore(), 'todos'));
-
-    const querySnapshotInner = await getDocs(qCollection);
-    querySnapshotInner.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      if (doc.id) {
-        console.log('Yes, its comparable');
-      } else {
-        console.log('No, its no');
-      }
-      console.log(doc.id, ' => ', doc.data());
-    });
-    console.log(querySnapshotInner);
-    // const toDoRef = collection(firebaseLib.firestore(), 'todos');
-
-    // // Create a query against the collection.
-    // const q = query(toDoRef, where('tDoSArray', 'array-contains', 'toDoID'));
-    // const qSnapshot = await getDocs(q);
-    // qSnapshot.forEach((item) => {
-    //   return item;
-    // });
-    // console.log(qSnapshot);
-
-    // const checkIt = await getDocs(collection(firebaseLib.firestore(), 'todos'));
-    // checkIt.forEach((doc) => {
-    //   if (doc.id === q) {
-    //     console.log('Yes, this is comparison strict-equality');
-    //     return true;
+    // const querySnapshotToDo = await getDocs(qToDo);
+    // querySnapshotToDo.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   if (doc) {
+    //     console.log('Yes, its comparable');
     //   } else {
-    //     console.log('No, this not a strict-equality');
-    //     return false;
+    //     console.log('No, its no');
     //   }
+    //   console.log(doc, ' => ', doc.data());
     // });
+    // console.log(querySnapshotToDo);
+
+    // const qCollection = query(collection(firebaseLib.firestore(), 'todos'));
+
+    // const querySnapshotInner = await getDocs(qCollection);
+    // querySnapshotInner.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   if (doc.id) {
+    //     console.log('Yes, its comparable');
+    //   } else {
+    //     console.log('No, its no');
+    //   }
+    //   console.log(doc.id, ' => ', doc.data());
+    // });
+    // console.log(querySnapshotInner);
+    // const toDoRef = collection(firebaseLib.firestore(), 'todos');
   };
 
   // Ths is function for editing posted ToDo
@@ -103,7 +129,7 @@ export default function ListOfToDo({
     const toDoRef = collection(firebaseLib.firestore(), 'todos');
 
     // Create a query against the collection.
-    const q = query(toDoRef, where('tDoSArray', 'array-contains', 'toDoID'));
+    const q = query(toDoRef, where('tDosArray', 'array-contains', 'toDoID'));
     const qSnapshot = await getDocs(q);
     qSnapshot.forEach((item) => {
       return item;
@@ -165,37 +191,32 @@ export default function ListOfToDo({
       });
   }
   const getUID = async () => {
-    // const getData = await toDosArray.map((item) => {
-    //   return (
-    //     <div>
-    //       {item.toDosArray.map((second) => {
-    //         return second.userId;
-    //       })}
-    //     </div>
-    //   );
-    // });
-    // console.log(getData);
-    // return getData;
+    const getData = await toDosArray.map((item) => {
+      return (
+        <div>
+          {item.toDosArray.map((second) => {
+            return second.userId;
+          })}
+        </div>
+      );
+    });
+    console.log(getData);
+    return getData;
   };
+  const Checking = async () => {
+    const result = await firebaseLib.firestore().collection('todos').get();
+    const users = result.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
 
-  const auth = getAuth();
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     // User is login
-  //     console.log(`User Login ${user.displayName}`);
-  //     const uid = user.uid;
-  //     const userAuthID = uid;
-  //     const findValue = toDosArray.find((item) => {
-  //       return (item.userId = userAuthID);
-  //     });
-  //     console.log(findValue);
-  //     return findValue;
-  //   } else {
-  //     // User is signed out
-  //     console.log('User was signed out');
-  //   }
-  // });
-
+    const mapToDoID = users.map((item) =>
+      item.toDosArray.map((item) => item.userId)
+    );
+    const twoMapToDoID = mapToDoID.map((item) => item[0] === user?.userId);
+    return twoMapToDoID;
+  };
+console.log(Checking  );
   return (
     <div>
       {/* Check if user is loggendIn */}
@@ -206,14 +227,14 @@ export default function ListOfToDo({
           </div>
           {/* Checking comparison */}
           <button onClick={checkComparison}>Check</button>
-          {user?.userId ? <div>true</div> : <div>false</div>}
+          {Checking ? <div>true</div> : <div>false</div>}
           <div>
             {/* Check if authorized user posted any of ToDoList
               if === yes => you can see own ToDoList,
               if === no => you can't see any of you own ToDoList
               but unfortunately for now it's not working 
             */}
-            {user?.username && (
+            {Checking()  && (
               <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
                 {toDosArray.map((item) => (
                   <div
