@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import useUser from '../../hooks/user';
 
@@ -13,9 +13,6 @@ import {
   arrayRemove,
   getDocs,
   collection,
-  getDoc,
-  query,
-  where,
 } from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -37,6 +34,10 @@ export default function ListOfToDo({
   // This is comparison for checking strict-equality parameters
   // what needed for comparison and get data exaclty what comparison do
   const checkComparison = async () => {
+    console.log(loggedIn);
+    console.log(user);
+    console.log(displayName);
+    console.log(user?.username);
     // DOC ID IN TODOS
     const resultDocId = await firebaseLib.firestore().collection('todos').get();
     const usersDocId = resultDocId.docs.map((item) => ({
@@ -59,60 +60,23 @@ export default function ListOfToDo({
     const mapToDoID = users.map((item) =>
       item.toDosArray.map((item) => item.userId)
     );
-    const twoMapToDoID = mapToDoID.map((item) => item[0] === user?.userId);
-    // console.log(
-    //   users.map((item) =>
-    //     item.toDosArray.map((itemTwo, i) =>
-    //       itemTwo[i].map((itemThree) => itemThree.toDoID)
-    //     )
-    //   )
-    // );
-    console.log(users);
-    console.log(users.map((item) => item.docId));
-    console.log(users.map((item) => item.toDosArray));
+    const twoMapToDoID = mapToDoID.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value userId what we are needed
+    twoMapToDoID.forEach((item) => {
+      if (user?.userId === item) {
+        console.log('Yes, its comparable');
+      } else {
+        console.log('No, its no');
+      }
+      console.log(item, `=> userId in todos`);
+    });
+
+    // console.log(users);
+    // console.log(users.map((item) => item.docId));
+    // console.log(users.map((item) => item.toDosArray));
     console.log(twoMapToDoID);
-    // console.log(
-    //   users.map((item) =>
-    //     item.toDosArray.map((itemTwo, i) =>
-    //       itemTwo.map((itemThree) =>
-    //         itemThree.map((itemFour) => itemFour.toDoID)
-    //       )
-    //     )
-    //   )
-    // );
-
-    if (user?.userId === twoMapToDoID) {
-      console.log('Yes, its comparable');
-    } else {
-      console.log('No, its no');
-    }
-
-    // const querySnapshotToDo = await getDocs(qToDo);
-    // querySnapshotToDo.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   if (doc) {
-    //     console.log('Yes, its comparable');
-    //   } else {
-    //     console.log('No, its no');
-    //   }
-    //   console.log(doc, ' => ', doc.data());
-    // });
-    // console.log(querySnapshotToDo);
-
-    // const qCollection = query(collection(firebaseLib.firestore(), 'todos'));
-
-    // const querySnapshotInner = await getDocs(qCollection);
-    // querySnapshotInner.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   if (doc.id) {
-    //     console.log('Yes, its comparable');
-    //   } else {
-    //     console.log('No, its no');
-    //   }
-    //   console.log(doc.id, ' => ', doc.data());
-    // });
-    // console.log(querySnapshotInner);
-    // const toDoRef = collection(firebaseLib.firestore(), 'todos');
   };
 
   // Ths is function for editing posted ToDo
@@ -126,44 +90,76 @@ export default function ListOfToDo({
     setToDo('');
     setTitle('');
 
-    const toDoRef = collection(firebaseLib.firestore(), 'todos');
+    const result = await firebaseLib.firestore().collection('todos').get();
+    const users = result.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
 
-    // Create a query against the collection.
-    const q = query(toDoRef, where('tDosArray', 'array-contains', 'toDoID'));
-    const qSnapshot = await getDocs(q);
-    qSnapshot.forEach((item) => {
-      return item;
-    });
-    console.log(qSnapshot);
+    const mapToDoID = users.map((item) =>
+      item.toDosArray.map((item) => item.toDoID)
+    );
+    const twoMapToDoID = mapToDoID.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value userId what we are needed
+    // twoMapToDoID.forEach((item) => {
+    //   if (doc.id) {
+    //     updateDoc(doc.ref, {
+    //       toDosArray: arrayUnion({
+    //         displayName: displayName,
+    //         createdAt: new Date().toISOString(),
+    //         title: title,
+    //         toDo: toDo,
+    //       }),
+    //     })
+    //       .then(() => {
+    //         console.log('Document updated with title: ', title);
+    //         console.log('Document updated with displayName: ', displayName);
+    //         // console.log('Document updated with ID: ', toDoID);
+    //         alert('Array updated was successfully: ', toDosArray);
+    //       })
+    //       .catch((error) => {
+    //         console.error('Array updated error: ', error);
+    //         alert('Array updated error: ', error);
+    //       });
+    //   } else {
+    //     console.log('Something wrong with edit doc data');
+    //     return null;
+    //   }
+    //   console.log(item, `=> userId in todos`);
+    // });
 
     const getDocTodos = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
     );
-    getDocTodos.forEach((doc) => {
-      // In this case need to compare two equal parameters for find user who create toDo
-      if (qSnapshot === doc.id) {
-        updateDoc(doc.ref, {
-          toDosArray: arrayUnion({
-            displayName: displayName,
-            createdAt: new Date().toISOString(),
-            title: title,
-            toDo: toDo,
-          }),
-        })
-          .then(() => {
-            console.log('Document updated with title: ', title);
-            console.log('Document updated with displayName: ', displayName);
-            // console.log('Document updated with ID: ', toDoID);
-            alert('Array updated was successfully: ', toDosArray);
+    twoMapToDoID.forEach((item) => {
+      getDocTodos.forEach((doc) => {
+        // In this case need to compare two equal parameters for find user who create toDo
+        if (doc.id === item) {
+          updateDoc(doc.ref, {
+            toDosArray: arrayUnion({
+              displayName: displayName,
+              createdAt: new Date().toISOString(),
+              title: title,
+              toDo: toDo,
+            }),
           })
-          .catch((error) => {
-            console.error('Array updated error: ', error);
-            alert('Array updated error: ', error);
-          });
-      } else {
-        console.log('Something wrong with edit doc data');
-        return null;
-      }
+            .then(() => {
+              console.log('Document updated with title: ', title);
+              console.log('Document updated with displayName: ', displayName);
+              // console.log('Document updated with ID: ', toDoID);
+              alert('Array updated was successfully: ', toDosArray);
+            })
+            .catch((error) => {
+              console.error('Array updated error: ', error);
+              alert('Array updated error: ', error);
+            });
+        } else {
+          console.log('Something wrong with edit doc data');
+          return null;
+        }
+      });
     });
   }
 
@@ -190,33 +186,113 @@ export default function ListOfToDo({
         alert('Array deleted error: ', error);
       });
   }
-  const getUID = async () => {
-    const getData = await toDosArray.map((item) => {
-      return (
-        <div>
-          {item.toDosArray.map((second) => {
-            return second.userId;
-          })}
-        </div>
-      );
-    });
-    console.log(getData);
-    return getData;
-  };
-  const Checking = async () => {
+  const check = async () => {
     const result = await firebaseLib.firestore().collection('todos').get();
     const users = result.docs.map((item) => ({
       ...item.data(),
       docId: item.id,
     }));
 
+    //  Get - displayName - in toDosArray
+    const mapDisplayName = users.map((item) =>
+      item.toDosArray.map((item) => item.displayName)
+    );
+    const twoMapDisplayName = mapDisplayName.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value displayName what we are needed
+    const itemDisplayName = twoMapDisplayName.forEach((item) => {
+      console.log(item, `=> displayName in todos`);
+      return item;
+    });
+
+    //  Get - createdAt - in toDosArray
+
+    const mapCreatedAt = users.map((item) =>
+      item.toDosArray.map((item) => item.createdAt)
+    );
+    const twoMapCreatedAt = mapCreatedAt.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value createdAt what we are needed
+    const itemCreatedAt = twoMapCreatedAt.forEach((item) => {
+      console.log(item, `=> createdAt in todos`);
+      return item;
+    });
+
+    //  Get - ToDoID - in toDosArray
+
     const mapToDoID = users.map((item) =>
+      item.toDosArray.map((item) => item.toDoID)
+    );
+    const twoMapToDoID = mapToDoID.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value ToDoID what we are needed
+    const itemToDoID = twoMapToDoID.forEach((item) => {
+      console.log(item, `=> toDoID in todos`);
+      return item;
+    });
+
+    //  Get - Title - in toDosArray
+
+    const mapTitle = users.map((item) =>
+      item.toDosArray.map((item) => item.title)
+    );
+    const twoMapTitle = mapTitle.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value title what we are needed
+    const itemTitle = twoMapTitle.forEach((item) => {
+      console.log(item, `=> title in todos`);
+      return item;
+    });
+
+    //  Get - toDo - in toDosArray
+
+    const mapToDo = users.map((item) =>
+      item.toDosArray.map((item) => item.toDo)
+    );
+    const twoMapToDo = mapToDo.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value ToDo what we are needed
+    const itemToDo = twoMapToDo.forEach((item) => {
+      console.log(item, `=> toDo in todos`);
+      return item;
+    });
+
+    //  Get - userId - in toDosArray
+
+    const mapUserId = users.map((item) =>
       item.toDosArray.map((item) => item.userId)
     );
-    const twoMapToDoID = mapToDoID.map((item) => item[0] === user?.userId);
-    return twoMapToDoID;
+    const twoMapUserId = mapUserId.map((item) => item[0]);
+
+    // method forEach execute function ones for every element in array
+    // what extract value userId what we are needed
+    const itemUserId = twoMapUserId.forEach((item) => {
+      console.log(item, `=> userId in todos`);
+      return item;
+    });
+    return {
+      itemDisplayName,
+      itemToDoID,
+      itemCreatedAt,
+      itemTitle,
+      itemToDo,
+      itemUserId,
+    };
   };
-console.log(Checking  );
+  console.log(check);
+  const {
+    itemDisplayName,
+    itemToDoID,
+    itemCreatedAt,
+    itemTitle,
+    itemToDo,
+    itemUserId,
+  } = check();
   return (
     <div>
       {/* Check if user is loggendIn */}
@@ -227,14 +303,13 @@ console.log(Checking  );
           </div>
           {/* Checking comparison */}
           <button onClick={checkComparison}>Check</button>
-          {Checking ? <div>true</div> : <div>false</div>}
           <div>
             {/* Check if authorized user posted any of ToDoList
               if === yes => you can see own ToDoList,
               if === no => you can't see any of you own ToDoList
               but unfortunately for now it's not working 
             */}
-            {Checking()  && (
+            {
               <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
                 {toDosArray.map((item) => (
                   <div
@@ -265,7 +340,7 @@ console.log(Checking  );
                           className='text-2xl font-bold p-2'
                           key={second.title}
                         >
-                          {second.title}
+                          {itemTitle === second.title}
                           <textarea
                             key={second.setTitle}
                             value={title}
@@ -274,7 +349,7 @@ console.log(Checking  );
                         </div>
                         <hr className='border border-red-600' key={second.hr} />
                         <div className='text-xl' key={second.toDo}>
-                          {second.toDo}
+                          {itemToDo === second.toDo}
                           <textarea
                             key={second.setToDo}
                             value={toDo}
@@ -298,21 +373,21 @@ console.log(Checking  );
                           </button>
                         </div>
                         <div className='text-lg' key={second.createdAt}>
-                          {second.createdAt}
+                          {itemCreatedAt === second.createdAt}
                         </div>
                         <div
                           className='text-sm font-bold p-2 underline'
                           defaultValue={displayName}
                           key={second.displayName}
                         >
-                          {second.displayName}
+                          {itemDisplayName === second.displayName}
                         </div>
                       </div>
                     ))}
                   </div>
                 ))}
               </form>
-            )}
+            }
           </div>
         </div>
       ) : (
