@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import PropTypes, { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import useUser from '../../hooks/user';
 
@@ -119,8 +119,7 @@ export default function ListOfToDo({
         // So updateDoc of toDoList otherwise - no
         if (
           doc.id === disNameArray[item][0].toDoID &&
-          user?.username === disNameArray[item][0].displayName &&
-          disNameArray[item][0].toDoID === disNameArray[item][0].doubleToDoID
+          user?.username === disNameArray[item][0].displayName
         ) {
           console.log(
             doc.id === disNameArray[item][0].toDoID &&
@@ -153,7 +152,7 @@ export default function ListOfToDo({
         }
       });
 
-      return disNameArray[item][0].toDoID;
+      return disNameArray[item][0];
     });
     return disName;
   }
@@ -343,109 +342,77 @@ export default function ListOfToDo({
 
   return (
     <div>
-      {/* Check if user is loggendIn */}
-      {loggedIn ? (
-        <div>
-          <div className='p-4 mx-auto justify-center'>
-            Now is loggedIn - {user?.username} - USER.
-          </div>
-          {/* Checking comparison */}
-          {/* <button onClick={checkComparison}>Check</button> */}
-          <div>
-            {/* Check if authorized user posted any of ToDoList
-              if === yes => you can see own ToDoList,
-              if === no => you can't see any of you own ToDoList
-              but unfortunately for now it's not working 
-            */}
-            {
-              <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
-                {toDosArray.map((item) => (
-                  <div
-                    className='m-4 p-4 shadow-inner rounded-lg'
-                    key={item.id}
+      <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
+        {toDosArray.map((item) => (
+          <div className='m-4 p-4 shadow-inner rounded-lg' key={item.id}>
+            {item.toDosArray.map((second) => (
+              <div key={second.toDosArray}>
+                {' '}
+                <svg
+                  key={second.delete}
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-8 w-8 cursor-pointer stroke'
+                  fill='black'
+                  viewBox='0 0 24 24'
+                  stroke='black'
+                  onClick={deleteToDo}
+                >
+                  <path
+                    key={second.path}
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M6 18L18 6M6 6l12 12'
+                  />
+                </svg>
+                <div className='text-2xl font-bold p-2' key={second.title}>
+                  {second.title}
+                  <textarea
+                    key={second.setTitle}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />{' '}
+                </div>
+                <hr className='border border-red-600' key={second.hr} />
+                <div className='text-xl' key={second.toDo}>
+                  {second.toDo}
+                  <textarea
+                    key={second.setToDo}
+                    value={toDo}
+                    onChange={(e) => setToDo(e.target.value)}
+                  />{' '}
+                </div>
+                <div
+                  className=' duration-200 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'
+                  key={second.div}
+                >
+                  <button
+                    key={second.buttonEdit}
+                    className={`w-full h-full text-lg font-bold text-white ${
+                      !toDo && !title && 'opacity-25'
+                    }`}
+                    type='button'
+                    disabled={toDo.length < 1 && title.length < 1}
+                    onClick={editToDo}
                   >
-                    {item.toDosArray.map((second) => (
-                      <div key={second.toDosArray}>
-                        {' '}
-                        <svg
-                          key={second.delete}
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-8 w-8 cursor-pointer stroke'
-                          fill='black'
-                          viewBox='0 0 24 24'
-                          stroke='black'
-                          onClick={deleteToDo}
-                        >
-                          <path
-                            key={second.path}
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            strokeWidth='2'
-                            d='M6 18L18 6M6 6l12 12'
-                          />
-                        </svg>
-                        <div
-                          className='text-2xl font-bold p-2'
-                          key={second.title}
-                        >
-                          {second.title}
-                          <textarea
-                            key={second.setTitle}
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                          />{' '}
-                        </div>
-                        <hr className='border border-red-600' key={second.hr} />
-                        <div className='text-xl' key={second.toDo}>
-                          {second.toDo}
-                          <textarea
-                            key={second.setToDo}
-                            value={toDo}
-                            onChange={(e) => setToDo(e.target.value)}
-                          />{' '}
-                        </div>
-                        <div
-                          className=' duration-200 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'
-                          key={second.div}
-                        >
-                          <button
-                            key={second.buttonEdit}
-                            className={`w-full h-full text-lg font-bold text-white ${
-                              !toDo && !title && 'opacity-25'
-                            }`}
-                            type='button'
-                            disabled={toDo.length < 1 && title.length < 1}
-                            onClick={editToDo}
-                          >
-                            Edit
-                          </button>
-                        </div>
-                        <div className='text-lg' key={second.createdAt}>
-                          {second.createdAt}
-                        </div>
-                        <div
-                          className='text-sm font-bold p-2 underline'
-                          defaultValue={displayName}
-                          key={second.displayName}
-                        >
-                          {second.displayName}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </form>
-            }
+                    Edit
+                  </button>
+                </div>
+                <div className='text-lg' key={second.createdAt}>
+                  {second.createdAt}
+                </div>
+                <div
+                  className='text-sm font-bold p-2 underline'
+                  defaultValue={displayName}
+                  key={second.displayName}
+                >
+                  {second.displayName}
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      ) : (
-        <div className='p-4 mx-auto justify-center'>
-          Now is loggedIn - {user?.username} USER?
-          <br /> You might be don't know what you can do but
-          <br />
-          what i know u can create you own ToDoList!
-        </div>
-      )}
+        ))}
+      </form>
     </div>
   );
 }

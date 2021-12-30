@@ -16,6 +16,7 @@ const SignUp = lazy(() => import('./pages/signUp'));
 const NotFound = lazy(() => import('./pages/not-found'));
 const Profile = lazy(() => import('./pages/profile'));
 const Setting = lazy(() => import('./Components/profile/setting'));
+const ListToDo = lazy(() => import('./Components/toDoApp/list.toDo'));
 
 export default function App() {
   const { user } = useAuthListener();
@@ -31,6 +32,14 @@ export default function App() {
               element={
                 <ProtectedRoute user={user}>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.TODOLIST}
+              element={
+                <ProtectedRoute user={user}>
+                  <ListToDo />
                 </ProtectedRoute>
               }
             />

@@ -62,9 +62,6 @@ export async function getToDo(setToDoSArray) {
       });
       setToDoSArray(todolist);
     })
-    .then((docRef) => {
-      console.log('Document with ID: ', docRef);
-    })
     .catch((error) => {
       console.error('Error to set document: ', error);
     });
