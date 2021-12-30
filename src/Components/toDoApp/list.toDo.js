@@ -13,10 +13,6 @@ import {
   arrayRemove,
   getDocs,
   collection,
-<<<<<<< HEAD
-=======
-  getDoc,
->>>>>>> parent of f40f9bf (need to rework editToDo and deleteTodo coz they don't work as I expected)
 } from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -35,7 +31,6 @@ export default function ListOfToDo({
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 
-<<<<<<< HEAD
   // This is comparison for checking strict-equality parameters
   // what needed for comparison and get data exaclty what comparison do
   // const checkComparison = async () => {
@@ -83,23 +78,8 @@ export default function ListOfToDo({
   //   // console.log(users.map((item) => item.toDosArray));
   //   console.log(twoMapToDoID);
   // };
-=======
-  const checkComparison = async () => {
-    const auth = getAuth();
-    const userAuth = auth.currentUser.uid;
-    const checkIt = await getDocs(collection(firebaseLib.firestore(), 'todos'));
-    checkIt.forEach((doc) => {
-      if (user?.userId === userAuth) {
-        console.log('Yes, this is comparison strict-equality');
-        return true;
-      } else {
-        console.log('No, this not a strict-equality');
-        return false;
-      }
-    });
-  };
->>>>>>> parent of f40f9bf (need to rework editToDo and deleteTodo coz they don't work as I expected)
 
+  // Ths is function for editing posted ToDo
   async function editToDo(event) {
     event.preventDefault();
 
@@ -110,7 +90,6 @@ export default function ListOfToDo({
     setToDo('');
     setTitle('');
 
-<<<<<<< HEAD
     const disNameArray = Object.keys(toDosArray).map((item) => {
       return toDosArray[item].toDosArray;
     });
@@ -154,26 +133,6 @@ export default function ListOfToDo({
               title: title,
               toDo: toDo,
             }),
-=======
-    const getDocTodos = await getDocs(
-      collection(firebaseLib.firestore(), 'todos')
-    );
-    getDocTodos.forEach((doc) => {
-      if (displayName === user?.username) {
-        updateDoc(doc.ref, {
-          toDosArray: arrayUnion({
-            displayName: displayName,
-            createdAt: new Date().toISOString(),
-            title: title,
-            toDo: toDo,
-          }),
-        })
-          .then(() => {
-            console.log('Document updated with title: ', title);
-            console.log('Document updated with displayName: ', displayName);
-            // console.log('Document updated with ID: ', toDoID);
-            alert('Array updated was successfully: ', toDosArray);
->>>>>>> parent of f40f9bf (need to rework editToDo and deleteTodo coz they don't work as I expected)
           })
             .then(() => {
               console.log('Document updated with title: ', title);
@@ -199,6 +158,7 @@ export default function ListOfToDo({
     return disName;
   }
 
+  // deleteToDo but doesn't work now
   async function deleteToDo(event) {
     event.preventDefault();
 
@@ -266,7 +226,6 @@ export default function ListOfToDo({
     window.location.reload();
     return disName;
   }
-<<<<<<< HEAD
   console.log(user);
   // const check = async () => {
   //   const result = await firebaseLib.firestore().collection('todos').get();
@@ -382,126 +341,14 @@ export default function ListOfToDo({
   //   return disNameArray[item][0].displayName;
   // });
 
-=======
-  const getUID = async () => {
-    // const getData = await toDosArray.map((item) => {
-    //   return (
-    //     <div>
-    //       {item.toDosArray.map((second) => {
-    //         return second.userId;
-    //       })}
-    //     </div>
-    //   );
-    // });
-    // console.log(getData);
-    // return getData;
-  };
-  const auth = getAuth();
-  const getU = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is login
-      console.log(`User Login ${user.displayName}`);
-      const uid = user.uid;
-      const userAuthID = uid;
-      const findValue = toDosArray.find((item) => {
-        return (item.userId = userAuthID);
-      });
-      console.log(findValue);
-      return findValue;
-    } else {
-      // User is signed out
-      // ...
-      console.log('User was signed out');
-    }
-  });
-  const GetToDoData = () => {
-    return (
-      <div>
-        {user?.userId && (
-          <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
-            {toDosArray.map((item) => (
-              <div className='m-4 p-4 shadow-inner rounded-lg' key={item.id}>
-                {item.toDosArray.map((second) => (
-                  <div key={second.toDosArray}>
-                    {' '}
-                    <svg
-                      key={second.delete}
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='h-8 w-8 cursor-pointer stroke'
-                      fill='black'
-                      viewBox='0 0 24 24'
-                      stroke='black'
-                      onClick={deleteTodo}
-                    >
-                      <path
-                        key={second.path}
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth='2'
-                        d='M6 18L18 6M6 6l12 12'
-                      />
-                    </svg>
-                    <div className='text-2xl font-bold p-2' key={second.title}>
-                      {second.title}
-                      <textarea
-                        key={second.setTitle}
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                      />{' '}
-                    </div>
-                    <hr className='border border-red-600' key={second.hr} />
-                    <div className='text-xl' key={second.toDo}>
-                      {second.toDo}
-                      <textarea
-                        key={second.setToDo}
-                        value={toDo}
-                        onChange={(e) => setToDo(e.target.value)}
-                      />{' '}
-                    </div>
-                    <div
-                      className=' duration-200 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'
-                      key={second.div}
-                    >
-                      <button
-                        key={second.buttonEdit}
-                        className={`w-full h-full text-lg font-bold text-white ${
-                          !toDo && !title && 'opacity-25'
-                        }`}
-                        type='button'
-                        disabled={toDo.length < 1 && title.length < 1}
-                        onClick={editToDo}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                    <div className='text-lg' key={second.createdAt}>
-                      {second.createdAt}
-                    </div>
-                    <div
-                      className='text-sm font-bold p-2 underline'
-                      defaultValue={displayName}
-                      key={second.displayName}
-                    >
-                      {second.displayName}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </form>
-        )}
-      </div>
-    );
-  };
->>>>>>> parent of f40f9bf (need to rework editToDo and deleteTodo coz they don't work as I expected)
   return (
     <div>
+      {/* Check if user is loggendIn */}
       {loggedIn ? (
         <div>
           <div className='p-4 mx-auto justify-center'>
             Now is loggedIn - {user?.username} - USER.
           </div>
-<<<<<<< HEAD
           {/* Checking comparison */}
           {/* <button onClick={checkComparison}>Check</button> */}
           <div>
@@ -590,15 +437,6 @@ export default function ListOfToDo({
               </form>
             }
           </div>
-=======
-          <button onClick={getUID}>Check</button>
-          {/* {user?.username === currentAuthUserDisplayName ? (
-            <div>false</div>
-          ) : (
-            <div>true</div>
-          )} */}
-          <GetToDoData />
->>>>>>> parent of f40f9bf (need to rework editToDo and deleteTodo coz they don't work as I expected)
         </div>
       ) : (
         <div className='p-4 mx-auto justify-center'>
