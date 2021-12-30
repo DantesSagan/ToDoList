@@ -26,7 +26,6 @@ export default function ListOfToDo({
   setToDoSArray,
   createdAt,
   toDoID,
-  userId,
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
@@ -226,6 +225,7 @@ export default function ListOfToDo({
     return disName;
   }
   console.log(user);
+
   // const check = async () => {
   //   const result = await firebaseLib.firestore().collection('todos').get();
   //   const users = result.docs.map((item) => ({
@@ -339,7 +339,7 @@ export default function ListOfToDo({
   //   console.log(disNameArray[item][0].toDoID === user?.username);
   //   return disNameArray[item][0].displayName;
   // });
-
+  console.log(toDosArray)
   return (
     <div>
       <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>

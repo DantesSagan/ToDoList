@@ -10,14 +10,12 @@ import NavBarAndHeader from '../pages/navBar';
 import LoggedInUserContext from '../context/logged-in-user';
 
 import IndexToDo from '../Components/toDoApp/index';
+
 export default function Dashboard({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
   const [toDo, setToDo] = useState('');
   const [title, setTitle] = useState('');
   const [createdAt] = useState(Number);
-  // const [onReserveFlight] = useState('');
-  // const [onAvailableFlights] = useState('');
-  // const [getSuggestionsFromServer] = useState(() => {});
 
   const [toDosArray, setToDoSArray] = useState([]);
 

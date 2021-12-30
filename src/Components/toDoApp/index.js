@@ -48,15 +48,11 @@ export default function IndexToDo({
               setTitle={setTitle}
               toDosArray={toDosArray}
               setToDoSArray={setToDoSArray}
-              firebaseLib={firebaseLib}
-              FieldValue={FieldValue}
               displayName={displayName}
-              user={user}
-              refTodo={refTodo}
               createdAt={createdAt}
               toDoID={toDoID}
             />
-            <RouterToDo toDoID={toDoID} title={title} toDosArray={toDosArray} />
+            {/* <RouterToDo toDoID={toDoID} title={title} toDosArray={toDosArray} /> */}
           </div>
         </div>
       </div>
