@@ -54,7 +54,6 @@ export default function FormToDo({
         title: title,
         toDo: toDo,
         toDoID: toDoID,
-        doubleToDoID: toDoID,
         userId: userAuth,
       }),
     })
