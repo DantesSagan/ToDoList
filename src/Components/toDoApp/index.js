@@ -15,6 +15,9 @@ export default function IndexToDo() {
   const [title, setTitle] = useState('');
   const [userId] = useState();
   const [createdAt] = useState(Number);
+  // const [onReserveFlight] = useState('');
+  // const [onAvailableFlights] = useState('');
+  // const [getSuggestionsFromServer] = useState(() => {});
 
   const [toDosArray, setToDoSArray] = useState([]);
 
@@ -78,7 +81,7 @@ export default function IndexToDo() {
               toDoID={toDoID}
               userId={userId}
             />
-            {/* <CheckUserTodo firebaseLib={firebaseLib} user={user} /> */}
+      
           </div>
         </div>
       </div>

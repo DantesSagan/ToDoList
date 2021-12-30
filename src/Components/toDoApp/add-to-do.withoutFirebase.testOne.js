@@ -54,6 +54,7 @@ export default function FormToDo({
         title: title,
         toDo: toDo,
         toDoID: toDoID,
+        doubleToDoID: toDoID,
         userId: userAuth,
       }),
     })
@@ -61,10 +62,13 @@ export default function FormToDo({
         console.log('Document written with title: ', title);
         console.log('Document written with displayName: ', displayName);
         console.log('Document written with ID: ', toDoID);
-        alert('ToDo was added');
+        alert(`ToDo ${title} was added`);
       })
       .catch((error) => {
         console.error('Error adding document: ', error);
+      })
+      .then(() => {
+        window.location.reload();
       });
   };
   console.log(toDosArray);
