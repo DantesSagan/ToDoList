@@ -6,7 +6,7 @@ export const DisplayTodoByUser = ({
   setTitle,
   toDo,
   setToDo,
-  editToDo
+  editToDo,
 }) => {
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
@@ -23,6 +23,7 @@ export const DisplayTodoByUser = ({
         {user?.username === disNameArray[item][0].displayName ? (
           <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
             <div className='m-4 p-4 shadow-inner rounded-lg'>
+              <input />
               {/* Delete toDo by toDoID */}
               <svg
                 xmlns='http://www.w3.org/2000/svg'

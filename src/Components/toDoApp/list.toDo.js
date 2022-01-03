@@ -12,9 +12,12 @@ import {
   arrayRemove,
   getDocs,
   collection,
+  deleteDoc,
+  doc,
 } from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
 import { DisplayTodoByUser } from './displayToDo/displayToDo';
+import { getAuth } from 'firebase/auth';
 export default function ListOfToDo({
   toDosArray,
   title,
@@ -96,25 +99,33 @@ export default function ListOfToDo({
       collection(firebaseLib.firestore(), 'todos')
     );
 
-    // const formatTime = () => {
-    //   var date = new Date(createdAt * 1000);
-    //   // Hours part from the timestamp
-    //   var hours = date.getHours();
-    //   // Minutes part from the timestamp
-    //   var minutes = date.getMinutes();
-    //   // Seconds part from the timestamp
-    //   var seconds = date.getSeconds();
+    const formatTime = () => {
+      var date = new Date();
+      // Year part from the timestamp
+      var year = date.getFullYear();
+      // Month part from the timestamp
+      var month = date.getMonth();
+      // Days part from the timestamp
+      var days = date.getDate();
+      // Hours part from the timestamp
+      var hours = date.getHours();
+      // Minutes part from the timestamp
+      var minutes = date.getMinutes();
+      // Seconds part from the timestamp
+      var seconds = date.getSeconds();
 
-    //   // Will display time in 10:30:23 format
-    //   var formattedTime = hours + ':' + minutes + ':' + seconds;
-    //   return formattedTime;
-    // };
+      // Will display time in 10:30:23 format
+      var formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
+      return formattedTime;
+    };
 
     const disName = Object.keys(disNameArray).map((item) => {
       getDocTodos.forEach((doc) => {
         // In this case need to compare two equal parameters for find user who create toDo
         // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
         // So updateDoc of toDoList otherwise - no
+        const auth = getAuth();
+        const userAuth = auth.currentUser.uid;
         if (
           doc.id === disNameArray[item][0].toDoID &&
           user?.username === disNameArray[item][0].displayName
@@ -124,12 +135,16 @@ export default function ListOfToDo({
               user?.username === disNameArray[item][0].displayName
           );
           updateDoc(doc.ref, {
-            toDosArray: arrayUnion({
-              displayName: displayName,
-              createdAt: new Date().toISOString(),
-              title: title,
-              toDo: toDo,
-            }),
+            toDosArray: [
+              {
+                displayName: displayName,
+                createdAt: formatTime(),
+                title: title,
+                toDo: toDo,
+                userId: userAuth,
+                toDoID: disNameArray[item][0].toDoID,
+              },
+            ],
           })
             .then(() => {
               console.log('Document updated with title: ', title);
@@ -155,17 +170,13 @@ export default function ListOfToDo({
     return disName;
   }
 
-  // deleteToDo but doesn't work now
+  // deleteToDo = work, but not i needed
   async function deleteToDo(event) {
     event.preventDefault();
 
     const disNameArray = Object.keys(toDosArray).map((item) => {
       return toDosArray[item].toDosArray;
     });
-
-    const getDocTodos = await getDocs(
-      collection(firebaseLib.firestore(), 'todos')
-    );
 
     // const formatTime = () => {
     //   var date = new Date(createdAt * 1000);
@@ -181,7 +192,11 @@ export default function ListOfToDo({
     //   return formattedTime;
     // };
 
-    const disName = Object.keys(disNameArray).map((item) => {
+    const getDocTodos = await getDocs(
+      collection(firebaseLib.firestore(), 'todos')
+    );
+
+    const disName = Object.keys(disNameArray).map(async (item) => {
       getDocTodos.forEach((doc) => {
         // In this case need to compare two equal parameters for find user who create toDo
         // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
@@ -194,14 +209,7 @@ export default function ListOfToDo({
             doc.id === disNameArray[item][0].toDoID &&
               user?.username === disNameArray[item][0].displayName
           );
-          updateDoc(doc.ref, {
-            toDosArray: arrayRemove({
-              displayName: displayName,
-              createdAt: new Date().toISOString(),
-              title: title,
-              toDo: toDo,
-            }),
-          })
+          deleteDoc(doc.ref, disNameArray[item][0].toDoID)
             .then(() => {
               console.log('Array was deleted successfully: ', toDosArray);
               alert('Array was deleted successfully: ', toDosArray);
@@ -218,9 +226,7 @@ export default function ListOfToDo({
           return null;
         }
       });
-      return disNameArray[item][0].toDoID;
     });
-    window.location.reload();
     return disName;
   }
   console.log(user);
