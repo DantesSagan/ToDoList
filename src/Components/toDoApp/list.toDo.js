@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import useUser from '../../hooks/user';
 
 import UserContext from '../../context/user';
 
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 import {
-  doc,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -15,7 +14,7 @@ import {
   collection,
 } from 'firebase/firestore';
 import { deleteTodo } from '../../services/firebase';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { DisplayTodoByUser } from './displayToDo/displayToDo';
 export default function ListOfToDo({
   toDosArray,
   title,
@@ -226,193 +225,19 @@ export default function ListOfToDo({
   }
   console.log(user);
 
-  // const check = async () => {
-  //   const result = await firebaseLib.firestore().collection('todos').get();
-  //   const users = result.docs.map((item) => ({
-  //     ...item.data(),
-  //     docId: item.id,
-  //   }));
-
-  //   //  Get - displayName - in toDosArray
-  //   const mapDisplayName = users.map((item) =>
-  //     item.toDosArray.map((item) => item.displayName)
-  //   );
-  //   const twoMapDisplayName = mapDisplayName.map((item) => item[0]);
-
-  //   const itemDisplayName = twoMapDisplayName.forEach((item) => {
-  //     console.log(item, `=> displayName in todos`);
-  //     return item;
-  //   });
-  //   console.log(itemDisplayName);
-  //   //  Get - createdAt - in toDosArray
-
-  //   const mapCreatedAt = users.map((item) =>
-  //     item.toDosArray.map((item) => item.createdAt)
-  //   );
-  //   const twoMapCreatedAt = mapCreatedAt.map((item) => item[0]);
-
-  //   // method forEach execute function ones for every element in array
-  //   // what extract value createdAt what we are needed
-  //   const itemCreatedAt = twoMapCreatedAt.forEach((item) => {
-  //     console.log(item, `=> createdAt in todos`);
-  //     return item;
-  //   });
-
-  //   //  Get - ToDoID - in toDosArray
-
-  //   const mapToDoID = users.map((item) =>
-  //     item.toDosArray.map((item) => item.toDoID)
-  //   );
-  //   const twoMapToDoID = mapToDoID.map((item) => item[0]);
-
-  //   // method forEach execute function ones for every element in array
-  //   // what extract value ToDoID what we are needed
-  //   const itemToDoID = twoMapToDoID.forEach((item) => {
-  //     console.log(item, `=> toDoID in todos`);
-  //     return item;
-  //   });
-
-  //   //  Get - Title - in toDosArray
-
-  //   const mapTitle = users.map((item) =>
-  //     item.toDosArray.map((item) => item.title)
-  //   );
-  //   const twoMapTitle = mapTitle.map((item) => item[0]);
-
-  //   // method forEach execute function ones for every element in array
-  //   // what extract value title what we are needed
-  //   const itemTitle = twoMapTitle.forEach((item) => {
-  //     console.log(item, `=> title in todos`);
-  //     return item;
-  //   });
-
-  //   //  Get - toDo - in toDosArray
-
-  //   const mapToDo = users.map((item) =>
-  //     item.toDosArray.map((item) => item.toDo)
-  //   );
-  //   const twoMapToDo = mapToDo.map((item) => item[0]);
-
-  //   // method forEach execute function ones for every element in array
-  //   // what extract value ToDo what we are needed
-  //   const itemToDo = twoMapToDo.forEach((item) => {
-  //     console.log(item, `=> toDo in todos`);
-  //     return item;
-  //   });
-
-  //   //  Get - userId - in toDosArray
-
-  //   const mapUserId = users.map((item) =>
-  //     item.toDosArray.map((item) => item.userId)
-  //   );
-  //   const twoMapUserId = mapUserId.map((item) => item[0]);
-
-  //   // method forEach execute function ones for every element in array
-  //   // what extract value userId what we are needed
-  //   const itemUserId = twoMapUserId.forEach((item) => {
-  //     console.log(item, `=> userId in todos`);
-  //     return item;
-  //   });
-  //   return {
-  //     itemDisplayName,
-  //     itemToDoID,
-  //     itemCreatedAt,
-  //     itemTitle,
-  //     itemToDo,
-  //     itemUserId,
-  //     disName,
-  //   };
-  // };
-  // console.log(check);
-  // const {
-  //   itemDisplayName,
-  //   itemToDoID,
-  //   itemCreatedAt,
-  //   itemTitle,
-  //   itemToDo,
-  //   itemUserId,
-  // } = check();
-  // const disNameArray = Object.keys(toDosArray).map((item) => {
-  //   return toDosArray[item].toDosArray;
-  // });
-  // const disName = Object.keys(disNameArray).map((item) => {
-  //   console.log(disNameArray[item][0].toDoID === user?.username);
-  //   return disNameArray[item][0].displayName;
-  // });
-  console.log(toDosArray)
+  console.log(DisplayTodoByUser);
   return (
     <div>
-      <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
-        {toDosArray.map((item) => (
-          <div className='m-4 p-4 shadow-inner rounded-lg' key={item.id}>
-            {item.toDosArray.map((second) => (
-              <div key={second.toDosArray}>
-                {' '}
-                <svg
-                  key={second.delete}
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-8 w-8 cursor-pointer stroke'
-                  fill='black'
-                  viewBox='0 0 24 24'
-                  stroke='black'
-                  onClick={deleteToDo}
-                >
-                  <path
-                    key={second.path}
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M6 18L18 6M6 6l12 12'
-                  />
-                </svg>
-                <div className='text-2xl font-bold p-2' key={second.title}>
-                  {second.title}
-                  <textarea
-                    key={second.setTitle}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />{' '}
-                </div>
-                <hr className='border border-red-600' key={second.hr} />
-                <div className='text-xl' key={second.toDo}>
-                  {second.toDo}
-                  <textarea
-                    key={second.setToDo}
-                    value={toDo}
-                    onChange={(e) => setToDo(e.target.value)}
-                  />{' '}
-                </div>
-                <div
-                  className=' duration-200 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'
-                  key={second.div}
-                >
-                  <button
-                    key={second.buttonEdit}
-                    className={`w-full h-full text-lg font-bold text-white ${
-                      !toDo && !title && 'opacity-25'
-                    }`}
-                    type='button'
-                    disabled={toDo.length < 1 && title.length < 1}
-                    onClick={editToDo}
-                  >
-                    Edit
-                  </button>
-                </div>
-                <div className='text-lg' key={second.createdAt}>
-                  {second.createdAt}
-                </div>
-                <div
-                  className='text-sm font-bold p-2 underline'
-                  defaultValue={displayName}
-                  key={second.displayName}
-                >
-                  {second.displayName}
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </form>
+      <DisplayTodoByUser
+        toDosArray={toDosArray}
+        user={user}
+        deleteToDo={deleteToDo}
+        title={title}
+        setTitle={setTitle}
+        toDo={toDo}
+        setToDo={setToDo}
+        editToDo={editToDo}
+      />
     </div>
   );
 }
