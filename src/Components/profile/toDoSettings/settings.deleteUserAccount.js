@@ -24,21 +24,18 @@ export default function DeleteUserAccount() {
       var userSelect = window.confirm(
         `Are you sure you want to delete this user = ${user?.username}? Вы уверены, что хотите удалить пользователя${user?.username}?`
       );
-      if (userSelect === true) {
-        if (doc.id === user?.userId) {
-          deleteDoc(doc.ref)
-            .then(() => {
-              console.log('Document was deleted with ID: ');
-              alert('Document was deleted with ID: ');
-            })
-            .catch((error) => {
-              console.error('Error deleting document: ', error);
-            });
-        } else {
-          return null;
-        }
-        console.log(doc.id);
-      }
+      return userSelect === true
+        ? doc.id === user?.userId
+          ? deleteDoc(doc.ref)
+              .then(() => {
+                console.log('Document was deleted with ID: ');
+                alert('Document was deleted with ID: ');
+              })
+              .catch((error) => {
+                console.error('Error deleting document: ', error);
+              })
+          : null
+        : console.log(doc.id);
     });
 
     await deleteUser(userDel)

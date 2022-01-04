@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import useUser from '../../hooks/user';
 
 import UserContext from '../../context/user';
@@ -8,14 +8,11 @@ import UserContext from '../../context/user';
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 import {
   updateDoc,
-  arrayUnion,
-  arrayRemove,
   getDocs,
   collection,
   deleteDoc,
   doc,
 } from 'firebase/firestore';
-import { deleteTodo } from '../../services/firebase';
 import { DisplayTodoByUser } from './displayToDo/displayToDo';
 import { getAuth } from 'firebase/auth';
 export default function ListOfToDo({
@@ -31,7 +28,6 @@ export default function ListOfToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
-
   // This is comparison for checking strict-equality parameters
   // what needed for comparison and get data exaclty what comparison do
   // const checkComparison = async () => {
@@ -169,8 +165,51 @@ export default function ListOfToDo({
     });
     return disName;
   }
-
   // deleteToDo = work, but not i needed
+  // async function deleteToDo(event) {
+  //   event.preventDefault();
+
+  //   const disNameArray = Object.keys(toDosArray).map((item) => {
+  //     return toDosArray[item].toDosArray;
+  //   });
+
+  //   const getDocTodos = await getDocs(
+  //     collection(firebaseLib.firestore(), 'todos')
+  //   );
+
+  //   const disName = Object.keys(disNameArray).map(async (item) => {
+  //     getDocTodos.forEach((doc) => {
+  //       // In this case need to compare two equal parameters for find user who create toDo
+  //       // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
+  //       // So updateDoc of toDoList otherwise - no
+  //       if (
+  //         doc.id === disNameArray[item][0].toDoID &&
+  //         user?.username === disNameArray[item][0].displayName
+  //       ) {
+  //         console.log(
+  //           doc.id === disNameArray[item][0].toDoID &&
+  //             user?.username === disNameArray[item][0].displayName
+  //         );
+  //         deleteDoc(doc.ref, disNameArray[item][0].toDoID)
+  //           .then(() => {
+  //             console.log('Array was deleted successfully: ', toDosArray);
+  //             alert('Array was deleted successfully: ', toDosArray);
+  //           })
+  //           .catch((error) => {
+  //             console.error('Array deleted error: ', error);
+  //             alert('Array deleted error: ', error);
+  //           })
+  //           .then(() => {
+  //             window.location.reload();
+  //           });
+  //       } else {
+  //         console.log('Something wrong with edit doc data');
+  //         return null;
+  //       }
+  //     });
+  //   });
+  //   return disName;
+  // }
   async function deleteToDo(event) {
     event.preventDefault();
 
@@ -178,56 +217,49 @@ export default function ListOfToDo({
       return toDosArray[item].toDosArray;
     });
 
-    // const formatTime = () => {
-    //   var date = new Date(createdAt * 1000);
-    //   // Hours part from the timestamp
-    //   var hours = date.getHours();
-    //   // Minutes part from the timestamp
-    //   var minutes = date.getMinutes();
-    //   // Seconds part from the timestamp
-    //   var seconds = date.getSeconds();
-
-    //   // Will display time in 10:30:23 format
-    //   var formattedTime = hours + ':' + minutes + ':' + seconds;
-    //   return formattedTime;
-    // };
-
     const getDocTodos = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
     );
+    Object.keys(disNameArray).map((item) => {
+      const comparisonName =
+        user?.username === disNameArray[item][0].displayName;
 
-    const disName = Object.keys(disNameArray).map(async (item) => {
-      getDocTodos.forEach((doc) => {
-        // In this case need to compare two equal parameters for find user who create toDo
-        // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
-        // So updateDoc of toDoList otherwise - no
-        if (
-          doc.id === disNameArray[item][0].toDoID &&
-          user?.username === disNameArray[item][0].displayName
-        ) {
-          console.log(
-            doc.id === disNameArray[item][0].toDoID &&
-              user?.username === disNameArray[item][0].displayName
-          );
-          deleteDoc(doc.ref, disNameArray[item][0].toDoID)
-            .then(() => {
-              console.log('Array was deleted successfully: ', toDosArray);
-              alert('Array was deleted successfully: ', toDosArray);
-            })
-            .catch((error) => {
-              console.error('Array deleted error: ', error);
-              alert('Array deleted error: ', error);
-            })
-            .then(() => {
-              window.location.reload();
-            });
-        } else {
-          console.log('Something wrong with edit doc data');
-          return null;
-        }
-      });
+      return comparisonName
+        ? getDocTodos.forEach((doc) => {
+            const comparisonID = doc.id === disNameArray[item][0].toDoID;
+            // In this case need to compare two equal parameters for find user who create toDo
+            // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
+            // So updateDoc of toDoList otherwise - no
+            var titleSelect = window.confirm(
+              `Are you sure you want to delete this toDo = ${disNameArray[item][0].title}? Вы уверены, что хотите удалить список дел ${disNameArray[item][0].title}?`
+            );
+            return titleSelect === true ? (
+              comparisonID ? (
+                deleteDoc(doc.ref)
+                  .then(() => {
+                    console.log(
+                      `Array was deleted successfully: 
+                    ${disNameArray[item][0].title}`
+                    );
+                    alert(
+                      `Array was deleted successfully: 
+                    ${disNameArray[item][0].title}`
+                    );
+                  })
+                  .catch((error) => {
+                    console.error(`Array deleted error: ${error}`);
+                    alert(`Array deleted error: ${error}`);
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  })
+              ) : (
+                <div>{`Cannot delete this ${disNameArray[item][0].title}`}</div>
+              )
+            ) : null;
+          })
+        : null;
     });
-    return disName;
   }
   console.log(user);
 

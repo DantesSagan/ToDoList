@@ -1,3 +1,6 @@
+import { collection, getDocs } from 'firebase/firestore';
+import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
+
 export const DisplayTodoByUser = ({
   toDosArray,
   user,
@@ -23,7 +26,6 @@ export const DisplayTodoByUser = ({
         {user?.username === disNameArray[item][0].displayName ? (
           <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
             <div className='m-4 p-4 shadow-inner rounded-lg'>
-              <input />
               {/* Delete toDo by toDoID */}
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -40,6 +42,7 @@ export const DisplayTodoByUser = ({
                   d='M6 18L18 6M6 6l12 12'
                 />
               </svg>
+
               {/* Get - title - in toDosArray */}
               <div className='text-2xl font-bold p-2'>
                 {disNameArray[item][0].title} <br />
