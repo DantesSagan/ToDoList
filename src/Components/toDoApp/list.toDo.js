@@ -1,20 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import useUser from '../../hooks/user';
 
 import UserContext from '../../context/user';
 
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
-import {
-  updateDoc,
-  getDocs,
-  collection,
-  deleteDoc,
-  doc,
-} from 'firebase/firestore';
+import { updateDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { DisplayTodoByUser } from './displayToDo/displayToDo';
 import { getAuth } from 'firebase/auth';
+import { editToDo } from './actions/editToDo';
 export default function ListOfToDo({
   toDosArray,
   title,
@@ -77,94 +72,7 @@ export default function ListOfToDo({
   // };
 
   // Ths is function for editing posted ToDo
-  async function editToDo(event) {
-    event.preventDefault();
 
-    setToDoSArray([
-      ...toDosArray,
-      { displayName, title, toDo, createdAt, toDoID },
-    ]);
-    setToDo('');
-    setTitle('');
-
-    const disNameArray = Object.keys(toDosArray).map((item) => {
-      return toDosArray[item].toDosArray;
-    });
-
-    const getDocTodos = await getDocs(
-      collection(firebaseLib.firestore(), 'todos')
-    );
-
-    const formatTime = () => {
-      var date = new Date();
-      // Year part from the timestamp
-      var year = date.getFullYear();
-      // Month part from the timestamp
-      var month = date.getMonth();
-      // Days part from the timestamp
-      var days = date.getDate();
-      // Hours part from the timestamp
-      var hours = date.getHours();
-      // Minutes part from the timestamp
-      var minutes = date.getMinutes();
-      // Seconds part from the timestamp
-      var seconds = date.getSeconds();
-
-      // Will display time in 10:30:23 format
-      var formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
-      return formattedTime;
-    };
-
-    const disName = Object.keys(disNameArray).map((item) => {
-      getDocTodos.forEach((doc) => {
-        // In this case need to compare two equal parameters for find user who create toDo
-        // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
-        // So updateDoc of toDoList otherwise - no
-        const auth = getAuth();
-        const userAuth = auth.currentUser.uid;
-        if (
-          doc.id === disNameArray[item][0].toDoID &&
-          user?.username === disNameArray[item][0].displayName
-        ) {
-          console.log(
-            doc.id === disNameArray[item][0].toDoID &&
-              user?.username === disNameArray[item][0].displayName
-          );
-          updateDoc(doc.ref, {
-            toDosArray: [
-              {
-                displayName: displayName,
-                createdAt: formatTime(),
-                title: title,
-                toDo: toDo,
-                userId: userAuth,
-                toDoID: disNameArray[item][0].toDoID,
-              },
-            ],
-          })
-            .then(() => {
-              console.log('Document updated with title: ', title);
-              console.log('Document updated with displayName: ', displayName);
-              // console.log('Document updated with ID: ', toDoID);
-              alert('Array updated was successfully: ', toDosArray);
-            })
-            .catch((error) => {
-              console.error('Array updated error: ', error);
-              alert('Array updated error: ', error);
-            })
-            .then(() => {
-              window.location.reload();
-            });
-        } else {
-          console.log('Something wrong with edit doc data');
-          return null;
-        }
-      });
-
-      return disNameArray[item][0];
-    });
-    return disName;
-  }
   // deleteToDo = work, but not i needed
   // async function deleteToDo(event) {
   //   event.preventDefault();
@@ -210,6 +118,7 @@ export default function ListOfToDo({
   //   });
   //   return disName;
   // }
+
   async function deleteToDo(event) {
     event.preventDefault();
 
@@ -266,6 +175,23 @@ export default function ListOfToDo({
   console.log(DisplayTodoByUser);
   return (
     <div>
+      <editToDo
+        setToDoSArray={setToDoSArray}
+        toDosArray={toDosArray}
+        displayName={displayName}
+        title={title}
+        toDo={toDo}
+        createdAt={createdAt}
+        toDoID={toDoID}
+        setToDo={setToDo}
+        setTitle={setTitle}
+        getDocs={getDocs}
+        collection={collection}
+        firebaseLib={firebaseLib}
+        updateDoc={updateDoc}
+        user={user}
+        getAuth={getAuth}
+      />
       <DisplayTodoByUser
         toDosArray={toDosArray}
         user={user}
