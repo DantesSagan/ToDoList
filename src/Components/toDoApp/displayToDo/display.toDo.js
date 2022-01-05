@@ -1,4 +1,4 @@
-export const DisplayTodoByUser = ({
+export const DisplayTodoByID = ({
   toDosArray,
   user,
   deleteToDo,

@@ -1,10 +1,10 @@
-import FormToDo from './add-to-do.withoutFirebase.testOne';
+import HeaderToDo from '../header.toDo';
 
-import HeaderToDo from './header.toDo';
-import IndexConst from './indexConst';
-import ListOfToDo from './list.toDo';
+import IndexConst from '../indexConst';
+import ListOfToDo from '../list.toDo';
+import ListOfDisplayToDo from './listToDo.displayToDo';
 
-export default function IndexToDo() {
+export default function IndexDisplayToDo() {
   const {
     toDo,
     setToDo,
@@ -28,22 +28,7 @@ export default function IndexToDo() {
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
             <HeaderToDo user={user} />
-            <FormToDo
-              toDo={toDo}
-              setToDo={setToDo}
-              title={title}
-              setTitle={setTitle}
-              toDosArray={toDosArray}
-              setToDoSArray={setToDoSArray}
-              firebaseLib={firebaseLib}
-              FieldValue={FieldValue}
-              displayName={displayName}
-              user={user}
-              refTodo={refTodo}
-              createdAt={createdAt}
-              toDoID={toDoID}
-            />
-            <ListOfToDo
+            <ListOfDisplayToDo
               toDo={toDo}
               setToDo={setToDo}
               title={title}
