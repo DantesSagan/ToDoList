@@ -13,10 +13,10 @@ export const DisplayTodoByID = ({
   });
 
   //  Get - displayName - in toDosArray
-  const disName = Object.keys(disNameArray).map((item) => {
+  return Object.keys(disNameArray).map((item) => {
     console.log(disNameArray[item][0].toDoID);
     return disNameArray[item][0].toDoID ? (
-      <div>
+      <div className="pt-2">
         {/* 
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser
@@ -84,6 +84,4 @@ export const DisplayTodoByID = ({
       </div>
     ) : null;
   });
-  console.log(disName);
-  return disName;
 };

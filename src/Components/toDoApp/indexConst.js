@@ -33,6 +33,7 @@ export default function IndexConst() {
   };
 
   let toDoID = getRandomNumber();
+  console.log(toDosArray)
   return {
     toDo,
     setToDo,

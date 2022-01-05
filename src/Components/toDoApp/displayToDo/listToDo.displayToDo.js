@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
@@ -8,7 +8,8 @@ import UserContext from '../../../context/user';
 import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
 import { updateDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { DisplayTodoByID } from './display.toDo';
+import { DisplayTodoByID } from './displayToDoRouter';
+import { getToDo } from '../../../services/firebase';
 
 export default function ListOfDisplayToDo({
   toDosArray,
@@ -23,7 +24,9 @@ export default function ListOfDisplayToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
-
+  useEffect(() => {
+    getToDo(setToDoSArray);
+  }, []);
   async function deleteToDo(event) {
     event.preventDefault();
 
@@ -164,6 +167,7 @@ export default function ListOfDisplayToDo({
         : null;
     });
   };
+  console.log(toDosArray)
   console.log(DisplayTodoByID);
   return (
     <div>

@@ -11,7 +11,7 @@ export default function DashboardDisplayToDo({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
   useEffect(() => {
-    document.title = 'ToDoList';
+    document.title = 'RouterToDoList';
   }, []);
 
   return (

@@ -21,7 +21,6 @@ export default function IndexToDo() {
     toDoID,
     displayName,
   } = IndexConst();
-
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
       <div className='flex flex-col w-2/2'>
