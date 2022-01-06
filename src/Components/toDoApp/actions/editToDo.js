@@ -1,35 +1,43 @@
+// /* eslint-disable react-hooks/exhaustive-deps */
 // // Ths is function for editing posted ToDo in currentUserAuth
 // import IndexConst from '../indexConst';
 // import { getDocs, collection, updateDoc } from 'firebase/firestore';
 // import { getAuth } from 'firebase/auth';
+// import { useEffect } from 'react';
+// import { getToDo } from '../../../services/firebase';
 // export default function EditToDo() {
 //   const {
-//     toDo,
-//     setToDo,
-//     title,
-//     setTitle,
-//     createdAt,
-//     toDosArray,
-//     setToDoSArray,
-//     firebaseLib,
-//     user,
-//     toDoID,
-//     displayName,
+//     toDo: eToDo,
+//     setToDo: eSetToDo,
+//     title: eTitle,
+//     setTitle: eSetTitle,
+//     createdAt: eCreatedAt,
+//     toDosArray: eToDosArray,
+//     setToDoSArray: eSetToDoSArray,
+//     firebaseLib: eFirebaseLib,
+//     user: eUser,
+//     toDoID: eToDoID,
+//     displayName: eDisplayName,
 //   } = IndexConst();
-//   const editToDo = async () => {
-//     setToDoSArray([
-//       ...toDosArray,
-//       { displayName, title, toDo, createdAt, toDoID },
-//     ]);
-//     setToDo('');
-//     setTitle('');
 
-//     const disNameArray = Object.keys(toDosArray).map((item) => {
-//       return toDosArray[item].toDosArray;
+//   useEffect(() => {
+//     getToDo(eSetToDoSArray);
+//   }, []);
+
+//   const editToDo = async () => {
+//     eSetToDoSArray([
+//       ...eToDosArray,
+//       { eDisplayName, eTitle, eToDo, eCreatedAt, eToDoID },
+//     ]);
+//     eSetToDo('');
+//     eSetTitle('');
+
+//     const disNameArray = Object.keys(eToDosArray).map((item) => {
+//       return eToDosArray[item].toDosArray;
 //     });
 
 //     const getDocTodos = await getDocs(
-//       collection(firebaseLib.firestore(), 'todos')
+//       collection(eFirebaseLib.firestore(), 'todos')
 //     );
 
 //     const formatTime = () => {
@@ -53,7 +61,8 @@
 //     };
 
 //     return Object.keys(disNameArray).map((item) => {
-//       let comparisonName = user?.username === disNameArray[item][0].displayName;
+//       let comparisonName =
+//         eUser?.username === disNameArray[item][0].displayName;
 
 //       return comparisonName
 //         ? getDocTodos.forEach((doc) => {
@@ -67,29 +76,29 @@
 //             );
 //             let checkDockID = doc.id === disNameArray[item][0].toDoID;
 //             let checkUserName =
-//               user?.username === disNameArray[item][0].displayName;
+//               eUser?.username === disNameArray[item][0].displayName;
 
 //             return titleSelect === true
 //               ? checkDockID && checkUserName
 //                 ? updateDoc(doc.ref, {
 //                     toDosArray: [
 //                       {
-//                         displayName: displayName,
+//                         displayName: eDisplayName,
 //                         createdAt: formatTime(),
-//                         title: title,
-//                         toDo: toDo,
+//                         title: eTitle,
+//                         toDo: eToDo,
 //                         userId: userAuth,
 //                         toDoID: disNameArray[item][0].toDoID,
 //                       },
 //                     ],
 //                   })
 //                     .then(() => {
-//                       console.log('Document updated with title: ', title);
+//                       console.log('Document updated with title: ', eTitle);
 //                       console.log(
 //                         'Document updated with displayName: ',
-//                         displayName
+//                         eDisplayName
 //                       );
-//                       alert('Array updated was successfully: ', toDosArray);
+//                       alert('Array updated was successfully: ', eToDosArray);
 //                     })
 //                     .catch((error) => {
 //                       console.error('Array updated error: ', error);
@@ -106,14 +115,14 @@
 //   };
 //   return {
 //     editToDo,
-//     toDo,
-//     setToDo,
-//     title,
-//     setTitle,
-//     createdAt,
-//     toDosArray,
-//     setToDoSArray,
-//     toDoID,
-//     displayName,
+//     eToDo,
+//     eSetToDo,
+//     eTitle,
+//     eSetTitle,
+//     eCreatedAt,
+//     eToDosArray,
+//     eSetToDoSArray,
+//     eToDoID,
+//     eDisplayName,
 //   };
 // }

@@ -9,6 +9,8 @@ export const DisplayTodoByID = ({
   toDo,
   setToDo,
   editToDo,
+  editToDoList,
+  editTitle,
 }) => {
   const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
@@ -18,7 +20,6 @@ export const DisplayTodoByID = ({
 
   //  Get - displayName - in toDosArray
   return Object.keys(disNameArray).map((item) => {
-    console.log(disNameArray[item][0].toDoID);
     return (
       disNameArray[item][0].toDoID && (
         <div className='pt-2'>
@@ -52,13 +53,21 @@ export const DisplayTodoByID = ({
                  where you can change you title of current toDo
                 */}
                 {clickTitle ? (
-                  <div className='block justify-between'>
+                  <div className='block'>
                     <textarea
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                     >
                       {disNameArray[item][0].title}
-                    </textarea>
+                    </textarea>{' '}
+                    <button
+                      className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
+                        !title && 'opacity-25'
+                      }`}
+                      onClick={editTitle}
+                    >
+                      EditTitle
+                    </button>
                     <button
                       className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
                       onClick={() => setClickTitle(!clickTitle)}
@@ -68,7 +77,7 @@ export const DisplayTodoByID = ({
                   </div>
                 ) : (
                   <button
-                    className='text-2xl font-bold p-2'
+                    className='text-2xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white'
                     onClick={() => setClickTitle(!clickTitle)}
                   >
                     {disNameArray[item][0].title} <br />
@@ -86,6 +95,14 @@ export const DisplayTodoByID = ({
                       {disNameArray[item][0].toDo}
                     </textarea>
                     <button
+                      className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
+                        !toDo && 'opacity-25'
+                      }`}
+                      onClick={editToDoList}
+                    >
+                      EditToDo
+                    </button>
+                    <button
                       className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
                       onClick={() => setClickToDo(!clickToDo)}
                     >
@@ -94,26 +111,13 @@ export const DisplayTodoByID = ({
                   </div>
                 ) : (
                   <button
-                    className='text-2xl font-bold p-2'
+                    className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
                     onClick={() => setClickToDo(!clickToDo)}
                   >
                     {disNameArray[item][0].toDo} <br />
                   </button>
                 )}
-                <div className='text-2xl font-bold p-2'>
-                  <div className=' duration-200 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
-                    <button
-                      className={`w-full h-full text-lg font-bold text-white ${
-                        !toDo && !title && 'opacity-25'
-                      }`}
-                      type='button'
-                      disabled={toDo.length < 1 && title.length < 1}
-                      onClick={editToDo}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
+
                 {/* Get - createdAt - in toDosArray */}
                 <div className='text-sm'>
                   {disNameArray[item][0].createdAt} <br />

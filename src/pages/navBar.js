@@ -25,9 +25,13 @@ export default function NavBarAndHeader() {
           <div className='text-white text-center flex items-center align-items cursor-pointer'>
             {loggedInUser ? (
               <>
-                <div className='bg-white font-bold text-sm rounded-lg text-black p-2'>
-                  <Link to={ROUTES.DASHBOARD}>DASHBOARD</Link>
-                </div>
+                <Link to={ROUTES.DASHBOARD}>
+                  {' '}
+                  <div className='bg-white font-bold text-sm rounded-lg text-black p-2'>
+                    DASHBOARD
+                  </div>
+                </Link>
+
                 <button
                   className='bg-black font-bold text-sm rounded-lg text-white w-20 h-8'
                   type='button'
@@ -75,7 +79,7 @@ export default function NavBarAndHeader() {
                     type='button'
                     className='bg-black font-bold text-sm rounded-lg text-white w-22 h-10 p-2'
                   >
-                   Sign-Up
+                    Sign-Up
                   </button>
                 </Link>
               </>

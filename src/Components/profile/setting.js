@@ -1,4 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+
+import useUser from '../../hooks/user';
+import UserContext from '../../context/user';
 
 import NavBarAndHeader from '../../pages/navBar';
 import HandleEmailAddress from './toDoSettings/editSettings/handleEmailAddress';
@@ -37,8 +40,11 @@ export default function Setting() {
   const isInvalidCity = city === '';
   const isInvalidCountry = country === '';
 
+  const { user: loggedIn } = useContext(UserContext);
+  const { user } = useUser(loggedIn?.uid);
+
   useEffect(() => {
-    document.title = 'Settings - ToDoList';
+    document.title = `Settings -  ${user?.username} Profile`;
   }, []);
 
   return (
