@@ -11,17 +11,7 @@ import { DisplayTodoByUser } from './displayToDo/displayToDo';
 import { getAuth } from 'firebase/auth';
 import RouterToDo from './list.routerToDo';
 
-export default function ListOfToDo({
-  toDosArray,
-  title,
-  toDo,
-  setTitle,
-  setToDo,
-  displayName,
-  setToDoSArray,
-  createdAt,
-  toDoID,
-}) {
+export default function ListOfToDo({ toDosArray, title, toDoID }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
   // This is comparison for checking strict-equality parameters

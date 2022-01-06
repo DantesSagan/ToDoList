@@ -77,7 +77,7 @@ export default function FormToDo({
       {loggedIn ? (
         <>
           <form
-            className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-black border border-gray-300 rounded-xl mt-2 pt-5'
+            className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border border-gray-300 rounded-xl mt-2 pt-5'
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
