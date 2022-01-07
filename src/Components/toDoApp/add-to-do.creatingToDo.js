@@ -29,11 +29,18 @@ export default function FormToDo({
   }, []);
 
   const handleSubmitToDo = async (event) => {
+    const auth = getAuth();
+    const userAuth = auth.currentUser.uid;
+
+    const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
+
+    const commaTitle = title.split(',');
+    const commaToDo = toDo.split(',');
     event.preventDefault();
 
     setToDoSArray([
       ...toDosArray,
-      { displayName, title, toDo, createdAt, toDoID },
+      { displayName, commaTitle, commaToDo, createdAt, toDoID },
     ]);
     setToDo('');
     setTitle('');
@@ -42,23 +49,19 @@ export default function FormToDo({
     //   return Math.max(Math.random() * (max - min) + min).toFixed(0);
     // }
     // let resultID = getRandomNumber(2000000000000, 5);
-    const auth = getAuth();
-    const userAuth = auth.currentUser.uid;
-
-    const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
 
     await setDoc(editRef, {
       toDosArray: arrayUnion({
         displayName: displayName,
         createdAt: new Date().toISOString(),
-        title: title,
-        toDo: toDo,
+        title: commaTitle,
+        toDo: commaToDo,
         toDoID: toDoID,
         userId: userAuth,
       }),
     })
       .then(() => {
-        console.log('Document written with title: ', title);
+        console.log('Document written with title: ', commaTitle);
         console.log('Document written with displayName: ', displayName);
         console.log('Document written with ID: ', toDoID);
         alert(`ToDo ${title} was added`);

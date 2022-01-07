@@ -25,18 +25,11 @@ export default function RouterToDo({ toDoID, title, toDosArray, user }) {
     );
   });
 
-  // const titleArray = Object.keys(toDosArray).map((item) => {
-  //   return toDosArray[item].toDosArray;
-  // });
-  // const titles = Object.keys(titleArray).map((item) => {
-  //   return disNameArray[item][0].title;
-  // });
-
   console.log(toDoArr);
 
   return (
     <div>
-      <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
+      <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '>
         <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
       </form>
     </div>

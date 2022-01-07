@@ -5,15 +5,16 @@ import useUser from '../../hooks/user';
 
 import UserContext from '../../context/user';
 
-import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
-import { updateDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
-import { DisplayTodoByUser } from './displayToDo/displayToDo';
-import { getAuth } from 'firebase/auth';
+// import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
+// import { updateDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
+// import { DisplayTodoByUser } from './displayToDo/displayToDo';
+// import { getAuth } from 'firebase/auth';
 import RouterToDo from './list.routerToDo';
 
 export default function ListOfToDo({ toDosArray, title, toDoID }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+
   // This is comparison for checking strict-equality parameters
   // what needed for comparison and get data exaclty what comparison do
   // const checkComparison = async () => {
@@ -110,7 +111,6 @@ export default function ListOfToDo({ toDosArray, title, toDoID }) {
   //   return disName;
   // }
 
-  console.log(DisplayTodoByUser);
   return (
     <div>
       <RouterToDo
