@@ -20,7 +20,7 @@ export default function IndexConst() {
 
   const { user } = useUser(displayName?.uid);
 
-  const getRandomNumber = () => {
+  const getRandomSymbolAndID = () => {
     var alphanumeric =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var result = '';
@@ -32,8 +32,9 @@ export default function IndexConst() {
     return result;
   };
 
-  let toDoID = getRandomNumber();
-  console.log(toDosArray)
+  let toDoID = getRandomSymbolAndID();
+
+  console.log(toDosArray);
   return {
     toDo,
     setToDo,

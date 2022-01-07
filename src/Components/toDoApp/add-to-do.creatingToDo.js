@@ -32,46 +32,55 @@ export default function FormToDo({
     const auth = getAuth();
     const userAuth = auth.currentUser.uid;
 
-    const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
-
     const commaTitle = title.split(',');
     const commaToDo = toDo.split(',');
     event.preventDefault();
 
-    setToDoSArray([
-      ...toDosArray,
-      { displayName, commaTitle, commaToDo, createdAt, toDoID },
-    ]);
-    setToDo('');
-    setTitle('');
+    const checkExistingID = Object.keys(toDosArray).map((item) => {
+      return toDosArray[item].toDosArray;
+    });
+    return Object.keys(checkExistingID).map(async (item) => {
+      if (checkExistingID[item][0].toDoID === toDoID) {
+        console.log('Error this toDoID existing, try again');
+      } else {
+        const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
+        setToDoSArray([
+          ...toDosArray,
+          { displayName, commaTitle, commaToDo, createdAt, toDoID },
+        ]);
+        setToDo('');
+        setTitle('');
 
-    // function getRandomNumber(max, min) {
-    //   return Math.max(Math.random() * (max - min) + min).toFixed(0);
-    // }
-    // let resultID = getRandomNumber(2000000000000, 5);
+        // function getRandomNumber(max, min) {
+        //   return Math.max(Math.random() * (max - min) + min).toFixed(0);
+        // }
+        // let resultID = getRandomNumber(2000000000000, 5);
 
-    await setDoc(editRef, {
-      toDosArray: arrayUnion({
-        displayName: displayName,
-        createdAt: new Date().toISOString(),
-        title: commaTitle,
-        toDo: commaToDo,
-        toDoID: toDoID,
-        userId: userAuth,
-      }),
-    })
-      .then(() => {
-        console.log('Document written with title: ', commaTitle);
-        console.log('Document written with displayName: ', displayName);
-        console.log('Document written with ID: ', toDoID);
-        alert(`ToDo ${title} was added`);
-      })
-      .catch((error) => {
-        console.error('Error adding document: ', error);
-      })
-      .then(() => {
-        window.location.reload();
-      });
+        await setDoc(editRef, {
+          toDosArray: arrayUnion({
+            displayName: displayName,
+            createdAt: new Date().toISOString(),
+            title: commaTitle,
+            toDo: commaToDo,
+            toDoID: toDoID,
+            userId: userAuth,
+          }),
+        })
+          .then(() => {
+            console.log('Document written with title: ', commaTitle);
+            console.log('Document written with displayName: ', displayName);
+            console.log('Document written with ID: ', toDoID);
+            alert(`ToDo ${title} was added`);
+          })
+          .catch((error) => {
+            console.error('Error adding document: ', error);
+          })
+          .then(() => {
+            window.location.reload();
+          });
+      }
+      return checkExistingID[item][0].toDoID;
+    });
   };
   console.log(toDosArray);
 

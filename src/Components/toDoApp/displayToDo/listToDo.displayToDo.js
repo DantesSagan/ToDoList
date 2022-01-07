@@ -11,6 +11,9 @@ import { getAuth } from 'firebase/auth';
 import { DisplayTodoByID } from './displayToDoRouter';
 import { getToDo } from '../../../services/firebase';
 import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
+import { useNavigate } from 'react-router-dom';
+
+import * as ROUTES from '../../../constants/routes';
 
 export default function ListOfDisplayToDo({
   toDosArray,
@@ -26,6 +29,7 @@ export default function ListOfDisplayToDo({
   // need to alias parameters from deleteToDo and editToDo
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getToDo(setToDoSArray);
@@ -42,6 +46,7 @@ export default function ListOfDisplayToDo({
       collection(firebaseLib.firestore(), 'todos')
     );
     Object.keys(disNameArray).map((item) => {
+      // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
       let comparisonName = user?.username === disNameArray[item][0].displayName;
 
       return comparisonName
@@ -71,7 +76,10 @@ export default function ListOfDisplayToDo({
                     alert(`Array deleted error: ${error}`);
                   })
                   .then(() => {
-                    window.location.reload();
+                    alert(
+                      `Deleted successfully - ${disNameArray[item][0].title}`
+                    );
+                    navigate(ROUTES.DASHBOARD);
                   })
               ) : (
                 <div>{`Cannot delete this ${disNameArray[item][0].title}`}</div>
@@ -119,6 +127,7 @@ export default function ListOfDisplayToDo({
     };
 
     return Object.keys(disNameArray).map((item) => {
+      // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
       let comparisonName = user?.username === disNameArray[item][0].displayName;
 
       return comparisonName
