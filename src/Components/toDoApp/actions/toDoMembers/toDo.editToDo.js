@@ -7,9 +7,11 @@ import { getToDo } from '../../../../services/firebase';
 export default function ToDoEditToDo() {
   const { toDo, setToDo, toDosArray, setToDoSArray, firebaseLib, user } =
     IndexConst();
+
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
+
   const editToDoList = async (event) => {
     event.preventDefault();
     setToDo('');

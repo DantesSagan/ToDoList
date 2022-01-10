@@ -27,6 +27,12 @@ export const DisplayTodoByID = ({
     let todoURL = `/todolist/${disNameArray[item][0].toDoID}`;
     let checkTODOID = currentUrl === todoURL;
 
+    // This is valueTitle and valueToDo 
+    // Their needed for editing data what hold previous (old data value) 
+    // for editing this data or just remove old data and type new one
+    let valueTitle = title ? title : disNameArray[item][0].title;
+    let valueToDo = toDo ? toDo : disNameArray[item][0].toDo;
+
     console.log(checkTODOID);
     console.log(currentUrl);
     return (
@@ -65,7 +71,8 @@ export const DisplayTodoByID = ({
                   {clickTitle ? (
                     <div className='block'>
                       <textarea
-                        value={title}
+                        className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
+                        value={valueTitle}
                         onChange={(e) => setTitle(e.target.value)}
                       >
                         {disNameArray[item][0].title}
@@ -99,7 +106,8 @@ export const DisplayTodoByID = ({
                   {clickToDo ? (
                     <div className='block justify-between'>
                       <textarea
-                        value={toDo}
+                        className='text-sm text-gray-base w-full mr-3 mt-3 py-5 px-4 rounded-xl font-bold'
+                        value={valueToDo}
                         onChange={(e) => setToDo(e.target.value)}
                       >
                         {disNameArray[item][0].toDo}
