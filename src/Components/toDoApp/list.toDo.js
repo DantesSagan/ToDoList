@@ -11,7 +11,12 @@ import UserContext from '../../context/user';
 // import { getAuth } from 'firebase/auth';
 import RouterToDo from './list.routerToDo';
 
-export default function ListOfToDo({ toDosArray, title, toDoID }) {
+export default function ListOfToDo({
+  toDosArray,
+  title,
+  toDoID,
+  setToDoSArray,
+}) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 
@@ -118,6 +123,7 @@ export default function ListOfToDo({ toDosArray, title, toDoID }) {
         title={title}
         toDosArray={toDosArray}
         user={user}
+        setToDoSArray={setToDoSArray}
       />
     </div>
   );

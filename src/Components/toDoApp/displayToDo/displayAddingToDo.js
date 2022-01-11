@@ -2,14 +2,22 @@
 // import { addDoc } from 'firebase/firestore';
 import React, { useEffect, useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import { getToDo } from '../../services/firebase';
+import { getToDo } from '../../../services/firebase';
 import PropTypes from 'prop-types';
 
-import { doc, arrayUnion, setDoc } from 'firebase/firestore';
-import UserContext from '../../context/user';
-import useUser from '../../hooks/user';
+import {
+  doc,
+  arrayUnion,
+  setDoc,
+  getDocs,
+  collection,
+  updateDoc,
+} from 'firebase/firestore';
+import UserContext from '../../../context/user';
+import useUser from '../../../hooks/user';
 import { getAuth } from 'firebase/auth';
-export default function FormToDo({
+
+export default function FormToDoToDoID({
   toDo,
   setToDo,
   title,
@@ -36,65 +44,66 @@ export default function FormToDo({
     const commaToDo = toDo.split(',');
     event.preventDefault();
 
+    const getDocTodos = await getDocs(
+      collection(firebaseLib.firestore(), 'todos')
+    );
+
     const checkExistingID = Object.keys(toDosArray).map((item) => {
       return toDosArray[item].toDosArray;
     });
+
     return Object.keys(checkExistingID).map(async (item) => {
-      if (checkExistingID[item][0].toDoID === toDoID) {
+      // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
+      let comparisonName =
+        user?.username === checkExistingID[item][0].displayName;
+
+      // This is check if currentURL and RouterPath strict-equal
+      // To undestand what u want to delete in current equl parameters of URL
+      let getCurrentUrl = window.location.pathname;
+      let getRouterPathToDo = `/todolist/${checkExistingID[item][0].toDoID}`;
+
+      let checkPathID = getCurrentUrl === getRouterPathToDo;
+
+      if (checkPathID && comparisonName) {
         console.log('Error this toDoID existing, try again');
       } else {
-        const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
+        const getDocTodos = await getDocs(
+          collection(firebaseLib.firestore(), 'todos')
+        );
         setToDoSArray([
           ...toDosArray,
           { displayName, commaTitle, commaToDo, createdAt, toDoID },
         ]);
         setToDo('');
         setTitle('');
-
-        // function getRandomNumber(max, min) {
-        //   return Math.max(Math.random() * (max - min) + min).toFixed(0);
-        // }
-        // let resultID = getRandomNumber(2000000000000, 5);
-        const formatTime = () => {
-          var date = new Date();
-          // Year part from the timestamp
-          var year = date.getFullYear();
-          // Month part from the timestamp
-          var month = date.getMonth();
-          // Days part from the timestamp
-          var days = date.getDate();
-          // Hours part from the timestamp
-          var hours = date.getHours();
-          // Minutes part from the timestamp
-          var minutes = date.getMinutes();
-          // Seconds part from the timestamp
-          var seconds = date.getSeconds();
-
-          // Will display time in 10:30:23 format
-          var formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
-          return formattedTime;
-        };
-        await setDoc(editRef, {
-          toDosArray: arrayUnion({
-            displayName: displayName,
-            createdAt: formatTime(),
-            title: commaTitle,
-            toDo: commaToDo,
-            toDoID: toDoID,
-            userId: userAuth,
-          }),
-        })
-          .then(() => {
-            console.log('Document written with title: ', commaTitle);
-            console.log('Document written with displayName: ', displayName);
-            console.log('Document written with ID: ', toDoID);
-          })
-          .catch((error) => {
-            console.error('Error adding document: ', error);
-          })
-          .then(() => {
-            window.location.reload();
-          });
+        getDocTodos.forEach(async (doc) => {
+          if (comparisonName && doc.if === checkExistingID[item][0].toDoID) {
+            await setDoc(doc.ref, {
+              toDosArray: arrayUnion({
+                displayName: displayName,
+                createdAt: new Date().toISOString(),
+                title: commaTitle,
+                toDo: commaToDo,
+                toDoID: toDoID,
+                userId: userAuth,
+              }),
+            })
+              .then(() => {
+                console.log('Document written with title: ', commaTitle);
+                console.log('Document written with displayName: ', displayName);
+                console.log('Document written with ID: ', toDoID);
+                alert(`ToDo ${title} was added`);
+              })
+              .catch((error) => {
+                console.error('Error adding document: ', error);
+              })
+              .then(() => {
+                window.location.reload();
+              });
+          } else {
+            return null;
+          }
+        });
       }
       return checkExistingID[item][0].toDoID;
     });
@@ -157,7 +166,7 @@ export default function FormToDo({
   );
 }
 
-FormToDo.propTypes = {
+FormToDoToDoID.propTypes = {
   toDosArray: PropTypes.array.isRequired,
   toDo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

@@ -1,12 +1,19 @@
 import { collection, getDocs } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { getToDo } from '../../services/firebase';
 
-export default function RouterToDo({ toDoID, title, toDosArray, user }) {
+export default function RouterToDo({
+  toDoID,
+  title,
+  toDosArray,
+  user,
+  setToDoSArray,
+}) {
   const [pagination, setPagination] = useState(1);
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
@@ -61,6 +68,10 @@ export default function RouterToDo({ toDoID, title, toDosArray, user }) {
   //   return next;
   // };
 
+  useEffect(() => {
+    getToDo(setToDoSArray);
+  }, []);
+
   const toDoArr = Object.keys(disNameArray).map((item, index) => {
     // const toDoRef = await getDocs(collection(firebaseLib.firestore(), 'todos'));
     // toDoRef.forEach((doc) => {
@@ -68,12 +79,14 @@ export default function RouterToDo({ toDoID, title, toDosArray, user }) {
     //     doc.orderBy('createdAt').limit(2)
     //   );
     // });
+
     return (
       <div
         className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
         key={index}
       >
-        {user?.username === disNameArray[item][0].displayName ? (
+        {user?.username === disNameArray[item][0].displayName &&
+        setToDoSArray ? (
           <Link to={`/todolist/${disNameArray[item][0].toDoID}`} key={item.id}>
             {' '}
             <div

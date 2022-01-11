@@ -35,7 +35,7 @@ export default function ListOfDisplayToDo({
     getToDo(setToDoSArray);
   }, []);
 
-  async function deleteToDo(event) {
+  const deleteToDo = async (event) => {
     event.preventDefault();
 
     const disNameArray = Object.keys(toDosArray).map((item) => {
@@ -102,7 +102,7 @@ export default function ListOfDisplayToDo({
           })
         : null;
     });
-  }
+  };
 
   const editToDoList = async () => {
     setToDoSArray([
