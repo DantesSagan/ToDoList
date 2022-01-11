@@ -20,15 +20,15 @@ export const DisplayTodoByID = ({
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
 
-  return Object.keys(disNameArray).map((item) => {
+  return Object.keys(disNameArray).map((item, index) => {
     // this is comparison for checking pathname of url from link to this page
     // and comparison with toDoID for receiving data from Firebase
     let currentUrl = window.location.pathname;
     let todoURL = `/todolist/${disNameArray[item][0].toDoID}`;
     let checkTODOID = currentUrl === todoURL;
 
-    // This is valueTitle and valueToDo 
-    // Their needed for editing data what hold previous (old data value) 
+    // This is valueTitle and valueToDo
+    // Their needed for editing data what hold previous (old data value)
     // for editing this data or just remove old data and type new one
     let valueTitle = title ? title : disNameArray[item][0].title;
     let valueToDo = toDo ? toDo : disNameArray[item][0].toDo;
@@ -36,7 +36,7 @@ export const DisplayTodoByID = ({
     console.log(checkTODOID);
     console.log(currentUrl);
     return (
-      <div className='pt-2'>
+      <div className='pt-2' key={index}>
         {/* 
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser 
@@ -44,8 +44,11 @@ export const DisplayTodoByID = ({
           */}
         {user?.username === disNameArray[item][0].displayName
           ? checkTODOID && (
-              <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
-                <div className='m-4 p-4 shadow-inner rounded-lg'>
+              <form
+                className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'
+                key={index}
+              >
+                <div className='m-8 p-4 shadow-inner rounded-lg'>
                   {/* Delete toDo by toDoID */}
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -64,7 +67,7 @@ export const DisplayTodoByID = ({
                   </svg>
                   {/* Get - title - in toDosArray */}
                   {/* 
-                By default state - true - and if you clicking on a title of toDoList 
+                By default state - true - and if you clicking on a title of a toDoList 
                 state will changed to false and you will see textarea,
                  where you can change you title of current toDo
                 */}
@@ -104,9 +107,9 @@ export const DisplayTodoByID = ({
                   <hr className='border border-red-600' />
                   {/* Get - toDo - in toDosArray */}
                   {clickToDo ? (
-                    <div className='block justify-between'>
+                    <div className='block'>
                       <textarea
-                        className='text-sm text-gray-base w-full mr-3 mt-3 py-5 px-4 rounded-xl font-bold'
+                        className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
                         value={valueToDo}
                         onChange={(e) => setToDo(e.target.value)}
                       >
@@ -132,11 +135,7 @@ export const DisplayTodoByID = ({
                       className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
                       onClick={() => setClickToDo(!clickToDo)}
                     >
-                      <ul>
-                        <li>
-                          {disNameArray[item][0].toDo} <br />
-                        </li>
-                      </ul>
+                      {disNameArray[item][0].toDo} <br />
                     </button>
                   )}
 

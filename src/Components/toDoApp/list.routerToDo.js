@@ -61,7 +61,7 @@ export default function RouterToDo({ toDoID, title, toDosArray, user }) {
   //   return next;
   // };
 
-  const toDoArr = Object.keys(disNameArray).map((item) => {
+  const toDoArr = Object.keys(disNameArray).map((item, index) => {
     // const toDoRef = await getDocs(collection(firebaseLib.firestore(), 'todos'));
     // toDoRef.forEach((doc) => {
     //   console.log(
@@ -69,16 +69,22 @@ export default function RouterToDo({ toDoID, title, toDosArray, user }) {
     //   );
     // });
     return (
-      <div className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'>
+      <div
+        className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
+        key={index}
+      >
         {user?.username === disNameArray[item][0].displayName ? (
-          <Link to={`/todolist/${disNameArray[item][0].toDoID}`}>
+          <Link to={`/todolist/${disNameArray[item][0].toDoID}`} key={item.id}>
             {' '}
-            <div className='text-3xl font-bold pb-4 pr-4 pl-4 pt-4'>
-              {disNameArray[item][0].title} <br />
+            <div
+              className='text-3xl font-bold pb-4 pr-4 pl-4 pt-4'
+              key={item.id}
+            >
+              {disNameArray[item][0].title} <br key={item.id} />
             </div>
-            <hr className='border border-red-600 ml-4 mr-4 m-2' />
-            <div className='text-2xl pb-4 pr-4 pl-4 pt-4'>
-              {disNameArray[item][0].toDo} <br />
+            <hr className='border border-red-600 ml-4 mr-4 m-2' key={item.id} />
+            <div className='text-2xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
+              {disNameArray[item][0].toDo} <br key={item.id} />
             </div>
             {` `}
           </Link>
