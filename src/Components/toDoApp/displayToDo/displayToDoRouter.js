@@ -35,6 +35,7 @@ export const DisplayTodoByID = ({
 
     console.log(checkTODOID);
     console.log(currentUrl);
+    console.log(disNameArray[item][0].displayName);
     return (
       <div className='pt-2' key={index}>
         {/* 

@@ -1,9 +1,7 @@
 import HeaderToDo from '../header.toDo';
 
 import IndexConst from '../indexConst';
-import ListOfToDo from '../list.toDo';
 import FormToDoToDoID from './displayAddingToDo';
-import { DisplayTodoByID } from './displayToDoRouter';
 import ListOfDisplayToDo from './listToDo.displayToDo';
 
 export default function IndexDisplayToDo() {
@@ -30,23 +28,7 @@ export default function IndexDisplayToDo() {
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
             <HeaderToDo user={user} />
-            {/* <FormToDoToDoID
-              toDo={toDo}
-              setToDo={setToDo}
-              title={title}
-              setTitle={setTitle}
-              toDosArray={toDosArray}
-              setToDoSArray={setToDoSArray}
-              firebaseLib={firebaseLib}
-              FieldValue={FieldValue}
-              displayName={displayName}
-              user={user}
-              refTodo={refTodo}
-              createdAt={createdAt}
-              toDoID={toDoID}
-              userId={userId}
-            /> */}
-            <ListOfDisplayToDo
+            <FormToDoToDoID
               toDo={toDo}
               setToDo={setToDo}
               title={title}
@@ -62,6 +44,7 @@ export default function IndexDisplayToDo() {
               toDoID={toDoID}
               userId={userId}
             />
+            <ListOfDisplayToDo title={title} setTitle={setTitle} />
           </div>
         </div>
       </div>

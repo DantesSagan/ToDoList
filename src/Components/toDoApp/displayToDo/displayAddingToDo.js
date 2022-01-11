@@ -36,76 +36,105 @@ export default function FormToDoToDoID({
     getToDo(setToDoSArray);
   }, []);
 
-  const handleSubmitToDo = async (event) => {
-    const auth = getAuth();
-    const userAuth = auth.currentUser.uid;
+  const handleSubmitToDo = async () => {
+    setToDoSArray([
+      ...toDosArray,
+      { displayName, title, toDo, createdAt, toDoID },
+    ]);
+    setToDo('');
+    setTitle('');
 
-    const commaTitle = title.split(',');
-    const commaToDo = toDo.split(',');
-    event.preventDefault();
+    const disNameArray = Object.keys(toDosArray).map((item) => {
+      return toDosArray[item].toDosArray;
+    });
 
     const getDocTodos = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
     );
 
-    const checkExistingID = Object.keys(toDosArray).map((item) => {
-      return toDosArray[item].toDosArray;
-    });
+    const formatTime = () => {
+      var date = new Date();
+      // Year part from the timestamp
+      var year = date.getFullYear();
+      // Month part from the timestamp
+      var month = date.getMonth();
+      // Days part from the timestamp
+      var days = date.getDate();
+      // Hours part from the timestamp
+      var hours = date.getHours();
+      // Minutes part from the timestamp
+      var minutes = date.getMinutes();
+      // Seconds part from the timestamp
+      var seconds = date.getSeconds();
 
-    return Object.keys(checkExistingID).map(async (item) => {
+      // Will display time in 10:30:23 format
+      var formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
+      return formattedTime;
+    };
+
+    return Object.keys(disNameArray).map((item) => {
       // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
-      let comparisonName =
-        user?.username === checkExistingID[item][0].displayName;
+      let comparisonName = user?.username === disNameArray[item][0].displayName;
 
       // This is check if currentURL and RouterPath strict-equal
-      // To undestand what u want to delete in current equl parameters of URL
+      // To undestand what u want to change
       let getCurrentUrl = window.location.pathname;
-      let getRouterPathToDo = `/todolist/${checkExistingID[item][0].toDoID}`;
+      let getRouterPathToDo = `/todolist/${disNameArray[item][0].toDoID}`;
 
-      let checkPathID = getCurrentUrl === getRouterPathToDo;
+      let checkPathIDToDoList = getCurrentUrl === getRouterPathToDo;
 
-      if (checkPathID && comparisonName) {
-        console.log('Error this toDoID existing, try again');
-      } else {
-        const getDocTodos = await getDocs(
-          collection(firebaseLib.firestore(), 'todos')
+      // This is check if currentURL and RouterPath strict-equal
+      // So do confirm what u want to change in toDoList
+      if (checkPathIDToDoList) {
+        window.confirm(
+          `Are you sure you want to edit this toDo = ${disNameArray[item][0].toDo}? Вы уверены, что хотите поменять список дел ${disNameArray[item][0].title}?`
         );
-        setToDoSArray([
-          ...toDosArray,
-          { displayName, commaTitle, commaToDo, createdAt, toDoID },
-        ]);
-        setToDo('');
-        setTitle('');
-        getDocTodos.forEach(async (doc) => {
-          if (comparisonName && doc.if === checkExistingID[item][0].toDoID) {
-            await setDoc(doc.ref, {
-              toDosArray: arrayUnion({
-                displayName: displayName,
-                createdAt: new Date().toISOString(),
-                title: commaTitle,
-                toDo: commaToDo,
-                toDoID: toDoID,
-                userId: userAuth,
-              }),
-            })
-              .then(() => {
-                console.log('Document written with title: ', commaTitle);
-                console.log('Document written with displayName: ', displayName);
-                console.log('Document written with ID: ', toDoID);
-                alert(`ToDo ${title} was added`);
-              })
-              .catch((error) => {
-                console.error('Error adding document: ', error);
-              })
-              .then(() => {
-                window.location.reload();
-              });
-          } else {
-            return null;
-          }
-        });
+      } else {
+        console.log('error change');
+        return null;
       }
-      return checkExistingID[item][0].toDoID;
+
+      return comparisonName && checkPathIDToDoList
+        ? getDocTodos.forEach((doc) => {
+            // In this case need to compare two equal parameters for find user who create toDo
+            // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
+            // So updateDoc of toDoList otherwise - no
+            let auth = getAuth();
+            let userAuth = auth.currentUser.uid;
+
+            let checkDockIDToDo = doc.id === disNameArray[item][0].toDoID;
+            let checkUserName =
+              user?.username === disNameArray[item][0].displayName;
+
+            return checkDockIDToDo && checkUserName
+              ? updateDoc(doc.ref, {
+                  toDosArray: arrayUnion({
+                    displayName: disNameArray[item][0].displayName,
+                    createdAt: formatTime(),
+                    title: title,
+                    toDo: toDo,
+                    userId: userAuth,
+                    toDoID: disNameArray[item][0].toDoID,
+                  }),
+                })
+                  .then(() => {
+                    console.log('Document updated with title: ', title);
+                    console.log(
+                      'Document updated with displayName: ',
+                      displayName
+                    );
+                    alert('Array updated was successfully: ', toDosArray);
+                  })
+                  .catch((error) => {
+                    console.error('Array updated error: ', error);
+                    alert('Array updated error: ', error);
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  })
+              : console.log('Something wrong with edit doc data');
+          })
+        : null;
     });
   };
   console.log(toDosArray);
