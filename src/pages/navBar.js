@@ -1,11 +1,12 @@
 import {
   getDownloadURL,
   getStorage,
+  list,
   ref,
   uploadBytesResumable,
 } from 'firebase/storage';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -27,25 +28,48 @@ export default function NavBarAndHeader({ user: photoUser }) {
   );
   const storage = getStorage();
   // Create a reference to 'images/someName.jpg'
-  const mountainImagesRef = ref(
+  const usersImagesRef = ref(
     storage,
-    fullPath
-
+    `${fullPath}.png` || `${fullPath}.jpg` || `${fullPath}.jpeg`
     // + selectFile.name
   );
+  useEffect(() => {
+    const getPhoto = async () => {
+      await getDownloadURL(usersImagesRef)
+        .then((url) => {
+          // Insert url into an <img> tag to "download"
+          console.log(url);
+          const img = document.getElementById('myimg');
+          img.setAttribute('src', url);
+        })
+        .catch((error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case 'storage/object-not-found':
+              // File doesn't exist
+              console.log(error);
+              break;
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+            default:
+              console.log(error.code);
+              break;
+            // ...
+            case 'storage/unknown':
+              // Unknown error occurred, inspect the server response
+              break;
+          }
+        });
+    };
+    getPhoto();
+  }, []);
 
-  const uploadTask = uploadBytesResumable(mountainImagesRef);
-  const photo = () => {
-    return uploadTask.on('state_changed', () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-        return downloadURL;
-      });
-    });
-  };
-
-  console.log(mountainImagesRef.name);
+  console.log(usersImagesRef.name);
   return (
     <header className='h-16 bg-black border-t border-8 border-red-600 mb-8 p-6 shadow-inner'>
       <div className='container mx-auto max-w-screen-lg h-full'>
@@ -84,8 +108,9 @@ export default function NavBarAndHeader({ user: photoUser }) {
                   <div className='flex items-center cursor-pointer'>
                     <Link to={`/p/${user?.username}`}>
                       <img
+                        id='myimg'
                         className='rounded-full h-8 w-8 flex'
-                        src={`/images/avatars/${photoUser?.username}.jpg`}
+                        src={usersImagesRef.name}
                         alt={`${user?.username} profile`}
                         onError={(e) => {
                           e.target.src = DEFAULT_IMAGE_PATH;

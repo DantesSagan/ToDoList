@@ -17,25 +17,25 @@ export default function SubmitPhoto({ photoUrl, fullPath, selectFile }) {
     };
 
     // Create a reference to 'somaName.jpg'
-    const mountainsRef = ref(storage, photoUrl);
+    const userssRef = ref(storage, photoUrl);
 
     // Create a reference to 'images/someName.jpg'
-    const mountainImagesRef = ref(
+    const usersImagesRef = ref(
       storage,
       fullPath
 
       // + selectFile.name
     );
     const uploadTask = uploadBytesResumable(
-      mountainImagesRef,
+      usersImagesRef,
       selectFile,
       metadata
     );
     console.log(uploadTask);
 
     // While the file names are the same, the references point to different files
-    const compRef = mountainsRef.name === mountainImagesRef.name; // true
-    //   mountainsRef.fullPath === mountainImagesRef.fullPath; // false
+    const compRef = userssRef.name === usersImagesRef.name; // true
+    //   userssRef.fullPath === usersImagesRef.fullPath; // false
     console.log(compRef);
 
     // Listen for state changes, errors, and completion of the upload.
