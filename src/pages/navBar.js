@@ -1,4 +1,11 @@
-import React, { useContext } from 'react';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
+
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -9,12 +16,36 @@ import useUser from '../hooks/user';
 import * as ROUTES from '../constants/routes';
 import { DEFAULT_IMAGE_PATH } from '../constants/defaultPaths';
 
-export default function NavBarAndHeader() {
+export default function NavBarAndHeader({ user: photoUser }) {
   const { firebaseLib } = useContext(FirebaseContext);
   const { user: loggedInUser } = useContext(UserContext);
   const { user } = useUser(loggedInUser?.uid);
   const navigate = useNavigate();
+  const path = `gs://todolist-64991.appspot.com`;
+  const [fullPath, setFullPath] = useState(
+    path + `/images/avatars/${photoUser?.username}`
+  );
+  const storage = getStorage();
+  // Create a reference to 'images/someName.jpg'
+  const mountainImagesRef = ref(
+    storage,
+    fullPath
 
+    // + selectFile.name
+  );
+
+  const uploadTask = uploadBytesResumable(mountainImagesRef);
+  const photo = () => {
+    return uploadTask.on('state_changed', () => {
+      // Upload completed successfully, now we can get the download URL
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        return downloadURL;
+      });
+    });
+  };
+
+  console.log(mountainImagesRef.name);
   return (
     <header className='h-16 bg-black border-t border-8 border-red-600 mb-8 p-6 shadow-inner'>
       <div className='container mx-auto max-w-screen-lg h-full'>
@@ -54,7 +85,7 @@ export default function NavBarAndHeader() {
                     <Link to={`/p/${user?.username}`}>
                       <img
                         className='rounded-full h-8 w-8 flex'
-                        src={`/images/avatars/${user?.username}.jpg`}
+                        src={`/images/avatars/${photoUser?.username}.jpg`}
                         alt={`${user?.username} profile`}
                         onError={(e) => {
                           e.target.src = DEFAULT_IMAGE_PATH;

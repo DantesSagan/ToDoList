@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import UserContext from '../../../../context/user';
-import IndexConst from '../../indexConst';
 
 import { getDocs, collection, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -8,18 +8,16 @@ import { getToDo } from '../../../../services/firebase';
 
 import useUser from '../../../../hooks/user';
 
-export default function ToDoEditToDo() {
-  const {
-    displayName,
-    createdAt,
-    toDoID,
-    toDo,
-    setToDo,
-    toDosArray,
-    setToDoSArray,
-    firebaseLib,
-  } = IndexConst();
-
+export default function ToDoEditToDo({
+  setToDoSArray,
+  toDosArray,
+  displayName,
+  toDo,
+  createdAt,
+  toDoID,
+  setToDo,
+  firebaseLib,
+}) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 
@@ -129,13 +127,5 @@ export default function ToDoEditToDo() {
   console.log(toDosArray);
   return {
     editToDoList,
-    displayName,
-    createdAt,
-    toDoID,
-    toDo,
-    setToDo,
-    toDosArray,
-    setToDoSArray,
-    firebaseLib,
   };
 }

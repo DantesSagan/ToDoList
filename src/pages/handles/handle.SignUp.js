@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { doesUsernameExist } from '../../services/firebase';
 
-import IndexSetting from '../../Components/profile/toDoSettings/index.setting';
+import IndexSetting from '../../Components/profile/userSettings/index.setting';
 
 import * as ROUTES from '../../constants/routes';
 

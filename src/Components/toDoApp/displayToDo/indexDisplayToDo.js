@@ -44,7 +44,22 @@ export default function IndexDisplayToDo() {
               toDoID={toDoID}
               userId={userId}
             />
-            <ListOfDisplayToDo title={title} setTitle={setTitle} />
+            <ListOfDisplayToDo
+              toDo={toDo}
+              setToDo={setToDo}
+              title={title}
+              setTitle={setTitle}
+              toDosArray={toDosArray}
+              setToDoSArray={setToDoSArray}
+              firebaseLib={firebaseLib}
+              FieldValue={FieldValue}
+              displayName={displayName}
+              user={user}
+              refTodo={refTodo}
+              createdAt={createdAt}
+              toDoID={toDoID}
+              userId={userId}
+            />
           </div>
         </div>
       </div>

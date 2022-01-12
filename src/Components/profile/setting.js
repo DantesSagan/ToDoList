@@ -1,22 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useContext } from 'react';
 
 import useUser from '../../hooks/user';
 import UserContext from '../../context/user';
 
 import NavBarAndHeader from '../../pages/navBar';
-import HandleEmailAddress from './toDoSettings/editSettings/handleEmailAddress';
-import HandleFullName from './toDoSettings/editSettings/handleFullName';
-import HandlePassword from './toDoSettings/editSettings/handlePassword';
-import HandleUsername from './toDoSettings/editSettings/handleUsername';
-import HandlePhone from './toDoSettings/editSettings/handlePhone';
-import HandleGender from './toDoSettings/editSettings/handleGender';
-import HandleCity from './toDoSettings/editSettings/handleCity';
-import HandleCountry from './toDoSettings/editSettings/handleCountry';
+import HandleEmailAddress from './userSettings/editSettings/handleEmailAddress';
+import HandleFullName from './userSettings/editSettings/handleFullName';
+import HandlePassword from './userSettings/editSettings/handlePassword';
+import HandleUsername from './userSettings/editSettings/handleUsername';
+import HandlePhone from './userSettings/editSettings/handlePhone';
+import HandleGender from './userSettings/editSettings/handleGender';
+import HandleCity from './userSettings/editSettings/handleCity';
+import HandleCountry from './userSettings/editSettings/handleCountry';
 
-import DeleteUserAccount from './toDoSettings/settings.deleteUserAccount';
+import DeleteUserAccount from './userSettings/settings.deleteUserAccount';
 
-import { CheckUserProfile } from './toDoSettings/settings.checkUserProfile';
-import DisplayUser from './toDoSettings/displayUser';
+import { CheckUserProfile } from './userSettings/settings.checkUserProfile';
+import DisplayUser from './userSettings/displayUser';
 
 export default function Setting() {
   const { handlePass, password, setPassword, passOne, passTwo, setCheckPass } =

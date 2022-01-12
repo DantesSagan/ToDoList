@@ -5,14 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { getToDo } from '../../../services/firebase';
 import PropTypes from 'prop-types';
 
-import {
-  doc,
-  arrayUnion,
-  setDoc,
-  getDocs,
-  collection,
-  updateDoc,
-} from 'firebase/firestore';
+import { arrayUnion, getDocs, collection, updateDoc } from 'firebase/firestore';
 import UserContext from '../../../context/user';
 import useUser from '../../../hooks/user';
 import { getAuth } from 'firebase/auth';
