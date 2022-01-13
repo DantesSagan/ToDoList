@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ConvertInfo from './convertInfo';
 import DeletePhoto from './deletePhoto';
 import SubmitPhoto from './submitPhoto';
-
+import '../../../App.css';
 export default function Photo({ user }) {
   const path = `gs://todolist-64991.appspot.com`;
   const [photoUrl, setPhotoUrl] = useState('');
@@ -36,7 +36,7 @@ export default function Photo({ user }) {
         </div>
       );
     }
-  };  
+  };
 
   return (
     <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600'>
@@ -50,7 +50,7 @@ export default function Photo({ user }) {
         <h1 className='text-4xl font-bold m-4'>Photo settings</h1>
         <input
           type='file'
-          className='p-4 text-2xl m-2'
+          className='p-4 text-2xl m-2 '
           onChange={(e) => setSelectFile(e.target.files[0])}
         />
         <button

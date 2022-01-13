@@ -31,6 +31,7 @@ export default function Login() {
   useEffect(() => {
     document.title = 'Login - ToDoList';
   }, []);
+  
   return (
     <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
       <div className='flex flex-col w-2/4 border-t border-8 border-red-600'>
