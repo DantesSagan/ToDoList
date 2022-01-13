@@ -5,6 +5,7 @@ import IndexSetting from '../index.setting';
 
 export default function HandleEmailAddress() {
   const { user, firebaseLib, emailAddress, setEmailAddress } = IndexSetting();
+  const isInvalidEmailAddress = emailAddress === '';
 
   const handleEmailAddress = async (event) => {
     event.preventDefault();
@@ -39,9 +40,25 @@ export default function HandleEmailAddress() {
       alert('Email provider changed successfully:  ', item);
     });
   };
-  return {
-    handleEmailAddress,
-    emailAddress,
-    setEmailAddress,
-  };
+  return (
+    <div className={`${isInvalidEmailAddress && 'opacity-60'}`}>
+      <input
+        minLength={6}
+        maxLength={50}
+        aria-label='Enter your email address'
+        type='email'
+        placeholder='Change you email address'
+        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+        onChange={({ target }) => setEmailAddress(target.value)}
+        value={emailAddress}
+      />
+      <button
+        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+        type='submit'
+        onClick={handleEmailAddress}
+      >
+        Change email address
+      </button>
+    </div>
+  );
 }

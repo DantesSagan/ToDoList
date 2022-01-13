@@ -3,6 +3,7 @@ import { getDocs, collection, updateDoc } from 'firebase/firestore';
 
 export default function HandleFullName() {
   const { user, firebaseLib, fullName, setFullName } = IndexSetting();
+const isInvalidFullName = fullName === '';
 
   const handleFullName = async (event) => {
     event.preventDefault();
@@ -31,9 +32,24 @@ export default function HandleFullName() {
       console.log(doc.id, ' => ', doc.data());
     });
   };
-  return {
-    handleFullName,
-    fullName,
-    setFullName,
-  };
+  return (
+    <div className={`${isInvalidFullName && 'opacity-60'}`}>
+      <input
+        aria-label='Enter your full name'
+        type='text'
+        placeholder='Full name'
+        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+        onChange={({ target }) => setFullName(target.value)}
+        value={fullName}
+      />
+      <button
+        disabled={isInvalidFullName}
+        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+        type='submit'
+        onClick={handleFullName}
+      >
+        Change full name
+      </button>
+    </div>
+  );
 }

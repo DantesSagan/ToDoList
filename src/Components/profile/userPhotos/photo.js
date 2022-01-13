@@ -36,7 +36,7 @@ export default function Photo({ user }) {
         </div>
       );
     }
-  };
+  };  
 
   return (
     <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600'>

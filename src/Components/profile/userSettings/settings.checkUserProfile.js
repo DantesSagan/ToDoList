@@ -13,4 +13,15 @@ export const CheckUserProfile = () => {
     });
   }
   console.log(user);
+  return (
+    <div className='p-4'>
+      <button
+        onClick={CheckUserProfile}
+        type='button'
+        className='bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold'
+      >
+        Check User Profile
+      </button>
+    </div>
+  );
 };

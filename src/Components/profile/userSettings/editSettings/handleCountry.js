@@ -6,6 +6,8 @@ import IndexSetting from '../index.setting';
 
 export default function HandleCountry() {
   const { user, firebaseLib, country, setCountry } = IndexSetting();
+  const isInvalidCountry = country === '';
+  
   const handleCountry = async (event) => {
     event.preventDefault();
 
@@ -34,9 +36,24 @@ export default function HandleCountry() {
       console.log(doc.id, ' => ', doc.data());
     });
   };
-  return {
-    handleCountry,
-    country,
-    setCountry,
-  };
+  return (
+    <div className={`${isInvalidCountry && 'opacity-60'}`}>
+      <input
+        aria-label='Enter your Country'
+        type='text'
+        placeholder='Country'
+        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+        onChange={({ target }) => setCountry(target.value)}
+        value={country}
+      />{' '}
+      <button
+        disabled={isInvalidCountry}
+        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+        type='submit'
+        onClick={handleCountry}
+      >
+        Change country
+      </button>
+    </div>
+  );
 }

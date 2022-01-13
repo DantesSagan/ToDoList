@@ -48,5 +48,15 @@ export default function DeleteUserAccount() {
         alert('User deleted error: ', error);
       });
   };
-  return { DUA };
+  return (
+    <div className='p-4'>
+      <button
+        onClick={DUA}
+        type='button'
+        className='bg-red-700 hover:bg-red-600 text-white w-full rounded h-8 font-bold'
+      >
+        Delete user account
+      </button>
+    </div>
+  );
 }

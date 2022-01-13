@@ -4,6 +4,7 @@ import { getDocs, collection, updateDoc } from 'firebase/firestore';
 
 export default function HandlePhone() {
   const { user, firebaseLib, phone, setPhone } = IndexSetting();
+const isInvalidPhone = phone === '';
 
   const handlePhone = async (event) => {
     event.preventDefault();
@@ -50,9 +51,24 @@ export default function HandlePhone() {
     //   setError(error.message);
     // }
   };
-  return {
-    handlePhone,
-    phone,
-    setPhone,
-  };
+  return (
+    <div className={`${isInvalidPhone && 'opacity-60'}`}>
+      <input
+        aria-label='Enter your phone number'
+        type='tele'
+        placeholder='Phone Number'
+        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+        onChange={({ target }) => setPhone(target.value)}
+        value={phone}
+      />
+      <button
+        disabled={isInvalidPhone}
+        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+        type='submit'
+        onClick={handlePhone}
+      >
+        Change phone
+      </button>
+    </div>
+  );
 }

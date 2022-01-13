@@ -1,10 +1,6 @@
-import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
-import { useQuery } from 'react-query';
-import axios from 'axios';
 import { getToDo } from '../../services/firebase';
 
 export default function RouterToDo({
