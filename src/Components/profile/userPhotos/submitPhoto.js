@@ -13,7 +13,7 @@ export default function SubmitPhoto({ photoUrl, fullPath, selectFile }) {
     // Create the file metadata
     //   /** @type {any} */
     const metadata = {
-      contentType: 'images/jpeg',
+      contentType: 'images/png' || 'images/jpg' || 'images/jpeg',
     };
 
     // Create a reference to 'somaName.jpg'
@@ -22,7 +22,7 @@ export default function SubmitPhoto({ photoUrl, fullPath, selectFile }) {
     // Create a reference to 'images/someName.jpg'
     const usersImagesRef = ref(
       storage,
-      fullPath
+      `${fullPath}.png` || `${fullPath}.jpg` || `${fullPath}.jpeg`
 
       // + selectFile.name
     );

@@ -7,6 +7,7 @@ import { getUserByUsername } from '../services/firebase';
 
 import * as ROUTES from '../constants/routes';
 import Photo from '../Components/profile/userPhotos/photo';
+import UserNavBar from './userNavBar';
 
 export default function Profile() {
   const { username } = useParams();
@@ -29,7 +30,7 @@ export default function Profile() {
   return user?.username ? (
     <div>
       <NavBarAndHeader user={user} />
-      <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg'>
+      <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600'>
         <div className='text-2xl font-bold'>{`User Profile ${user?.username}`}</div>
         <Link to={`/p/${user?.username}/settings`}>
           <button className='bg-black hover:bg-red-600 p-4 rounded-lg text-white font-bold'>

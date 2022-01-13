@@ -5,6 +5,9 @@ import { doesUsernameExist } from '../../services/firebase';
 import IndexSetting from '../../Components/profile/userSettings/index.setting';
 
 import * as ROUTES from '../../constants/routes';
+import { useContext } from 'react';
+import UserContext from '../../context/user';
+import useUser from '../../hooks/user';
 
 export default function HandleSingUp() {
   const {
@@ -29,9 +32,10 @@ export default function HandleSingUp() {
     passTwo,
     setCheckPass,
     setError,
-    firebaseLib
+    firebaseLib,
   } = IndexSetting();
-
+  const { user: loggedInUser } = useContext(UserContext);
+  const { user } = useUser(loggedInUser?.uid);
   const navigate = useNavigate();
 
   const SignUp = async (event) => {
@@ -50,7 +54,7 @@ export default function HandleSingUp() {
           await createdUserResult.user.updateProfile({
             displayName: username,
           });
-          
+
           await firebaseLib
             .firestore()
             .collection('users')

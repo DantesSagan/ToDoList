@@ -7,6 +7,7 @@ import LoggedInUserContext from '../../../context/logged-in-user';
 import useUser from '../../../hooks/user';
 
 import IndexDisplayToDo from './indexDisplayToDo';
+import UserNavBar from '../../../pages/userNavBar';
 export default function DashboardDisplayToDo({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
