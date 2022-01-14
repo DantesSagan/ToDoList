@@ -19,12 +19,16 @@ const Setting = lazy(() => import('./Components/profile/setting'));
 const DashboardDisplayToDo = lazy(() =>
   import('./Components/toDoApp/displayToDo/dashboard.displayToDo')
 );
+
+// const NavBarAndHeader = lazy(() => import('./pages/userNavBar'));
+const Footer = lazy(() => import('./pages/footer'));
 export default function App() {
   const { user } = useAuthListener();
   return (
     <UserContext.Provider value={{ user }}>
       <BrowserRouter>
         <Suspense fallback={<Loader />}>
+          {/* <NavBarAndHeader user={user} /> */}
           <Routes>
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
@@ -62,6 +66,7 @@ export default function App() {
             />
             <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
           </Routes>
+          <Footer />
         </Suspense>
       </BrowserRouter>
     </UserContext.Provider>

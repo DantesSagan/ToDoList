@@ -4,9 +4,8 @@ import { useEffect, useContext } from 'react';
 import useUser from '../../hooks/user';
 import UserContext from '../../context/user';
 
-import NavBarAndHeader from '../../pages/navBar';
-
 import DisplayUser from './userSettings/displayUser';
+import UserNavBar from '../../pages/userNavBar';
 
 export default function Setting() {
   const { user: loggedIn } = useContext(UserContext);
@@ -18,7 +17,7 @@ export default function Setting() {
 
   return (
     <div>
-      <NavBarAndHeader />
+      <UserNavBar />
       <DisplayUser />
     </div>
   );

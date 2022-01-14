@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 import React, { useContext, useEffect, useState } from 'react';
@@ -12,21 +13,24 @@ import * as ROUTES from '../constants/routes';
 import { DEFAULT_IMAGE_PATH } from '../constants/defaultPaths';
 
 export default function NavBarAndHeader({ user: photoUser }) {
+  const navigate = useNavigate();
+  const storage = getStorage();
+
   const { firebaseLib } = useContext(FirebaseContext);
   const { user: loggedInUser } = useContext(UserContext);
   const { user } = useUser(loggedInUser?.uid);
-  const navigate = useNavigate();
+
   const path = `gs://todolist-64991.appspot.com`;
   const [fullPath, setFullPath] = useState(
     path + `/images/avatars/${photoUser?.username}`
   );
-  const storage = getStorage();
   // Create a reference to 'images/someName.jpg'
   const usersImagesRef = ref(
     storage,
     `${fullPath}.png` || `${fullPath}.jpg` || `${fullPath}.jpeg`
     // + selectFile.name
   );
+
   useEffect(() => {
     const getPhoto = async () => {
       await getDownloadURL(usersImagesRef)
@@ -61,7 +65,7 @@ export default function NavBarAndHeader({ user: photoUser }) {
         });
     };
     getPhoto();
-  }, []);
+  }, [usersImagesRef]);
 
   console.log(usersImagesRef.name);
   return (

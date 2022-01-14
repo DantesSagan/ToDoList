@@ -6,9 +6,9 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className='bg-red-600'>
+    <div className='m-24 rounded-lg bg-red-600'>
       <div className='mx-auto max-w-screen-lg'>
-        <p className='text-center text-4x1 text-white'>Not Found!</p>
+        <p className='text-center text-4xl text-white'>Not Found!</p>
       </div>
     </div>
   );

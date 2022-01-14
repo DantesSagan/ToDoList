@@ -30,6 +30,14 @@ export const DisplayTodoByID = ({
     // This is valueTitle and valueToDo
     // Their needed for editing data what hold previous (old data value)
     // for editing this data or just remove old data and type new one
+    // This is working but not well because when you want to delete all title ot toDo
+    // value will comeback to old data value immediately and this works well if u want to change
+    // some value from previos data
+    // But better use defaultValue and put in there
+    // - disNameArray[item][0].title
+    // or
+    // disNameArray[item][0].toDo
+    // And this is work perfect
     let valueTitle = title ? title : disNameArray[item][0].title;
     let valueToDo = toDo ? toDo : disNameArray[item][0].toDo;
 
@@ -46,7 +54,7 @@ export const DisplayTodoByID = ({
         {user?.username === disNameArray[item][0].displayName
           ? checkTODOID && (
               <form
-                className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'
+                className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
                 key={index}
               >
                 <div className='m-8 p-4 shadow-inner rounded-lg'>
@@ -75,12 +83,10 @@ export const DisplayTodoByID = ({
                   {clickTitle ? (
                     <div className='block'>
                       <textarea
+                        defaultValue={disNameArray[item][0].title}
                         className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
-                        value={valueTitle}
                         onChange={(e) => setTitle(e.target.value)}
-                      >
-                        {disNameArray[item][0].title}
-                      </textarea>{' '}
+                      />
                       <button
                         className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
                           !title && 'opacity-25'
@@ -111,11 +117,9 @@ export const DisplayTodoByID = ({
                     <div className='block'>
                       <textarea
                         className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
-                        value={valueToDo}
+                        defaultValue={disNameArray[item][0].toDo}
                         onChange={(e) => setToDo(e.target.value)}
-                      >
-                        {disNameArray[item][0].toDo}
-                      </textarea>
+                      />
                       <button
                         className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
                           !toDo && 'opacity-25'

@@ -4,6 +4,7 @@ import ConvertInfo from './convertInfo';
 import DeletePhoto from './deletePhoto';
 import SubmitPhoto from './submitPhoto';
 import '../../../App.css';
+
 export default function Photo({ user }) {
   const path = `gs://todolist-64991.appspot.com`;
   const [photoUrl, setPhotoUrl] = useState('');

@@ -5,8 +5,6 @@ import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
 
-import { updateDoc, getDocs, collection } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 import { DisplayTodoByID } from './displayToDoRouter';
 import { getToDo } from '../../../services/firebase';
 import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
@@ -58,7 +56,7 @@ export default function ListOfDisplayToDo({
   }, []);
 
   return (
-    <div>
+    <div className='h-screen'>
       <DisplayTodoByID
         toDosArray={toDosArray}
         user={user}

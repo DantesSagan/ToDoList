@@ -1,29 +1,31 @@
 import NavBarAndHeader from '../pages/navBar';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { getUserByUsername } from '../services/firebase';
 
-import * as ROUTES from '../constants/routes';
+import UserContext from '../context/user';
+import useUser from '../hooks/user';
 
 export default function UserNavBar() {
-  const { username } = useParams();
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+  // const [user, setUser] = useState(null);
+  // const navigate = useNavigate();
+  const { user: loggedIn } = useContext(UserContext);
+  const { user } = useUser(loggedIn?.uid);
+  // useEffect(() => {
+  //   async function checkUserExists() {
+  //     if (user?.userId) {
+  //       setUser(user);
+  //     } else {
+  //       navigate(ROUTES.NOT_FOUND);
+  //     }
+  //   }
 
-  useEffect(() => {
-    async function checkUserExists() {
-      const [user] = await getUserByUsername(username);
-      if (user?.userId) {
-        setUser(user);
-      } else {
-        navigate(ROUTES.NOT_FOUND);
-      }
-    }
+  //   checkUserExists();
+  // }, [navigate]);
 
-    checkUserExists();
-  }, [username, navigate]);
-
-  return user?.username ? <NavBarAndHeader /> : null;
+  return user?.username ? (
+    <NavBarAndHeader user={user} />
+  ) : null;
 }

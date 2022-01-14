@@ -28,7 +28,7 @@ export default function Profile() {
   }, [username, navigate]);
 
   return user?.username ? (
-    <div>
+    <div className='h-screen'>
       <NavBarAndHeader user={user} />
       <form className='block mx-auto max-w-screen-lg  p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 grid'>
         <div className='text-3xl font-bold p-4 m-2'>{`User Profile ${user?.username}`}</div>

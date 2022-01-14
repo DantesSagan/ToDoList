@@ -12,12 +12,12 @@ import { CheckUserProfile } from './settings.checkUserProfile';
 
 export default function DisplayUser() {
   return (
-    <div>
+    <div  >
       <form
-        className='container block mx-auto max-w-screen-sm item-center justify-center'
+        className='container block mx-auto max-w-screen-sm item-center justify-center mb-28'
         method='POST'
       >
-        <fieldset className='border border-gray-primary p-4'>
+        <fieldset className='border-4 border-t border-red-400 p-4 bg-white'>
           <legend className='block m-auto'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
