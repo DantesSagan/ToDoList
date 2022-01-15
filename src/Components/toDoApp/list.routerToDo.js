@@ -1,3 +1,4 @@
+import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ export default function RouterToDo({
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
+
   // const PaginationToDo = async () => {
   //   const fetchColors = (pageNumber) => {
   //     const first = firebaseLib
@@ -101,7 +103,6 @@ export default function RouterToDo({
       </div>
     );
   });
-
   console.log(toDoArr);
 
   return (
