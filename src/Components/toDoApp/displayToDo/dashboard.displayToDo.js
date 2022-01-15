@@ -7,6 +7,7 @@ import useUser from '../../../hooks/user';
 
 import IndexDisplayToDo from './indexDisplayToDo';
 import UserNavBar from '../../../pages/userNavBar';
+import Footer from '../../../pages/footer';
 export default function DashboardDisplayToDo({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
@@ -20,6 +21,7 @@ export default function DashboardDisplayToDo({ user: loggedInUser }) {
       <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
         <IndexDisplayToDo />
       </div>
+      <Footer />
     </LoggedInUserContext.Provider>
   );
 }

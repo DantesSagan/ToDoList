@@ -6,6 +6,7 @@ import UserContext from '../../context/user';
 
 import DisplayUser from './userSettings/displayUser';
 import UserNavBar from '../../pages/userNavBar';
+import Footer from '../../pages/footer';
 
 export default function Setting() {
   const { user: loggedIn } = useContext(UserContext);
@@ -16,9 +17,10 @@ export default function Setting() {
   }, []);
 
   return (
-    <div>
+    <div className='h-screen'>
       <UserNavBar />
       <DisplayUser />
+      <Footer />
     </div>
   );
 }

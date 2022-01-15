@@ -61,7 +61,6 @@ export default function IndexDisplayToDo() {
               toDoID={toDoID}
               userId={userId}
             />
-          <Footer />
           </div>
         </div>
       </div>

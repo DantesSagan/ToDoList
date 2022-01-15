@@ -8,6 +8,7 @@ import { getUserByUsername } from '../services/firebase';
 import * as ROUTES from '../constants/routes';
 import Photo from '../Components/profile/userPhotos/photo';
 import UserNavBar from './userNavBar';
+import Footer from './footer';
 
 export default function Profile() {
   const { username } = useParams();
@@ -28,17 +29,20 @@ export default function Profile() {
   }, [username, navigate]);
 
   return user?.username ? (
-    <div className='h-screen'>
-      <NavBarAndHeader user={user} />
-      <form className='block mx-auto max-w-screen-lg  p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 grid'>
-        <div className='text-3xl font-bold p-4 m-2'>{`User Profile ${user?.username}`}</div>
-        <Link to={`/p/${user?.username}/settings`}>
-          <button className='bg-black hover:bg-red-600 p-4 rounded-lg text-white font-bold w-2/6'>
-            Settings
-          </button>
-        </Link>
-      </form>
-      <Photo user={user} />
+    <div>
+      <div className='h-screen'>
+        <NavBarAndHeader user={user} />
+        <form className='block mx-auto max-w-screen-lg  p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 grid'>
+          <div className='text-3xl font-bold p-4 m-2'>{`User Profile ${user?.username}`}</div>
+          <Link to={`/p/${user?.username}/settings`}>
+            <button className='bg-black hover:bg-red-600 p-4 rounded-lg text-white font-bold w-2/6'>
+              Settings
+            </button>
+          </Link>
+        </form>
+        <Photo user={user} />
+      </div>
+      <Footer />
     </div>
   ) : null;
 }

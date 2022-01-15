@@ -8,6 +8,7 @@ import useUser from '../hooks/user';
 import IndexToDo from '../Components/toDoApp/index';
 import UserNavBar from './userNavBar';
 import NavBarAndHeader from './navBar';
+import Footer from './footer';
 export default function Dashboard({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
@@ -21,6 +22,7 @@ export default function Dashboard({ user: loggedInUser }) {
       <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
         <IndexToDo />
       </div>
+      <Footer />
     </LoggedInUserContext.Provider>
   );
 }

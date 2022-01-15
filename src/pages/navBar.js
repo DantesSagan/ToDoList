@@ -68,19 +68,11 @@ export default function NavBarAndHeader({ user: photoUser }) {
   }, [usersImagesRef]);
 
   console.log(usersImagesRef.name);
+
   return (
     <header className='h-16 bg-black border-t border-8 border-red-600 mb-8 p-6 shadow-inner'>
       <div className='container mx-auto max-w-screen-lg h-full'>
         <div className='flex justify-between h-full'>
-          <div>
-            <i className='text-white ml-2' style={{ fontSize: '0.6em' }}>
-              <strong className='text-white font-bold border-2 border-red-700'>
-                <a href='https://github.com/DantesSagan/ToDoList'>
-                  Coded by @DantesSagan
-                </a>
-              </strong>
-            </i>
-          </div>
           <div className='text-white text-center flex items-center align-items cursor-pointer'>
             <Link to={ROUTES.DASHBOARD} />
           </div>
