@@ -1,6 +1,7 @@
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../../pages/footer';
 
 import { getToDo } from '../../services/firebase';
 
@@ -106,13 +107,15 @@ export default function RouterToDo({
   console.log(toDoArr);
 
   return (
-    <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl w-full'>
-      <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
-      {/* <div className='text-3xl text-black font-bold justify-center'>
+    <div>
+      <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl w-full'>
+        <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
+        {/* <div className='text-3xl text-black font-bold justify-center'>
         - {pagination} -
       </div> */}
-      {/* <PaginationToDo /> */}
-      {/* Here need to add pagination button to see a list of tasks by (any number) by page in it */}
-    </form>
+        {/* <PaginationToDo /> */}
+        {/* Here need to add pagination button to see a list of tasks by (any number) by page in it */}
+      </form>
+    </div>
   );
 }

@@ -1,3 +1,4 @@
+import Footer from '../../pages/footer';
 import FormToDo from './add-to-do.creatingToDo';
 
 import HeaderToDo from './header.toDo';
@@ -22,7 +23,7 @@ export default function IndexToDo() {
     displayName,
   } = IndexConst();
   return (
-    <div className='container flex mx-auto max-w-screen-sm item-center justify-center h-screen'>
+    <div className='container flex mx-auto max-w-screen-sm item-center justify-center'>
       <div className='flex flex-col w-2/2'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
@@ -58,6 +59,7 @@ export default function IndexToDo() {
               toDoID={toDoID}
               userId={userId}
             />
+            
           </div>
         </div>
       </div>

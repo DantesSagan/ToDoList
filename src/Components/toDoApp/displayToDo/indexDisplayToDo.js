@@ -1,3 +1,4 @@
+import Footer from '../../../pages/footer';
 import HeaderToDo from '../header.toDo';
 
 import IndexConst from '../indexConst';
@@ -60,6 +61,7 @@ export default function IndexDisplayToDo() {
               toDoID={toDoID}
               userId={userId}
             />
+          <Footer />
           </div>
         </div>
       </div>

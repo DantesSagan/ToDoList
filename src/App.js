@@ -66,7 +66,6 @@ export default function App() {
             />
             <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
           </Routes>
-          <Footer />
         </Suspense>
       </BrowserRouter>
     </UserContext.Provider>
