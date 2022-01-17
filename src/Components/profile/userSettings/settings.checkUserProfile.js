@@ -18,7 +18,7 @@ export const CheckUserProfile = () => {
       <button
         onClick={CheckUserProfile}
         type='button'
-        className='bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold'
+        className='bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold transition ease-in-out duration-300 focus:border-black border-4 border-solid'
       >
         Check User Profile
       </button>

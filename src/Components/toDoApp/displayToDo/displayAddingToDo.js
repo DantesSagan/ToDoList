@@ -107,7 +107,7 @@ export default function FormToDoToDoID({
                     title: title,
                     toDo: toDo,
                     userId: userAuth,
-                    toDoID: disNameArray[item][0].toDoID,
+                    toDoID: toDoID,
                   }),
                 })
                   .then(() => {

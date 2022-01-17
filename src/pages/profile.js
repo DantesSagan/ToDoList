@@ -35,7 +35,7 @@ export default function Profile() {
         <form className='block mx-auto max-w-screen-lg  p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 grid'>
           <div className='text-3xl font-bold p-4 m-2'>{`User Profile ${user?.username}`}</div>
           <Link to={`/p/${user?.username}/settings`}>
-            <button className='bg-black hover:bg-red-600 p-4 rounded-lg text-white font-bold w-2/6'>
+            <button className='bg-black hover:bg-red-600 p-4 rounded-lg text-white font-bold w-2/6 transition'>
               Settings
             </button>
           </Link>

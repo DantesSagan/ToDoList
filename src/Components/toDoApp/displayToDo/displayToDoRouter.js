@@ -10,6 +10,7 @@ export const DisplayTodoByID = ({
   setToDo,
   editToDoList,
   editTitle,
+  setToDoSArray,
 }) => {
   const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
@@ -19,14 +20,13 @@ export const DisplayTodoByID = ({
   });
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
-
   return Object.keys(disNameArray).map((item, index) => {
     // this is comparison for checking pathname of url from link to this page
     // and comparison with toDoID for receiving data from Firebase
     let currentUrl = window.location.pathname;
     let todoURL = `/todolist/${disNameArray[item][0].toDoID}`;
     let checkTODOID = currentUrl === todoURL;
-
+    let second = item;
     // This is valueTitle and valueToDo
     // Their needed for editing data what hold previous (old data value)
     // for editing this data or just remove old data and type new one
@@ -43,9 +43,20 @@ export const DisplayTodoByID = ({
 
     console.log(checkTODOID);
     console.log(currentUrl);
-    console.log(disNameArray[item][0].displayName);
+    console.log(disNameArray[item][index]);
+    console.log(disNameArray);
+    // console.log(
+    //   checkTODOID && user?.username
+    //     ? disNameArray[item][1].toDo
+    //     : // Object.assign(disNameArray[item]).map(
+    //       //     (ind) => disNameArray
+    //       //   )
+    //       null
+    // );
+    console.log(setToDoSArray);
+
     return (
-      <div className='pt-2' key={index}>
+      <div className='pt-2 ' key={index}>
         {/* 
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser 
@@ -140,7 +151,7 @@ export const DisplayTodoByID = ({
                       className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
                       onClick={() => setClickToDo(!clickToDo)}
                     >
-                      {disNameArray[item][0].toDo} <br />
+                      {disNameArray[item][0].toDo} <br />{' '}
                     </button>
                   )}
 
@@ -156,6 +167,7 @@ export const DisplayTodoByID = ({
               </form>
             )
           : null}
+          
       </div>
     );
   });

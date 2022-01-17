@@ -81,13 +81,13 @@ export default function NavBarAndHeader({ user: photoUser }) {
               <>
                 <Link to={ROUTES.DASHBOARD}>
                   {' '}
-                  <div className='bg-white font-bold text-sm rounded-lg text-black p-2'>
+                  <div className='bg-white font-bold text-sm rounded-lg text-black p-2 hover:bg-red-400 transButton'>
                     DASHBOARD
                   </div>
                 </Link>
 
                 <button
-                  className='bg-black font-bold text-sm rounded-lg text-white w-20 h-8'
+                  className='bg-black font-bold text-sm rounded-lg text-white w-20 h-8 hover:border-red-600 transButton transition ease-in-out focus:border-white'
                   type='button'
                   title='Sign Out'
                   onClick={() => {
@@ -104,11 +104,11 @@ export default function NavBarAndHeader({ user: photoUser }) {
                   Sign Out
                 </button>
                 {user && (
-                  <div className='flex items-center cursor-pointer'>
+                  <div className='flex items-center cursor-pointer transButton'>
                     <Link to={`/p/${user?.username}`}>
                       <img
                         id='myimg'
-                        className='rounded-full h-8 w-8 flex'
+                        className='rounded-full h-8 w-8 flex object-cover transition'
                         src={usersImagesRef.name}
                         alt={`${user?.username} profile`}
                         onError={(e) => {

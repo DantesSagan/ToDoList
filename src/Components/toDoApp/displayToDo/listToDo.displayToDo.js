@@ -68,6 +68,7 @@ export default function ListOfDisplayToDo({
         // editToDo={editToDo}
         editToDoList={editToDoList}
         editTitle={editTitle}
+        setToDoSArray={setToDoSArray}
       />
     </div>
   );

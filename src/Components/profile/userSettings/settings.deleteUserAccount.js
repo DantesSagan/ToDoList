@@ -49,11 +49,12 @@ export default function DeleteUserAccount() {
       });
   };
   return (
-    <div className='p-4'>
+    <div className='p-4 border-4 border-solid border-red-600 bg-black'>
+      <h1 className='text-white text-center text-3xl p-4 underline'>DANGER ZONE!!!</h1>
       <button
         onClick={DUA}
         type='button'
-        className='bg-red-700 hover:bg-red-600 text-white w-full rounded h-8 font-bold'
+        className='bg-red-700 text-white w-full rounded h-8 font-bold transition ease-in-out duration-300 hover:bg-black focus:border-red-700 border-4 border-solid'
       >
         Delete user account
       </button>

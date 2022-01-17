@@ -49,13 +49,14 @@ export default function Photo({ user }) {
         }}
       >
         <h1 className='text-4xl font-bold m-4'>Photo settings</h1>
+
         <input
           type='file'
-          className='p-4 text-2xl m-2 '
+          className='text-2xl m-2 border-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600'
           onChange={(e) => setSelectFile(e.target.files[0])}
         />
         <button
-          className='p-4 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold w-2/6'
+          className='p-4 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold w-2/6 transition'
           onClick={handleSubmitPhoto}
         >
           Set photo
@@ -66,7 +67,7 @@ export default function Photo({ user }) {
         <h1 className='text-4xl font-bold m-4'>{`Delete photo profile: ${user?.username}`}</h1>
         <button
           id='del'
-          className='p-4 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold w-2/6'
+          className='p-4 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold w-2/6 transition'
           onClick={delPhoto}
         >
           Delete photo
