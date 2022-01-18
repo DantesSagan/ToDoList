@@ -5,15 +5,14 @@ import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
 
-import { DisplayTodoByID } from './displayToDoRouter';
 import { getToDo } from '../../../services/firebase';
 import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
 
 import DeleteToDo from '../actions/deleteToDo';
 import TitleEditToDo from '../actions/toDoMembers/title.editToDo';
-import Checking from '../actions/checkUserTodo';
+import { DisplayTodoByIDNESTED } from './displayToDoNested';
 
-export default function ListOfDisplayToDo({
+export default function ListOfNestedDisplayToDo({
   title,
   setTitle,
   displayName,
@@ -57,7 +56,7 @@ export default function ListOfDisplayToDo({
 
   return (
     <div className='h-screen'>
-      <DisplayTodoByID
+      <DisplayTodoByIDNESTED
         toDosArray={toDosArray}
         user={user}
         deleteToDo={deleteToDo}
@@ -72,6 +71,6 @@ export default function ListOfDisplayToDo({
     </div>
   );
 }
-ListOfDisplayToDo.propTypes = {
+ListOfNestedDisplayToDo.propTypes = {
   toDosArray: PropTypes.array.isRequired,
 };

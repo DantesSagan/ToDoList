@@ -22,6 +22,9 @@ const DashboardDisplayToDo = lazy(() =>
 
 // const NavBarAndHeader = lazy(() => import('./pages/userNavBar'));
 const Footer = lazy(() => import('./pages/footer'));
+const DashboardDisplayNestedToDo = lazy(() =>
+  import('./Components/toDoApp/nestedToDo/dashboardNestedToDo')
+);
 export default function App() {
   const { user } = useAuthListener();
   return (
@@ -37,6 +40,14 @@ export default function App() {
               element={
                 <ProtectedRoute user={user}>
                   <DashboardDisplayToDo />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ROUTES.NESTEDTODOLIST}
+              element={
+                <ProtectedRoute user={user}>
+                  <DashboardDisplayNestedToDo />
                 </ProtectedRoute>
               }
             />

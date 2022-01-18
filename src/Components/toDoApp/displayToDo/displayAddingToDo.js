@@ -107,7 +107,7 @@ export default function FormToDoToDoID({
                     title: title,
                     toDo: toDo,
                     userId: userAuth,
-                    toDoID: toDoID,
+                    toDoID: toDoID
                   }),
                 })
                   .then(() => {
@@ -116,7 +116,7 @@ export default function FormToDoToDoID({
                       'Document updated with displayName: ',
                       displayName
                     );
-                    alert('Array updated was successfully: ', toDosArray);
+                    alert('Array updated was successfully: ', title);
                   })
                   .catch((error) => {
                     console.error('Array updated error: ', error);

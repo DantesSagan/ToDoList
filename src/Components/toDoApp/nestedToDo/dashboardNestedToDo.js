@@ -2,30 +2,30 @@ import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
-import LoggedInUserContext from '../context/logged-in-user';
-import useUser from '../hooks/user';
+import LoggedInUserContext from '../../../context/logged-in-user';
+import useUser from '../../../hooks/user';
 
-import IndexToDo from '../Components/toDoApp/index';
-import UserNavBar from './userNavBar';
-import Footer from './footer';
-export default function Dashboard({ user: loggedInUser }) {
+import UserNavBar from '../../../pages/userNavBar';
+import Footer from '../../../pages/footer';
+import IndexNestedToDo from './indexNestedToDo';
+export default function DashboardDisplayNestedToDo({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
   useEffect(() => {
-    document.title = 'ToDoList';
+    document.title = 'RouterToDoList';
   }, []);
 
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <UserNavBar />
       <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
-        <IndexToDo />
+        <IndexNestedToDo />
       </div>
       <Footer />
     </LoggedInUserContext.Provider>
   );
 }
 
-Dashboard.propTypes = {
+DashboardDisplayNestedToDo.propTypes = {
   user: PropTypes.object,
 };

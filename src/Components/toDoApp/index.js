@@ -59,7 +59,6 @@ export default function IndexToDo() {
               toDoID={toDoID}
               userId={userId}
             />
-            
           </div>
         </div>
       </div>

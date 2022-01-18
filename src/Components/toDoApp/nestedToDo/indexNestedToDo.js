@@ -1,11 +1,9 @@
-import Footer from '../../../pages/footer';
 import HeaderToDo from '../header.toDo';
 
 import IndexConst from '../indexConst';
-import FormToDoToDoID from './displayAddingToDo';
-import ListOfDisplayToDo from './listToDo.displayToDo';
+import ListOfNestedDisplayToDo from './listNestedToDo';
 
-export default function IndexDisplayToDo() {
+export default function IndexNestedToDo() {
   const {
     toDo,
     setToDo,
@@ -29,23 +27,7 @@ export default function IndexDisplayToDo() {
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
             <HeaderToDo user={user} />
-            <FormToDoToDoID
-              toDo={toDo}
-              setToDo={setToDo}
-              title={title}
-              setTitle={setTitle}
-              toDosArray={toDosArray}
-              setToDoSArray={setToDoSArray}
-              firebaseLib={firebaseLib}
-              FieldValue={FieldValue}
-              displayName={displayName}
-              user={user}
-              refTodo={refTodo}
-              createdAt={createdAt}
-              toDoID={toDoID}
-              userId={userId}
-            />
-            <ListOfDisplayToDo
+            <ListOfNestedDisplayToDo
               toDo={toDo}
               setToDo={setToDo}
               title={title}

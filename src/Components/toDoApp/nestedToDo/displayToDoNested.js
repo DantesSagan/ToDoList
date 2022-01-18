@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-export const DisplayTodoByID = ({
+export const DisplayTodoByIDNESTED = ({
   toDosArray,
   user,
   deleteToDo,
@@ -22,40 +21,52 @@ export const DisplayTodoByID = ({
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
-    console.log(setToDoSArray);
+    console.log(disNameArray);
     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
     return Object.keys(disNameArray[item]).map((ind) => {
       // this is comparison for checking pathname of url from link to this page
       // and comparison with toDoID for receiving data from Firebase
       let currentUrl = window.location.pathname;
-      let todoURL = `/todolist/${disNameArray[item][0].toDoID}`;
-      let checkTODOID = currentUrl === todoURL;
-      let second = item;
+      let todoNestedURL = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
+      let checkTODOID = currentUrl === todoNestedURL;
 
-      console.log(checkTODOID);
-      console.log(currentUrl);
-      console.log(disNameArray[item][index]);
-      console.log(disNameArray);
-      console.log(
-        checkTODOID && user?.username
-          ? Object.keys(disNameArray[item]).map(
-              (ind) => disNameArray[item][ind].displayName
-            )
-          : // disNameArray[item][1].toDo
-            null
-      );
+      // console.log(checkTODOID);
+      // console.log(currentUrl);
+      console.log(disNameArray[item]);
+      // console.log(disNameArray);
+      // console.log(
+      //   checkTODOID && user?.username
+      //     ? Object.keys(disNameArray[item]).map(
+      //         (ind) => disNameArray[item][ind].displayName
+      //       )
+      //     : // disNameArray[item][1].toDo
+      //       null
+      // );
+      console.log(disNameArray[item][ind].displayName, checkTODOID);
 
+      const HandleSubmit = (event) => {
+        event.preventDefault();
+
+        this.setState({
+          isLoading: true,
+          redeemVoucherForm: false,
+          error: false,
+          verified: false,
+        });
+      };
       return (
-        <div className='pt-2 ' key={index}>
+        <div className='pt-2' key={index}>
           {/* 
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser 
           And additionally checking if current route path strict-equal to toDoID
           */}
-          {user?.username === disNameArray[item][0].displayName
-            ? checkTODOID && (
+          {user?.username === disNameArray[item][ind].displayName 
+            ? checkTODOID && setToDoSArray && (
                 <form
+                method='POST'
                   className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
+                  onSubmit={HandleSubmit}
                   key={index}
                 >
                   <div className='m-8 p-4 shadow-inner rounded-lg'>
@@ -84,7 +95,7 @@ export const DisplayTodoByID = ({
                     {clickTitle ? (
                       <div className='block'>
                         <textarea
-                          defaultValue={disNameArray[item][0].title}
+                          defaultValue={disNameArray[item][ind].title}
                           className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
                           onChange={(e) => setTitle(e.target.value)}
                         />
@@ -108,7 +119,7 @@ export const DisplayTodoByID = ({
                         className='text-2xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white'
                         onClick={() => setClickTitle(!clickTitle)}
                       >
-                        {disNameArray[item][0].title} <br />
+                        {disNameArray[item][ind].title} <br />
                       </button>
                     )}
 
@@ -118,7 +129,7 @@ export const DisplayTodoByID = ({
                       <div className='block'>
                         <textarea
                           className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
-                          defaultValue={disNameArray[item][0].toDo}
+                          defaultValue={disNameArray[item][ind].toDo}
                           onChange={(e) => setToDo(e.target.value)}
                         />
                         <button
@@ -141,52 +152,22 @@ export const DisplayTodoByID = ({
                         className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
                         onClick={() => setClickToDo(!clickToDo)}
                       >
-                        {disNameArray[item][0].toDo} <br />{' '}
+                        {disNameArray[item][ind].toDo} <br />{' '}
                       </button>
                     )}
 
                     {/* Get - createdAt - in toDosArray */}
                     <div className='text-sm'>
-                      {disNameArray[item][0].createdAt} <br />
+                      {disNameArray[item][ind].createdAt} <br />
                     </div>
                     {/* Get - displayName - in toDosArray */}
                     <div className='text-sm font-bold p-2 underline'>
-                      {disNameArray[item][0].displayName} <br />
+                      {disNameArray[item][ind].displayName} <br />
                     </div>
                   </div>
                 </form>
               )
             : null}
-          {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
-          <div
-            className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
-            key={index}
-          >
-            {user?.username === disNameArray[item][ind].displayName &&
-            checkTODOID &&
-            setToDoSArray ? (
-              <Link
-                to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
-                key={item.id}
-              >
-                {' '}
-                <div
-                  className='text-3xl font-bold pb-4 pr-4 pl-4 pt-4'
-                  key={item.id}
-                >
-                  {disNameArray[item][ind].title} <br key={item.id} />
-                </div>
-                <hr
-                  className='border border-red-600 ml-4 mr-4 m-2'
-                  key={item.id}
-                />
-                <div className='text-2xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
-                  {disNameArray[item][ind].toDo} <br key={item.id} />
-                </div>
-                {` `}
-              </Link>
-            ) : null}
-          </div>
         </div>
       );
     });
