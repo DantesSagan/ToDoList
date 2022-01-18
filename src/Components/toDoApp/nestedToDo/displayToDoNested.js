@@ -30,8 +30,7 @@ export const DisplayTodoByIDNESTED = ({
       let todoNestedURL = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoNestedURL;
 
-      // console.log(checkTODOID);
-      // console.log(currentUrl);
+      console.log(checkTODOID)
       console.log(disNameArray[item]);
       // console.log(disNameArray);
       // console.log(

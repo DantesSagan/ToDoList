@@ -5,7 +5,14 @@ import { Outlet } from 'react-router-dom';
 import { getToDo } from '../../../services/firebase';
 import PropTypes from 'prop-types';
 
-import { arrayUnion, getDocs, collection, updateDoc } from 'firebase/firestore';
+import {
+  arrayUnion,
+  getDocs,
+  collection,
+  updateDoc,
+  setDoc,
+  doc,
+} from 'firebase/firestore';
 import UserContext from '../../../context/user';
 import useUser from '../../../hooks/user';
 import { getAuth } from 'firebase/auth';
@@ -25,6 +32,7 @@ export default function FormToDoToDoID({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
@@ -40,10 +48,6 @@ export default function FormToDoToDoID({
     const disNameArray = Object.keys(toDosArray).map((item) => {
       return toDosArray[item].toDosArray;
     });
-
-    const getDocTodos = await getDocs(
-      collection(firebaseLib.firestore(), 'todos')
-    );
 
     const formatTime = () => {
       var date = new Date();
@@ -65,69 +69,88 @@ export default function FormToDoToDoID({
       return formattedTime;
     };
 
-    return Object.keys(disNameArray).map((item) => {
-      // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
-      let comparisonName = user?.username === disNameArray[item][0].displayName;
+    return Object.keys(disNameArray).map(async (item) => {
+      return Object.keys(disNameArray[item]).map(async (ind) => {
+        // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
+        let comparisonName =
+          user?.username === disNameArray[item][ind].displayName;
 
-      // This is check if currentURL and RouterPath strict-equal
-      // To undestand what u want to change
-      let getCurrentUrl = window.location.pathname;
-      let getRouterPathToDo = `/todolist/${disNameArray[item][0].toDoID}`;
+        // This is check if currentURL and RouterPath strict-equal
+        // To undestand what u want to change
+        let getCurrentUrl = window.location.pathname;
+        let getRouterPathToDo = `/todolist/${disNameArray[item][ind].toDoID}`;
 
-      let checkPathIDToDoList = getCurrentUrl === getRouterPathToDo;
+        let checkPathIDToDoList = getCurrentUrl === getRouterPathToDo;
 
-      // This is check if currentURL and RouterPath strict-equal
-      // So do confirm what u want to change in toDoList
-      if (checkPathIDToDoList) {
-        window.confirm(
-          `Are you sure you want to edit this toDo = ${disNameArray[item][0].toDo}? Вы уверены, что хотите поменять список дел ${disNameArray[item][0].title}?`
+        // This is check if currentURL and RouterPath strict-equal
+        // So do confirm what u want to change in toDoList
+        if (checkPathIDToDoList) {
+          window.confirm(
+            `Are you sure you want to add this toDo = ${disNameArray[item][ind].toDo}? Вы уверены, что хотите добавить дополнительный список дел ${disNameArray[item][ind].title}?`
+          );
+        } else {
+          console.log('error change');
+          return null;
+        }
+
+        // Get all doc in todos collection
+        const getDocTodosOne = await getDocs(
+          collection(firebaseLib.firestore(), 'todos')
         );
-      } else {
-        console.log('error change');
-        return null;
-      }
 
-      return comparisonName && checkPathIDToDoList
-        ? getDocTodos.forEach((doc) => {
-            // In this case need to compare two equal parameters for find user who create toDo
-            // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
-            // So updateDoc of toDoList otherwise - no
-            let auth = getAuth();
-            let userAuth = auth.currentUser.uid;
+        // Get ref for creating nested toDo sublcollection with own toDoID in parent route for
+        // improving flexibility and changing nested todos
+        const nestedRef = doc(
+          firebaseLib.firestore(),
+          'todos',
+          disNameArray[item][ind].toDoID,
+          'nestedToDo',
+          toDoID
+        );
+        return comparisonName && checkPathIDToDoList
+          ? getDocTodosOne.forEach(async (doc) => {
+              // In this case need to compare two equal parameters for find user who create toDo
+              // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
+              // So updateDoc of toDoList otherwise - no
+              let auth = getAuth();
+              let userAuth = auth.currentUser.uid;
 
-            let checkDockIDToDo = doc.id === disNameArray[item][0].toDoID;
-            let checkUserName =
-              user?.username === disNameArray[item][0].displayName;
+              let checkDockIDToDo = doc.id === disNameArray[item][ind].toDoID;
+              let checkUserName =
+                user?.username === disNameArray[item][ind].displayName;
 
-            return checkDockIDToDo && checkUserName
-              ? updateDoc(doc.ref, {
-                  toDosArray: arrayUnion({
-                    displayName: disNameArray[item][0].displayName,
-                    createdAt: formatTime(),
-                    title: title,
-                    toDo: toDo,
-                    userId: userAuth,
-                    toDoID: toDoID
-                  }),
-                })
-                  .then(() => {
-                    console.log('Document updated with title: ', title);
-                    console.log(
-                      'Document updated with displayName: ',
-                      displayName
-                    );
-                    alert('Array updated was successfully: ', title);
+              // Check if current auth user and check if current doc id equals to parent toDoID
+              // And if all is it true so set new subcolletion with new toDoID like a child toDo in parent router path
+              return checkUserName && checkDockIDToDo
+                ? await setDoc(nestedRef, {
+                    toDosArray: arrayUnion({
+                      displayName: disNameArray[item][ind].displayName,
+                      createdAt: formatTime(),
+                      title: title,
+                      toDo: toDo,
+                      userId: userAuth,
+                      toDoID: toDoID,
+                    }),
                   })
-                  .catch((error) => {
-                    console.error('Array updated error: ', error);
-                    alert('Array updated error: ', error);
-                  })
-                  .then(() => {
-                    window.location.reload();
-                  })
-              : console.log('Something wrong with edit doc data');
-          })
-        : null;
+                    .then(() => {
+                      console.log('Document updated with title: ', title);
+                      console.log(
+                        'Document updated with displayName: ',
+                        displayName
+                      );
+                      alert('Array updated was successfully: ', title);
+                    })
+                    .catch((error) => {
+                      console.error('Array updated error: ', error);
+                      alert('Array updated error: ', error);
+                    })
+                    .then(() => {
+                      window.location.reload();
+                    })
+                : console.log('Something wrong with edit doc data');
+            })
+          : null;
+      });
     });
   };
   console.log(toDosArray);
@@ -168,7 +191,7 @@ export default function FormToDoToDoID({
               ref={refTodo}
             />
           </form>
-          <div className='transform hover:rotate-0 transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
+          <div className='transform hover:rotate-ind transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
             <button
               className={`w-full h-full text-lg font-bold text-white ${
                 !toDo && !title && 'opacity-25'
