@@ -1,5 +1,9 @@
+import { async } from '@firebase/util';
+import { collection, getDocs } from 'firebase/firestore';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
+import { getNestedToDo } from '../../../services/firebase';
 
 export const DisplayTodoByID = ({
   toDosArray,
@@ -22,7 +26,7 @@ export const DisplayTodoByID = ({
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
-    console.log(setToDoSArray);
+    console.log(toDosArray);
     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
     return Object.keys(disNameArray[item]).map((ind) => {
       // this is comparison for checking pathname of url from link to this page
@@ -44,7 +48,29 @@ export const DisplayTodoByID = ({
           : // disNameArray[item][1].toDo
             null
       );
+      const nestedDoc = async () => {
+        const getNestedDoc = await getDocs(
+          collection(
+            firebaseLib.firestore(),
+            'todos',
+            disNameArray[item][ind].toDoID,
+            'nestedToDo'
+          )
+        );
 
+        let nestedToDo = [];
+
+        getNestedDoc.forEach((docs) => {
+          console.log(docs.id, '=>', docs.data());
+          nestedToDo.push(docs.data());
+          const changedNested = Object.keys(nestedToDo).map((item) => {
+            console.log(nestedToDo[item].toDosArray[item].toDoID);
+            return <div>1{nestedToDo[item].toDosArray[item].toDoID}</div>;
+          });
+          return changedNested;
+        });
+      };
+      nestedDoc();
       return (
         <div className='pt-2 ' key={index}>
           {/* 
@@ -53,6 +79,7 @@ export const DisplayTodoByID = ({
           And additionally checking if current route path strict-equal to toDoID
         */}
           {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
+          {nestedDoc}
           <div
             className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
             key={index}

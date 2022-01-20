@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getNestedToDo } from '../../../services/firebase';
 
 export const DisplayTodoByIDNESTED = ({
   toDosArray,
@@ -19,6 +20,7 @@ export const DisplayTodoByIDNESTED = ({
     return toDosArray[item].toDosArray;
   });
 
+
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
     console.log(disNameArray);
@@ -30,7 +32,8 @@ export const DisplayTodoByIDNESTED = ({
       let todoNestedURL = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoNestedURL;
 
-      console.log(checkTODOID)
+
+      console.log(checkTODOID);
       console.log(disNameArray[item]);
       // console.log(disNameArray);
       // console.log(
@@ -60,10 +63,11 @@ export const DisplayTodoByIDNESTED = ({
           And finally display it what strict-equal to currentAuthUser 
           And additionally checking if current route path strict-equal to toDoID
           */}
-          {user?.username === disNameArray[item][ind].displayName 
-            ? checkTODOID && setToDoSArray && (
+          {user?.username === disNameArray[item][ind].displayName
+            ? checkTODOID &&
+              setToDoSArray && (
                 <form
-                method='POST'
+                  method='POST'
                   className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
                   onSubmit={HandleSubmit}
                   key={index}

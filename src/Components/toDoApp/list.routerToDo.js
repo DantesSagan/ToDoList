@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../pages/footer';
 
-import { getToDo } from '../../services/firebase';
+import { getNestedToDo, getToDo } from '../../services/firebase';
 
 export default function RouterToDo({
   toDoID,
@@ -71,6 +71,8 @@ export default function RouterToDo({
     getToDo(setToDoSArray);
   }, []);
 
+
+  
   const toDoArr = Object.keys(disNameArray).map((item, index) => {
     // const toDoRef = await getDocs(collection(firebaseLib.firestore(), 'todos'));
     // toDoRef.forEach((doc) => {
@@ -78,7 +80,7 @@ export default function RouterToDo({
     //     doc.orderBy('createdAt').limit(2)
     //   );
     // });
-
+// console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return (
       <div
         className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'

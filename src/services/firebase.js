@@ -1,5 +1,5 @@
 import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
-import { updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, doc, getDocs, collection } from 'firebase/firestore';
 
 export async function doesUsernameExist(username) {
   const result = await firebaseLib
@@ -50,6 +50,7 @@ export async function getToDoByUserId(userId) {
 
   return user;
 }
+
 export async function getToDo(setToDoSArray) {
   const docId = await firebaseLib
     .firestore()
@@ -67,6 +68,23 @@ export async function getToDo(setToDoSArray) {
     });
 
   return docId;
+}
+
+export async function getNestedToDo(setToDoSArray, disNameArray, item, ind) {
+  const getNestedDoc = await getDocs(
+    collection(
+      firebaseLib.firestore(),
+      'todos',
+      disNameArray[item][ind].toDoID,
+      'nestedToDo'
+    )
+  );
+  let nestedToDo = [];
+  getNestedDoc.forEach((item) => {
+    console.log(item.id, '=>', item.data());
+    nestedToDo.push(item.data());
+  });
+  return setToDoSArray(nestedToDo);
 }
 
 export async function deleteTodo() {
