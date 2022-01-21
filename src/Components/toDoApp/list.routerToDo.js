@@ -1,9 +1,9 @@
-import { getAuth } from 'firebase/auth';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../pages/footer';
+import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
-import { getNestedToDo, getToDo } from '../../services/firebase';
+import { getToDo } from '../../services/firebase';
 
 export default function RouterToDo({
   toDoID,
@@ -17,70 +17,30 @@ export default function RouterToDo({
     return toDosArray[item].toDosArray;
   });
 
-  // const PaginationToDo = async () => {
-  //   const fetchColors = (pageNumber) => {
-  //     const first = firebaseLib
-  //       .firestore()
-  //       .collection('todos')
-  //       .orderBy('createdAt')
-  //       .limit(pageNumber);
-  //     return first;
-  //   };
-
-  //   const { isError, error, isLoading, isFetching, data } = useQuery(
-  //     ['todos', pagination],
-  //     () => fetchColors(pagination),
-  //     {
-  //       keepPreviousData: true,
-  //     }
-  //   );
-
-  //   const firstPage = await getDocs(
-  //     collection(firebaseLib.firestore(), 'todos')
-  //   );
-  //   firstPage.forEach((doc) => {
-  //     console.log(doc.id);
-  //     return doc;
-  //   });
-
-  //   const first = firebaseLib
-  //     .firestore()
-  //     .collection('todos')
-  //     .orderBy('createdAt')
-  //     .limit(2);
-
-  //   const snapshot = await first.get();
-
-  //   // Get the last document
-  //   const last = snapshot.docs[snapshot.docs.length];
-
-  //   // Construct a new query starting at this document.
-  //   // Note: this will not have the desired effect if multiple
-  //   // cities have the exact same population value.
-  //   const next = firebaseLib
-  //     .firestore()
-  //     .collection('todos')
-  //     .orderBy('createdAt')
-  //     .startAfter(last.data().createdAt)
-  //     .limit(2);
-  //   console.log(last);
-  //   return next;
-  // };
+  const PaginationToDo = async () => {
+    const toDoArrKeys = Object.keys(disNameArray).map(async (item) => {
+      const first = query(
+        collection(firebaseLib.firestore(), 'todos'),
+        orderBy(disNameArray[item][0].createdAt),
+        limit(3)
+      );
+      const docSnap = await getDocs(first);
+      console.log('Hello world');
+      return docSnap.forEach((item) => {
+        console.log(item.id, item.data(), item);
+        return item;
+      });
+    });
+    return toDoArrKeys;
+  };
 
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
-
-
   
   const toDoArr = Object.keys(disNameArray).map((item, index) => {
-    // const toDoRef = await getDocs(collection(firebaseLib.firestore(), 'todos'));
-    // toDoRef.forEach((doc) => {
-    //   console.log(
-    //     doc.orderBy('createdAt').limit(2)
-    //   );
-    // });
-// console.log(getNestedToDo(setToDoSArray, disNameArray, item));
+    // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
+
     return (
       <div
         className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
@@ -110,6 +70,8 @@ export default function RouterToDo({
 
   return (
     <div>
+      {' '}
+      <button onClick={PaginationToDo}>Click me</button>
       <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl w-full'>
         <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
         {/* <div className='text-3xl text-black font-bold justify-center'>

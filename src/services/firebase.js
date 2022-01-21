@@ -64,27 +64,37 @@ export async function getToDo(setToDoSArray) {
       setToDoSArray(todolist);
     })
     .catch((error) => {
-      console.error('Error to set document: ', error);
+      console.error('Error to get document: ', error);
     });
 
   return docId;
 }
 
-export async function getNestedToDo(setToDoSArray, disNameArray, item, ind) {
-  const getNestedDoc = await getDocs(
-    collection(
-      firebaseLib.firestore(),
-      'todos',
-      disNameArray[item][ind].toDoID,
-      'nestedToDo'
-    )
-  );
-  let nestedToDo = [];
-  getNestedDoc.forEach((item) => {
-    console.log(item.id, '=>', item.data());
-    nestedToDo.push(item.data());
-  });
-  return setToDoSArray(nestedToDo);
+export  function getNestedToDo(
+  disNameArray,
+  item,
+  ind,
+  setNestedArrayToDo
+) {
+  const refNested =  firebaseLib
+    .firestore()
+    .collection('todos')
+    .doc(disNameArray[item][ind].toDoID)
+    .collection('nestedToDo')
+    .get()
+    .then((getDoc) => {
+      let nestedToDo = [];
+
+      getDoc.docs.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+        nestedToDo.push(doc.data());
+      });
+      setNestedArrayToDo(nestedToDo);
+    })
+    .catch((error) => {
+      console.log('Error with fetching nested todo data: ', error);
+    });
+  return refNested;
 }
 
 export async function deleteTodo() {

@@ -1,31 +1,50 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { async } from '@firebase/util';
 import { collection, getDocs } from 'firebase/firestore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
-import { getNestedToDo } from '../../../services/firebase';
+import { getNestedToDo, nestedDoc } from '../../../services/firebase';
 
 export const DisplayTodoByID = ({
   toDosArray,
   user,
-  deleteToDo,
-  title,
-  setTitle,
-  toDo,
-  setToDo,
-  editToDoList,
-  editTitle,
+  // deleteToDo,
+  // title,
+  // setTitle,
+  // toDo,
+  // setToDo,
+  // editToDoList,
+  // editTitle,
   setToDoSArray,
 }) => {
-  const [clickTitle, setClickTitle] = useState(false);
-  const [clickToDo, setClickToDo] = useState(false);
+  // const [clickTitle, setClickTitle] = useState(false);
+  // const [clickToDo, setClickToDo] = useState(false);
+
+  const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
 
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
 
+  useEffect(() => {
+    const checkNestedToDo = () => {
+      return Object.keys(disNameArray).map((item) => {
+        // Get - disNameArray[item] - and nested indexes within it for each result of its callback
+        return Object.keys(disNameArray[item]).map((ind) => {
+          return getNestedToDo(disNameArray, item, ind, setNestedArrayToDo);
+        });
+      });
+    };
+    checkNestedToDo();
+  }, []);
+  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
+    return nestedArrayToDo[item].toDosArray;
+  });
+  console.log(nestedToDoArray, '21');
+
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
-  return Object.keys(disNameArray).map((item, index) => {
+  const MainObj = Object.keys(disNameArray).map((item, index) => {
     console.log(toDosArray);
     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
     return Object.keys(disNameArray[item]).map((ind) => {
@@ -34,56 +53,20 @@ export const DisplayTodoByID = ({
       let currentUrl = window.location.pathname;
       let todoURL = `/todolist/${disNameArray[item][0].toDoID}`;
       let checkTODOID = currentUrl === todoURL;
-      let second = item;
 
-      console.log(checkTODOID);
-      console.log(currentUrl);
-      console.log(disNameArray[item][index]);
-      console.log(disNameArray);
-      console.log(
-        checkTODOID && user?.username
-          ? Object.keys(disNameArray[item]).map(
-              (ind) => disNameArray[item][ind].displayName
-            )
-          : // disNameArray[item][1].toDo
-            null
-      );
-      const nestedDoc = async () => {
-        const getNestedDoc = await getDocs(
-          collection(
-            firebaseLib.firestore(),
-            'todos',
-            disNameArray[item][ind].toDoID,
-            'nestedToDo'
-          )
-        );
-
-        let nestedToDo = [];
-
-        getNestedDoc.forEach((docs) => {
-          console.log(docs.id, '=>', docs.data());
-          nestedToDo.push(docs.data());
-          const changedNested = Object.keys(nestedToDo).map((item) => {
-            console.log(nestedToDo[item].toDosArray[item].toDoID);
-            return <div>1{nestedToDo[item].toDosArray[item].toDoID}</div>;
-          });
-          return changedNested;
-        });
-      };
-      nestedDoc();
       return (
-        <div className='pt-2 ' key={index}>
-          {/* 
+        <div className='' key={index}>
+          {/*
           Check if user is logged in and strict-equlity to ref in toDo displayName
-          And finally display it what strict-equal to currentAuthUser 
+          And finally display it what strict-equal to currentAuthUser
           And additionally checking if current route path strict-equal to toDoID
         */}
           {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
-          {nestedDoc}
           <div
             className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
             key={index}
           >
+            {/* <div key={index}>{nestedDo}</div> */}
             {user?.username === disNameArray[item][ind].displayName &&
             checkTODOID &&
             setToDoSArray ? (
@@ -115,4 +98,48 @@ export const DisplayTodoByID = ({
       );
     });
   });
+
+  const nest =
+    // 1st
+    Object.keys(disNameArray).map((item) => {
+      // Get - disNameArray[item] - and nested indexes within it for each result of its callback
+      // 2nd
+      return Object.keys(disNameArray[item]).map((ind) => {
+        let currentUrl = window.location.pathname;
+        let todoURL = `/todolist/${disNameArray[item][ind].toDoID}`;
+        let checkTODOID = currentUrl === todoURL;
+        console.log(checkTODOID);
+        // 3d
+        return Object.keys(nestedToDoArray).map((items) => {
+          console.log(nestedArrayToDo);
+          //  4th
+          return Object.keys(nestedToDoArray[items]).map((index) => {
+            console.log(nestedToDoArray[items][index].toDo);
+            // JSX nested todo
+            return (
+              <div key={items.id}>
+                {/* without check */}
+                <div key={items.id}>
+                  {/* with check especially toDoId pathname and username */}
+                  {checkTODOID &&
+                  user?.username === nestedToDoArray[items][index].displayName
+                    ? nestedToDoArray[items][index].toDo
+                    : null}
+                </div>
+              </div>
+            );
+          });
+        });
+      });
+    });
+
+  // For now subcollection will calling only with console.log???
+  // And again it's displaying nested subcollection when was call
+  // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
+  return (
+    <div>
+      {MainObj}
+      <div>{nest}1</div>
+    </div>
+  );
 };
