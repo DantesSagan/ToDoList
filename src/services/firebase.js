@@ -70,13 +70,14 @@ export async function getToDo(setToDoSArray) {
   return docId;
 }
 
-export  function getNestedToDo(
+export async function getNestedToDo(
   disNameArray,
   item,
   ind,
-  setNestedArrayToDo
+  setNestedArrayToDo,
+  setArrayID
 ) {
-  const refNested =  firebaseLib
+  const refNested = await firebaseLib
     .firestore()
     .collection('todos')
     .doc(disNameArray[item][ind].toDoID)
@@ -84,11 +85,15 @@ export  function getNestedToDo(
     .get()
     .then((getDoc) => {
       let nestedToDo = [];
-
+      let arrayToDoID = [];
+      
       getDoc.docs.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
         nestedToDo.push(doc.data());
+        arrayToDoID.push(doc.id);
       });
+      
+      setArrayID(arrayToDoID);
       setNestedArrayToDo(nestedToDo);
     })
     .catch((error) => {

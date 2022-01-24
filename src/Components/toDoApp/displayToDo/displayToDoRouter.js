@@ -22,26 +22,35 @@ export const DisplayTodoByID = ({
   // const [clickToDo, setClickToDo] = useState(false);
 
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
+  const [arrayID, setArrayID] = useState();
 
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
 
   useEffect(() => {
+    console.log(nestedToDoArray);
     const checkNestedToDo = () => {
       return Object.keys(disNameArray).map((item) => {
         // Get - disNameArray[item] - and nested indexes within it for each result of its callback
         return Object.keys(disNameArray[item]).map((ind) => {
-          return getNestedToDo(disNameArray, item, ind, setNestedArrayToDo);
+          return getNestedToDo(
+            disNameArray,
+            item,
+            ind,
+            setNestedArrayToDo,
+            setArrayID
+          );
         });
       });
     };
     checkNestedToDo();
   }, []);
+
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
-  console.log(nestedToDoArray, '21');
+  console.log(nestedToDoArray, '22');
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   const MainObj = Object.keys(disNameArray).map((item, index) => {
@@ -63,7 +72,7 @@ export const DisplayTodoByID = ({
         */}
           {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
           <div
-            className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
+            className='justify-center text-1xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
             key={index}
           >
             {/* <div key={index}>{nestedDo}</div> */}
@@ -75,9 +84,9 @@ export const DisplayTodoByID = ({
                   to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
                   key={item.id}
                 >
-                  <div className='text-3xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '}
+                  <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '}
                   <div
-                    className='text-3xl font-bold pb-4 pr-4 pl-4 pt-4'
+                    className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
                     key={item.id}
                   >
                     {disNameArray[item][ind].title} <br key={item.id} />
@@ -86,7 +95,7 @@ export const DisplayTodoByID = ({
                     className='border border-red-600 ml-4 mr-4 m-2'
                     key={item.id}
                   />
-                  <div className='text-2xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
+                  <div className='text-1xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
                     {disNameArray[item][ind].toDo} <br key={item.id} />
                   </div>
                   {` `}
@@ -99,7 +108,8 @@ export const DisplayTodoByID = ({
     });
   });
 
-  const nest =
+  // getting nested subcollection toDo from the same router path in a parent toDo
+  const Nest =
     // 1st
     Object.keys(disNameArray).map((item) => {
       // Get - disNameArray[item] - and nested indexes within it for each result of its callback
@@ -114,17 +124,47 @@ export const DisplayTodoByID = ({
           console.log(nestedArrayToDo);
           //  4th
           return Object.keys(nestedToDoArray[items]).map((index) => {
-            console.log(nestedToDoArray[items][index].toDo);
+            console.log(nestedToDoArray, '9');
+            console.log(arrayID[0] === nestedToDoArray[items][index].toDoID);
+            console.log(arrayID[0]);
             // JSX nested todo
+            let checkNestedID =
+              arrayID[0] === nestedToDoArray[items][index].toDoID;
+            let checkName =
+              user?.username === nestedToDoArray[items][index].displayName;
             return (
               <div key={items.id}>
                 {/* without check */}
                 <div key={items.id}>
                   {/* with check especially toDoId pathname and username */}
-                  {checkTODOID &&
-                  user?.username === nestedToDoArray[items][index].displayName
-                    ? nestedToDoArray[items][index].toDo
-                    : null}
+                  {checkTODOID && checkNestedID && checkName ? (
+                    <div>
+                      <Link
+                        to={`/todolist/nested/${nestedToDoArray[item][ind].toDoID}`}
+                        key={item.id}
+                      >
+                        <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '}
+                        <div
+                          className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
+                          key={item.id}
+                        >
+                          {nestedToDoArray[item][ind].title}{' '}
+                          <br key={item.id} />
+                        </div>
+                        <hr
+                          className='border border-red-600 ml-4 mr-4 m-2'
+                          key={item.id}
+                        />
+                        <div
+                          className='text-1xl pb-4 pr-4 pl-4 pt-4'
+                          key={item.id}
+                        >
+                          {nestedToDoArray[item][ind].toDo} <br key={item.id} />
+                        </div>
+                        {` `}
+                      </Link>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             );
@@ -139,7 +179,7 @@ export const DisplayTodoByID = ({
   return (
     <div>
       {MainObj}
-      <div>{nest}1</div>
+      <div>{Nest}</div>
     </div>
   );
 };

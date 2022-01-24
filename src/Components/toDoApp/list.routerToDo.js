@@ -51,7 +51,7 @@ export default function RouterToDo({
           <Link to={`/todolist/${disNameArray[item][0].toDoID}`} key={item.id}>
             {' '}
             <div
-              className='text-3xl font-bold pb-4 pr-4 pl-4 pt-4'
+              className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
               key={item.id}
             >
               {disNameArray[item][0].title} <br key={item.id} />
@@ -74,7 +74,7 @@ export default function RouterToDo({
       <button onClick={PaginationToDo}>Click me</button>
       <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl w-full'>
         <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
-        {/* <div className='text-3xl text-black font-bold justify-center'>
+        {/* <div className='text-1xl text-black font-bold justify-center'>
         - {pagination} -
       </div> */}
         {/* <PaginationToDo /> */}
