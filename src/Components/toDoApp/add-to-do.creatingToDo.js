@@ -82,6 +82,7 @@ export default function FormToDo({
             toDo: commaToDo,
             toDoID: toDoID,
             userId: userAuth,
+            doneToDo: false,
           }),
         })
           .then(() => {

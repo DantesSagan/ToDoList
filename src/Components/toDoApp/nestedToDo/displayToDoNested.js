@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { arrayUnion, collection, getDocs, updateDoc } from 'firebase/firestore';
+import { useEffect, useRef, useState } from 'react';
+import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
 import { getNestedToDo } from '../../../services/firebase';
 
 export const DisplayTodoByIDNESTED = ({
@@ -16,10 +18,11 @@ export const DisplayTodoByIDNESTED = ({
   const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
 
+  const [doneToDo, setDoneToDo] = useState(false);
+
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
-
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
@@ -32,28 +35,50 @@ export const DisplayTodoByIDNESTED = ({
       let todoNestedURL = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoNestedURL;
 
-
       console.log(checkTODOID);
       console.log(disNameArray[item]);
-      // console.log(disNameArray);
-      // console.log(
-      //   checkTODOID && user?.username
-      //     ? Object.keys(disNameArray[item]).map(
-      //         (ind) => disNameArray[item][ind].displayName
-      //       )
-      //     : // disNameArray[item][1].toDo
-      //       null
-      // );
-      console.log(disNameArray[item][ind].displayName, checkTODOID);
 
-      const HandleSubmit = (event) => {
+      console.log(disNameArray[item][ind].doneToDo);
+    
+      const handleDoneToDo = async (event) => {
         event.preventDefault();
 
-        this.setState({
-          isLoading: true,
-          redeemVoucherForm: false,
-          error: false,
-          verified: false,
+        // UPDATE STATE WHEN A DATA WAS EDIT SUCCESSFULLY
+        setDoneToDo(!doneToDo);
+        const querySnapshot = await getDocs(
+          collection(firebaseLib.firestore(), 'todos')
+        );
+
+        querySnapshot.forEach((doc) => {
+          if (disNameArray[item][ind].toDoID === doc.id) {
+            console.log(disNameArray[item][ind].toDoID === doc.id);
+            updateDoc(doc.ref, {
+              toDosArray: [
+                {
+                  displayName: disNameArray[item][ind].displayName,
+                  createdAt: disNameArray[item][ind].createdAt,
+                  title: disNameArray[item][ind].title,
+                  toDo: disNameArray[item][ind].toDo,
+                  toDoID: disNameArray[item][ind].toDoID,
+                  userId: disNameArray[item][ind].userId,
+                  doneToDo: !doneToDo,
+                },
+              ],
+            })
+              .then(() => {
+                setDoneToDo(!doneToDo);
+                console.log(
+                  'DoneToDo changed successfully: ',
+                  disNameArray[item][ind].doneToDo
+                );
+              })
+              .catch((error) => {
+                console.error('Error with city changed: ', error);
+              });
+          } else {
+            return null;
+          }
+          console.log(doc.id, ' => ', doc.data());
         });
       };
       return (
@@ -69,7 +94,6 @@ export const DisplayTodoByIDNESTED = ({
                 <form
                   method='POST'
                   className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
-                  onSubmit={HandleSubmit}
                   key={index}
                 >
                   <div className='m-8 p-4 shadow-inner rounded-lg'>
@@ -128,6 +152,24 @@ export const DisplayTodoByIDNESTED = ({
 
                     <hr className='border border-red-600' />
                     {/* Get - toDo - in toDosArray */}
+                    {/* Check to completed toDo */}
+                    <div className='pt-4'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        className='h-6 w-6 cursor-pointer border-2 border-solid border-black rounded-2xl hover:bg-gray-300'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        stroke='currentColor'
+                        onClick={handleDoneToDo}
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth='2'
+                          d='M5 13l4 4L19 7'
+                        />
+                      </svg>
+                    </div>
                     {clickToDo ? (
                       <div className='block'>
                         <textarea
@@ -155,7 +197,14 @@ export const DisplayTodoByIDNESTED = ({
                         className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
                         onClick={() => setClickToDo(!clickToDo)}
                       >
-                        {disNameArray[item][ind].toDo} <br />{' '}
+                        {disNameArray[item][ind].doneToDo || doneToDo ? (
+                          <s className='opacity-50'>
+                            {disNameArray[item][ind].toDo}
+                          </s>
+                        ) : (
+                          disNameArray[item][ind].toDo
+                        )}{' '}
+                        <br />{' '}
                       </button>
                     )}
 

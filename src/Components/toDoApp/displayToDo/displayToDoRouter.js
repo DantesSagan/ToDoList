@@ -124,7 +124,7 @@ export const DisplayTodoByID = ({
           console.log(nestedArrayToDo);
           //  4th
           return Object.keys(nestedToDoArray[items]).map((index) => {
-            console.log(nestedToDoArray, '9');
+            console.log(nestedToDoArray, '10');
             console.log(arrayID[0] === nestedToDoArray[items][index].toDoID);
             console.log(arrayID[0]);
             // JSX nested todo
