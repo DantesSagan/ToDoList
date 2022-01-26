@@ -71,7 +71,6 @@ export default function RouterToDo({
   return (
     <div>
       {' '}
-      <button onClick={PaginationToDo}>Click me</button>
       <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl w-full'>
         <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
         {/* <div className='text-1xl text-black font-bold justify-center'>

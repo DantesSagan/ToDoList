@@ -86,13 +86,13 @@ export async function getNestedToDo(
     .then((getDoc) => {
       let nestedToDo = [];
       let arrayToDoID = [];
-      
+
       getDoc.docs.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
         nestedToDo.push(doc.data());
         arrayToDoID.push(doc.id);
       });
-      
+
       setArrayID(arrayToDoID);
       setNestedArrayToDo(nestedToDo);
     })

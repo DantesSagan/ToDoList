@@ -96,7 +96,12 @@ export const DisplayTodoByID = ({
                     key={item.id}
                   />
                   <div className='text-1xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
-                    {disNameArray[item][ind].toDo} <br key={item.id} />
+                    {disNameArray[item][ind].doneToDo ? (
+                      <s className='opacity-50'>{disNameArray[item][ind].toDo}</s>
+                    ) : (
+                      <div>{disNameArray[item][ind].toDo}</div>
+                    )}
+                    <br key={item.id} />
                   </div>
                   {` `}
                 </Link>

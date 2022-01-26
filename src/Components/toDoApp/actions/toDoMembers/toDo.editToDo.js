@@ -20,7 +20,7 @@ export default function ToDoEditToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
-
+  
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
@@ -80,7 +80,7 @@ export default function ToDoEditToDo({
           console.log('error change');
           return null;
         }
-
+        
         return comparisonName && checkPathIDToDoList
           ? getDocTodos.forEach((doc) => {
               // In this case need to compare two equal parameters for find user who create toDo

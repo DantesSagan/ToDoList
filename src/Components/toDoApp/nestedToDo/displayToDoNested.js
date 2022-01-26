@@ -2,6 +2,7 @@ import { arrayUnion, collection, getDocs, updateDoc } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
 import { getNestedToDo } from '../../../services/firebase';
+import HandleDoneToDo from './toDoMembers/handleDoneToDo';
 
 export const DisplayTodoByIDNESTED = ({
   toDosArray,
@@ -39,48 +40,16 @@ export const DisplayTodoByIDNESTED = ({
       console.log(disNameArray[item]);
 
       console.log(disNameArray[item][ind].doneToDo);
-    
-      const handleDoneToDo = async (event) => {
-        event.preventDefault();
 
-        // UPDATE STATE WHEN A DATA WAS EDIT SUCCESSFULLY
-        setDoneToDo(!doneToDo);
-        const querySnapshot = await getDocs(
-          collection(firebaseLib.firestore(), 'todos')
-        );
+      const { handleDoneToDo } = HandleDoneToDo({
+        setDoneToDo,
+        doneToDo,
+        firebaseLib,
+        disNameArray,
+        item,
+        ind,
+      });
 
-        querySnapshot.forEach((doc) => {
-          if (disNameArray[item][ind].toDoID === doc.id) {
-            console.log(disNameArray[item][ind].toDoID === doc.id);
-            updateDoc(doc.ref, {
-              toDosArray: [
-                {
-                  displayName: disNameArray[item][ind].displayName,
-                  createdAt: disNameArray[item][ind].createdAt,
-                  title: disNameArray[item][ind].title,
-                  toDo: disNameArray[item][ind].toDo,
-                  toDoID: disNameArray[item][ind].toDoID,
-                  userId: disNameArray[item][ind].userId,
-                  doneToDo: !doneToDo,
-                },
-              ],
-            })
-              .then(() => {
-                setDoneToDo(!doneToDo);
-                console.log(
-                  'DoneToDo changed successfully: ',
-                  disNameArray[item][ind].doneToDo
-                );
-              })
-              .catch((error) => {
-                console.error('Error with city changed: ', error);
-              });
-          } else {
-            return null;
-          }
-          console.log(doc.id, ' => ', doc.data());
-        });
-      };
       return (
         <div className='pt-2' key={index}>
           {/* 
