@@ -76,4 +76,5 @@ export default function ListOfDisplayToDo({
 }
 ListOfDisplayToDo.propTypes = {
   toDosArray: PropTypes.array.isRequired,
+  
 };

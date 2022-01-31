@@ -1,5 +1,6 @@
 import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
 import { updateDoc, doc, getDocs, collection } from 'firebase/firestore';
+import { useEffect } from 'react';
 
 export async function doesUsernameExist(username) {
   const result = await firebaseLib
@@ -75,15 +76,21 @@ export async function getToDo(setToDoSArray, setToDoDOC) {
 
 export async function getNestedToDo(
   disNameArray,
-  item,
-  ind,
   setNestedArrayToDo,
   setArrayID
 ) {
+  const result = await firebaseLib.firestore().collection('todos').get();
+  const docID = result.docs.map((listId) => ({
+    ...listId.data(),
+    docId: listId.id,
+  }));
+  console.log(docID);
+
+
   const refNested = await firebaseLib
     .firestore()
     .collection('todos')
-    .doc(disNameArray[item][ind].toDoID)
+    .doc(docID[1].docId)
     .collection('nestedToDo')
     .get()
     .then((getDoc) => {
