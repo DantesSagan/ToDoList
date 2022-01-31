@@ -8,6 +8,7 @@ export default function HandleDoneToDo({
   item,
   ind,
 }) {
+  
   const handleDoneToDo = async (event) => {
     event.preventDefault();
 

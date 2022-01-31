@@ -35,15 +35,10 @@ export default function Login() {
   return (
     <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
       <div className='flex flex-col w-2/4 border-t border-8 border-red-600'>
-        <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded'>
+        <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
           <h1 className='flex justify-center w-full'>
-            {/* <img
-              src='/images/logo.png'
-              alt='Instagram'
-              className='mt-2 w-6/12 mb-4'
-            /> */}
           </h1>
-          {error && <p className='mb-4 text-xs text-red-primary'>{error}</p>}
+          {error && <p className='mb-4 text-sm text-red-600 text-left'>{error}</p>}
           <form onSubmit={handleLogin} method='POST'>
             <fieldset className='border border-gray-primary p-4'>
               <legend className='block m-auto'>
@@ -70,7 +65,7 @@ export default function Login() {
                 type='text'
                 placeholder='Email address (ex: Dantes@gmail.com)'
                 className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                onChange={({target}) => setEmailAddress(target.value)}
+                onChange={({ target }) => setEmailAddress(target.value)}
                 value={emailAddress}
               />
               <input
@@ -78,7 +73,7 @@ export default function Login() {
                 type='password'
                 placeholder='Password (ex: DanteskillsPushkin1837)'
                 className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                onChange={({target}) => setPassword(target.value)}
+                onChange={({ target }) => setPassword(target.value)}
                 value={password}
               />
               <button
@@ -92,7 +87,7 @@ export default function Login() {
             </fieldset>
           </form>
         </div>
-        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary mt-1'>
+        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
           <p className='text-sm'>
             Don't have an account?{' '}
             <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
@@ -27,7 +27,7 @@ export default function ListOfDisplayToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
-
+  const [toDoDOC, setToDoDOC] = useState([]);
   const { deleteToDo } = DeleteToDo();
   const { editToDoList } = ToDoEditToDo({
     setToDoSArray,
@@ -52,7 +52,7 @@ export default function ListOfDisplayToDo({
   // const { comparison } = Checking({ user });
   // console.log(comparison);
   useEffect(() => {
-    getToDo(setToDoSArray);
+    getToDo(setToDoSArray, setToDoDOC);
   }, []);
 
   return (
@@ -68,6 +68,8 @@ export default function ListOfDisplayToDo({
         editToDoList={editToDoList}
         editTitle={editTitle}
         setToDoSArray={setToDoSArray}
+        setToDoDOC={setToDoDOC}
+        toDoDOC={toDoDOC}
       />
     </div>
   );

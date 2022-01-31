@@ -1,10 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { async } from '@firebase/util';
-import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
-import { getNestedToDo, nestedDoc } from '../../../services/firebase';
+import { getNestedToDo } from '../../../services/firebase';
 
 export const DisplayTodoByID = ({
   toDosArray,
@@ -17,40 +14,44 @@ export const DisplayTodoByID = ({
   // editToDoList,
   // editTitle,
   setToDoSArray,
+  toDoDOC,
 }) => {
   // const [clickTitle, setClickTitle] = useState(false);
   // const [clickToDo, setClickToDo] = useState(false);
 
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
-  const [arrayID, setArrayID] = useState();
+  const [arrayID, setArrayID] = useState([]);
 
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
-
-  useEffect(() => {
-    console.log(nestedToDoArray);
-    const checkNestedToDo = () => {
-      return Object.keys(disNameArray).map((item) => {
-        // Get - disNameArray[item] - and nested indexes within it for each result of its callback
-        return Object.keys(disNameArray[item]).map((ind) => {
-          return getNestedToDo(
-            disNameArray,
-            item,
-            ind,
-            setNestedArrayToDo,
-            setArrayID
-          );
-        });
-      });
-    };
-    checkNestedToDo();
-  }, []);
-
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
-  console.log(nestedToDoArray, '22');
+
+  useEffect(() => {
+    const nestedArr = async () => {
+      return Object.keys(disNameArray).map(async (item) => {
+        // Get - disNameArray[item] - and nested indexes within it for each result of its callback
+        return Object.keys(disNameArray[item]).map(async (ind) => {
+          try {
+            await getNestedToDo(
+              disNameArray,
+              item,
+              ind,
+              setNestedArrayToDo,
+              setArrayID
+            );
+          } catch (error) {
+            setNestedArrayToDo([]);
+            console.log(error);
+          }
+          return disNameArray[item][ind].toDoID;
+        });
+      });
+    };
+    nestedArr();
+  }, []);
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   const MainObj = Object.keys(disNameArray).map((item, index) => {
@@ -60,11 +61,11 @@ export const DisplayTodoByID = ({
       // this is comparison for checking pathname of url from link to this page
       // and comparison with toDoID for receiving data from Firebase
       let currentUrl = window.location.pathname;
-      let todoURL = `/todolist/${disNameArray[item][0].toDoID}`;
+      let todoURL = `/todolist/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoURL;
 
       return (
-        <div className='' key={index}>
+        <div className='' key={index.id}>
           {/*
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser
@@ -77,8 +78,7 @@ export const DisplayTodoByID = ({
           >
             {/* <div key={index}>{nestedDo}</div> */}
             {user?.username === disNameArray[item][ind].displayName &&
-            checkTODOID &&
-            setToDoSArray ? (
+            checkTODOID ? (
               <div>
                 <Link
                   to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
@@ -97,7 +97,9 @@ export const DisplayTodoByID = ({
                   />
                   <div className='text-1xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
                     {disNameArray[item][ind].doneToDo ? (
-                      <s className='opacity-50'>{disNameArray[item][ind].toDo}</s>
+                      <s className='opacity-50'>
+                        {disNameArray[item][ind].toDo}
+                      </s>
                     ) : (
                       <div>{disNameArray[item][ind].toDo}</div>
                     )}
@@ -120,40 +122,66 @@ export const DisplayTodoByID = ({
       // Get - disNameArray[item] - and nested indexes within it for each result of its callback
       // 2nd
       return Object.keys(disNameArray[item]).map((ind) => {
-        let currentUrl = window.location.pathname;
-        let todoURL = `/todolist/${disNameArray[item][ind].toDoID}`;
-        let checkTODOID = currentUrl === todoURL;
-        console.log(checkTODOID);
         // 3d
-        return Object.keys(nestedToDoArray).map((items) => {
-          console.log(nestedArrayToDo);
+        return Object.keys(nestedToDoArray).map((itemsNested) => {
+          // console.log(nestedArrayToDo);
           //  4th
-          return Object.keys(nestedToDoArray[items]).map((index) => {
-            console.log(nestedToDoArray, '10');
-            console.log(arrayID[0] === nestedToDoArray[items][index].toDoID);
-            console.log(arrayID[0]);
+          return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
+            console.log(nestedToDoArray, '23');
+            console.log(
+              'DocIDEqualToDoID',
+              arrayID[index] === nestedToDoArray[itemsNested][index].toDoID
+            );
+            console.log('ParentDocID', arrayID[ind]);
+            console.log(
+              Object.keys(toDoDOC).map((indDoc) => {
+                console.log(toDoDOC[indDoc]);
+                return toDoDOC[indDoc];
+              })
+            );
+            console.log(
+              'ParentID',
+              toDoDOC[0] === nestedToDoArray[itemsNested][index].parentID
+            );
+
+            let currentUrl = window.location.pathname;
+            let todoURL = `/todolist/${nestedToDoArray[itemsNested][index].parentID}`;
+            let checkTODOID = currentUrl === todoURL;
+
             // JSX nested todo
             let checkNestedID =
-              arrayID[0] === nestedToDoArray[items][index].toDoID;
+              arrayID[0] === nestedToDoArray[itemsNested][index].toDoID;
             let checkName =
-              user?.username === nestedToDoArray[items][index].displayName;
+              user?.username ===
+              nestedToDoArray[itemsNested][index].displayName;
+            let checkParentID = Object.keys(toDoDOC).map((indDoc) => {
+              console.log(toDoDOC[indDoc]);
+              return (
+                toDoDOC[indDoc] === nestedToDoArray[itemsNested][index].parentID
+              );
+            });
+
+            console.log(checkParentID);
             return (
-              <div key={items.id}>
+              <div key={itemsNested.id}>
                 {/* without check */}
-                <div key={items.id}>
+                <div key={itemsNested.id}>
                   {/* with check especially toDoId pathname and username */}
-                  {checkTODOID && checkNestedID && checkName ? (
+                  {checkName &&
+                  checkNestedID &&
+                  checkParentID &&
+                  checkTODOID ? (
                     <div>
                       <Link
-                        to={`/todolist/nested/${nestedToDoArray[item][ind].toDoID}`}
+                        to={`/todolist/nested/${nestedToDoArray[itemsNested][index].toDoID}`}
                         key={item.id}
                       >
-                        <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '}
+                        <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '}
                         <div
                           className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
                           key={item.id}
                         >
-                          {nestedToDoArray[item][ind].title}{' '}
+                          {nestedToDoArray[itemsNested][index].title}{' '}
                           <br key={item.id} />
                         </div>
                         <hr
@@ -164,7 +192,8 @@ export const DisplayTodoByID = ({
                           className='text-1xl pb-4 pr-4 pl-4 pt-4'
                           key={item.id}
                         >
-                          {nestedToDoArray[item][ind].toDo} <br key={item.id} />
+                          {nestedToDoArray[itemsNested][index].toDo}{' '}
+                          <br key={item.id} />
                         </div>
                         {` `}
                       </Link>
@@ -181,10 +210,5 @@ export const DisplayTodoByID = ({
   // For now subcollection will calling only with console.log???
   // And again it's displaying nested subcollection when was call
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
-  return (
-    <div>
-      {MainObj}
-      <div>{Nest}</div>
-    </div>
-  );
+  return [MainObj, Nest];
 };

@@ -51,17 +51,20 @@ export async function getToDoByUserId(userId) {
   return user;
 }
 
-export async function getToDo(setToDoSArray) {
+export async function getToDo(setToDoSArray, setToDoDOC) {
   const docId = await firebaseLib
     .firestore()
     .collection('todos')
     .get()
     .then((serverUpdate) => {
       let todolist = [];
+      let docID = [];
       serverUpdate.docs.forEach((doc) => {
         todolist.push(doc.data());
+        docID.push(doc.id);
       });
       setToDoSArray(todolist);
+      setToDoDOC(docID);
     })
     .catch((error) => {
       console.error('Error to get document: ', error);
