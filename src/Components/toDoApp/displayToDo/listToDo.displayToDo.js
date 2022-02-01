@@ -5,7 +5,7 @@ import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
 
-import { DisplayTodoByID } from './displayToDoRouter';
+import DisplayTodoByID from './displayToDoRouter';
 import { getToDo } from '../../../services/firebase';
 import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
 
@@ -76,5 +76,4 @@ export default function ListOfDisplayToDo({
 }
 ListOfDisplayToDo.propTypes = {
   toDosArray: PropTypes.array.isRequired,
-  
 };

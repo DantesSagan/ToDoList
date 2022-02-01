@@ -1,6 +1,7 @@
 import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
 import { updateDoc, doc, getDocs, collection } from 'firebase/firestore';
 import { useEffect } from 'react';
+import { async } from '@firebase/util';
 
 export async function doesUsernameExist(username) {
   const result = await firebaseLib
@@ -74,42 +75,44 @@ export async function getToDo(setToDoSArray, setToDoDOC) {
   return docId;
 }
 
-export async function getNestedToDo(
-  disNameArray,
-  setNestedArrayToDo,
-  setArrayID
-) {
+export async function getNestedToDo(setNestedArrayToDo, setArrayID) {
   const result = await firebaseLib.firestore().collection('todos').get();
   const docID = result.docs.map((listId) => ({
     ...listId.data(),
     docId: listId.id,
   }));
-  console.log(docID);
 
+  // Object.keys(docID).forEach(async (nestedDoc) => {
+  //   console.log(docID[nestedDoc].docId);
+  // });
+  var nestedToDo = [];
+  var arrayToDoID = [];
+  Promise.all(arrayToDoID, nestedToDo).then((get) => {
+    console.log(get, 'get Data');
+  });
+  return Object.keys(docID).map(async (nestedDoc) => {
+    console.log(docID[nestedDoc].docId);
+    const refNested = await firebaseLib
+      .firestore()
+      .collection('todos')
+      .doc(docID[nestedDoc].docId)
+      .collection('nestedToDo')
+      .get()
+      .then((getDoc) => {
+        getDoc.docs.forEach((doc) => {
+          console.log(doc.id, '=>', doc.data());
+          nestedToDo.push(doc.data());
+          arrayToDoID.push(doc.id);
+        });
 
-  const refNested = await firebaseLib
-    .firestore()
-    .collection('todos')
-    .doc(docID[1].docId)
-    .collection('nestedToDo')
-    .get()
-    .then((getDoc) => {
-      let nestedToDo = [];
-      let arrayToDoID = [];
-
-      getDoc.docs.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
-        nestedToDo.push(doc.data());
-        arrayToDoID.push(doc.id);
+        setArrayID(arrayToDoID);
+        setNestedArrayToDo(nestedToDo);
+      })
+      .catch((error) => {
+        console.log('Error with fetching nested todo data: ', error);
       });
-
-      setArrayID(arrayToDoID);
-      setNestedArrayToDo(nestedToDo);
-    })
-    .catch((error) => {
-      console.log('Error with fetching nested todo data: ', error);
-    });
-  return refNested;
+    return refNested;
+  });
 }
 
 export async function deleteTodo() {

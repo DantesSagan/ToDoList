@@ -5,19 +5,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getNestedToDo } from '../../../services/firebase';
 
-export const DisplayTodoByID = ({
-  toDosArray,
-  user,
-  // deleteToDo,
-  // title,
-  // setTitle,
-  // toDo,
-  // setToDo,
-  // editToDoList,
-  // editTitle,
-  setToDoSArray,
-  toDoDOC,
-}) => {
+export default function DisplayTodoByID({ toDosArray, user, toDoDOC }) {
   // const [clickTitle, setClickTitle] = useState(false);
   // const [clickToDo, setClickToDo] = useState(false);
 
@@ -30,17 +18,17 @@ export const DisplayTodoByID = ({
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
-
-  // Problem was in nested scope object function 
+  // Problem was in nested scope object function
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
     try {
-       getNestedToDo(disNameArray, setNestedArrayToDo, setArrayID);
+      getNestedToDo(setNestedArrayToDo, setArrayID);
     } catch (error) {
       setNestedArrayToDo([]);
       console.log(error);
     }
   }, []);
+
   //   const nestedArr = () => {
   //   return Object.keys(disNameArray).map((item) => {
   //     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
@@ -93,7 +81,6 @@ export const DisplayTodoByID = ({
       let currentUrl = window.location.pathname;
       let todoURL = `/todolist/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoURL;
-
       return (
         <div className='' key={index.id}>
           {/*
@@ -171,7 +158,6 @@ export const DisplayTodoByID = ({
               nestedToDoArray[itemsNested][index].displayName;
             return Object.keys(toDoDOC).map((indDoc) => {
               // console.log('docidPARENT=>', toDoDOC[indDoc]);
-
               let checkParentID =
                 toDoDOC[indDoc] ===
                 nestedToDoArray[itemsNested][index].parentID;
@@ -234,7 +220,7 @@ export const DisplayTodoByID = ({
       {Nest}
     </div>
   );
-};
+}
 
 DisplayTodoByID.propTypes = {
   nestedArrayToDo: PropTypes.array.isRequired,
