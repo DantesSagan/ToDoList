@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
-import HandleDoneToDo from './toDoMembers/handleDoneToDo';
+import { firebaseLib } from '../../../../firebaseLibrary/firebaseLib';
+import HandleDoneSubToDo from './toDoMembers/handleDoneToDo';
 
 export const DisplayTodoByIDNESTED = ({
   toDosArray,
@@ -13,8 +13,12 @@ export const DisplayTodoByIDNESTED = ({
   editToDoList,
   editTitle,
   setToDoSArray,
+  nestedArrayToDo,
+  setNestedArrayToDo,
+  arrayID,
+  setArrayID,
 }) => {
-  const [clickTitle, setClickTitle] = useState(false);
+  // const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
 
   const [doneToDo, setDoneToDo] = useState(false);
@@ -23,6 +27,9 @@ export const DisplayTodoByIDNESTED = ({
     return toDosArray[item].toDosArray;
   });
 
+  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
+    return nestedArrayToDo[item].toDosArray;
+  });
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
     console.log(disNameArray);
@@ -39,7 +46,7 @@ export const DisplayTodoByIDNESTED = ({
 
       console.log(disNameArray[item][ind].doneToDo);
 
-      const { handleDoneToDo } = HandleDoneToDo({
+      const { handleDoneToDo } = HandleDoneSubToDo({
         setDoneToDo,
         doneToDo,
         firebaseLib,
@@ -47,17 +54,49 @@ export const DisplayTodoByIDNESTED = ({
         item,
         ind,
       });
+      return Object.keys(nestedToDoArray).map((itemsNested) => {
+        // console.log(nestedArrayToDo);
+        //  4th
+        return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
+          console.log(nestedToDoArray, '27');
 
-      return (
-        <div className='pt-2' key={index}>
-          {/* 
-          Check if user is logged in and strict-equlity to ref in toDo displayName
-          And finally display it what strict-equal to currentAuthUser 
-          And additionally checking if current route path strict-equal to toDoID
-          */}
-          {user?.username === disNameArray[item][ind].displayName
-            ? checkTODOID &&
-              setToDoSArray && (
+          // Check if parent toDoID is equal to current window.location.pathname of URL
+          // And if it true so display current nestedToDo in subcollection
+          let currentUrl = window.location.pathname;
+          let todoURL = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
+          let checkTODOID = currentUrl === todoURL;
+
+          // Check subcollection nestedToDo document ID and comparison it with
+          // nestedToDo subcollection toDoID
+          let checkNestedID =
+            arrayID[itemsNested] === nestedToDoArray[itemsNested][index].toDoID;
+
+          // Check current authentication user in provider data and comparison with
+          // nestedToDo displayName
+          //  in - subcollection - toDo
+          //  in - parent - toDo
+          let checkName =
+            user?.username === nestedToDoArray[itemsNested][index].displayName;
+
+          // Check parentID of toDo which stored in array toDo
+          // and  comparison it with subcollection data where stored parentID
+          let checkParentID =
+            disNameArray[item][ind].toDoID ===
+            nestedToDoArray[itemsNested][index].parentID;
+
+          // console.log('docidPARENT=>', toDoDOC[indDoc]);
+          // console.log(' checkTODOID =>', checkTODOID);
+          // console.log('   checkNestedID =>', checkNestedID);
+          // console.log('   checkName =>', checkName);
+          // console.log('   checkParentID =>', checkParentID);
+          return (
+            <div className='pt-2' key={index}>
+              {/* 
+              Check if user is logged in and strict-equlity to ref in toDo displayName
+              And finally display it what strict-equal to currentAuthUser 
+              And additionally checking if current route path strict-equal to toDoID
+              */}
+              {checkTODOID && checkNestedID && checkName && checkParentID ? (
                 <form
                   method='POST'
                   className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
@@ -80,42 +119,11 @@ export const DisplayTodoByIDNESTED = ({
                         d='M6 18L18 6M6 6l12 12'
                       />
                     </svg>
-                    {/* Get - title - in toDosArray */}
                     {/* 
-                By default state - true - and if you clicking on a title of a toDoList 
-                state will changed to false and you will see textarea,
-                 where you can change you title of current toDo
-                */}
-                    {clickTitle ? (
-                      <div className='block'>
-                        <textarea
-                          defaultValue={disNameArray[item][ind].title}
-                          className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <button
-                          className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
-                            !title && 'opacity-25'
-                          }`}
-                          onClick={editTitle}
-                        >
-                          EditTitle
-                        </button>
-                        <button
-                          className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
-                          onClick={() => setClickTitle(!clickTitle)}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        className='text-2xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white'
-                        onClick={() => setClickTitle(!clickTitle)}
-                      >
-                        {disNameArray[item][ind].title} <br />
-                      </button>
-                    )}
+                    By default state - true - and if you clicking on a title of a toDoList 
+                    state will changed to false and you will see textarea,
+                     where you can change you title of current toDo
+                    */}
 
                     <hr className='border border-red-600' />
                     {/* Get - toDo - in toDosArray */}
@@ -141,7 +149,9 @@ export const DisplayTodoByIDNESTED = ({
                       <div className='block'>
                         <textarea
                           className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
-                          defaultValue={disNameArray[item][ind].toDo}
+                          defaultValue={
+                            nestedToDoArray[itemsNested][index].toDo
+                          }
                           onChange={(e) => setToDo(e.target.value)}
                         />
                         <button
@@ -161,15 +171,22 @@ export const DisplayTodoByIDNESTED = ({
                       </div>
                     ) : (
                       <button
-                        className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
+                        className='text-1xl font-bold rounded-lg m-2 mt-4 hover:bg-red-400 hover:text-white border-l-2 border-red-600'
                         onClick={() => setClickToDo(!clickToDo)}
                       >
-                        {disNameArray[item][ind].doneToDo || doneToDo ? (
+                        {nestedToDoArray[itemsNested][index].doneToDo ||
+                        doneToDo ? (
                           <s className='opacity-50'>
-                            {disNameArray[item][ind].toDo}
+                            {nestedToDoArray[itemsNested][index].toDo}
                           </s>
                         ) : (
-                          disNameArray[item][ind].toDo
+                          <div
+                            className='p-2 hover:underline'
+                            key={item.id}
+                          >
+                            {nestedToDoArray[itemsNested][index].toDo}{' '}
+                            <br key={item.id} />
+                          </div>
                         )}{' '}
                         <br />{' '}
                       </button>
@@ -177,18 +194,19 @@ export const DisplayTodoByIDNESTED = ({
 
                     {/* Get - createdAt - in toDosArray */}
                     <div className='text-sm'>
-                      {disNameArray[item][ind].createdAt} <br />
+                      {nestedToDoArray[itemsNested][index].createdAt} <br />
                     </div>
                     {/* Get - displayName - in toDosArray */}
                     <div className='text-sm font-bold p-2 underline'>
-                      {disNameArray[item][ind].displayName} <br />
+                      {nestedToDoArray[itemsNested][index].displayName} <br />
                     </div>
                   </div>
                 </form>
-              )
-            : null}
-        </div>
-      );
+              ) : null}
+            </div>
+          );
+        });
+      });
     });
   });
 };

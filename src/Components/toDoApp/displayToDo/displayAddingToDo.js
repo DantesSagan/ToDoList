@@ -9,7 +9,6 @@ import {
   arrayUnion,
   getDocs,
   collection,
-  updateDoc,
   setDoc,
   doc,
 } from 'firebase/firestore';
@@ -20,8 +19,6 @@ import { getAuth } from 'firebase/auth';
 export default function FormToDoToDoID({
   toDo,
   setToDo,
-  title,
-  setTitle,
   toDosArray,
   setToDoSArray,
   firebaseLib,
@@ -38,12 +35,8 @@ export default function FormToDoToDoID({
   }, []);
 
   const handleSubmitToDo = async () => {
-    setToDoSArray([
-      ...toDosArray,
-      { displayName, title, toDo, createdAt, toDoID },
-    ]);
+    setToDoSArray([...toDosArray, { displayName, toDo, createdAt, toDoID }]);
     setToDo('');
-    setTitle('');
 
     const disNameArray = Object.keys(toDosArray).map((item) => {
       return toDosArray[item].toDosArray;
@@ -127,20 +120,20 @@ export default function FormToDoToDoID({
                     toDosArray: arrayUnion({
                       displayName: disNameArray[item][ind].displayName,
                       createdAt: formatTime(),
-                      title: title,
                       toDo: toDo,
                       userId: userAuth,
                       toDoID: toDoID,
                       parentID: disNameArray[item][ind].toDoID,
+                      doneToDo: false,
                     }),
                   })
                     .then(() => {
-                      console.log('Document updated with title: ', title);
+                      console.log('Document updated with title: ', toDo);
                       console.log(
                         'Document updated with displayName: ',
                         displayName
                       );
-                      alert('Array updated was successfully: ', title);
+                      alert('Array updated was successfully: ', toDo);
                     })
                     .catch((error) => {
                       console.error('Array updated error: ', error);
@@ -162,7 +155,8 @@ export default function FormToDoToDoID({
       {loggedIn ? (
         <>
           <form
-            className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border border-gray-300 rounded-xl mt-2 pt-5'
+            className='shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border border-gray-300 rounded-xl mt-2 pt-5'
+            style={{ width: '600px' }}
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
@@ -170,17 +164,6 @@ export default function FormToDoToDoID({
                 : event.preventDefault()
             }
           >
-            <textarea
-              aria-label='Add a comment'
-              autoComplete='off'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
-              type='text'
-              name='title'
-              placeholder='Заголовок задачи...'
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              ref={refTodo}
-            />
             <textarea
               aria-label='Add a comment'
               autoComplete='off'
@@ -196,10 +179,10 @@ export default function FormToDoToDoID({
           <div className='transform hover:rotate-ind transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
             <button
               className={`w-full h-full text-lg font-bold text-white ${
-                !toDo && !title && 'opacity-25'
+                !toDo && 'opacity-25'
               }`}
               type='button'
-              disabled={toDo.length < 1 && title.length < 1}
+              disabled={toDo.length < 1}
               onClick={handleSubmitToDo}
             >
               Добавить задачу
@@ -216,5 +199,4 @@ export default function FormToDoToDoID({
 FormToDoToDoID.propTypes = {
   toDosArray: PropTypes.array.isRequired,
   toDo: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
 };

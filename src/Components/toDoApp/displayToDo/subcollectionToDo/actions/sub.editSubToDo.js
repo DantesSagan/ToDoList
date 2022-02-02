@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import UserContext from '../../../../context/user';
+import UserContext from '../../../../../context/user';
 
 import { getDocs, collection, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { useEffect, useContext } from 'react';
-import { getToDo } from '../../../../services/firebase';
+import { getToDo } from '../../../../../services/firebase';
 
-import useUser from '../../../../hooks/user';
+import useUser from '../../../../../hooks/user';
 
-export default function ToDoEditToDo({
+export default function EditSubToDo({
   setToDoSArray,
   toDosArray,
   displayName,

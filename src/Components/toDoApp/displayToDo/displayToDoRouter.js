@@ -93,41 +93,51 @@ export default function DisplayTodoByID({
         */}
           {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
           <div
-            className='justify-center text-1xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
+            className='justify-center text-1xl rounded-xl m-2 hover:bg-red-600 hover:text-white '
             key={index}
           >
             {/* <div key={index}>{nestedDo}</div> */}
             {user?.username === disNameArray[item][ind].displayName &&
             checkTODOID ? (
-              <div>
-                <Link
-                  to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
+              <Link
+                to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
+                key={item.id}
+                // onClick={() =>
+                //   window.open(
+                //     todoURL,
+                //     'targetWindow',
+                //     `toolbar=no,
+                //                     location=no,
+                //                     status=no,
+                //                     menubar=no,
+                //                     scrollbars=yes,
+                //                     resizable=yes,
+                //                     width=800px,
+                //                     height=800px`
+                //   )
+                // }
+              >
+                {/* <div className='text-1xl font-bold text-black p-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '} */}
+                <div
+                  className='text-1xl font-bold p-4 hover:underline'
                   key={item.id}
                 >
-                  <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '}
-                  <div
-                    className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
-                    key={item.id}
-                  >
-                    {disNameArray[item][ind].title} <br key={item.id} />
-                  </div>
-                  <hr
-                    className='border border-red-600 ml-4 mr-4 m-2'
-                    key={item.id}
-                  />
-                  <div className='text-1xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
-                    {disNameArray[item][ind].doneToDo ? (
-                      <s className='opacity-50'>
-                        {disNameArray[item][ind].toDo}
-                      </s>
-                    ) : (
-                      <div>{disNameArray[item][ind].toDo}</div>
-                    )}
-                    <br key={item.id} />
-                  </div>
-                  {` `}
-                </Link>
-              </div>
+                  {disNameArray[item][ind].title} <br key={item.id} />
+                </div>
+                <hr
+                  className='border border-red-600 ml-4 mr-4 m-2'
+                  key={item.id}
+                />
+                <div className='text-1xl p-4 hover:underline' key={item.id}>
+                  {disNameArray[item][ind].doneToDo ? (
+                    <s className='opacity-50'>{disNameArray[item][ind].toDo}</s>
+                  ) : (
+                    <div>{disNameArray[item][ind].toDo}</div>
+                  )}
+                  <br key={item.id} />
+                </div>
+                {` `}
+              </Link>
             ) : null}
           </div>
         </div>
@@ -181,43 +191,28 @@ export default function DisplayTodoByID({
             // console.log('   checkName =>', checkName);
             // console.log('   checkParentID =>', checkParentID);
             return (
-              <div key={itemsNested.id}>
-                {/* without check */}
-                <div key={itemsNested.id}>
-                  {/* with check especially toDoId pathname and username */}
-                  {checkName &&
-                  checkNestedID &&
-                  checkParentID &&
-                  checkTODOID ? (
-                    <div>
-                      <Link
-                        to={`/todolist/nested/${nestedToDoArray[itemsNested][index].toDoID}`}
-                        key={item.id}
-                      >
-                        <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '}
-                        <div
-                          className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
-                          key={item.id}
-                        >
-                          {nestedToDoArray[itemsNested][index].title}{' '}
-                          <br key={item.id} />
-                        </div>
-                        <hr
-                          className='border border-red-600 ml-4 mr-4 m-2'
-                          key={item.id}
-                        />
-                        <div
-                          className='text-1xl pb-4 pr-4 pl-4 pt-4'
-                          key={item.id}
-                        >
-                          {nestedToDoArray[itemsNested][index].toDo}{' '}
-                          <br key={item.id} />
-                        </div>
-                        {` `}
-                      </Link>
+              <div
+                className='justify-center text-1xl rounded-xl m-2 pl-4 hover:bg-red-600 hover:text-white border-l-2 border-red-600'
+                key={itemsNested.id}
+              >
+                {/* with check especially toDoId pathname and username */}
+                {checkName && checkNestedID && checkParentID && checkTODOID ? (
+                  <Link
+                    to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
+                    key={item.id}
+                  >
+                    {/* <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '} */}
+                    {/* <hr
+                      className='border border-red-600 ml-4 mr-4 m-2'
+                      key={item.id}
+                    /> */}
+                    <div className='text-1xl p-2 hover:underline' key={item.id}>
+                      {nestedToDoArray[itemsNested][index].toDo}{' '}
+                      <br key={item.id} />
                     </div>
-                  ) : null}
-                </div>
+                    {` `}
+                  </Link>
+                ) : null}
               </div>
             );
           });
