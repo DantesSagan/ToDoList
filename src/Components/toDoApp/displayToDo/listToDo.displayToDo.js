@@ -6,7 +6,7 @@ import useUser from '../../../hooks/user';
 import UserContext from '../../../context/user';
 
 import DisplayTodoByID from './displayToDoRouter';
-import { getToDo } from '../../../services/firebase';
+import { getNestedToDo, getToDo } from '../../../services/firebase';
 import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
 
 import DeleteToDo from '../actions/deleteToDo';
@@ -27,7 +27,10 @@ export default function ListOfDisplayToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
-  const [toDoDOC, setToDoDOC] = useState([]);
+
+  const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
+  const [arrayID, setArrayID] = useState([]);
+
   const { deleteToDo } = DeleteToDo();
   const { editToDoList } = ToDoEditToDo({
     setToDoSArray,
@@ -52,7 +55,13 @@ export default function ListOfDisplayToDo({
   // const { comparison } = Checking({ user });
   // console.log(comparison);
   useEffect(() => {
-    getToDo(setToDoSArray, setToDoDOC);
+    try {
+      getNestedToDo(setNestedArrayToDo, setArrayID);
+    } catch (error) {
+      setNestedArrayToDo([]);
+      console.log(error);
+    }
+    getToDo(setToDoSArray);
   }, []);
 
   return (
@@ -68,8 +77,10 @@ export default function ListOfDisplayToDo({
         editToDoList={editToDoList}
         editTitle={editTitle}
         setToDoSArray={setToDoSArray}
-        setToDoDOC={setToDoDOC}
-        toDoDOC={toDoDOC}
+        nestedArrayToDo={nestedArrayToDo}
+        setNestedArrayToDo={setNestedArrayToDo}
+        arrayID={arrayID}
+        setArrayID={setArrayID}
       />
     </div>
   );

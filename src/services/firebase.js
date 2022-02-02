@@ -1,7 +1,5 @@
+import { collection, getDocs } from 'firebase/firestore';
 import { firebaseLib, FieldValue } from '../firebaseLibrary/firebaseLib';
-import { updateDoc, doc, getDocs, collection } from 'firebase/firestore';
-import { useEffect } from 'react';
-import { async } from '@firebase/util';
 
 export async function doesUsernameExist(username) {
   const result = await firebaseLib
@@ -53,20 +51,17 @@ export async function getToDoByUserId(userId) {
   return user;
 }
 
-export async function getToDo(setToDoSArray, setToDoDOC) {
+export async function getToDo(setToDoSArray) {
   const docId = await firebaseLib
     .firestore()
     .collection('todos')
     .get()
     .then((serverUpdate) => {
       let todolist = [];
-      let docID = [];
       serverUpdate.docs.forEach((doc) => {
         todolist.push(doc.data());
-        docID.push(doc.id);
       });
       setToDoSArray(todolist);
-      setToDoDOC(docID);
     })
     .catch((error) => {
       console.error('Error to get document: ', error);
@@ -76,26 +71,23 @@ export async function getToDo(setToDoSArray, setToDoDOC) {
 }
 
 export async function getNestedToDo(setNestedArrayToDo, setArrayID) {
-  const result = await firebaseLib.firestore().collection('todos').get();
-  const docID = result.docs.map((listId) => ({
-    ...listId.data(),
-    docId: listId.id,
-  }));
-
-  // Object.keys(docID).forEach(async (nestedDoc) => {
-  //   console.log(docID[nestedDoc].docId);
-  // });
-  var nestedToDo = [];
-  var arrayToDoID = [];
+  const nestedToDo = [];
+  const arrayToDoID = [];
   Promise.all(arrayToDoID, nestedToDo).then((get) => {
     console.log(get, 'get Data');
   });
-  return Object.keys(docID).map(async (nestedDoc) => {
-    console.log(docID[nestedDoc].docId);
+  
+  const getDocTodosOne = await getDocs(
+    collection(firebaseLib.firestore(), 'todos')
+  );
+
+  return getDocTodosOne.forEach(async (getDoc) => {
+    let get = getDoc.id;
+    console.log(getDoc.id);
     const refNested = await firebaseLib
       .firestore()
       .collection('todos')
-      .doc(docID[nestedDoc].docId)
+      .doc(get)
       .collection('nestedToDo')
       .get()
       .then((getDoc) => {

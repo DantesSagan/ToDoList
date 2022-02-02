@@ -1,16 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getNestedToDo } from '../../../services/firebase';
 
-export default function DisplayTodoByID({ toDosArray, user, toDoDOC }) {
+export default function DisplayTodoByID({
+  toDosArray,
+  user,
+  nestedArrayToDo,
+  setNestedArrayToDo,
+  arrayID,
+  setArrayID,
+}) {
   // const [clickTitle, setClickTitle] = useState(false);
   // const [clickToDo, setClickToDo] = useState(false);
-
-  const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
-  const [arrayID, setArrayID] = useState([]);
 
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
@@ -28,7 +32,6 @@ export default function DisplayTodoByID({ toDosArray, user, toDoDOC }) {
       console.log(error);
     }
   }, []);
-
   //   const nestedArr = () => {
   //   return Object.keys(disNameArray).map((item) => {
   //     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
@@ -146,66 +149,77 @@ export default function DisplayTodoByID({ toDosArray, user, toDoDOC }) {
           return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
             console.log(nestedToDoArray, '27');
 
+            // Check if parent toDoID is equal to current window.location.pathname of URL
+            // And if it true so display current nestedToDo in subcollection
             let currentUrl = window.location.pathname;
-            let todoURL = `/todolist/${nestedToDoArray[itemsNested][index].parentID}`;
+            let todoURL = `/todolist/${disNameArray[item][ind].toDoID}`;
             let checkTODOID = currentUrl === todoURL;
 
-            // JSX nested todo
+            // Check subcollection nestedToDo document ID and comparison it with
+            // nestedToDo subcollection toDoID
             let checkNestedID =
-              arrayID[index] === nestedToDoArray[itemsNested][index].toDoID;
+              arrayID[itemsNested] ===
+              nestedToDoArray[itemsNested][index].toDoID;
+
+            // Check current authentication user in provider data and comparison with
+            // nestedToDo displayName
+            //  in - subcollection - toDo
+            //  in - parent - toDo
             let checkName =
               user?.username ===
               nestedToDoArray[itemsNested][index].displayName;
-            return Object.keys(toDoDOC).map((indDoc) => {
-              // console.log('docidPARENT=>', toDoDOC[indDoc]);
-              let checkParentID =
-                toDoDOC[indDoc] ===
-                nestedToDoArray[itemsNested][index].parentID;
-              // console.log(' checkTODOID =>', checkTODOID);
-              // console.log('   checkNestedID =>', checkNestedID);
-              // console.log('   checkName =>', checkName);
-              // console.log('   checkParentID =>', checkParentID);
-              return (
+
+            // Check parentID of toDo which stored in array toDo
+            // and  comparison it with subcollection data where stored parentID
+            let checkParentID =
+              disNameArray[item][ind].toDoID ===
+              nestedToDoArray[itemsNested][index].parentID;
+
+            // console.log('docidPARENT=>', toDoDOC[indDoc]);
+            // console.log(' checkTODOID =>', checkTODOID);
+            // console.log('   checkNestedID =>', checkNestedID);
+            // console.log('   checkName =>', checkName);
+            // console.log('   checkParentID =>', checkParentID);
+            return (
+              <div key={itemsNested.id}>
+                {/* without check */}
                 <div key={itemsNested.id}>
-                  {/* without check */}
-                  <div key={itemsNested.id}>
-                    {/* with check especially toDoId pathname and username */}
-                    {checkName &&
-                    checkNestedID &&
-                    checkParentID &&
-                    checkTODOID ? (
-                      <div>
-                        <Link
-                          to={`/todolist/nested/${nestedToDoArray[itemsNested][index].toDoID}`}
+                  {/* with check especially toDoId pathname and username */}
+                  {checkName &&
+                  checkNestedID &&
+                  checkParentID &&
+                  checkTODOID ? (
+                    <div>
+                      <Link
+                        to={`/todolist/nested/${nestedToDoArray[itemsNested][index].toDoID}`}
+                        key={item.id}
+                      >
+                        <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '}
+                        <div
+                          className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
                           key={item.id}
                         >
-                          <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '}
-                          <div
-                            className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
-                            key={item.id}
-                          >
-                            {nestedToDoArray[itemsNested][index].title}{' '}
-                            <br key={item.id} />
-                          </div>
-                          <hr
-                            className='border border-red-600 ml-4 mr-4 m-2'
-                            key={item.id}
-                          />
-                          <div
-                            className='text-1xl pb-4 pr-4 pl-4 pt-4'
-                            key={item.id}
-                          >
-                            {nestedToDoArray[itemsNested][index].toDo}{' '}
-                            <br key={item.id} />
-                          </div>
-                          {` `}
-                        </Link>
-                      </div>
-                    ) : null}
-                  </div>
+                          {nestedToDoArray[itemsNested][index].title}{' '}
+                          <br key={item.id} />
+                        </div>
+                        <hr
+                          className='border border-red-600 ml-4 mr-4 m-2'
+                          key={item.id}
+                        />
+                        <div
+                          className='text-1xl pb-4 pr-4 pl-4 pt-4'
+                          key={item.id}
+                        >
+                          {nestedToDoArray[itemsNested][index].toDo}{' '}
+                          <br key={item.id} />
+                        </div>
+                        {` `}
+                      </Link>
+                    </div>
+                  ) : null}
                 </div>
-              );
-            });
+              </div>
+            );
           });
         });
       });
