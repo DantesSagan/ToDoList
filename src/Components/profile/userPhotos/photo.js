@@ -26,11 +26,11 @@ export default function Photo({ user }) {
       return (
         <div className='m-6'>
           <div className='text-2xl'>
-            Name of file: {` `}
+            Name of file: {` `} <br />
             <span className='font-bold'>{selectFile.name}</span>
           </div>
           <div className='text-2xl'>
-            Type of file: {` `}
+            Type of file: {` `} <br />
             <span className='text-xl font-bold'>{selectFile.type}</span>
           </div>
           {convertDataSize()}
@@ -40,39 +40,52 @@ export default function Photo({ user }) {
   };
 
   return (
-    <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600'>
-      <form
-        className='p-4 grid'
-        method='POST'
-        onSubmit={(event) => {
-          selectFile >= 1 ? handleSubmitPhoto(event) : event.preventDefault();
-        }}
-      >
-        <h1 className='text-4xl font-bold m-4'>Photo settings</h1>
+    <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 grid'>
+      <div className='grid grid-cols-2 gap-3'>
+        <form
+          className='p-4 grid'
+          method='POST'
+          onSubmit={(event) => {
+            selectFile >= 1 ? handleSubmitPhoto(event) : event.preventDefault();
+          }}
+        >
+          <div className='grid grid-cols-1 gap-3'>
+            <h1 className='text-4xl font-bold m-4'>Photo settings</h1>
 
-        <input
-          type='file'
-          className='text-2xl m-2 border-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600'
-          onChange={(e) => setSelectFile(e.target.files[0])}
-        />
-        <button
-          className='p-4 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold w-2/6 transition'
-          onClick={handleSubmitPhoto}
-        >
-          Set photo
-        </button>
-      </form>
-      {dataFile()}{' '}
-      <form className='p-4 grid '>
-        <h1 className='text-4xl font-bold m-4'>{`Delete photo profile: ${user?.username}`}</h1>
-        <button
-          id='del'
-          className='p-4 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold w-2/6 transition'
-          onClick={delPhoto}
-        >
-          Delete photo
-        </button>
-      </form>
+            <input
+              id='file'
+              type='file'
+              className='hidden'
+              onChange={(e) => setSelectFile(e.target.files[0])}
+            />
+            <label
+              for='file'
+              className='text-2xl mb-2 mt-2 border-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 p-2 w-1/3 rounded-lg hover:text-white'
+            >
+              Select photo...
+            </label>
+            <button
+              className='p-4 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold w-2/6 transition'
+              onClick={handleSubmitPhoto}
+            >
+              Set photo
+            </button>
+          </div>
+        </form>
+        {dataFile()}{' '}
+        <form className='p-4 border-l-4 border-red-600 '>
+          <div className='grid grid-cols-1 gap-3'>
+            <h1 className='text-4xl font-bold m-4'>{`Delete photo profile: ${user?.username}`}</h1>
+            <button
+              id='del'
+              className='p-4 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold w-2/6 transition'
+              onClick={delPhoto}
+            >
+              Delete photo
+            </button>
+          </div>
+        </form>{' '}
+      </div>
     </div>
   );
 }

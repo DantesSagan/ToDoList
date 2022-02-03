@@ -27,8 +27,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertMBMoreThan1B);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(convertMBMoreThan1B.toFixed(3))} GB`}
             </span>
           </div>
@@ -39,8 +39,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertMBMoreThan100M);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(convertMBMoreThan100M.toFixed(3))} MB`}
             </span>
           </div>
@@ -52,8 +52,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertMBMoreThan10M);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(convertMBMoreThan10M.toFixed(3))} MB`}
             </span>
           </div>
@@ -65,8 +65,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertMBMoreThan1M);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(convertMBMoreThan1M.toFixed(3))} MB`}
             </span>
           </div>
@@ -78,8 +78,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertKBMoreThan100Thousands);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(
                 convertKBMoreThan100Thousands.toFixed(3)
               )} KB`}
@@ -93,8 +93,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertKBMoreThan10Thousands);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(convertKBMoreThan10Thousands.toFixed(3))} KB`}
             </span>
           </div>
@@ -105,8 +105,8 @@ export default function ConvertInfo({ selectFile }) {
         console.log(convertKBMoreThan1Thousands);
         return (
           <div className='text-lg'>
-            Current size of file: {` `}
-            <span className='font-bold'>
+            Current size of file: {` `} <br />
+            <span className='font-bold text-2xl'>
               {`${validSizeNumber(convertKBMoreThan1Thousands.toFixed(3))} KB`}
             </span>
           </div>
