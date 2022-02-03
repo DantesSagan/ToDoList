@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,8 +13,9 @@ export default function RouterToDo({
   user,
   setToDoSArray,
 }) {
-  
+  const [welcome, setWelcome] = useState(false);
   const [pagination, setPagination] = useState(1);
+
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
@@ -38,7 +40,7 @@ export default function RouterToDo({
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
-  
+
   const toDoArr = Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
 
@@ -47,8 +49,7 @@ export default function RouterToDo({
         className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
         key={index}
       >
-        {user?.username === disNameArray[item][0].displayName &&
-        setToDoSArray ? (
+        {user?.username === disNameArray[item][0].displayName ? (
           <Link to={`/todolist/${disNameArray[item][0].toDoID}`} key={item.id}>
             {' '}
             <div
@@ -67,19 +68,52 @@ export default function RouterToDo({
       </div>
     );
   });
-  console.log(toDoArr);
+
+  const toDoArray = [];
+  Object.keys(disNameArray).map((item) => {
+    return toDoArray.push(disNameArray[item][0].displayName);
+  });
+
+  // In this case this will be find index of array = toDoArray by current auth user
+  const length = toDoArray.indexOf(user?.username);
+  console.log(toDoArray[length] === user?.username);
 
   return (
-    <div>
-      {' '}
-      <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl w-full'>
-        <div className='m-4 p-4 rounded-lg'>{toDoArr}</div>
-        {/* <div className='text-1xl text-black font-bold justify-center'>
+    <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 rounded-xl w-full'>
+      <div className='m-4 p-4 rounded-lg'>
+        {/* And here this comparison check
+        if current auth user strict-equal to username in created todo by current user so
+        display const variable toDoArr
+        else if it not true display welcome section which displayed that you don't have any todos
+        */}
+        {user?.username === toDoArray[length] ? (
+          toDoArr
+        ) : (
+          <div className='text-3xl'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-12 w-12 m-auto block transform hover:-translate-y-48 duration-700 hover:scale-125'
+              fill='red'
+              viewBox='0 0 24 24'
+              stroke='black'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeidth='2'
+                d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+              />
+            </svg>
+            Hello fellow, seems like you didn't have any of todo! <br /> Can you
+            create you own todo in upper form?
+          </div>
+        )}
+      </div>
+      {/* <div className='text-1xl text-black font-bold justify-center'>
         - {pagination} -
       </div> */}
-        {/* <PaginationToDo /> */}
-        {/* Here need to add pagination button to see a list of tasks by (any number) by page in it */}
-      </form>
-    </div>
+      {/* <PaginationToDo /> */}
+      {/* Here need to add pagination button to see a list of tasks by (any number) by page in it */}
+    </form>
   );
 }
