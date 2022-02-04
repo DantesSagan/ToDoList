@@ -109,18 +109,19 @@ export default function FormToDo({
       {loggedIn && createToDo ? (
         <>
           <form
-            className='flex flex-col justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border border-gray-300 rounded-xl mt-2 pt-5'
+            className='flex flex-col shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border-2 border-red-600 rounded-xl mt-2 pt-5'
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
                 ? handleSubmitToDo(event)
                 : event.preventDefault()
             }
+            style={{width: '600px'}}
           >
             <textarea
               aria-label='Add a comment'
               autoComplete='off'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl h-14'
               type='text'
               name='title'
               placeholder='Заголовок задачи...'
@@ -140,9 +141,9 @@ export default function FormToDo({
               ref={refTodo}
             />{' '}
           </form>
-          <div className='grid grid-cols-2 gap-3'>
+          <div className='inline'>
             <button
-              className={`text-lg font-bold text-white transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2  w-2/5 ${
+              className={`text-lg font-bold text-white transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2  w-44 ${
                 !toDo && !title && 'opacity-25'
               }`}
               type='button'
@@ -170,7 +171,7 @@ export default function FormToDo({
             <button
               type='button'
               onClick={() => setCreateToDo(!createToDo)}
-              className='p-4 m-2 bg-red-600 hover:bg-red-400 rounded-lg focus:ring-black focus:ring  transition duration-200 text-white w-2/5'
+              className='p-2 m-2 bg-red-600 hover:bg-red-400 rounded-lg focus:ring-black focus:ring  transition duration-200 text-white w-22'
             >
               Cancel
             </button>

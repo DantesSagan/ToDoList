@@ -93,8 +93,9 @@ export default function DisplayTodoByID({
         */}
           {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
           <div
-            className='justify-center text-1xl rounded-xl m-2 hover:bg-red-600 hover:text-white '
+            className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white'
             key={index}
+            style={{ width: '600px' }}
           >
             {/* <div key={index}>{nestedDo}</div> */}
             {user?.username === disNameArray[item][ind].displayName &&
@@ -119,7 +120,7 @@ export default function DisplayTodoByID({
               >
                 {/* <div className='text-1xl font-bold text-black p-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '} */}
                 <div
-                  className='text-1xl font-bold p-4 hover:underline'
+                  className='text-3xl font-bold p-4 hover:underline title'
                   key={item.id}
                 >
                   {disNameArray[item][ind].title} <br key={item.id} />
@@ -192,7 +193,7 @@ export default function DisplayTodoByID({
             // console.log('   checkParentID =>', checkParentID);
             return (
               <div
-                className='justify-center text-1xl rounded-xl m-2 pl-4 hover:bg-red-600 hover:text-white border-l-2 border-red-600'
+                className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white'
                 key={itemsNested.id}
               >
                 {/* with check especially toDoId pathname and username */}
@@ -202,11 +203,11 @@ export default function DisplayTodoByID({
                     key={item.id}
                   >
                     {/* <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '} */}
-                    {/* <hr
+                    <hr
                       className='border border-red-600 ml-4 mr-4 m-2'
                       key={item.id}
-                    /> */}
-                    <div className='text-1xl p-2 hover:underline' key={item.id}>
+                    />
+                    <div className='text-1xl p-2 ml-2 hover:underline' key={item.id}>
                       {nestedToDoArray[itemsNested][index].toDo}{' '}
                       <br key={item.id} />
                     </div>
@@ -224,7 +225,7 @@ export default function DisplayTodoByID({
   // And again it's displaying nested subcollection when was call
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
   return (
-    <div>
+    <div className='border-l-2 border-solid border-red-600 rounded-xl'>
       {MainObj}
       {Nest}
     </div>

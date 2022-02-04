@@ -46,20 +46,18 @@ export default function RouterToDo({
 
     return (
       <div
-        className='justify-center text-2xl bg-white rounded-xl m-2 hover:bg-red-600 hover:text-white shadow-inner'
+        className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner'
         key={index}
+        style={{ width: '600px' }}
       >
         {user?.username === disNameArray[item][0].displayName ? (
           <Link to={`/todolist/${disNameArray[item][0].toDoID}`} key={item.id}>
             {' '}
-            <div
-              className='text-1xl font-bold pb-4 pr-4 pl-4 pt-4'
-              key={item.id}
-            >
+            <div className='text-3xl font-bold p-4 title' key={item.id}>
               {disNameArray[item][0].title} <br key={item.id} />
             </div>
             <hr className='border border-red-600 ml-4 mr-4 m-2' key={item.id} />
-            <div className='text-2xl pb-4 pr-4 pl-4 pt-4' key={item.id}>
+            <div className='text-1xl p-4' key={item.id}>
               {disNameArray[item][0].toDo} <br key={item.id} />
             </div>
             {` `}
@@ -79,36 +77,36 @@ export default function RouterToDo({
   console.log(toDoArray[length] === user?.username);
 
   return (
-    <form className='justify-center text-2xl border border-red-300 pl-0 pr-5 rounded-xl w-full'>
-      <div className='m-4 p-4 rounded-lg'>
-        {/* And here this comparison check
+    <form className='justify-center text-2xl pl-0 pr-5 rounded-xl '>
+      {/* And here this comparison check
         if current auth user strict-equal to username in created todo by current user so
         display const variable toDoArr
         else if it not true display welcome section which displayed that you don't have any todos
         */}
-        {user?.username === toDoArray[length] ? (
-          toDoArr
-        ) : (
-          <div className='text-3xl'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-12 w-12 m-auto block transform hover:-translate-y-48 duration-700 hover:scale-125'
-              fill='red'
-              viewBox='0 0 24 24'
-              stroke='black'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeidth='2'
-                d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
-              />
-            </svg>
+      {user?.username === toDoArray[length] ? (
+        toDoArr
+      ) : (
+        <div className='text-3xl'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='h-12 w-12 m-auto block transform hover:-translate-y-48 duration-700 hover:scale-125'
+            fill='red'
+            viewBox='0 0 24 24'
+            stroke='black'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeidth='2'
+              d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+            />
+          </svg>
+          <p className='title'>
             Hello fellow, seems like you didn't have any of todo! <br /> Can you
             create you own todo in upper form?
-          </div>
-        )}
-      </div>
+          </p>
+        </div>
+      )}
       {/* <div className='text-1xl text-black font-bold justify-center'>
         - {pagination} -
       </div> */}

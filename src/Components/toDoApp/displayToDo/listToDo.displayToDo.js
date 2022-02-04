@@ -65,7 +65,7 @@ export default function ListOfDisplayToDo({
   }, []);
 
   return (
-    <div className='h-screen'>
+    <div className='h-screen '>
       <DisplayTodoByID
         toDosArray={toDosArray}
         user={user}

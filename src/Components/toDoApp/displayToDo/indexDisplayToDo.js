@@ -24,10 +24,10 @@ export default function IndexDisplayToDo() {
   } = IndexConst();
   console.log(user);
   return (
-    <div className='container flex mx-auto max-w-screen-sm item-center justify-center mb-40'>
+    <div className='container flex mx-auto max-w-screen-sm item-center justify-center mb-40 border-r-2 border-solid border-red-600 rounded-xl '>
       <div className='flex flex-col w-2/2'>
         <div className='flex flex-col items-center'>
-          <div className='h-full w-full py-5 px-4 text-xl'>
+          <div className='h-full w-full py-5 px-4 text-xl '>
             <HeaderToDo user={user} />
             <FormToDoToDoID
               toDo={toDo}

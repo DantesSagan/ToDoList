@@ -23,7 +23,7 @@ export const DisplayTodoByUser = ({
           And finally display it what strict-equal to currentAuthUser
           */}
         {user?.username === disNameArray[item][0].displayName ? (
-          <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl'>
+          <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '>
             <div className='m-4 p-4 shadow-inner rounded-lg'>
               {/* Delete toDo by toDoID */}
               <svg

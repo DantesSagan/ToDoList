@@ -44,4 +44,7 @@
   transform: scale(0.85);
 }
 
-
+.title::first-letter {
+  font-size: 50px;
+  color: black;
+}
