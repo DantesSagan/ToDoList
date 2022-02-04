@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Footer from '../../pages/footer';
 import FormToDo from './add-to-do.creatingToDo';
 
@@ -22,12 +23,15 @@ export default function IndexToDo() {
     toDoID,
     displayName,
   } = IndexConst();
+  const [createToDo, setCreateToDo] = useState(false);
+
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center h-full mb-60'>
       <div className='flex flex-col w-2/2'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
             <HeaderToDo user={user} />
+
             <FormToDo
               toDo={toDo}
               setToDo={setToDo}
@@ -42,7 +46,10 @@ export default function IndexToDo() {
               refTodo={refTodo}
               createdAt={createdAt}
               toDoID={toDoID}
+              createToDo={createToDo}
+              setCreateToDo={setCreateToDo}
             />
+
             <ListOfToDo
               toDo={toDo}
               setToDo={setToDo}

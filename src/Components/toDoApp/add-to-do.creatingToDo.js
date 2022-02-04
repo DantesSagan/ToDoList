@@ -21,6 +21,8 @@ export default function FormToDo({
   refTodo,
   createdAt,
   toDoID,
+  createToDo,
+  setCreateToDo,
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
@@ -104,10 +106,10 @@ export default function FormToDo({
 
   return (
     <div>
-      {loggedIn ? (
+      {loggedIn && createToDo ? (
         <>
           <form
-            className='block justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border border-gray-300 rounded-xl mt-2 pt-5'
+            className='flex flex-col justify-between shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border border-gray-300 rounded-xl mt-2 pt-5'
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
@@ -129,30 +131,58 @@ export default function FormToDo({
             <textarea
               aria-label='Add a comment'
               autoComplete='off'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
+              className='text-sm text-gray-base w-full mr-3 mt-3 mb-3 py-5 px-4 rounded-xl '
               type='text'
               name='toDo'
               placeholder='Напишите задачу...'
               value={toDo}
               onChange={(e) => setToDo(e.target.value)}
               ref={refTodo}
-            />
+            />{' '}
           </form>
-          <div className='transform hover:rotate-0 transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2'>
+          <div className='grid grid-cols-2 gap-3'>
             <button
-              className={`w-full h-full text-lg font-bold text-white ${
+              className={`text-lg font-bold text-white transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2  w-2/5 ${
                 !toDo && !title && 'opacity-25'
               }`}
               type='button'
               disabled={toDo.length < 1 && title.length < 1}
               onClick={handleSubmitToDo}
             >
-              Добавить задачу
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                class={`h-6 w-6 inline-block m-auto  ${
+                  !toDo && !title && 'transform hover:rotate-12'
+                } 
+                `}
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M12 4v16m8-8H4'
+                />
+              </svg>
+            </button>{' '}
+            <button
+              type='button'
+              onClick={() => setCreateToDo(!createToDo)}
+              className='p-4 m-2 bg-red-600 hover:bg-red-400 rounded-lg focus:ring-black focus:ring  transition duration-200 text-white w-2/5'
+            >
+              Cancel
             </button>
-          </div>
+          </div>{' '}
         </>
       ) : (
-        <Outlet />
+        <button
+          onClick={() => setCreateToDo(!createToDo)}
+          className='p-4 m-2 bg-black hover:bg-red-400 rounded-lg focus:ring-black text-white focus:ring focus:ring-red-600 transition duration-200'
+        >
+          Create ToDo
+        </button>
       )}
     </div>
   );
