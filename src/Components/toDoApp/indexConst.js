@@ -34,7 +34,6 @@ export default function IndexConst() {
 
   let toDoID = getRandomSymbolAndID();
 
-  console.log(toDosArray);
   return {
     toDo,
     setToDo,

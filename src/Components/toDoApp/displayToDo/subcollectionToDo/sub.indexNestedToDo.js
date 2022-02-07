@@ -20,7 +20,6 @@ export default function IndexSubToDo() {
     toDoID,
     displayName,
   } = IndexConst();
-  console.log(user);
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center mb-60'>
       <div className='flex flex-col w-2/2'>

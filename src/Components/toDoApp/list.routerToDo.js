@@ -28,9 +28,7 @@ export default function RouterToDo({
         limit(3)
       );
       const docSnap = await getDocs(first);
-      console.log('Hello world');
       return docSnap.forEach((item) => {
-        console.log(item.id, item.data(), item);
         return item;
       });
     });

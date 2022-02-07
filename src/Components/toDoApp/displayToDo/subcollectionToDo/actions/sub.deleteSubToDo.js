@@ -33,7 +33,6 @@ export default function DeleteSubToDo({
     getToDo(setToDoSArray);
   }, []);
 
-  console.log(arrayID);
 
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
@@ -57,7 +56,6 @@ export default function DeleteSubToDo({
         let getRouterPathToDo = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
 
         let checkPathID = getCurrentUrl === getRouterPathToDo;
-        console.log(checkPathID);
         // This is check if currentURL and RouterPath strict-equal
         // So do confirm what u want to delete whole toDoList with all data in it
 
@@ -83,7 +81,6 @@ export default function DeleteSubToDo({
 
               return comparisonName && checkPathID && checkID
                 ? getDocTodos.forEach((doc) => {
-                    console.log(doc.id);
                     let comparisonID =
                       doc.id === nestedToDoArray[itemsNested][index].toDoID;
                     // In this case need to compare two equal parameters
@@ -93,9 +90,9 @@ export default function DeleteSubToDo({
                     // So updateDoc of toDoList otherwise - no
                     const confirm = window.confirm(
                       `Are you sure you want to delete this toDo = 
-            ${doc.id}? 
+            ${nestedToDoArray[itemsNested][index].toDo}? 
             Вы уверены, что хотите поменять список дел 
-            ${doc.id}?`
+            ${nestedToDoArray[itemsNested][index].toDo}?`
                     );
                     if (
                       confirm &&
@@ -115,26 +112,26 @@ export default function DeleteSubToDo({
                       deleteDoc(doc.ref)
                         .then(() => {
                           console.log(
-                            `Array was deleted successfully: 
+                            `Subcollection toDo was deleted successfully: 
                         ${nestedToDoArray[itemsNested][index].toDoID}`
                           );
                           alert(
-                            `Array was deleted successfully: 
-                        ${nestedToDoArray[itemsNested][index].title}`
+                            `Subcollection toDo was deleted successfully: 
+                        ${nestedToDoArray[itemsNested][index].toDo}`
                           );
                         })
                         .catch((error) => {
-                          console.error(`Array deleted error: ${error}`);
-                          alert(`Array deleted error: ${error}`);
+                          console.error(`ToDo deleted error: ${error}`);
+                          alert(`ToDo deleted error: ${error}`);
                         })
                         .then(() => {
                           alert(
-                            `Deleted successfully - ${nestedToDoArray[itemsNested][index].title}`
+                            `Deleted successfully - ${nestedToDoArray[itemsNested][index].toDo}`
                           );
                           navigate(ROUTES.DASHBOARD);
                         })
                     ) : (
-                      <div>{`Cannot delete this ${nestedToDoArray[itemsNested][index].title}`}</div>
+                      <div>{`Cannot delete this ${nestedToDoArray[itemsNested][index].toDo}`}</div>
                     );
                   })
                 : null;

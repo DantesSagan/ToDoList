@@ -21,7 +21,6 @@ export default function HandleDoneSubToDo({
 
     querySnapshot.forEach((doc) => {
       if (disNameArray[item][ind].toDoID === doc.id) {
-        console.log(disNameArray[item][ind].toDoID === doc.id);
         updateDoc(doc.ref, {
           toDosArray: [
             {
