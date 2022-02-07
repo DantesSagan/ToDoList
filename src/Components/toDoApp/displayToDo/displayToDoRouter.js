@@ -19,9 +19,11 @@ export default function DisplayTodoByID({
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
+  
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
+
   // Problem was in nested scope object function
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
@@ -32,6 +34,7 @@ export default function DisplayTodoByID({
       console.log(error);
     }
   }, []);
+
   //   const nestedArr = () => {
   //   return Object.keys(disNameArray).map((item) => {
   //     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
@@ -118,7 +121,6 @@ export default function DisplayTodoByID({
                 //   )
                 // }
               >
-                {/* <div className='text-1xl font-bold text-black p-4'>{`ToDoList page ${disNameArray[item][ind].toDoID}`}</div>{' '} */}
                 <div
                   className='text-3xl font-bold p-4 hover:underline title'
                   key={item.id}
@@ -202,7 +204,6 @@ export default function DisplayTodoByID({
                     to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
                     key={item.id}
                   >
-                    {/* <div className='text-1xl font-bold text-black pb-4 pr-4 pl-4 pt-4'>{`ToDoList page ${nestedToDoArray[itemsNested][ind].toDoID}`}</div>{' '} */}
                     <hr
                       className='border border-red-600 ml-4 mr-4 m-2'
                       key={item.id}

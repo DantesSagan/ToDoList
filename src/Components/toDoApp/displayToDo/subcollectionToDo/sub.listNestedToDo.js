@@ -29,7 +29,13 @@ export default function ListOfSubDisplayToDo({
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
   const [arrayID, setArrayID] = useState([]);
 
-  const { deleteToDo } = DeleteSubToDo();
+  const { deleteSubToDo } = DeleteSubToDo({
+    setNestedArrayToDo,
+    arrayID,
+    setArrayID,
+    nestedArrayToDo,
+  });
+
   const { editToDoList } = EditSubToDo({
     setToDoSArray,
     toDosArray,
@@ -56,7 +62,7 @@ export default function ListOfSubDisplayToDo({
       <DisplayTodoByIDNESTED
         toDosArray={toDosArray}
         user={user}
-        deleteToDo={deleteToDo}
+        deleteSubToDo={deleteSubToDo}
         title={title}
         setTitle={setTitle}
         toDo={toDo}
