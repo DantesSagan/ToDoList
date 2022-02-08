@@ -7,7 +7,7 @@ export const DisplayTodoByIDNESTED = ({
   deleteSubToDo,
   toDo,
   setToDo,
-  editToDoList,
+  editSubToDo,
   editTitle,
   nestedArrayToDo,
   setNestedArrayToDo,
@@ -29,7 +29,7 @@ export const DisplayTodoByIDNESTED = ({
     return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
       console.log(nestedToDoArray, '27');
 
-      const { handleDoneToDo } = HandleDoneSubToDo({
+      const { handleDoneToDoSub } = HandleDoneSubToDo({
         setDoneToDo,
         doneToDo,
         firebaseLib,
@@ -106,7 +106,7 @@ export const DisplayTodoByIDNESTED = ({
                     fill='none'
                     viewBox='0 0 24 24'
                     stroke='currentColor'
-                    onClick={handleDoneToDo}
+                    onClick={handleDoneToDoSub}
                   >
                     <path
                       strokeLinecap='round'
@@ -127,9 +127,9 @@ export const DisplayTodoByIDNESTED = ({
                       className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
                         !toDo && 'opacity-25'
                       }`}
-                      onClick={editToDoList}
+                      onClick={editSubToDo}
                     >
-                      EditToDo
+                      Edit Sub ToDo
                     </button>
                     <button
                       className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'

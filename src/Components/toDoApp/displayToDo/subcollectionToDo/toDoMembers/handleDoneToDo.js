@@ -4,54 +4,62 @@ export default function HandleDoneSubToDo({
   setDoneToDo,
   doneToDo,
   firebaseLib,
-  disNameArray,
-  item,
-  ind,
+  nestedToDoArray,
+  itemsNested,
+  index,
 }) {
-  
-  const handleDoneToDo = async (event) => {
+  const handleDoneToDoSub = async (event) => {
     event.preventDefault();
 
     // UPDATE STATE WHEN A DATA WAS EDIT SUCCESSFULLY
     setDoneToDo(!doneToDo);
-    
+
     const querySnapshot = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
     );
 
-    querySnapshot.forEach((doc) => {
-      if (disNameArray[item][ind].toDoID === doc.id) {
-        updateDoc(doc.ref, {
-          toDosArray: [
-            {
-              displayName: disNameArray[item][ind].displayName,
-              createdAt: disNameArray[item][ind].createdAt,
-              title: disNameArray[item][ind].title,
-              toDo: disNameArray[item][ind].toDo,
-              toDoID: disNameArray[item][ind].toDoID,
-              userId: disNameArray[item][ind].userId,
-              doneToDo: !doneToDo,
-            },
-          ],
-        })
-          .then(() => {
-            setDoneToDo(!doneToDo);
-            console.log(
-              'DoneToDo changed successfully: ',
-              disNameArray[item][ind].doneToDo,
-              doneToDo
-            );
-          })
-          .catch((error) => {
-            console.error('Error with city changed: ', error);
-          });
-      } else {
-        return null;
-      }
-      console.log(doc.id, ' => ', doc.data());
+    return querySnapshot.forEach(async (doc) => {
+      let getID = doc.id;
+      const querySnapshotSub = await getDocs(
+        collection(firebaseLib.firestore(), 'todos', getID, 'nestedToDo')
+      );
+
+      return querySnapshotSub.forEach((docSub) => {
+        let checkToDoID =
+          nestedToDoArray[itemsNested][index].toDoID === docSub.id;
+        // let checkParentID =
+        //   doc.id === nestedToDoArray[itemsNested][index].parentID;
+
+        return checkToDoID
+          ? updateDoc(docSub.ref, {
+              toDosArray: [
+                {
+                  displayName: nestedToDoArray[itemsNested][index].displayName,
+                  createdAt: nestedToDoArray[itemsNested][index].createdAt,
+                  toDo: nestedToDoArray[itemsNested][index].toDo,
+                  toDoID: nestedToDoArray[itemsNested][index].toDoID,
+                  userId: nestedToDoArray[itemsNested][index].userId,
+                  parentID: doc.id,
+                  doneToDo: !doneToDo,
+                },
+              ],
+            })
+              .then(() => {
+                setDoneToDo(!doneToDo);
+                console.log(
+                  'DoneToDo changed successfully: ',
+                  nestedToDoArray[itemsNested][index].doneToDo,
+                  doneToDo
+                );
+              })
+              .catch((error) => {
+                console.error('Error with city changed: ', error);
+              })
+          : null;
+      });
     });
   };
   return {
-    handleDoneToDo,
+    handleDoneToDoSub,
   };
 }

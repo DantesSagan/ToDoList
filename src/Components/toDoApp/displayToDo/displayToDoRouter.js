@@ -19,7 +19,7 @@ export default function DisplayTodoByID({
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
-  
+
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
@@ -208,8 +208,17 @@ export default function DisplayTodoByID({
                       className='border border-red-600 ml-4 mr-4 m-2'
                       key={item.id}
                     />
-                    <div className='text-1xl p-2 ml-2 hover:underline' key={item.id}>
-                      {nestedToDoArray[itemsNested][index].toDo}{' '}
+                    <div
+                      className='text-1xl p-2 ml-2 hover:underline'
+                      key={item.id}
+                    >
+                      {nestedToDoArray[itemsNested][index].doneToDo ? (
+                        <s className='opacity-50'>
+                          {nestedToDoArray[itemsNested][index].toDo}{' '}
+                        </s>
+                      ) : (
+                        <div>{nestedToDoArray[itemsNested][index].toDo}</div>
+                      )}
                       <br key={item.id} />
                     </div>
                     {` `}

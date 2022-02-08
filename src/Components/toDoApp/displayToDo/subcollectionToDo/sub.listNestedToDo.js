@@ -36,7 +36,7 @@ export default function ListOfSubDisplayToDo({
     nestedArrayToDo,
   });
 
-  const { editToDoList } = EditSubToDo({
+  const { editSubToDo } = EditSubToDo({
     setToDoSArray,
     toDosArray,
     displayName,
@@ -45,6 +45,10 @@ export default function ListOfSubDisplayToDo({
     toDoID,
     setToDo,
     firebaseLib,
+    setNestedArrayToDo,
+    arrayID,
+    setArrayID,
+    nestedArrayToDo,
   });
 
   useEffect(() => {
@@ -67,7 +71,7 @@ export default function ListOfSubDisplayToDo({
         setTitle={setTitle}
         toDo={toDo}
         setToDo={setToDo}
-        editToDoList={editToDoList}
+        editSubToDo={editSubToDo}
         setToDoSArray={setToDoSArray}
         nestedArrayToDo={nestedArrayToDo}
         setNestedArrayToDo={setNestedArrayToDo}

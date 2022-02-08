@@ -109,7 +109,7 @@ export default function FormToDo({
       {loggedIn && createToDo ? (
         <>
           <form
-            className='flex flex-col shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border-2 border-red-600 rounded-xl mt-2 pt-5'
+            className='flex flex-col shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border-2 border-red-600 rounded-xl mt-2 pt-5 transition duration-700'
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
