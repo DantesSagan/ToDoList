@@ -35,48 +35,7 @@ export default function DisplayTodoByID({
     }
   }, []);
 
-  //   const nestedArr = () => {
-  //   return Object.keys(disNameArray).map((item) => {
-  //     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
-  //     return Object.keys(disNameArray[item]).map((ind) => {
-  //       try {
-  //         return getNestedToDo(
-  //           disNameArray,
-  //           item,
-  //           ind,
-  //           setNestedArrayToDo,
-  //           setArrayID
-  //         );
-  //       } catch (error) {
-  //         setNestedArrayToDo([]);
-  //         console.log(error);
-  //       }
-  //       return disNameArray[item][ind].toDoID;
-  //     });
-  //   });
-  // };
-  // nestedArr();
-  // const NESTED = Object.keys(disNameArray).map((item) => {
-  //   // Get - disNameArray[item] - and nested indexes within it for each result of its callback
-  //   return disNameArray[item];
-  // });
-  // const NESTEDtwo = Object.keys(NESTED).map((ind) => {
-  //   return NESTED[ind];
-  // });
-  // const NESTEDthree = Object.keys(NESTEDtwo).map((indThree) => {
-  //   return NESTEDtwo[indThree][0].toDoID;
-  // });
-  // return Object.keys(NESTEDthree).forEach((forEachind) => {
-  //   console.log(NESTEDthree[forEachind]);
-  //   const nest = NESTEDthree[forEachind];
-  //   try {
-  //     getNestedToDo(setNestedArrayToDo, setArrayID, NESTEDthree, forEachind);
-  //   } catch (error) {
-  //     setNestedArrayToDo([]);
-  //     console.log(error);
-  //   }
-  //   return NESTEDthree[forEachind];
-  // });
+
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   const MainObj = Object.keys(disNameArray).map((item, index) => {
     // console.log(toDosArray);

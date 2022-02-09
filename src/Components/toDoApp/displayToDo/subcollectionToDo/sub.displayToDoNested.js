@@ -72,6 +72,7 @@ export const DisplayTodoByIDNESTED = ({
               method='POST'
               className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
               key={index}
+              style={{ width: '600px' }}
             >
               <div className='m-8 p-4 shadow-inner rounded-lg'>
                 {/* Delete toDo by toDoID */}

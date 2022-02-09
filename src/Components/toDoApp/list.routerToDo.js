@@ -92,10 +92,11 @@ export default function RouterToDo({
               <Skeleton
                 sx={{ bgcolor: 'red.800' }}
                 animation='wave'
-                variant='rectangular'
+                variant='rect'
                 height={200}
                 width={600}
                 className='rounded-lg mb-2'
+                key={fall.id}
               >
                 {fall}
               </Skeleton>

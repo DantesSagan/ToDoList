@@ -33,7 +33,6 @@ export default function DeleteSubToDo({
     getToDo(setToDoSArray);
   }, []);
 
-
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
@@ -90,9 +89,7 @@ export default function DeleteSubToDo({
                     // So updateDoc of toDoList otherwise - no
                     const confirm = window.confirm(
                       `Are you sure you want to delete this toDo = 
-            ${nestedToDoArray[itemsNested][index].toDo}? 
-            Вы уверены, что хотите поменять список дел 
-            ${nestedToDoArray[itemsNested][index].toDo}?`
+            ${nestedToDoArray[itemsNested][index].toDo}? `
                     );
                     if (
                       confirm &&
@@ -125,9 +122,6 @@ export default function DeleteSubToDo({
                           alert(`ToDo deleted error: ${error}`);
                         })
                         .then(() => {
-                          alert(
-                            `Deleted successfully - ${nestedToDoArray[itemsNested][index].toDo}`
-                          );
                           navigate(ROUTES.DASHBOARD);
                         })
                     ) : (

@@ -10,6 +10,7 @@ import { getNestedToDo, getToDo } from '../../../../services/firebase';
 import { DisplayTodoByIDNESTED } from './sub.displayToDoNested';
 import EditSubToDo from './actions/sub.editSubToDo';
 import DeleteSubToDo from './actions/sub.deleteSubToDo';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 export default function ListOfSubDisplayToDo({
   title,
@@ -28,6 +29,8 @@ export default function ListOfSubDisplayToDo({
 
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
   const [arrayID, setArrayID] = useState([]);
+
+  const [loading, setLoading] = useState(true);
 
   const { deleteSubToDo } = DeleteSubToDo({
     setNestedArrayToDo,
@@ -53,7 +56,9 @@ export default function ListOfSubDisplayToDo({
 
   useEffect(() => {
     try {
-      getNestedToDo(setNestedArrayToDo, setArrayID);
+      getNestedToDo(setNestedArrayToDo, setArrayID).then((doc) => {
+        setLoading(false);
+      });
     } catch (error) {
       setNestedArrayToDo([]);
       console.log(error);
@@ -61,22 +66,45 @@ export default function ListOfSubDisplayToDo({
     getToDo(setToDoSArray);
   }, []);
 
+  const skeletonArray = Array(1).fill('');
+
   return (
     <div className='h-screen'>
-      <DisplayTodoByIDNESTED
-        toDosArray={toDosArray}
-        user={user}
-        deleteSubToDo={deleteSubToDo}
-        title={title}
-        setTitle={setTitle}
-        toDo={toDo}
-        setToDo={setToDo}
-        editSubToDo={editSubToDo}
-        setToDoSArray={setToDoSArray}
-        nestedArrayToDo={nestedArrayToDo}
-        setNestedArrayToDo={setNestedArrayToDo}
-        arrayID={arrayID}
-      />
+      {loading ? (
+        <>
+          {skeletonArray.map((fall) => {
+            return (
+              <Skeleton
+                sx={{ bgcolor: 'red.900' }}
+                animation='wave'
+                variant='rect'
+                height={250}
+                width={600}
+                className='rounded-lg mb-2'
+                key={fall.id}
+              >
+                {fall}
+              </Skeleton>
+            );
+          })}
+        </>
+      ) : (
+        <DisplayTodoByIDNESTED
+          toDosArray={toDosArray}
+          user={user}
+          deleteSubToDo={deleteSubToDo}
+          title={title}
+          setTitle={setTitle}
+          toDo={toDo}
+          setToDo={setToDo}
+          editSubToDo={editSubToDo}
+          setToDoSArray={setToDoSArray}
+          nestedArrayToDo={nestedArrayToDo}
+          setNestedArrayToDo={setNestedArrayToDo}
+          arrayID={arrayID}
+          loading={loading}
+        />
+      )}
     </div>
   );
 }

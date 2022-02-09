@@ -84,7 +84,19 @@ export default function EditSubToDo({
         const getDocTodos = await getDocs(
           collection(firebaseLib.firestore(), 'todos')
         );
-
+        
+        if (checkPathID) {
+          console.log('Edit subToDo confirm');
+          window.confirm(
+            `Are you sure you want to edit this toDo =
+                  ${nestedToDoArray[itemsNested][index].toDo}?`
+          );
+        } else {
+          console.log(
+            'error change, ошибка в подтверждении редактировании toDo'
+          );
+          return null;
+        }
         return checkPathID
           ? getDocTodos.forEach(async (docParent) => {
               // In this case need to compare two equal parameters for findex user who create toDo
@@ -105,20 +117,7 @@ export default function EditSubToDo({
                   'nestedToDo'
                 )
               );
-              const confirm = window.confirm(
-                `Are you sure you want to delete this toDo =
-                  ${nestedToDoArray[itemsNested][index].toDo}?
-                  Вы уверены, что хотите поменять список дел
-                  ${nestedToDoArray[itemsNested][index].toDo}?`
-              );
-              if (confirm && checkPathID && checkID && comparisonName) {
-                console.log('Edit subToDo confirm');
-              } else {
-                console.log(
-                  'error change, ошибка в подтверждении редактировании toDo'
-                );
-                return null;
-              }
+
               return (
                 comparisonName &&
                 checkID &&
