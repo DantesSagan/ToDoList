@@ -30,13 +30,6 @@ export default function IndexToDo() {
         <div className='flex flex-col items-center'>
           <div className='w-full py-5 px-4 text-xl '>
             <HeaderToDo user={user} />
-            {/* <SkeletonTheme baseColor='#202020' highlightColor='#444'>
-              <>
-                <Skeleton
-                  wrapper={}
-                />
-              </>
-            </SkeletonTheme> */}
             <FormToDo
               toDo={toDo}
               setToDo={setToDo}

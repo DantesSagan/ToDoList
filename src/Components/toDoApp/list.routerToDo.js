@@ -60,7 +60,16 @@ export default function RouterToDo({
             </div>
             <hr className='border border-red-600 ml-4 mr-4 m-2' key={item.id} />
             <div className='text-1xl p-4' key={item.id}>
-              {disNameArray[item][0].toDo} <br key={item.id} />
+              {disNameArray[item][0].doneToDo ? (
+                <s className='opacity-50'>
+                  {disNameArray[item][0].toDo} <br key={item.id} />
+                </s>
+              ) : (
+                <div>
+                  {' '}
+                  {disNameArray[item][0].toDo} <br key={item.id} />
+                </div>
+              )}
             </div>
             {` `}
           </Link>
@@ -124,8 +133,8 @@ export default function RouterToDo({
                 />
               </svg>
               <p className='title'>
-                Hello fellows, seems like you didn't have any of todo! <br /> Can
-                you create you own todo in upper form?
+                Hello fellows, seems like you didn't have any of todo! <br />{' '}
+                Can you create you own todo in upper form?
               </p>
             </div>
           )}
