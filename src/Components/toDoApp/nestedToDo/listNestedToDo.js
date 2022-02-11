@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
@@ -11,6 +11,7 @@ import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
 import DeleteToDo from '../actions/deleteToDo';
 import TitleEditToDo from '../actions/toDoMembers/title.editToDo';
 import { DisplayTodoByIDNESTED } from './displayToDoNested';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 export default function ListOfNestedDisplayToDo({
   title,
@@ -26,6 +27,8 @@ export default function ListOfNestedDisplayToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+
+  const [loading, setLoading] = useState(true);
 
   const { deleteToDo } = DeleteToDo();
   const { editToDoList } = ToDoEditToDo({
@@ -51,23 +54,49 @@ export default function ListOfNestedDisplayToDo({
   // const { comparison } = Checking({ user });
   // console.log(comparison);
   useEffect(() => {
-    getToDo(setToDoSArray);
+    getToDo(setToDoSArray).then((doc) => {
+      setLoading(!loading);
+    });
   }, []);
+
+  const skeletonArray = Array(1).fill('');
 
   return (
     <div className='h-screen'>
-      <DisplayTodoByIDNESTED
-        toDosArray={toDosArray}
-        user={user}
-        deleteToDo={deleteToDo}
-        title={title}
-        setTitle={setTitle}
-        toDo={toDo}
-        setToDo={setToDo}
-        editToDoList={editToDoList}
-        editTitle={editTitle}
-        setToDoSArray={setToDoSArray}
-      />
+      {loading ? (
+        <>
+          {skeletonArray.map((fall) => {
+            return (
+              <Skeleton
+                sx={{ bgcolor: 'red.800' }}
+                animation='wave'
+                variant='rect'
+                height={250}
+                width={600}
+                className='rounded-lg mb-2'
+                key={fall.id}
+              >
+                {fall}
+              </Skeleton>
+            );
+          })}
+        </>
+      ) : (
+        <div>
+          <DisplayTodoByIDNESTED
+            toDosArray={toDosArray}
+            user={user}
+            deleteToDo={deleteToDo}
+            title={title}
+            setTitle={setTitle}
+            toDo={toDo}
+            setToDo={setToDo}
+            editToDoList={editToDoList}
+            editTitle={editTitle}
+            setToDoSArray={setToDoSArray}
+          />
+        </div>
+      )}
     </div>
   );
 }

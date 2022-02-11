@@ -70,15 +70,15 @@ export const DisplayTodoByIDNESTED = ({
           {checkTODOID && checkNestedID && checkName ? (
             <form
               method='POST'
-              className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
+              className='justrify-center text-2xl border-l-2 border-red-600 pl-0 pr-5 rounded-xl border-r-2 shadow-inner'
               key={index}
               style={{ width: '600px' }}
             >
-              <div className='m-8 p-4 shadow-inner rounded-lg'>
+              <div className='m-8 p-4  rounded-lg'>
                 {/* Delete toDo by toDoID */}
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  className='h-8 w-8 cursor-pointer stroke'
+                  className='h-8 w-8 cursor-pointer stroke ml-auto flex'
                   fill='black'
                   viewBox='0 0 24 24'
                   stroke='black'
@@ -97,74 +97,81 @@ export const DisplayTodoByIDNESTED = ({
                      where you can change you title of current toDo
                     */}
 
-                <hr className='border border-red-600' />
+                <hr className='border-b-2 border-red-600' />
+
                 {/* Get - toDo - in toDosArray */}
                 {/* Check to completed toDo */}
-                <div className='pt-4'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-6 w-6 cursor-pointer border-2 border-solid border-black rounded-2xl hover:bg-gray-300'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                    onClick={handleDoneToDoSub}
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth='2'
-                      d='M5 13l4 4L19 7'
-                    />
-                  </svg>
-                </div>
-                {clickToDo ? (
-                  <div className='block'>
-                    <textarea
-                      className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
-                      defaultValue={nestedToDoArray[itemsNested][index].toDo}
-                      onChange={(e) => setToDo(e.target.value)}
-                    />
-                    <button
-                      className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
-                        !toDo && 'opacity-25'
-                      }`}
-                      onClick={editSubToDo}
+                <div className='grid grid-cols-2 gap-2'>
+                  <div className='pt-4 col-span-2 ml-4'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='h-6 w-6 cursor-pointer border-2 border-solid border-black rounded-2xl hover:bg-gray-300 '
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      onClick={handleDoneToDoSub}
                     >
-                      Edit Sub ToDo
-                    </button>
-                    <button
-                      className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
-                      onClick={() => setClickToDo(!clickToDo)}
-                    >
-                      Cancel
-                    </button>
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M5 13l4 4L19 7'
+                      />
+                    </svg>
                   </div>
-                ) : (
-                  <button
-                    className='text-1xl font-bold rounded-lg m-2 mt-4 hover:bg-red-400 hover:text-white border-l-2 border-red-600'
-                    onClick={() => setClickToDo(!clickToDo)}
-                  >
-                    {nestedToDoArray[itemsNested][index].doneToDo ||
-                    doneToDo ? (
-                      <s className='opacity-50'>
-                        {nestedToDoArray[itemsNested][index].toDo}
-                      </s>
-                    ) : (
-                      <div className='p-2 hover:underline' key={itemsNested.id}>
-                        {nestedToDoArray[itemsNested][index].toDo}{' '}
-                        <br key={itemsNested.id} />
+                  <div className='col-span-1'>
+                    {clickToDo ? (
+                      <div className='block'>
+                        <textarea
+                          className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
+                          defaultValue={
+                            nestedToDoArray[itemsNested][index].toDo
+                          }
+                          onChange={(e) => setToDo(e.target.value)}
+                        />
+                        <button
+                          className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
+                            !toDo && 'opacity-25'
+                          }`}
+                          onClick={editSubToDo}
+                        >
+                          Edit Sub ToDo
+                        </button>
+                        <button
+                          className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
+                          onClick={() => setClickToDo(!clickToDo)}
+                        >
+                          Cancel
+                        </button>
                       </div>
-                    )}{' '}
-                    <br />{' '}
-                  </button>
-                )}
+                    ) : (
+                      <button
+                        className='text-1xl font-bold rounded-lg m-2 mt-4 hover:bg-red-400 hover:text-white border-l-2 border-red-600'
+                        onClick={() => setClickToDo(!clickToDo)}
+                      >
+                        {nestedToDoArray[itemsNested][index].doneToDo ||
+                        doneToDo ? (
+                          <s className='opacity-50'>
+                            {nestedToDoArray[itemsNested][index].toDo}
+                          </s>
+                        ) : (
+                          <div className='hover:underline' key={itemsNested.id}>
+                            {nestedToDoArray[itemsNested][index].toDo}{' '}
+                            <br key={itemsNested.id} />
+                          </div>
+                        )}{' '}
+                        <br />{' '}
+                      </button>
+                    )}
+                  </div>
+                </div>
 
                 {/* Get - createdAt - in toDosArray */}
-                <div className='text-sm'>
+                <div className='text-sm m-2 mt-4 font-bold'>
                   {nestedToDoArray[itemsNested][index].createdAt} <br />
                 </div>
                 {/* Get - displayName - in toDosArray */}
-                <div className='text-sm font-bold p-2 underline'>
+                <div className='text-sm font-bold underline m-2 '>
                   {nestedToDoArray[itemsNested][index].displayName} <br />
                 </div>
               </div>

@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getNestedToDo } from '../../../services/firebase';
 
@@ -16,6 +17,8 @@ export default function DisplayTodoByID({
   // const [clickTitle, setClickTitle] = useState(false);
   // const [clickToDo, setClickToDo] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
@@ -28,13 +31,14 @@ export default function DisplayTodoByID({
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
     try {
-      getNestedToDo(setNestedArrayToDo, setArrayID);
+      getNestedToDo(setNestedArrayToDo, setArrayID).then((data) => {
+        setLoading(false);
+      });
     } catch (error) {
       setNestedArrayToDo([]);
       console.log(error);
     }
   }, []);
-
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   const MainObj = Object.keys(disNameArray).map((item, index) => {
@@ -81,20 +85,20 @@ export default function DisplayTodoByID({
                 // }
               >
                 <div
-                  className='text-3xl font-bold p-4 hover:underline title'
+                  className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
                   key={item.id}
                 >
                   {disNameArray[item][ind].title} <br key={item.id} />
                 </div>
                 <hr
-                  className='border border-red-600 ml-4 mr-4 m-2'
+                  className='border border-red-600 ml-4 mr-4 '
                   key={item.id}
                 />
-                <div className='text-1xl p-4 hover:underline' key={item.id}>
+                <div className='text-1xl p-2 ml-2 hover:underline' key={item.id}>
                   {disNameArray[item][ind].doneToDo ? (
-                    <s className='opacity-50'>{disNameArray[item][ind].toDo}</s>
+                    <s className='opacity-50 ml-5'>{disNameArray[item][ind].toDo}</s>
                   ) : (
-                    <div>{disNameArray[item][ind].toDo}</div>
+                    <div className='ml-5'>{disNameArray[item][ind].toDo}</div>
                   )}
                   <br key={item.id} />
                 </div>
@@ -172,11 +176,11 @@ export default function DisplayTodoByID({
                       key={item.id}
                     >
                       {nestedToDoArray[itemsNested][index].doneToDo ? (
-                        <s className='opacity-50'>
+                        <s className='opacity-50 ml-5'>
                           {nestedToDoArray[itemsNested][index].toDo}{' '}
                         </s>
                       ) : (
-                        <div>{nestedToDoArray[itemsNested][index].toDo}</div>
+                        <div className='ml-5'>{nestedToDoArray[itemsNested][index].toDo}</div>
                       )}
                       <br key={item.id} />
                     </div>
@@ -190,13 +194,57 @@ export default function DisplayTodoByID({
       });
     });
 
+  const skeletonArray = Array(1).fill('');
+  const skeletonArrayNest = Array(8).fill('');
+
   // For now subcollection will calling only with console.log???
   // And again it's displaying nested subcollection when was call
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
   return (
     <div className='border-l-2 border-solid border-red-600 rounded-xl'>
-      {MainObj}
-      {Nest}
+      {' '}
+      {loading ? (
+        <>
+          {skeletonArray.map((fall) => {
+            return (
+              <Skeleton
+                sx={{ bgcolor: 'red.900' }}
+                animation='wave'
+                variant='rect'
+                height={200}
+                width={600}
+                className='rounded-lg mb-2'
+                key={fall.id}
+              >
+                {fall}
+              </Skeleton>
+            );
+          })}
+        </>
+      ) : (
+        <div>{MainObj}</div>
+      )}{' '}
+      {loading ? (
+        <>
+          {skeletonArrayNest.map((fall) => {
+            return (
+              <Skeleton
+                sx={{ bgcolor: 'red.900' }}
+                animation='wave'
+                variant='rect'
+                height={60}
+                width={600}
+                className='rounded-lg mb-2'
+                key={fall.id}
+              >
+                {fall}
+              </Skeleton>
+            );
+          })}
+        </>
+      ) : (
+        <div>{Nest}</div>
+      )}
     </div>
   );
 }

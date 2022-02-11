@@ -60,14 +60,14 @@ export const DisplayTodoByIDNESTED = ({
               setToDoSArray && (
                 <form
                   method='POST'
-                  className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '
+                  className='justrify-center text-2xl border-l-2 border-r-2 border-red-600 pl-0 pr-5 rounded-xl  shadow-inner'
                   key={index}
                 >
-                  <div className='m-8 p-4 shadow-inner rounded-lg'>
+                  <div className='p-4 rounded-lg'>
                     {/* Delete toDo by toDoID */}
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      className='h-8 w-8 cursor-pointer stroke'
+                      className='h-8 w-8 cursor-pointer stroke flex ml-auto'
                       fill='black'
                       viewBox='0 0 24 24'
                       stroke='black'
@@ -110,7 +110,7 @@ export const DisplayTodoByIDNESTED = ({
                       </div>
                     ) : (
                       <button
-                        className='text-2xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white'
+                        className='text-3xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white title'
                         onClick={() => setClickTitle(!clickTitle)}
                       >
                         {disNameArray[item][ind].title} <br />
@@ -161,7 +161,7 @@ export const DisplayTodoByIDNESTED = ({
                       </div>
                     ) : (
                       <button
-                        className='text-xl font-bold p-2 rounded-lg m-2 hover:bg-red-400 hover:text-white '
+                        className='text-xl font-bold p-2 rounded-lg hover:bg-red-400 hover:text-white '
                         onClick={() => setClickToDo(!clickToDo)}
                       >
                         {disNameArray[item][ind].doneToDo || doneToDo ? (
@@ -169,14 +169,14 @@ export const DisplayTodoByIDNESTED = ({
                             {disNameArray[item][ind].toDo}
                           </s>
                         ) : (
-                          disNameArray[item][ind].toDo
+                          <div className='p-2'>{disNameArray[item][ind].toDo}</div>
                         )}{' '}
                         <br />{' '}
                       </button>
                     )}
 
                     {/* Get - createdAt - in toDosArray */}
-                    <div className='text-sm'>
+                    <div className='text-sm font-bold p-2'>
                       {disNameArray[item][ind].createdAt} <br />
                     </div>
                     {/* Get - displayName - in toDosArray */}
