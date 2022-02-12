@@ -11,11 +11,13 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const [error, setError] = useState('');
+  const [lock, setLock] = useState(true);
+
   const isInvalid = password === '' || emailAddress === '';
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
+    setLock(!lock);
     try {
       await firebaseLib
         .auth()
@@ -31,31 +33,53 @@ export default function Login() {
   useEffect(() => {
     document.title = 'Login - ToDoList';
   }, []);
-  
+
   return (
     <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
-      <div className='flex flex-col w-2/4 border-t border-8 border-red-600'>
+      <img
+        src='/todolistred-removebg-preview.png'
+        alt='todolist'
+        className='float-right'
+      />
+      <div className='flex flex-col w-2/4 border-t border-8 border-red-600 '>
         <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
-          <h1 className='flex justify-center w-full'>
-          </h1>
-          {error && <p className='mb-4 text-sm text-red-600 text-left'>{error}</p>}
+          {error && (
+            <p className='mb-4 text-sm text-red-600 text-left'>{error}</p>
+          )}
           <form onSubmit={handleLogin} method='POST'>
             <fieldset className='border border-gray-primary p-4'>
               <legend className='block m-auto'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-12 w-12'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='black'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
-                  />
-                </svg>
+                {lock ? (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-12 w-12 transition duration-300'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='black'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    class='h-12 w-12 transition duration-300'
+                    fill='red'
+                    viewBox='0 0 24 24'
+                    stroke='black'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z'
+                    />
+                  </svg>
+                )}
               </legend>
               <div className='text-3xl text-center text-black underline mb-6'>
                 Log-In

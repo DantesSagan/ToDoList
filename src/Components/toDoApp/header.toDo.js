@@ -77,7 +77,7 @@ export default function HeaderToDo({ user: photoUser }) {
               />
             </Link> */}{' '}
             <i className='text-3xl'>
-              <strong>{user?.username}</strong>
+              Welcome - <strong>{user?.username}</strong>
             </i>
           </div>
         </div>
