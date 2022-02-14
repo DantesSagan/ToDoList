@@ -69,8 +69,14 @@ export default function DisplayTodoByID({
           ? `${year}-${month.toString().slice(-2)}-${days}`
           : formattedTime;
       };
-      console.log(formatTime());
-
+      console.log(
+        disNameArray[item][ind].untilTime === '2022-06-01' ||
+          disNameArray[item][ind].untilTime < '2022-06-01'
+          ? console.log('wasted')
+          : disNameArray[item][ind].untilTime === 0
+          ? console.log('equal to zero')
+          : console.log('display')
+      );
       return (
         <div className='' key={index.id}>
           {/*
@@ -88,8 +94,10 @@ export default function DisplayTodoByID({
             {user?.username === disNameArray[item][ind].displayName &&
             checkTODOID ? (
               <div>
-                {disNameArray[item][ind].untilTime >= formatTime() ||
-                disNameArray[item][ind].untilTime === 0 ? (
+                {disNameArray[item][ind].untilTime === formatTime() ||
+                disNameArray[item][ind].untilTime < formatTime() ? (
+                  <div>Задание просрочено!</div>
+                ) : disNameArray[item][ind].untilTime === 0 ? (
                   <Link
                     to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
                     key={item.id}
@@ -136,7 +144,51 @@ export default function DisplayTodoByID({
                     {` `}
                   </Link>
                 ) : (
-                  <div>Задание просрочено!</div>
+                  <Link
+                    to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
+                    key={item.id}
+                    // onClick={() =>
+                    //   window.open(
+                    //     todoURL,
+                    //     'targetWindow',
+                    //     `toolbar=no,
+                    //                     location=no,
+                    //                     status=no,
+                    //                     menubar=no,
+                    //                     scrollbars=yes,
+                    //                     resizable=yes,
+                    //                     width=800px,
+                    //                     height=800px`
+                    //   )
+                    // }
+                  >
+                    <div
+                      className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
+                      key={item.id}
+                    >
+                      {disNameArray[item][ind].title} <br key={item.id} />
+                    </div>
+                    <hr
+                      className='border border-red-600 ml-4 mr-4 '
+                      key={item.id}
+                    />
+                    <div
+                      className='text-1xl p-2 ml-2 hover:underline'
+                      key={item.id}
+                    >
+                      {disNameArray[item][ind].doneToDo ? (
+                        <s className='opacity-50 ml-5'>
+                          {disNameArray[item][ind].toDo}
+                        </s>
+                      ) : (
+                        <div className='ml-5'>
+                          {disNameArray[item][ind].toDo}
+                        </div>
+                      )}
+                      <br key={item.id} />
+                    </div>
+                    {` `}
+                  </Link>
                 )}
               </div>
             ) : null}
@@ -158,7 +210,7 @@ export default function DisplayTodoByID({
           // console.log(nestedArrayToDo);
           //  4th
           return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
-            console.log(nestedToDoArray, '27');
+            // console.log(nestedToDoArray, '27');
 
             // Check if parent toDoID is equal to current window.location.pathname of URL
             // And if it true so display current nestedToDo in subcollection
