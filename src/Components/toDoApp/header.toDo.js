@@ -61,7 +61,7 @@ export default function HeaderToDo({ user: photoUser }) {
   // }, [usersImagesRef]);
 
   return (
-    <div>
+    <div className='mb-6'>
       {user && (
         <div className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'>
           <div className='flex items-center'>
@@ -76,7 +76,7 @@ export default function HeaderToDo({ user: photoUser }) {
                 }}
               />
             </Link> */}{' '}
-            <i className='text-3xl'>
+            <i className='text-3xl  '>
               Welcome - <strong>{user?.username}</strong>
             </i>
           </div>

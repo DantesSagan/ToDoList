@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getToDo } from '../../services/firebase';
 import PropTypes from 'prop-types';
@@ -26,9 +26,12 @@ export default function FormToDo({
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
+
+  const [untilTime, setUntilTime] = useState(Number);
 
   const handleSubmitToDo = async (event) => {
     const auth = getAuth();
@@ -48,7 +51,7 @@ export default function FormToDo({
         const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
         setToDoSArray([
           ...toDosArray,
-          { displayName, commaTitle, commaToDo, createdAt, toDoID },
+          { displayName, commaTitle, commaToDo, createdAt, toDoID, untilTime },
         ]);
         setToDo('');
         setTitle('');
@@ -84,6 +87,7 @@ export default function FormToDo({
             toDo: commaToDo,
             toDoID: toDoID,
             userId: userAuth,
+            untilTime: untilTime,
             doneToDo: false,
           }),
         })
@@ -116,7 +120,7 @@ export default function FormToDo({
                 ? handleSubmitToDo(event)
                 : event.preventDefault()
             }
-            style={{width: '600px'}}
+            style={{ width: '600px' }}
           >
             <textarea
               aria-label='Add a comment'
@@ -142,6 +146,16 @@ export default function FormToDo({
             />{' '}
           </form>
           <div className='inline'>
+            <input
+              className='text-2xl m-2  border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
+              onChange={(e) => setUntilTime(e.target.value)}
+              type='date'
+              id='until'
+              name='trip-start'
+              value={untilTime}
+              min='2021-12-31'
+              max='2078-12-31'
+            />
             <button
               className={`text-lg font-bold text-white transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2  w-44 ${
                 !toDo && !title && 'opacity-25'

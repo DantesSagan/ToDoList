@@ -39,7 +39,7 @@ export default function DisplayTodoByID({
       console.log(error);
     }
   }, []);
-
+  console.log(new Date());
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   const MainObj = Object.keys(disNameArray).map((item, index) => {
     // console.log(toDosArray);
@@ -50,6 +50,27 @@ export default function DisplayTodoByID({
       let currentUrl = window.location.pathname;
       let todoURL = `/todolist/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoURL;
+
+      const formatTime = () => {
+        let date = new Date();
+        // Year part from the timestamp
+        let year = date.getFullYear();
+        // Month part from the timestamp
+        let month = date.getMonth() + 1;
+        // Days part from the timestamp
+        let days = date.getDate();
+
+        let months = 10 || 11 || 12;
+
+        // Will display time in 10:30:23 format
+        let formattedTime = `${year}-0${month}-${days}`;
+        let formattedTimeSecond = `${year}-${month}-${days}`;
+        return formattedTimeSecond === `${year}-${months}-${days}`
+          ? `${year}-${month.toString().slice(-2)}-${days}`
+          : formattedTime;
+      };
+      console.log(formatTime());
+
       return (
         <div className='' key={index.id}>
           {/*
@@ -66,44 +87,58 @@ export default function DisplayTodoByID({
             {/* <div key={index}>{nestedDo}</div> */}
             {user?.username === disNameArray[item][ind].displayName &&
             checkTODOID ? (
-              <Link
-                to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
-                key={item.id}
-                // onClick={() =>
-                //   window.open(
-                //     todoURL,
-                //     'targetWindow',
-                //     `toolbar=no,
-                //                     location=no,
-                //                     status=no,
-                //                     menubar=no,
-                //                     scrollbars=yes,
-                //                     resizable=yes,
-                //                     width=800px,
-                //                     height=800px`
-                //   )
-                // }
-              >
-                <div
-                  className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
-                  key={item.id}
-                >
-                  {disNameArray[item][ind].title} <br key={item.id} />
-                </div>
-                <hr
-                  className='border border-red-600 ml-4 mr-4 '
-                  key={item.id}
-                />
-                <div className='text-1xl p-2 ml-2 hover:underline' key={item.id}>
-                  {disNameArray[item][ind].doneToDo ? (
-                    <s className='opacity-50 ml-5'>{disNameArray[item][ind].toDo}</s>
-                  ) : (
-                    <div className='ml-5'>{disNameArray[item][ind].toDo}</div>
-                  )}
-                  <br key={item.id} />
-                </div>
-                {` `}
-              </Link>
+              <div>
+                {disNameArray[item][ind].untilTime >= formatTime() ||
+                disNameArray[item][ind].untilTime === 0 ? (
+                  <Link
+                    to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
+                    key={item.id}
+                    // onClick={() =>
+                    //   window.open(
+                    //     todoURL,
+                    //     'targetWindow',
+                    //     `toolbar=no,
+                    //                     location=no,
+                    //                     status=no,
+                    //                     menubar=no,
+                    //                     scrollbars=yes,
+                    //                     resizable=yes,
+                    //                     width=800px,
+                    //                     height=800px`
+                    //   )
+                    // }
+                  >
+                    <div
+                      className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
+                      key={item.id}
+                    >
+                      {disNameArray[item][ind].title} <br key={item.id} />
+                    </div>
+                    <hr
+                      className='border border-red-600 ml-4 mr-4 '
+                      key={item.id}
+                    />
+                    <div
+                      className='text-1xl p-2 ml-2 hover:underline'
+                      key={item.id}
+                    >
+                      {disNameArray[item][ind].doneToDo ? (
+                        <s className='opacity-50 ml-5'>
+                          {disNameArray[item][ind].toDo}
+                        </s>
+                      ) : (
+                        <div className='ml-5'>
+                          {disNameArray[item][ind].toDo}
+                        </div>
+                      )}
+                      <br key={item.id} />
+                    </div>
+                    {` `}
+                  </Link>
+                ) : (
+                  <div>Задание просрочено!</div>
+                )}
+              </div>
             ) : null}
           </div>
         </div>
@@ -180,7 +215,9 @@ export default function DisplayTodoByID({
                           {nestedToDoArray[itemsNested][index].toDo}{' '}
                         </s>
                       ) : (
-                        <div className='ml-5'>{nestedToDoArray[itemsNested][index].toDo}</div>
+                        <div className='ml-5'>
+                          {nestedToDoArray[itemsNested][index].toDo}
+                        </div>
                       )}
                       <br key={item.id} />
                     </div>

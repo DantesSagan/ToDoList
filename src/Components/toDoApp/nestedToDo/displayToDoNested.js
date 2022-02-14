@@ -49,7 +49,7 @@ export const DisplayTodoByIDNESTED = ({
       });
 
       return (
-        <div className='pt-2' key={index}>
+        <div className='' key={index}>
           {/* 
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser 
