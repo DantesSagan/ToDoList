@@ -69,14 +69,14 @@ export default function DisplayTodoByID({
           ? `${year}-${month.toString().slice(-2)}-${days}`
           : formattedTime;
       };
-      console.log(
-        disNameArray[item][ind].untilTime === '2022-06-01' ||
-          disNameArray[item][ind].untilTime < '2022-06-01'
-          ? console.log('wasted')
-          : disNameArray[item][ind].untilTime === 0
-          ? console.log('equal to zero')
-          : console.log('display')
-      );
+      // console.log(
+      //   disNameArray[item][ind].untilTime === '2022-06-01' ||
+      //     disNameArray[item][ind].untilTime < '2022-06-01'
+      //     ? console.log('wasted')
+      //     : disNameArray[item][ind].untilTime === 0
+      //     ? console.log('equal to zero')
+      //     : console.log('display')
+      // );
       return (
         <div className='' key={index.id}>
           {/*
@@ -96,7 +96,17 @@ export default function DisplayTodoByID({
               <div>
                 {disNameArray[item][ind].untilTime === formatTime() ||
                 disNameArray[item][ind].untilTime < formatTime() ? (
-                  <div>Задание просрочено!</div>
+                  <Link
+                    to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
+                  >
+                    <div className='text-3xl p-4 m-2'>
+                      Задание просрочено! <br />
+                      <span className='bg-red-500 rounded-lg'>
+                        {disNameArray[item][ind].untilTime}
+                      </span>{' '}
+                      {` `}!== {formatTime()}
+                    </div>
+                  </Link>
                 ) : disNameArray[item][ind].untilTime === 0 ? (
                   <Link
                     to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}

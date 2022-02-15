@@ -43,39 +43,110 @@ export default function RouterToDo({
     });
   }, []);
 
+  const formatTime = () => {
+    let date = new Date();
+    // Year part from the timestamp
+    let year = date.getFullYear();
+    // Month part from the timestamp
+    let month = date.getMonth() + 1;
+    // Days part from the timestamp
+    let days = date.getDate();
+
+    let months = 10 || 11 || 12;
+
+    // Will display time in 10:30:23 format
+    let formattedTime = `${year}-0${month}-${days}`;
+    let formattedTimeSecond = `${year}-${month}-${days}`;
+    return formattedTimeSecond === `${year}-${months}-${days}`
+      ? `${year}-${month.toString().slice(-2)}-${days}`
+      : formattedTime;
+  };
+
   const toDoArr = Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
-
-    return (
-      <div
-        className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2'
-        key={index}
-        style={{ width: '600px' }}
-      >
-        {user?.username === disNameArray[item][0].displayName ? (
-          <Link to={`/todolist/${disNameArray[item][0].toDoID}`} key={item.id}>
-            {' '}
-            <div className='text-3xl font-bold p-4 title' key={item.id}>
-              {disNameArray[item][0].title} <br key={item.id} />
-            </div>
-            <hr className='border border-red-600 ml-4 mr-4 m-2' key={item.id} />
-            <div className='text-1xl p-4' key={item.id}>
-              {disNameArray[item][0].doneToDo ? (
-                <s className='opacity-50'>
-                  {disNameArray[item][0].toDo} <br key={item.id} />
-                </s>
-              ) : (
+    return Object.keys(disNameArray[item]).map((ind) => {
+      return (
+        <div
+          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2'
+          key={index}
+          style={{ width: '600px' }}
+        >
+          {' '}
+          {user?.username === disNameArray[item][ind].displayName ? (
+            <div>
+              {disNameArray[item][ind].untilTime === formatTime() ||
+              disNameArray[item][ind].untilTime < formatTime() ? (
+                <Link to={`/todolist/${disNameArray[item][0].toDoID}`}>
+                  <p className='text-3xl p-4 title'>
+                    Задание просрочено!|Time is out for task - <br />
+                    <span className='bg-red-500 rounded-lg'>
+                      {disNameArray[item][ind].untilTime}
+                    </span>{' '}
+                    {` `}= {formatTime()}
+                  </p>
+                </Link>
+              ) : disNameArray[item][ind].untilTime === 0 ? (
                 <div>
-                  {' '}
-                  {disNameArray[item][0].toDo} <br key={item.id} />
+                  <Link
+                    to={`/todolist/${disNameArray[item][0].toDoID}`}
+                    key={item.id}
+                  >
+                    {' '}
+                    <div className='text-3xl font-bold p-4 title' key={item.id}>
+                      {disNameArray[item][0].title} <br key={item.id} />
+                    </div>
+                    <hr
+                      className='border border-red-600 ml-4 mr-4 m-2'
+                      key={item.id}
+                    />
+                    <div className='text-1xl p-4' key={item.id}>
+                      {disNameArray[item][0].doneToDo ? (
+                        <s className='opacity-50'>
+                          {disNameArray[item][0].toDo} <br key={item.id} />
+                        </s>
+                      ) : (
+                        <div>
+                          {' '}
+                          {disNameArray[item][0].toDo} <br key={item.id} />
+                        </div>
+                      )}
+                    </div>
+                    {` `}
+                  </Link>
                 </div>
+              ) : (
+                <Link
+                  to={`/todolist/${disNameArray[item][0].toDoID}`}
+                  key={item.id}
+                >
+                  {' '}
+                  <div className='text-3xl font-bold p-4 title' key={item.id}>
+                    {disNameArray[item][0].title} <br key={item.id} />
+                  </div>
+                  <hr
+                    className='border border-red-600 ml-4 mr-4 m-2'
+                    key={item.id}
+                  />
+                  <div className='text-1xl p-4' key={item.id}>
+                    {disNameArray[item][0].doneToDo ? (
+                      <s className='opacity-50'>
+                        {disNameArray[item][0].toDo} <br key={item.id} />
+                      </s>
+                    ) : (
+                      <div>
+                        {' '}
+                        {disNameArray[item][0].toDo} <br key={item.id} />
+                      </div>
+                    )}
+                  </div>
+                  {` `}
+                </Link>
               )}
             </div>
-            {` `}
-          </Link>
-        ) : null}
-      </div>
-    );
+          ) : null}
+        </div>
+      );
+    });
   });
 
   const toDoArray = [];

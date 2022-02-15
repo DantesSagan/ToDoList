@@ -147,7 +147,7 @@ export default function FormToDo({
           </form>
           <div className='inline'>
             <input
-              className='text-2xl m-2  border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
+              className='text-2xl m-2 p-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
               onChange={(e) => setUntilTime(e.target.value)}
               type='date'
               id='until'

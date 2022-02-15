@@ -155,7 +155,7 @@ export const DisplayTodoByIDNESTED = ({
                             {nestedToDoArray[itemsNested][index].toDo}
                           </s>
                         ) : (
-                          <div className='hover:underline' key={itemsNested.id}>
+                          <div className='pl-2 hover:underline' key={itemsNested.id}>
                             {nestedToDoArray[itemsNested][index].toDo}{' '}
                             <br key={itemsNested.id} />
                           </div>
