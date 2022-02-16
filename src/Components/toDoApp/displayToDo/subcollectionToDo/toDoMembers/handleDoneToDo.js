@@ -31,30 +31,55 @@ export default function HandleDoneSubToDo({
         //   doc.id === nestedToDoArray[itemsNested][index].parentID;
 
         return checkToDoID
-          ? updateDoc(docSub.ref, {
-              toDosArray: [
-                {
-                  displayName: nestedToDoArray[itemsNested][index].displayName,
-                  createdAt: nestedToDoArray[itemsNested][index].createdAt,
-                  toDo: nestedToDoArray[itemsNested][index].toDo,
-                  toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                  userId: nestedToDoArray[itemsNested][index].userId,
-                  parentID: doc.id,
-                  doneToDo: !doneToDo,
-                },
-              ],
-            })
-              .then(() => {
-                setDoneToDo(!doneToDo);
-                console.log(
-                  'DoneToDo changed successfully: ',
-                  nestedToDoArray[itemsNested][index].doneToDo,
-                  doneToDo
-                );
+          ? nestedToDoArray[itemsNested][index].doneToDo === true
+            ? updateDoc(docSub.ref, {
+                toDosArray: [
+                  {
+                    displayName:
+                      nestedToDoArray[itemsNested][index].displayName,
+                    createdAt: nestedToDoArray[itemsNested][index].createdAt,
+                    toDo: nestedToDoArray[itemsNested][index].toDo,
+                    toDoID: nestedToDoArray[itemsNested][index].toDoID,
+                    userId: nestedToDoArray[itemsNested][index].userId,
+                    parentID: doc.id,
+                    doneToDo: doneToDo,
+                  },
+                ],
               })
-              .catch((error) => {
-                console.error('Error with city changed: ', error);
+                .then(() => {
+                  console.log(
+                    'DoneToDo changed successfully: ',
+                    nestedToDoArray[itemsNested][index].doneToDo,
+                    doneToDo
+                  );
+                })
+                .catch((error) => {
+                  console.error('Error with city changed: ', error);
+                })
+            : updateDoc(docSub.ref, {
+                toDosArray: [
+                  {
+                    displayName:
+                      nestedToDoArray[itemsNested][index].displayName,
+                    createdAt: nestedToDoArray[itemsNested][index].createdAt,
+                    toDo: nestedToDoArray[itemsNested][index].toDo,
+                    toDoID: nestedToDoArray[itemsNested][index].toDoID,
+                    userId: nestedToDoArray[itemsNested][index].userId,
+                    parentID: doc.id,
+                    doneToDo: !doneToDo,
+                  },
+                ],
               })
+                .then(() => {
+                  console.log(
+                    'DoneToDo changed successfully: ',
+                    nestedToDoArray[itemsNested][index].doneToDo,
+                    doneToDo
+                  );
+                })
+                .catch((error) => {
+                  console.error('Error with city changed: ', error);
+                })
           : null;
       });
     });

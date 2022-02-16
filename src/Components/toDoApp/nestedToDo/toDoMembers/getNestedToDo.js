@@ -23,12 +23,11 @@ export default function GetNestedToDo({
   changeDate,
   setChangeDate,
   handleZeroStamp,
+  setDoneToDo,
 }) {
   console.log(
     disNameArray[item][ind].doneToDo !== doneToDo
       ? console.log('Not a toDo')
-      : disNameArray[item][ind].doneToDo === true || doneToDo
-      ? console.log('ToDo by second condition')
       : console.log('ToDo by defalt')
   );
   return (
@@ -134,10 +133,8 @@ export default function GetNestedToDo({
         >
           {disNameArray[item][ind].doneToDo !== doneToDo ? (
             <s className='opacity-50 '>{disNameArray[item][ind].toDo}</s>
-          ) : disNameArray[item][ind].doneToDo === true || doneToDo ? (
-            <div className='p-2'>{disNameArray[item][ind].toDo}</div>
           ) : (
-            <div className='p-2 '>{disNameArray[item][ind].toDo}</div>
+            <div className='p-2 hover:underline'>{disNameArray[item][ind].toDo}</div>
           )}{' '}
           <br /> <br />{' '}
         </button>

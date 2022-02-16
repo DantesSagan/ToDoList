@@ -149,8 +149,7 @@ export const DisplayTodoByIDNESTED = ({
                         className='text-1xl font-bold rounded-lg m-2 mt-4 hover:bg-red-400 hover:text-white border-l-2 border-red-600'
                         onClick={() => setClickToDo(!clickToDo)}
                       >
-                        {nestedToDoArray[itemsNested][index].doneToDo ||
-                        doneToDo ? (
+                        {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
                           <s className='opacity-50'>
                             {nestedToDoArray[itemsNested][index].toDo}
                           </s>
