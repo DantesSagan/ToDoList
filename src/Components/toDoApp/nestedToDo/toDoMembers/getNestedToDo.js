@@ -24,6 +24,13 @@ export default function GetNestedToDo({
   setChangeDate,
   handleZeroStamp,
 }) {
+  console.log(
+    disNameArray[item][ind].doneToDo !== doneToDo
+      ? console.log('Not a toDo')
+      : disNameArray[item][ind].doneToDo === true || doneToDo
+      ? console.log('ToDo by second condition')
+      : console.log('ToDo by defalt')
+  );
   return (
     <div className='p-4 rounded-lg'>
       {/* Delete toDo by toDoID */}
@@ -122,20 +129,26 @@ export default function GetNestedToDo({
         </div>
       ) : (
         <button
-          className='text-xl font-bold p-2 rounded-lg hover:bg-red-400 hover:text-white '
+          className='text-xl font-bold p-2 rounded-lg hover:bg-red-400 hover:text-white'
           onClick={() => setClickToDo(!clickToDo)}
         >
-          {disNameArray[item][ind].doneToDo || doneToDo ? (
-            <s className='opacity-50'>{disNameArray[item][ind].toDo}</s>
-          ) : (
+          {disNameArray[item][ind].doneToDo !== doneToDo ? (
+            <s className='opacity-50 '>{disNameArray[item][ind].toDo}</s>
+          ) : disNameArray[item][ind].doneToDo === true || doneToDo ? (
             <div className='p-2'>{disNameArray[item][ind].toDo}</div>
+          ) : (
+            <div className='p-2 '>{disNameArray[item][ind].toDo}</div>
           )}{' '}
-          <br />{' '}
+          <br /> <br />{' '}
         </button>
       )}
       {/* Get - createdAt - in toDosArray */}
       <div className='text-sm font-bold p-2'>
         {disNameArray[item][ind].createdAt} <br />
+      </div>
+      <div className='text-sm font-bold p-2 border border-ted-400'>
+        Until this time - {disNameArray[item][ind].untilTime}
+        <br />
       </div>
       {/* Change deadline data */}
       <br />

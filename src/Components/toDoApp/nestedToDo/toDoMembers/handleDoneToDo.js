@@ -8,13 +8,12 @@ export default function HandleDoneToDo({
   item,
   ind,
 }) {
-  
   const handleDoneToDo = async (event) => {
     event.preventDefault();
 
     // UPDATE STATE WHEN A DATA WAS EDIT SUCCESSFULLY
     setDoneToDo(!doneToDo);
-    
+
     const querySnapshot = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
     );
@@ -32,15 +31,14 @@ export default function HandleDoneToDo({
               toDoID: disNameArray[item][ind].toDoID,
               userId: disNameArray[item][ind].userId,
               doneToDo: !doneToDo,
+              untilTime: disNameArray[item][ind].untilTime,
             },
           ],
         })
           .then(() => {
-            setDoneToDo(!doneToDo);
             console.log(
               'DoneToDo changed successfully: ',
-              disNameArray[item][ind].doneToDo,
-              doneToDo
+              disNameArray[item][ind].doneToDo
             );
           })
           .catch((error) => {

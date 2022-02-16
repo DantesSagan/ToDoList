@@ -96,6 +96,7 @@ export default function TitleEditToDo({
                         userId: userAuth,
                         toDoID: disNameArray[item][ind].toDoID,
                         doneToDo: disNameArray[item][ind].doneToDo,
+                        untilTime: disNameArray[item][ind].untilTime,
                       },
                     ],
                   })
