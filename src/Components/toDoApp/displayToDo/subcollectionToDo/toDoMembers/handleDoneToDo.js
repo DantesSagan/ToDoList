@@ -67,6 +67,7 @@ export default function HandleDoneSubToDo({
                     userId: nestedToDoArray[itemsNested][index].userId,
                     parentID: doc.id,
                     doneToDo: !doneToDo,
+                    untilTime: nestedToDoArray[itemsNested][index].untilTime,
                   },
                 ],
               })

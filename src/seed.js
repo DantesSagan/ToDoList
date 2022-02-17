@@ -1,17 +1,17 @@
 // userId: D5psSVAkNWPhReliPnnFPuFGoex1
 export function seedDatabse(firebase) {
   const users = [
-    {
-      country: 'Russia',
-      city: 'Ufa',
-      gender: 'male',
-      phoneNumber: '+79188866923',
-      userId: 'D5psSVAkNWPhReliPnnFPuFGoex1',
-      username: 'alex',
-      fullName: 'Alex Mikh',
-      emailAddress: 'mihaleksval@gmail.com',
-      dateCreated: Date.now(),
-    },
+    // {
+    //   country: 'Russia',
+    //   city: 'Ufa',
+    //   gender: 'male',
+    //   phoneNumber: '+79188866923',
+    //   userId: 'D5psSVAkNWPhReliPnnFPuFGoex1',
+    //   username: 'alex',
+    //   fullName: 'Alex Mikh',
+    //   emailAddress: 'mihaleksval@gmail.com',
+    //   dateCreated: Date.now(),
+    // },
     {
       country: 'Sweden',
       city: 'Stockholm',

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-export default function NestToDo({ disNameArray, user }) {
+export default function NestMainToDo({ disNameArray, user }) {
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(toDosArray);

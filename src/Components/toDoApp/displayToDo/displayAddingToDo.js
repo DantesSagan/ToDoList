@@ -31,13 +31,17 @@ export default function FormToDoToDoID({
   const { user } = useUser(loggedIn?.uid);
 
   const [createdToDo, setCreateToDo] = useState(false);
+  const [untilTime, setUntilTime] = useState(Number);
 
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
 
-  const handleSubmitToDo = async () => {
-    setToDoSArray([...toDosArray, { displayName, toDo, createdAt, toDoID }]);
+  const handleSubmitSubToDo = async () => {
+    setToDoSArray([
+      ...toDosArray,
+      { displayName, toDo, createdAt, toDoID, untilTime },
+    ]);
     setToDo('');
 
     const disNameArray = Object.keys(toDosArray).map((item) => {
@@ -126,6 +130,7 @@ export default function FormToDoToDoID({
                       userId: userAuth,
                       toDoID: toDoID,
                       parentID: disNameArray[item][ind].toDoID,
+                      untilTime: untilTime,
                       doneToDo: false,
                     }),
                   })
@@ -162,7 +167,7 @@ export default function FormToDoToDoID({
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
-                ? handleSubmitToDo(event)
+                ? handleSubmitSubToDo(event)
                 : event.preventDefault()
             }
           >
@@ -179,13 +184,23 @@ export default function FormToDoToDoID({
             />{' '}
           </form>
           <div className='inline'>
+            <input
+              className='text-2xl m-2 p-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
+              onChange={(e) => setUntilTime(e.target.value)}
+              type='date'
+              id='until'
+              name='trip-start'
+              value={untilTime}
+              min='2021-12-31'
+              max='2078-12-31'
+            />
             <button
               className={`text-lg font-bold text-white transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2  w-44 ${
                 !toDo && 'opacity-25'
               }`}
               type='button'
               disabled={toDo.length < 1}
-              onClick={handleSubmitToDo}
+              onClick={handleSubmitSubToDo}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'

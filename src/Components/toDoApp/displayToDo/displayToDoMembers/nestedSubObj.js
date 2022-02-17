@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function MainObj({
+export default function NestedSubObj({
   disNameArray,
   nestedToDoArray,
   user,

@@ -39,10 +39,10 @@ export const DisplayTodoByIDNESTED = ({
       let todoNestedURL = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
       let checkTODOID = currentUrl === todoNestedURL;
 
-      console.log(checkTODOID);
-      console.log(disNameArray[item]);
+      // console.log(checkTODOID);
+      // console.log(disNameArray[item]);
 
-      console.log(disNameArray[item][ind].doneToDo);
+      // console.log(disNameArray[item][ind].doneToDo);
 
       const formatTime = () => {
         let date = new Date();

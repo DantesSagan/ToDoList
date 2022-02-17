@@ -194,8 +194,8 @@ export default function GetNestedToDo({
             </button>
           </div>
         )}
-        {/* Get - displayName - in toDosArray */}
       </div>
+        {/* Get - displayName - in toDosArray */}
       <div className='text-sm font-bold p-2 underline'>
         {disNameArray[item][ind].displayName} <br />
       </div>

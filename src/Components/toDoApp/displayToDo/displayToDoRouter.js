@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { useEffect, useState } from 'react';
 import { getNestedToDo } from '../../../services/firebase';
-import MainObj from './displayToDoMembers/MainObj';
-import NestToDo from './displayToDoMembers/nestToDo';
+import NestedSubObj from './displayToDoMembers/nestedSubObj';
+import NestMainToDo from './displayToDoMembers/nestMainToDo';
 
 export default function DisplayTodoByID({
   toDosArray,
@@ -70,7 +70,7 @@ export default function DisplayTodoByID({
           })}
         </>
       ) : (
-        <NestToDo
+        <NestMainToDo
           disNameArray={disNameArray}
           nestedToDoArray={nestedToDoArray}
           user={user}
@@ -96,7 +96,7 @@ export default function DisplayTodoByID({
           })}
         </>
       ) : (
-        <MainObj
+        <NestedSubObj
           disNameArray={disNameArray}
           nestedToDoArray={nestedToDoArray}
           user={user}
