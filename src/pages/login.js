@@ -18,38 +18,47 @@ export default function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
     setLock(!lock);
+
     try {
       await firebaseLib
         .auth()
         .signInWithEmailAndPassword(emailAddress, password);
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
+      if (error) {
+        setLock(!lock);
+      }
       setEmailAddress('');
       setPassword('');
       setError(error.message);
     }
   };
-
   useEffect(() => {
     document.title = 'Login - ToDoList';
   }, []);
-
+  // console.log(
+  //   lock
+  //     ? console.log(`Locked value ${lock}`)
+  //     : error
+  //     ? console.log(`Locked value error ${error}`)
+  //     : console.log(`Unlocked value ${lock}`)
+  // );
   return (
-    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
-      <img
+    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up'>
+      {/* <img
         src='/todolistred-removebg-preview.png'
         alt='todolist'
         className='float-right'
-      />
+      /> */}
       <div className='flex flex-col w-2/4 border-t border-8 border-red-600 '>
         <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
-          {error && (
-            <p className='mb-4 text-sm text-red-600 text-left'>{error}</p>
-          )}
+          {/* <button onClick={() => setLock(!lock)}>Console lock</button> */}
+          {error && <p className='text-sm text-red-600 text-left'>{error}</p>}
           <form onSubmit={handleLogin} method='POST'>
             <fieldset className='border border-gray-primary p-4'>
               <legend className='block m-auto'>
                 {lock ? (
+                  // Locked value
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-12 w-12 transition duration-300'
@@ -64,7 +73,23 @@ export default function Login() {
                       d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
                     />
                   </svg>
+                ) : error ? (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-12 w-12 border-red-600 border-2 rounded-lg bg-black transition duration-300'
+                    fill='red'
+                    viewBox='0 0 24 24'
+                    stroke='white'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M6 18L18 6M6 6l12 12'
+                    />
+                  </svg>
                 ) : (
+                  // Unlocked value when you type data into two valid email and password
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     class='h-12 w-12 transition duration-300'

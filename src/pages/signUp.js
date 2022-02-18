@@ -36,7 +36,7 @@ export default function SignUp() {
   }, []);
 
   return (
-    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen'>
+    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up'>
       <div className='flex flex-col w-2/4 border-t border-8 border-red-600'>
         <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded'>
           <h1 className='flex justify-center w-full'>
