@@ -150,11 +150,45 @@ export default function NestMainToDo({ disNameArray, user }) {
                     >
                       {disNameArray[item][ind].doneToDo ? (
                         <s className='opacity-50 ml-5'>
-                          {disNameArray[item][ind].toDo}
+                          <div className='ml-5'>
+                            {disNameArray[item][ind].toDo instanceof Array ? (
+                              <ul>
+                                {Object.keys(disNameArray[item][ind].toDo).map(
+                                  (toDoIndex) => {
+                                    return (
+                                      <li className='p-1 hover:underline'>
+                                        {
+                                          disNameArray[item][ind].toDo[
+                                            toDoIndex
+                                          ]
+                                        }{' '}
+                                      </li>
+                                    );
+                                  }
+                                )}
+                              </ul>
+                            ) : (
+                              disNameArray[item][ind].toDo
+                            )}
+                          </div>
                         </s>
                       ) : (
                         <div className='ml-5'>
-                          {disNameArray[item][ind].toDo}
+                          {disNameArray[item][ind].toDo instanceof Array ? (
+                            <ul>
+                              {Object.keys(disNameArray[item][ind].toDo).map(
+                                (toDoIndex) => {
+                                  return (
+                                    <li className='p-1 hover:underline'>
+                                      {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                                    </li>
+                                  );
+                                }
+                              )}
+                            </ul>
+                          ) : (
+                            disNameArray[item][ind].toDo
+                          )}
                         </div>
                       )}
                       <br key={item.id} />

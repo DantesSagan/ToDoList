@@ -67,7 +67,7 @@ export default function FormToDo({
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl h-14'
               type='text'
               name='title'
-              placeholder='Заголовок задачи...'
+              placeholder='Write titles with commas for separate items'
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               ref={refTodo}
@@ -78,7 +78,7 @@ export default function FormToDo({
               className='text-sm text-gray-base w-full mr-3 mt-3 mb-3 py-5 px-4 rounded-xl '
               type='text'
               name='toDo'
-              placeholder='Напишите задачу...'
+              placeholder='Write todos with commas for separate items.'
               value={toDo}
               onChange={(e) => setToDo(e.target.value)}
               ref={refTodo}

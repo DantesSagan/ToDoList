@@ -25,11 +25,19 @@ export default function GetNestedToDo({
   handleZeroStamp,
   setDoneToDo,
 }) {
-  console.log(
-    disNameArray[item][ind].doneToDo !== doneToDo
-      ? console.log('Not a toDo')
-      : console.log('ToDo by defalt')
-  );
+  // console.log(
+  //   disNameArray[item][ind].doneToDo !== doneToDo
+  //     ? console.log('Not a toDo')
+  //     : console.log('ToDo by defalt')
+  // );
+
+  console.log(disNameArray[item][ind].toDo instanceof Array);
+
+  // const toDoArray = [];
+  // const nestedToDoUL = Object.keys(disNameArray).map((toDoIndex) => {
+  //   return toDoArray.push(disNameArray[item][ind].toDo[toDoIndex]);
+  // });
+
   return (
     <div className='p-4 rounded-lg'>
       {/* Delete toDo by toDoID */}
@@ -107,9 +115,11 @@ export default function GetNestedToDo({
       {clickToDo ? (
         <div className='block'>
           <textarea
-            className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
+            placeholder='Write todos with commas for separate items.'
+            className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-xl font-bold'
             defaultValue={disNameArray[item][ind].toDo}
             onChange={(e) => setToDo(e.target.value)}
+            style={{ width: '600px' }}
           />
           <button
             className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
@@ -132,11 +142,45 @@ export default function GetNestedToDo({
           onClick={() => setClickToDo(!clickToDo)}
         >
           {disNameArray[item][ind].doneToDo !== doneToDo ? (
-            <s className='opacity-50 '>{disNameArray[item][ind].toDo}</s>
+            <s className='opacity-50 '>
+              {' '}
+              <div className='ml-5'>
+                {disNameArray[item][ind].toDo instanceof Array ? (
+                  <ul>
+                    {Object.keys(disNameArray[item][ind].toDo).map(
+                      (toDoIndex) => {
+                        return (
+                          <li className='p-1 hover:underline'>
+                            {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                          </li>
+                        );
+                      }
+                    )}
+                  </ul>
+                ) : (
+                  disNameArray[item][ind].toDo
+                )}
+              </div>
+            </s>
           ) : (
-            <div className='p-2 hover:underline'>{disNameArray[item][ind].toDo}</div>
+            <div>
+              {disNameArray[item][ind].toDo instanceof Array ? (
+                <ul>
+                  {Object.keys(disNameArray[item][ind].toDo).map(
+                    (toDoIndex) => {
+                      return (
+                        <li className='p-1 hover:underline'>
+                          {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+              ) : (
+                disNameArray[item][ind].toDo
+              )}
+            </div>
           )}{' '}
-          <br /> <br />{' '}
         </button>
       )}
       {/* Get - createdAt - in toDosArray */}
@@ -195,7 +239,7 @@ export default function GetNestedToDo({
           </div>
         )}
       </div>
-        {/* Get - displayName - in toDosArray */}
+      {/* Get - displayName - in toDosArray */}
       <div className='text-sm font-bold p-2 underline'>
         {disNameArray[item][ind].displayName} <br />
       </div>
