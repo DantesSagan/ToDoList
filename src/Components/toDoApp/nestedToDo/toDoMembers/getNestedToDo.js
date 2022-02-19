@@ -146,7 +146,7 @@ export default function GetNestedToDo({
               {' '}
               <div className='ml-5'>
                 {disNameArray[item][ind].toDo instanceof Array ? (
-                  <ul>
+                  <ul className='text-left'>
                     {Object.keys(disNameArray[item][ind].toDo).map(
                       (toDoIndex) => {
                         return (
@@ -165,7 +165,7 @@ export default function GetNestedToDo({
           ) : (
             <div>
               {disNameArray[item][ind].toDo instanceof Array ? (
-                <ul>
+                <ul className='text-left'>
                   {Object.keys(disNameArray[item][ind].toDo).map(
                     (toDoIndex) => {
                       return (
