@@ -67,7 +67,7 @@ export default function GetNestedToDoArray({
           {clickToDo ? (
             <div className='block'>
               <textarea
-                className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
+                className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
                 defaultValue={nestedToDoArray[itemsNested][index].toDo}
                 onChange={(e) => setToDo(e.target.value)}
               />

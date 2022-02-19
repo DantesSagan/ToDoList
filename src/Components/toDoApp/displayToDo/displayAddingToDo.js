@@ -174,7 +174,7 @@ export default function FormToDoToDoID({
             <textarea
               aria-label='Add a comment'
               autoComplete='off'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-lg'
               type='text'
               name='toDo'
               placeholder='Напишите задачу...'

@@ -29,6 +29,8 @@ export default function ToDoEditToDo({
     setToDoSArray([...toDosArray, { displayName, toDo, createdAt, toDoID }]);
     setToDo('');
 
+    const commaToDo = toDo.split(',');
+
     const disNameArray = Object.keys(toDosArray).map((item) => {
       return toDosArray[item].toDosArray;
     });
@@ -100,7 +102,7 @@ export default function ToDoEditToDo({
                         displayName: disNameArray[item][ind].displayName,
                         createdAt: formatTime(),
                         title: disNameArray[item][ind].title,
-                        toDo: toDo,
+                        toDo: commaToDo,
                         userId: userAuth,
                         toDoID: disNameArray[item][ind].toDoID,
                         doneToDo: disNameArray[item][ind].doneToDo,

@@ -66,7 +66,7 @@ export default function GetNestedToDo({
         <div className='block'>
           <textarea
             defaultValue={disNameArray[item][ind].title}
-            className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-xl font-bold'
+            className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
             onChange={(e) => setTitle(e.target.value)}
           />
           <button
@@ -116,7 +116,7 @@ export default function GetNestedToDo({
         <div className='block'>
           <textarea
             placeholder='Write todos with commas for separate items.'
-            className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-xl font-bold'
+            className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-lg font-bold'
             defaultValue={disNameArray[item][ind].toDo}
             onChange={(e) => setToDo(e.target.value)}
             style={{ width: '600px' }}

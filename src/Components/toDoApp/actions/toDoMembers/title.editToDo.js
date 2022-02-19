@@ -21,6 +21,8 @@ export default function TitleEditToDo({
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 
+  const commaTitle = title.split(',');
+
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
@@ -91,7 +93,7 @@ export default function TitleEditToDo({
                       {
                         displayName: disNameArray[item][ind].displayName,
                         createdAt: formatTime(),
-                        title: title,
+                        title: commaTitle,
                         toDo: disNameArray[item][ind].toDo,
                         userId: userAuth,
                         toDoID: disNameArray[item][ind].toDoID,

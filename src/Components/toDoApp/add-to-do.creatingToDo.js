@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // import { addDoc } from 'firebase/firestore';
 import React, { useEffect, useContext, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import { getToDo } from '../../services/firebase';
 import PropTypes from 'prop-types';
 
-import { doc, arrayUnion, setDoc } from 'firebase/firestore';
 import UserContext from '../../context/user';
 import useUser from '../../hooks/user';
-import { getAuth } from 'firebase/auth';
 import HandleSubmitToDo from './actions/handleSubmitToDo';
 export default function FormToDo({
   toDo,
@@ -26,9 +23,9 @@ export default function FormToDo({
   setCreateToDo,
 }) {
   const { user: loggedIn } = useContext(UserContext);
-  const { user } = useUser(loggedIn?.uid);
+  // const { user } = useUser(loggedIn?.uid);
   const [untilTime, setUntilTime] = useState(Number);
-
+  const [deadLine, setDeadLine] = useState(false);
   useEffect(() => {
     getToDo(setToDoSArray);
   }, []);
@@ -50,9 +47,9 @@ export default function FormToDo({
   return (
     <div>
       {loggedIn && createToDo ? (
-        <>
+        <div className='border-2 border-red-600 rounded-lg m-2'>
           <form
-            className='flex flex-col shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border-2 border-red-600 rounded-xl mt-2 pt-5 transition duration-700'
+            className='flex flex-col shadow-inner bg-white pl-5 pr-5 hover:bg-red-600 border-2 border-red-600 rounded-md pt-5 transition duration-700'
             method='POST'
             onSubmit={(event) =>
               toDo.length >= 1
@@ -62,9 +59,10 @@ export default function FormToDo({
             style={{ width: '600px' }}
           >
             <textarea
+              id='titleInput'
               aria-label='Add a comment'
               autoComplete='off'
-              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-xl h-14'
+              className='text-sm text-gray-base w-full mr-3 py-5 px-4 rounded-lg h-16 overflow-auto resize-none'
               type='text'
               name='title'
               placeholder='Write titles with commas for separate items'
@@ -75,7 +73,7 @@ export default function FormToDo({
             <textarea
               aria-label='Add a comment'
               autoComplete='off'
-              className='text-sm text-gray-base w-full mr-3 mt-3 mb-3 py-5 px-4 rounded-xl '
+              className='text-sm text-gray-base w-full mr-3 mt-3 mb-3 py-5 px-4 rounded-lg overflow-auto'
               type='text'
               name='toDo'
               placeholder='Write todos with commas for separate items.'
@@ -85,16 +83,36 @@ export default function FormToDo({
             />{' '}
           </form>
           <div className='inline'>
-            <input
-              className='text-2xl m-2 p-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
-              onChange={(e) => setUntilTime(e.target.value)}
-              type='date'
-              id='until'
-              name='trip-start'
-              value={untilTime}
-              min='2021-12-31'
-              max='2078-12-31'
-            />
+            <>
+              {' '}
+              {deadLine ? (
+                <>
+                  <input
+                    className='text-xl m-2 p-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
+                    onChange={(e) => setUntilTime(e.target.value)}
+                    type='date'
+                    id='until'
+                    name='trip-start'
+                    value={untilTime}
+                    min='2021-12-31'
+                    max='2078-12-31'
+                  />{' '}
+                  <button
+                    className='p-2 m-2 bg-red-600 hover:bg-red-400 rounded-lg focus:ring-black focus:ring  transition duration-200 text-white w-22'
+                    onClick={() => setDeadLine(!deadLine)}
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  className='p-2 m-2 bg-black hover:bg-red-400 rounded-lg focus:ring-black focus:ring  transition duration-200 text-white w-22'
+                  onClick={() => setDeadLine(!deadLine)}
+                >
+                  Deadline
+                </button>
+              )}
+            </>
             <button
               className={`text-lg font-bold text-white transition duration-300 bg-black text-white hover:bg-red-600 rounded-lg p-2 m-2  w-44 ${
                 !toDo && !title && 'opacity-25'
@@ -129,11 +147,11 @@ export default function FormToDo({
               Cancel
             </button>
           </div>{' '}
-        </>
+        </div>
       ) : (
         <button
           onClick={() => setCreateToDo(!createToDo)}
-          className='p-4 m-2 bg-black hover:bg-red-400 rounded-lg focus:ring-black text-white focus:ring focus:ring-red-600 transition duration-200'
+          className='p-2 m-2 bg-black hover:bg-red-400 rounded-lg focus:ring-black text-white focus:ring focus:ring-red-600 transition duration-200 w-2/5'
         >
           Create ToDo
         </button>
