@@ -7,7 +7,6 @@ import { getUserByUsername } from '../services/firebase';
 
 import * as ROUTES from '../constants/routes';
 import Photo from '../Components/profile/userPhotos/photo';
-import UserNavBar from './userNavBar';
 import Footer from './footer';
 
 export default function Profile() {

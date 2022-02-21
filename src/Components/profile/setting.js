@@ -17,10 +17,14 @@ export default function Setting() {
   }, []);
 
   return (
-    <div className='h-screen'>
-      <UserNavBar />
-      <DisplayUser />
-      <Footer />
+    <div className=''>
+      {user ? (
+        <div>
+          <UserNavBar />
+          <DisplayUser />
+          <Footer />
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -11,7 +11,7 @@ export async function doesUsernameExist(username) {
   return result.docs.length > 0;
 }
 
-export async function getUserByUsername(setUserArray) {
+export async function getUsername(setUserArray) {
   const docId = await firebaseLib
     .firestore()
     .collection('users')
@@ -27,6 +27,20 @@ export async function getUserByUsername(setUserArray) {
       console.error('Error to get document: ', error);
     });
   return docId;
+}
+
+export async function getUserByUsername(username) {
+  const result = await firebaseLib
+    .firestore()
+    .collection('users')
+    .where('username', '==', username)
+    .get();
+  const user = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+
+  return user;
 }
 
 export async function getUserByUserId(userId) {

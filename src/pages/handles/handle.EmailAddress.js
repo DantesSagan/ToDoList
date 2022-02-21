@@ -3,18 +3,17 @@ import { getAuth } from 'firebase/auth';
 
 import IndexSetting from '../../Components/profile/userSettings/index.setting';
 import { useEffect, useState } from 'react';
-import { getUserByUsername } from '../../services/firebase';
+import { getUsername } from '../../services/firebase';
 
 export default function HandleForgotEmail() {
+  const { userArray, setUserArray } = IndexSetting();
   const [nickName, setNickName] = useState('');
-
-  const [userArray, setUserArray] = useState([]);
 
   const { user, firebaseLib, emailAddress, setEmailAddress } = IndexSetting();
   const isInvalidEmailAddress = emailAddress === '';
 
   useEffect(() => {
-    getUserByUsername(setUserArray);
+    getUsername(setUserArray);
   }, []);
 
   const toDoArray = [];
@@ -34,7 +33,7 @@ export default function HandleForgotEmail() {
     const querySnapshot = await getDocs(
       collection(firebaseLib.firestore(), 'users')
     );
-    
+
     return Object.keys(userArray).map((secondArray) => {
       return querySnapshot.forEach((doc) => {
         console.log(userArray[secondArray].username === toDoArray[length]);

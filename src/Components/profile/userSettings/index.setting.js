@@ -20,7 +20,8 @@ export default function IndexSetting() {
   const [gender, setGender] = useState('');
   const [error, setError] = useState('');
   const [checkPass, setCheckPass] = useState('');
-  
+  const [userArray, setUserArray] = useState([]);
+
   const passOne = password;
   const passTwo = checkPass;
 
@@ -47,6 +48,8 @@ export default function IndexSetting() {
     setError,
     passOne,
     passTwo,
-    setCheckPass
+    setCheckPass,
+    userArray,
+    setUserArray,
   };
 }
