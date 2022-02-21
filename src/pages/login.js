@@ -23,8 +23,17 @@ export default function Login() {
       await firebaseLib
         .auth()
         .signInWithEmailAndPassword(emailAddress, password);
+
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
       if (error) {
         setLock(!lock);
       }
@@ -33,9 +42,11 @@ export default function Login() {
       setError(error.message);
     }
   };
+
   useEffect(() => {
     document.title = 'Login - ToDoList';
   }, []);
+
   // console.log(
   //   lock
   //     ? console.log(`Locked value ${lock}`)
@@ -92,21 +103,21 @@ export default function Login() {
                   // Unlocked value when you type data into two valid email and password
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
-                    class='h-12 w-12 transition duration-300'
+                    className='h-12 w-12 transition duration-300'
                     fill='red'
                     viewBox='0 0 24 24'
                     stroke='black'
                   >
                     <path
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
                       d='M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z'
                     />
                   </svg>
                 )}
               </legend>
-              <div className='text-3xl text-center text-black underline mb-6'>
+              <div className='text-3xl text-center text-black p-4 mb-6 border-b-2 border-red-600'>
                 Log-In
               </div>
               <input
@@ -141,6 +152,17 @@ export default function Login() {
             Don't have an account?{' '}
             <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
               Sign up
+            </Link>
+          </p>
+        </div>
+        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
+          <p className='text-sm'>
+            Forget{` `}
+            <Link
+              to={ROUTES.FORGOTDATA}
+              className='font-bold text-blue-medium hover:underline'
+            >
+              password or email?
             </Link>
           </p>
         </div>

@@ -68,7 +68,7 @@ export default function SignUp() {
                   />
                 </svg>
               </legend>
-              <div className='text-3xl text-center text-black underline p-4'>
+              <div className='text-3xl text-center text-black p-4 border-b-2 border-red-600'>
                 Sign-Up Form
               </div>
               {/* SET GENDER */}

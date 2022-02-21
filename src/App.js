@@ -27,6 +27,7 @@ const DashboardSubToDo = lazy(() =>
     './Components/toDoApp/displayToDo/subcollectionToDo/sub.dashboardNestedToDo'
   )
 );
+const ForgotData = lazy(() => import('./pages/handles/handle.ForgotData'));
 export default function App() {
   const { user } = useAuthListener();
   return (
@@ -37,6 +38,7 @@ export default function App() {
             <Routes>
               <Route path={ROUTES.LOGIN} element={<Login />} />
               <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
+              <Route path={ROUTES.FORGOTDATA} element={<ForgotData />} />
               <Route
                 path={ROUTES.TODOLIST}
                 element={

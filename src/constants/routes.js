@@ -7,4 +7,5 @@ export const NOT_FOUND = '/not-found';
 export const TODOLIST = '/todolist/:toDoID';
 export const NESTEDTODOLIST = '/todolist/nested/:toDoID';
 export const SUBCOLLECTION = '/todolist/nested/subcollection/:toDoID';
- 
+export const FORGOTDATA = '/forgot';
+
