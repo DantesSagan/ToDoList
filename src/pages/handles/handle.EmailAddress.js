@@ -1,5 +1,5 @@
 import { getDocs, collection, updateDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth, updateEmail } from 'firebase/auth';
 
 import IndexSetting from '../../Components/profile/userSettings/index.setting';
 import { useEffect, useState } from 'react';
@@ -34,10 +34,18 @@ export default function HandleForgotEmail() {
       collection(firebaseLib.firestore(), 'users')
     );
 
+    // await updateEmail(auth.currentUser, emailAddress).then((item) => {
+    //   console.log('Email provider changed successfully:  ', item);
+    //   alert('Email provider changed successfully:  ', item);
+    // });
+    
     return Object.keys(userArray).map((secondArray) => {
       return querySnapshot.forEach((doc) => {
         console.log(userArray[secondArray].username === toDoArray[length]);
-        if (doc.id === toDoArray[length]) {
+        if (
+          doc.id === userArray[secondArray].userId &&
+          userArray[secondArray].username === toDoArray[length]
+        ) {
           updateDoc(doc.ref, {
             emailAddress: emailAddress.toLowerCase(),
           })
@@ -54,11 +62,6 @@ export default function HandleForgotEmail() {
         }
       });
     });
-
-    // await updateEmail(auth.i, emailAddress).then((item) => {
-    //   console.log('Email provider changed successfully:  ', item);
-    //   alert('Email provider changed successfully:  ', item);
-    // });
   };
 
   return (
