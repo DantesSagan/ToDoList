@@ -29,8 +29,8 @@ export default function HandleGender() {
           gender: gender,
         })
           .then(() => {
-            console.log('Gender hanged successfully: ', gender);
-            alert('Gender hanged successfully: ', gender);
+            console.log('Gender changed successfully: ', gender);
+            alert('Gender changed successfully: ', gender);
           })
           .catch((error) => {
             console.error('Error with gender changed: ', error);
@@ -42,19 +42,18 @@ export default function HandleGender() {
     });
   };
 
-  const UsernameDisplay = Object.keys(userArray).map((secondArray) => {
-    let currentAuthUsername = userArray[secondArray].gender;
+  const GenderDisplay = Object.keys(userArray).map((secondArray) => {
+    let currentDisplayGender = userArray[secondArray].gender;
+    let currentUserID = user?.userId === userArray[secondArray].userId;
     return (
       <div>
-        {user?.userId === userArray[secondArray].userId ? (
+        {currentUserID ? (
           <section>
-            <div className='pb-2 '>
-              Current floor -{' '}
-              <span className='font-bold'>{currentAuthUsername}</span>
-            </div>
             <div className={`${isInvalidGender && 'opacity-60'}`}>
               <input
-                placeholder='Gender/sex/floor/ground xd'
+                placeholder={
+                  !currentDisplayGender ? 'Gender' : currentDisplayGender
+                }
                 className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
                 onChange={({ target }) => setGender(target.value)}
                 type='text'
@@ -75,5 +74,5 @@ export default function HandleGender() {
       </div>
     );
   });
-  return UsernameDisplay;
+  return GenderDisplay;
 }

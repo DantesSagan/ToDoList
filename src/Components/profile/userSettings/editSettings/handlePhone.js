@@ -1,10 +1,27 @@
 import IndexSetting from '../index.setting';
 
 import { getDocs, collection, updateDoc } from 'firebase/firestore';
+import { getUsername } from '../../../../services/firebase';
+import { useEffect } from 'react';
+import { getAuth, updatePhoneNumber } from 'firebase/auth';
 
 export default function HandlePhone() {
-  const { user, firebaseLib, phone, setPhone } = IndexSetting();
-const isInvalidPhone = phone === '';
+  const {
+    user,
+    firebaseLib,
+    phone,
+    setPhone,
+    userArray,
+    setUserArray,
+    setError,
+  } = IndexSetting();
+  const isInvalidPhone = phone === '';
+
+  useEffect(() => {
+    getUsername(setUserArray);
+  }, []);
+
+  const auth = getAuth();
 
   const handlePhone = async (event) => {
     event.preventDefault();
@@ -51,24 +68,34 @@ const isInvalidPhone = phone === '';
     //   setError(error.message);
     // }
   };
-  return (
-    <div className={`${isInvalidPhone && 'opacity-60'}`}>
-      <input
-        aria-label='Enter your phone number'
-        type='tele'
-        placeholder='Phone Number'
-        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-        onChange={({ target }) => setPhone(target.value)}
-        value={phone}
-      />
-      <button
-        disabled={isInvalidPhone}
-        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
-        type='submit'
-        onClick={handlePhone}
-      >
-        Change phone
-      </button>
-    </div>
-  );
+  const PhoneDisplay = Object.keys(userArray).map((secondArray) => {
+    let currentDisplayPhone = userArray[secondArray].phone;
+    let currentUserID = user?.userId === userArray[secondArray].userId;
+
+    return (
+      <div>
+        {currentUserID ? (
+          <div className={`${isInvalidPhone && 'opacity-60'}`}>
+            <input
+              aria-label='Enter your phone number'
+              type='tele'
+              placeholder={!currentDisplayPhone ? 'Phone' : currentDisplayPhone}
+              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+              onChange={({ target }) => setPhone(target.value)}
+              value={phone}
+            />
+            <button
+              disabled={isInvalidPhone}
+              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+              type='submit'
+              onClick={handlePhone}
+            >
+              Change phone
+            </button>
+          </div>
+        ) : null}
+      </div>
+    );
+  });
+  return PhoneDisplay;
 }
