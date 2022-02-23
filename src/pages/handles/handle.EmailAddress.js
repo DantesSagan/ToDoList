@@ -50,11 +50,6 @@ export default function HandleForgotEmail() {
       collection(firebaseLib.firestore(), 'users')
     );
 
-    // if (checkEmailAddress !== emailAddress) {
-    //   alert('Wrong email, confirm email');
-    //   console.log('Wrong email, confirm email');
-    //   return null;
-    // } else {
     try {
       await firebaseLib
         .auth()
@@ -87,7 +82,7 @@ export default function HandleForgotEmail() {
       await updateEmail(auth.currentUser, emailAddress.toLowerCase()).then(
         (item) => {
           firebaseLib.auth().signOut();
-          navigate(ROUTES.FORGOTDATA);
+          navigate(ROUTES.FORGOTTENEMAIL);
           console.log('Email provider changed successfully:  ', item);
           alert('Email provider changed successfully:  ', item);
         }
@@ -106,47 +101,55 @@ export default function HandleForgotEmail() {
       setPassword('');
       setError(error.message);
     }
-    // }
   };
 
   return (
-    <div className={`${isInvalidEmailAddress && 'opacity-60'}`}>
+    <div>
       {' '}
-      <input
-        minLength={6}
-        maxLength={50}
-        aria-label='Enter your nickName'
-        type='text'
-        placeholder='Enter your nickName'
-        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-        onChange={({ target }) => setNickName(target.value)}
-        value={nickName}
-      />
-      {/* Sign in for 1 sec to update email insert current email address */}
-      <input
-        minLength={6}
-        maxLength={50}
-        aria-label='Enter your email address'
-        type='email'
-        placeholder='Change you email address'
-        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-        onChange={({ target }) => setCheckEmailAddress(target.value)}
-        value={checkEmailAddress}
-      />
-      {/* Sign in for 1 sec to update email to insert current password for auth  */}
-      <input
-        minLength={6}
-        maxLength={30}
-        aria-label='Enter your password'
-        type='password'
-        placeholder='Enter your password'
-        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-        onChange={({ target }) => setPassword(target.value)}
-        value={password}
-      />
+      <div className='border-2 border-red-600 rounded-lg p-1'>
+        <h1 className='text-2xl font-bold text-center border-b-2 border-red-600'>
+          Enter you data for check.
+        </h1>{' '}
+        <h1 className='text-1xl font-bold'>Last used nick</h1>{' '}
+        <input
+          minLength={6}
+          maxLength={50}
+          aria-label='Enter your nickName'
+          type='text'
+          placeholder='Enter your Nickname'
+          className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+          onChange={({ target }) => setNickName(target.value)}
+          value={nickName}
+        />
+        <h1 className='text-1xl font-bold'>Last used email</h1>{' '}
+        {/* Sign in for 1 sec to update email insert current email address */}
+        <input
+          minLength={6}
+          maxLength={50}
+          aria-label='Enter your email address'
+          type='email'
+          placeholder='Change you email address'
+          className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+          onChange={({ target }) => setCheckEmailAddress(target.value)}
+          value={checkEmailAddress}
+        />
+        <h1 className='text-1xl font-bold'>Last used password</h1>
+        {/* Sign in for 1 sec to update email to insert current password for auth  */}
+        <input
+          minLength={6}
+          maxLength={30}
+          aria-label='Enter your password'
+          type='password'
+          placeholder='Enter your password'
+          className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+          onChange={({ target }) => setPassword(target.value)}
+          value={password}
+        />
+      </div>
       {/* This is input for change current emailAddress for new address that 
       was added in this input
-      */}
+      */}{' '}
+      <h1 className='text-2xl font-bold text-center mb-2'>Enter new email</h1>{' '}
       <input
         minLength={6}
         maxLength={50}
@@ -158,7 +161,9 @@ export default function HandleForgotEmail() {
         value={emailAddress}
       />
       <button
-        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+          isInvalidEmailAddress && 'opacity-60'
+        }`}
         type='submit'
         onClick={handleEmailAddress}
       >

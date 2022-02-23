@@ -157,12 +157,12 @@ export default function Login() {
         </div>
         <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
           <p className='text-sm'>
-            Forget{` `}
+            Forgot{` `}password{` `}or{` `}
             <Link
-              to={ROUTES.FORGOTDATA}
+              to={ROUTES.FORGOTTENEMAIL}
               className='font-bold text-blue-medium hover:underline'
             >
-              password or email?
+              email?
             </Link>
           </p>
         </div>
