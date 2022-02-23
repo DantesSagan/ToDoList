@@ -13,6 +13,7 @@ export default function IndexSetting() {
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
+  const [checkEmailAddress, setCheckEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [country, setCountry] = useState('');
   const [phone, setPhone] = useState('');
@@ -51,5 +52,7 @@ export default function IndexSetting() {
     setCheckPass,
     userArray,
     setUserArray,
+    checkEmailAddress,
+    setCheckEmailAddress,
   };
 }
