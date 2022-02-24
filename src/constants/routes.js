@@ -9,3 +9,4 @@ export const NESTEDTODOLIST = '/todolist/nested/:toDoID';
 export const SUBCOLLECTION = '/todolist/nested/subcollection/:toDoID';
 export const FORGOTDATA = '/forgot';
 export const FORGOTTENEMAIL = '/forgottenEmail';
+export const FORGOTTENPASSWORD = '/forgottenPassword';

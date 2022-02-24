@@ -30,6 +30,9 @@ const DashboardSubToDo = lazy(() =>
 const ForgottenEmail = lazy(() =>
   import('./pages/handles/handle.ForgottenEmail')
 );
+const ForgottenPassword = lazy(() =>
+  import('./pages/handles/handle.ForgottenPassword')
+);
 export default function App() {
   const { user } = useAuthListener();
   return (
@@ -40,7 +43,14 @@ export default function App() {
             <Routes>
               <Route path={ROUTES.LOGIN} element={<Login />} />
               <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
-              <Route path={ROUTES.FORGOTTENEMAIL} element={<ForgottenEmail />} />
+              <Route
+                path={ROUTES.FORGOTTENEMAIL}
+                element={<ForgottenEmail />}
+              />
+              <Route
+                path={ROUTES.FORGOTTENPASSWORD}
+                element={<ForgottenPassword />}
+              />
               <Route
                 path={ROUTES.TODOLIST}
                 element={

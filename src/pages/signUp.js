@@ -148,7 +148,7 @@ export default function SignUp() {
               >
                 <input
                   minLength={6}
-                  maxLength={30}
+                  maxLength={35}
                   aria-label='Enter your password'
                   type='password'
                   placeholder='Enter your password'
@@ -158,7 +158,7 @@ export default function SignUp() {
                 />
                 <input
                   minLength={6}
-                  maxLength={30}
+                  maxLength={35}
                   aria-label='Confirm your password'
                   type='password'
                   placeholder='Confirm your password'
