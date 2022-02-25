@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { firebaseLib } from '../../../../firebaseLibrary/firebaseLib';
-import GetChangeDate from '../../nestedToDo/toDoMembers/getChangeDate';
 import GetNestedToDoArray from './toDoMembers/getNestedToDoArray';
 import GetSubChangeDate from './toDoMembers/getSubChangeDate';
 import HandleDoneSubToDo from './toDoMembers/handleDoneToDo';
@@ -14,9 +13,7 @@ export const DisplayTodoByIDNESTED = ({
   setToDo,
   editSubToDo,
   nestedArrayToDo,
-  setNestedArrayToDo,
   arrayID,
-  setArrayID,
 }) => {
   // const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
