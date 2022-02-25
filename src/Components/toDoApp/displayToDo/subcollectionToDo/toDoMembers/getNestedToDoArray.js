@@ -18,7 +18,7 @@ export default function GetNestedToDoArray({
   untilTime,
 }) {
   return (
-    <div className='m-8 p-4  rounded-lg'>
+    <div className='p-4 rounded-lg'>
       {/* Delete toDo by toDoID */}
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -41,12 +41,12 @@ export default function GetNestedToDoArray({
                      where you can change you title of current toDo
                     */}
 
-      <hr className='border-b-2 border-red-600' />
+      <hr className='border-b-2 border-red-600 mt-6' />
 
       {/* Get - toDo - in toDosArray */}
       {/* Check to completed toDo */}
-      <div className='p-4 rounded-lg'>
-        <div className='pt-4 ml-4'>
+      <div className='rounded-lg'>
+        <div className='pt-4'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='h-6 w-6 cursor-pointer border-2 border-solid border-black rounded-2xl hover:bg-gray-300 '
@@ -87,11 +87,11 @@ export default function GetNestedToDoArray({
           </div>
         ) : (
           <div
-            className='text-1xl font-bold rounded-lg mt-4 p-2 hover:bg-red-400 hover:text-white border-l-2 border-red-600'
+            className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white h-full '
             onClick={() => setClickToDo(!clickToDo)}
           >
             {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
-              <s className='opacity-50 ml-5'>
+              <s className='opacity-50 ml-5 border-l-2 border-red-600'>
                 {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
                   <ul className='text-left'>
                     {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
@@ -113,9 +113,9 @@ export default function GetNestedToDoArray({
                 )}
               </s>
             ) : (
-              <div className='ml-5 hover:underline' key={itemsNested.id}>
+              <div key={itemsNested.id}>
                 {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
-                  <ul className='text-left'>
+                  <ul className='text-left border-l-2 border-red-600 rounded-lg '>
                     {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
                       (toDoIndex) => {
                         return (
