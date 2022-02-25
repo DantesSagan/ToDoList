@@ -73,20 +73,6 @@ export default function NestMainToDo({ disNameArray, user }) {
                   <Link
                     to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
                     key={item.id}
-                    // onClick={() =>
-                    //   window.open(
-                    //     todoURL,
-                    //     'targetWindow',
-                    //     `toolbar=no,
-                    //                     location=no,
-                    //                     status=no,
-                    //                     menubar=no,
-                    //                     scrollbars=yes,
-                    //                     resizable=yes,
-                    //                     width=800px,
-                    //                     height=800px`
-                    //   )
-                    // }
                   >
                     <div
                       className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
@@ -119,20 +105,6 @@ export default function NestMainToDo({ disNameArray, user }) {
                   <Link
                     to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
                     key={item.id}
-                    // onClick={() =>
-                    //   window.open(
-                    //     todoURL,
-                    //     'targetWindow',
-                    //     `toolbar=no,
-                    //                     location=no,
-                    //                     status=no,
-                    //                     menubar=no,
-                    //                     scrollbars=yes,
-                    //                     resizable=yes,
-                    //                     width=800px,
-                    //                     height=800px`
-                    //   )
-                    // }
                   >
                     <div
                       className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'

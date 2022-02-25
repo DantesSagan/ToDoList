@@ -42,6 +42,8 @@ export default function EditSubToDo({
   console.log(nestedToDoArray);
 
   const editSubToDo = async (event) => {
+    const commaToDo = toDo.split(',');
+
     setNestedArrayToDo([
       ...nestedArrayToDo,
       { displayName, toDo, createdAt, toDoID },
@@ -84,7 +86,7 @@ export default function EditSubToDo({
         const getDocTodos = await getDocs(
           collection(firebaseLib.firestore(), 'todos')
         );
-        
+
         if (checkPathID) {
           console.log('Edit subToDo confirm');
           window.confirm(
@@ -136,7 +138,7 @@ export default function EditSubToDo({
                             displayName:
                               nestedToDoArray[itemsNested][index].displayName,
                             createdAt: formatTime(),
-                            toDo: toDo,
+                            toDo: commaToDo,
                             userId: userAuth,
                             toDoID: nestedToDoArray[itemsNested][index].toDoID,
                             doneToDo:
