@@ -13,6 +13,10 @@ export default function IndexConst() {
 
   const { firebaseLib, FieldValue } = useContext(FirebaseContext);
 
+  const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
+
+  const [arrayID, setArrayID] = useState([]);
+
   const refTodo = useRef(null);
   const {
     user: { displayName },
@@ -49,5 +53,9 @@ export default function IndexConst() {
     user,
     toDoID,
     displayName,
+    nestedArrayToDo,
+    setNestedArrayToDo,
+    arrayID,
+    setArrayID,
   };
 }

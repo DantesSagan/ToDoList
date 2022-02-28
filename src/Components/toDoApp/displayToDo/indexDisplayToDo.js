@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { getNestedToDo } from '../../../services/firebase';
 import HeaderToDo from '../header.toDo';
 
 import IndexConst from '../indexConst';
@@ -20,14 +22,29 @@ export default function IndexDisplayToDo() {
     user,
     toDoID,
     displayName,
+    nestedArrayToDo,
+    setNestedArrayToDo,
   } = IndexConst();
-  console.log(user);
+
+  useEffect(() => {
+    try {
+      getNestedToDo(setNestedArrayToDo);
+    } catch (error) {
+      setNestedArrayToDo([]);
+      console.log(error);
+    }
+  }, []);
+
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center mb-40 border-r-2 border-solid border-red-600 rounded-xl '>
       <div className='flex flex-col w-2/2'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl '>
-            <HeaderToDo user={user} />
+            <HeaderToDo
+              user={user}
+              nestedArrayToDo={nestedArrayToDo}
+              setNestedArrayToDo={setNestedArrayToDo}
+            />
             <FormToDoToDoID
               toDo={toDo}
               setToDo={setToDo}
