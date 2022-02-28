@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getNestedToDo } from '../../../../services/firebase';
+import { getNestedToDo, getToDo } from '../../../../services/firebase';
 import HeaderToDo from '../../header.toDo';
 
 import IndexConst from '../../indexConst';
@@ -35,6 +35,7 @@ export default function IndexSubToDo() {
       setNestedArrayToDo([]);
       console.log(error);
     }
+    getToDo(setToDoSArray);
   }, []);
 
   return (
@@ -48,6 +49,7 @@ export default function IndexSubToDo() {
               setNestedArrayToDo={setNestedArrayToDo}
               arrayID={arrayID}
               setArrayID={setArrayID}
+              setToDoSArray={setToDoSArray}
             />
             <ListOfSubDisplayToDo
               toDo={toDo}

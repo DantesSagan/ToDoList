@@ -44,7 +44,7 @@ export default function IndexNestedToDo() {
       <div className='flex flex-col w-2/2'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
-            <HeaderNestedToDo
+            <HeaderToDo
               user={user}
               nestedArrayToDo={nestedArrayToDo}
               setNestedArrayToDo={setNestedArrayToDo}

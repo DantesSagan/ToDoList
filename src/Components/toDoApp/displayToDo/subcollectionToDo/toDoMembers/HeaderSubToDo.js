@@ -5,13 +5,15 @@ import UserContext from '../../../../../context/user';
 import useUser from '../../../../../hooks/user';
 
 import * as ROUTES from '../../../../../constants/routes';
-import { getNestedToDo } from '../../../../../services/firebase';
+import { getNestedToDo, getToDo } from '../../../../../services/firebase';
 
 export default function HeaderSubToDo({
   arrayID,
   setArrayID,
   nestedArrayToDo,
   setNestedArrayToDo,
+  toDosArray,
+  setToDoSArray,
 }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
@@ -24,11 +26,16 @@ export default function HeaderSubToDo({
       setNestedArrayToDo([]);
       console.log(error);
     }
+    // getToDo(setToDoSArray);
   }, []);
 
+  // const disNameArray = Object.keys(toDosArray).map((item) => {
+  //   return toDosArray[item].toDosArray;
+  // });
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
   });
+
   console.log(nestedToDoArray);
   console.log(ROUTES.SUBCOLLECTION);
   return Object.keys(nestedToDoArray).map((itemsNested) => {
@@ -36,14 +43,24 @@ export default function HeaderSubToDo({
     //  4th
     return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
       let toDoNestedID = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
-      let currentPath = window.location.pathname;
-      let compareID = toDoNestedID === currentPath;
 
       let checkNestedID =
         arrayID[itemsNested] === nestedToDoArray[itemsNested][index].toDoID;
 
+      let currentPath = window.location.pathname;
+
       let checkName =
         user?.username === nestedToDoArray[itemsNested][index].displayName;
+
+      let compareID = toDoNestedID === currentPath;
+
+      // return Object.keys(disNameArray).map((item) => {
+      //   // Get - disNameArray[item] - and nested indexes within it for each result of its callback
+      //   // 2nd
+      //   return Object.keys(disNameArray[item]).map((ind) => {
+      //     let toDoMainID = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
+
+      //     let compareMainID = currentPath === toDoMainID;
 
       return (
         <div>
@@ -74,6 +91,7 @@ export default function HeaderSubToDo({
                     onClick={() => navigate(-1)}
                   >
                     <svg
+                      aria-selected='true'
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-8 w-8 hover:bg-red-600 rounded-lg hover:text-white'
                       viewBox='0 0 20 20'
@@ -96,6 +114,7 @@ export default function HeaderSubToDo({
                     onClick={() => navigate(+1)}
                   >
                     <svg
+                      aria-selected='false'
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-8 w-8 hover:bg-red-600 rounded-lg hover:text-white'
                       viewBox='0 0 20 20'
@@ -115,5 +134,7 @@ export default function HeaderSubToDo({
         </div>
       );
     });
+    //   });
+    // });
   });
 }
