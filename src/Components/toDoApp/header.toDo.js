@@ -1,87 +1,103 @@
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
-import { DEFAULT_IMAGE_PATH } from '../../constants/defaultPaths';
+import { useNavigate } from 'react-router-dom';
 
 import UserContext from '../../context/user';
 import useUser from '../../hooks/user';
 
-export default function HeaderToDo({ user: photoUser }) {
+import * as ROUTES from '../../constants/routes';
+import { getNestedToDo } from '../../services/firebase';
+
+export default function HeaderToDo() {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
+  const navigate = useNavigate();
+  const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
 
-  // const storage = getStorage();
-  // const path = `gs://todolist-64991.appspot.com`;
-  // const [fullPath, setFullPath] = useState(
-  //   path + `/images/avatars/${user?.username}`
-  // );
+  useEffect(() => {
+    try {
+      getNestedToDo(setNestedArrayToDo);
+    } catch (error) {
+      setNestedArrayToDo([]);
+      console.log(error);
+    }
+  }, []);
 
-  // // Create a reference to 'images/someName.jpg'
-  // const usersImagesRef = ref(
-  //   storage,
-  //   `${fullPath}.png` || `${fullPath}.jpg` || `${fullPath}.jpeg`
-  //   // + selectFile.name
-  // );
-  // console.log(fullPath, user?.username);
-  // useEffect(() => {
-  //   const getPhoto = async () => {
-  //     await getDownloadURL(usersImagesRef)
-  //       .then((url) => {
-  //         // Insert url into an <img> tag to "download"
-  //         console.log(url);
-  //         const img = document.getElementById('myimg');
-  //         img.setAttribute('src', url);
-  //       })
-  //       .catch((error) => {
-  //         // A full list of error codes is available at
-  //         // https://firebase.google.com/docs/storage/web/handle-errors
-  //         switch (error.code) {
-  //           case 'storage/object-not-found':
-  //             // File doesn't exist
-  //             console.log(error);
-  //             break;
-  //           case 'storage/unauthorized':
-  //             // User doesn't have permission to access the object
-  //             break;
-  //           case 'storage/canceled':
-  //             // User canceled the upload
-  //             break;
-  //           default:
-  //             console.log(error.code);
-  //             break;
-  //           // ...
-  //           case 'storage/unknown':
-  //             // Unknown error occurred, inspect the server response
-  //             break;
-  //         }
-  //       });
-  //   };
-  //   getPhoto();
-  // }, [usersImagesRef]);
+  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
+    return nestedArrayToDo[item].toDosArray;
+  });
+  console.log(nestedToDoArray);
+  console.log(ROUTES.SUBCOLLECTION);
+  return Object.keys(nestedToDoArray).map((itemsNested) => {
+    // console.log(nestedArrayToDo);
+    //  4th
+    return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
+      let toDoNestedID = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
+      let currentPath = window.location.pathname;
+      let compareID = toDoNestedID === currentPath;
 
-  return (
-    <div className='mb-6'>
-      {user && (
-        <div className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'>
-          <div className='flex items-center'>
-            {/* <Link to={`/p/${user?.username}`}>
-              <img
-                id='myimg'
-                className='rounded-full h-8 w-8 flex'
-                src={usersImagesRef.name}
-                alt={`${user?.username} profile`}
-                onError={(e) => {
-                  e.target.src = DEFAULT_IMAGE_PATH;
-                }}
-              />
-            </Link> */}{' '}
-            <i className='text-3xl  '>
-              Welcome - <strong>{user?.username}</strong>
-            </i>
+      return (
+        <div className='mb-6'>
+          {user && (
+            <div className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'>
+              <div className='flex items-center'>
+                <i className='text-3xl'>
+                  Welcome - <strong>{user?.username}</strong>
+                </i>{' '}
+              </div>{' '}
+            </div>
+          )}
+          <div class='grid grid-rows-1 grid-flow-col gap-4'>
+            <div className='grid justify-items-start mt-6'>
+              <button
+                disabled={
+                  ROUTES.DASHBOARD === window.location.pathname ? true : false
+                }
+                className={`text-3xl ${
+                  ROUTES.DASHBOARD === window.location.pathname
+                    ? 'opacity-60'
+                    : 'opacity-100'
+                }`}
+                onClick={() => navigate(-1)}
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  class='h-8 w-8'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                >
+                  <path
+                    fill-rule='evenodd'
+                    d='M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z'
+                    clip-rule='evenodd'
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className='grid justify-items-end mt-6'>
+              <button
+                disabled={compareID ? true : false}
+                className={`text-3xl ${
+                  compareID ? 'opacity-60' : 'opacity-100'
+                }`}
+                onClick={() => navigate(+1)}
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  class='h-8 w-8'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                >
+                  <path
+                    fill-rule='evenodd'
+                    d='M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z'
+                    clip-rule='evenodd'
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      )}
-    </div>
-  );
+      );
+    });
+  });
 }

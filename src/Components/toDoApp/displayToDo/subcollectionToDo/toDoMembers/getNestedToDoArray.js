@@ -64,7 +64,7 @@ export default function GetNestedToDoArray({
           </svg>
         </div>
         {clickToDo ? (
-          <div className='block'>
+          <div className='block cursor-pointer'>
             <textarea
               className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
               defaultValue={nestedToDoArray[itemsNested][index].toDo}
@@ -87,7 +87,7 @@ export default function GetNestedToDoArray({
           </div>
         ) : (
           <div
-            className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white h-full '
+            className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white h-full cursor-pointer '
             onClick={() => setClickToDo(!clickToDo)}
           >
             {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (

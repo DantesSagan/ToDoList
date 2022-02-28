@@ -7,6 +7,25 @@ export default function NestedSubObj({
   user,
   arrayID,
 }) {
+  const formatTime = () => {
+    let date = new Date();
+    // Year part from the timestamp
+    let year = date.getFullYear();
+    // Month part from the timestamp
+    let month = date.getMonth() + 1;
+    // Days part from the timestamp
+    let days = date.getDate();
+
+    let months = 10 || 11 || 12;
+
+    // Will display time in 10:30:23 format
+    let formattedTime = `${year}-0${month}-${days}`;
+    let formattedTimeSecond = `${year}-${month}-${days}`;
+    return formattedTimeSecond === `${year}-${months}-${days}`
+      ? `${year}-${month.toString().slice(-2)}-${days}`
+      : formattedTime;
+  };
+  
   // getting nested subcollection toDo from the same router path in a parent toDo
   //   1st
   return Object.keys(disNameArray).map((item) => {
@@ -56,31 +75,77 @@ export default function NestedSubObj({
             >
               {/* with check especially toDoId pathname and username */}
               {checkName && checkNestedID && checkParentID && checkTODOID ? (
-                <Link
-                  to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
-                  key={item.id}
-                >
-                  <hr
-                    className='border border-red-600 ml-4 mr-4 m-2'
-                    key={item.id}
-                  />
-                  <div
-                    className='text-1xl p-2 ml-2 hover:underline'
-                    key={item.id}
-                  >
-                    {nestedToDoArray[itemsNested][index].doneToDo ? (
-                      <s className='opacity-50 ml-5'>
-                        {nestedToDoArray[itemsNested][index].toDo}{' '}
-                      </s>
-                    ) : (
-                      <div className='ml-5'>
-                        {nestedToDoArray[itemsNested][index].toDo}
+                <div>
+                  {nestedToDoArray[itemsNested][index].untilTime ===
+                    formatTime() ||
+                  nestedToDoArray[itemsNested][index].untilTime <
+                    formatTime() ? (
+                    <Link
+                      to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
+                    >
+                      <div className='text-1xl p-4 m-2'>
+                        Задание просрочено! <br />
+                        Срок:
+                        <span className='bg-red-500 rounded-lg'>
+                          {nestedToDoArray[itemsNested][index].untilTime}
+                        </span>{' '}
+                        {` `} до, включительно {formatTime()}
                       </div>
-                    )}
-                    <br key={item.id} />
-                  </div>
-                  {` `}
-                </Link>
+                    </Link>
+                  ) : nestedToDoArray[itemsNested][index].untilTime === 0 ? (
+                    <Link
+                      to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
+                      key={item.id}
+                    >
+                      <hr
+                        className='border border-red-600 ml-4 mr-4 m-2'
+                        key={item.id}
+                      />
+                      <div
+                        className='text-1xl p-2 ml-2 hover:underline'
+                        key={item.id}
+                      >
+                        {nestedToDoArray[itemsNested][index].doneToDo ? (
+                          <s className='opacity-50 ml-5'>
+                            {nestedToDoArray[itemsNested][index].toDo}{' '}
+                          </s>
+                        ) : (
+                          <div className='ml-5'>
+                            {nestedToDoArray[itemsNested][index].toDo}
+                          </div>
+                        )}
+                        <br key={item.id} />
+                      </div>
+                      {` `}
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
+                      key={item.id}
+                    >
+                      <hr
+                        className='border border-red-600 ml-4 mr-4 m-2'
+                        key={item.id}
+                      />
+                      <div
+                        className='text-1xl p-2 ml-2 hover:underline'
+                        key={item.id}
+                      >
+                        {nestedToDoArray[itemsNested][index].doneToDo ? (
+                          <s className='opacity-50 ml-5'>
+                            {nestedToDoArray[itemsNested][index].toDo}{' '}
+                          </s>
+                        ) : (
+                          <div className='ml-5'>
+                            {nestedToDoArray[itemsNested][index].toDo}
+                          </div>
+                        )}
+                        <br key={item.id} />
+                      </div>
+                      {` `}
+                    </Link>
+                  )}
+                </div>
               ) : null}
             </div>
           );

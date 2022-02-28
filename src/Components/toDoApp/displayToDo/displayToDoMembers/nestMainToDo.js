@@ -63,10 +63,11 @@ export default function NestMainToDo({ disNameArray, user }) {
                   >
                     <div className='text-3xl p-4 m-2'>
                       Задание просрочено! <br />
+                      Срок:
                       <span className='bg-red-500 rounded-lg'>
                         {disNameArray[item][ind].untilTime}
                       </span>{' '}
-                      {` `}!== {formatTime()}
+                      {` `}до, включительно {formatTime()}
                     </div>
                   </Link>
                 ) : disNameArray[item][ind].untilTime === 0 ? (

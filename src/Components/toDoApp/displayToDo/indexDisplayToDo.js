@@ -1,4 +1,3 @@
-import Footer from '../../../pages/footer';
 import HeaderToDo from '../header.toDo';
 
 import IndexConst from '../indexConst';
