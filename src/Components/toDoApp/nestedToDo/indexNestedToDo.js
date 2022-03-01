@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getNestedToDo } from '../../../services/firebase';
+import { getNestedToDo, getToDo } from '../../../services/firebase';
 import HeaderToDo from '../header.toDo';
 
 import IndexConst from '../indexConst';
@@ -37,6 +37,7 @@ export default function IndexNestedToDo() {
       setNestedArrayToDo([]);
       console.log(error);
     }
+    getToDo(setToDoSArray);
   }, []);
 
   return (
@@ -44,12 +45,10 @@ export default function IndexNestedToDo() {
       <div className='flex flex-col w-2/2'>
         <div className='flex flex-col items-center'>
           <div className='h-full w-full py-5 px-4 text-xl'>
-            <HeaderToDo
+            <HeaderNestedToDo
               user={user}
-              nestedArrayToDo={nestedArrayToDo}
-              setNestedArrayToDo={setNestedArrayToDo}
-              arrayID={arrayID}
-              setArrayID={setArrayID}
+              toDosArray={toDosArray}
+              setToDoSArray={setToDoSArray}
             />
             <ListOfNestedDisplayToDo
               toDo={toDo}

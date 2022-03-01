@@ -5,49 +5,44 @@ import UserContext from '../../../../context/user';
 import useUser from '../../../../hooks/user';
 
 import * as ROUTES from '../../../../constants/routes';
-import { getNestedToDo } from '../../../../services/firebase';
+import { getNestedToDo, getToDo } from '../../../../services/firebase';
 
-export default function HeaderNestedToDo({
-  arrayID,
-  setArrayID,
-  nestedArrayToDo,
-  setNestedArrayToDo,
-}) {
+export default function HeaderNestedToDo({ toDosArray, setToDoSArray }) {
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
   const navigate = useNavigate();
 
   useEffect(() => {
     try {
-      getNestedToDo(setNestedArrayToDo, setArrayID);
+      getToDo(setToDoSArray);
     } catch (error) {
-      setNestedArrayToDo([]);
+      setToDoSArray([]);
       console.log(error);
     }
   }, []);
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
+  const disNameArray = Object.keys(toDosArray).map((item) => {
+    return toDosArray[item].toDosArray;
   });
-  console.log(nestedToDoArray);
+  console.log(disNameArray);
   console.log(ROUTES.SUBCOLLECTION);
-  return Object.keys(nestedToDoArray).map((itemsNested) => {
+  return Object.keys(disNameArray).map((item) => {
     // console.log(nestedArrayToDo);
     //  4th
-    return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
-      let toDoNestedID = `/todolist/nested/${nestedToDoArray[itemsNested][index].toDoID}`;
+    return Object.keys(disNameArray[item]).map((index) => {
+      let toDoNestedID = `/todolist/nested/${disNameArray[item][index].toDoID}`;
       let currentPath = window.location.pathname;
       let compareID = toDoNestedID === currentPath;
 
-      let checkNestedID =
-        arrayID[itemsNested] === nestedToDoArray[itemsNested][index].toDoID;
+      // let checkNestedID =
+      //   arrayID[itemsNested] === disNameArray[item][index].toDoID;
 
       let checkName =
-        user?.username === nestedToDoArray[itemsNested][index].displayName;
+        user?.username === disNameArray[item][index].displayName;
 
       return (
         <div>
-          {checkName && checkNestedID && toDoNestedID ? (
+          {checkName && compareID ? (
             <div className='mb-6 border-b-2 border-red-600 rounded-lg'>
               {user && (
                 <div className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'>

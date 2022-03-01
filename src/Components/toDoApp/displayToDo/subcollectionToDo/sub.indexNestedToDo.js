@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getNestedToDo, getToDo } from '../../../../services/firebase';
-import HeaderToDo from '../../header.toDo';
 
 import IndexConst from '../../indexConst';
 import ListOfSubDisplayToDo from './sub.listNestedToDo';
@@ -35,8 +34,11 @@ export default function IndexSubToDo() {
       setNestedArrayToDo([]);
       console.log(error);
     }
-    getToDo(setToDoSArray);
+    // getToDo(setToDoSArray);
   }, []);
+  // const disNameArray = Object.keys(toDosArray).map((item) => {
+  //   return toDosArray[item].toDosArray;
+  // });
 
   return (
     <div className='container flex mx-auto max-w-screen-sm item-center justify-center mb-60'>
@@ -50,6 +52,7 @@ export default function IndexSubToDo() {
               arrayID={arrayID}
               setArrayID={setArrayID}
               setToDoSArray={setToDoSArray}
+              // disNameArray={disNameArray}
             />
             <ListOfSubDisplayToDo
               toDo={toDo}
