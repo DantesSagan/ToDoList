@@ -12,18 +12,21 @@ export default function NestedSubObj({
     // Year part from the timestamp
     let year = date.getFullYear();
     // Month part from the timestamp
-    let month = date.getMonth() + 1;
+    let month =
+      date.getMonth() + 1 === 10 || 11 || 12
+        ? `0${date.getMonth() + 1}`
+        : date.getMonth() + 1;
     // Days part from the timestamp
-    let days = date.getDate();
+    let days =
+      date.getDate() === 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9
+        ? `0${date.getDate()}`
+        : date.getDate();
 
-    let months = 10 || 11 || 12;
+    // Will display time in 2022-10-03 || 2077-03-20 format
+    let formattedTime = `${year}-${month}-${days}`;
 
-    // Will display time in 10:30:23 format
-    let formattedTime = `${year}-0${month}-${days}`;
-    let formattedTimeSecond = `${year}-${month}-${days}`;
-    return formattedTimeSecond === `${year}-${months}-${days}`
-      ? `${year}-${month.toString().slice(-2)}-${days}`
-      : formattedTime;
+    console.log(formattedTime);
+    return formattedTime;
   };
   
   // getting nested subcollection toDo from the same router path in a parent toDo

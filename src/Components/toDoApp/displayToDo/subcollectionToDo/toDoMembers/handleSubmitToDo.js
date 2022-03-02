@@ -32,25 +32,31 @@ export default function HandleSubmitSubToDo({
       return toDosArray[item].toDosArray;
     });
 
-    const formatTime = () => {
-      var date = new Date();
-      // Year part from the timestamp
-      var year = date.getFullYear();
-      // Month part from the timestamp
-      var month = date.getMonth();
-      // Days part from the timestamp
-      var days = date.getDate();
-      // Hours part from the timestamp
-      var hours = date.getHours();
-      // Minutes part from the timestamp
-      var minutes = date.getMinutes();
-      // Seconds part from the timestamp
-      var seconds = date.getSeconds();
+      const formatTime = () => {
+        let date = new Date();
+        // Year part from the timestamp
+        let year = date.getFullYear();
+        // Month part from the timestamp
+        let month =
+          date.getMonth() + 1 === 10 || 11 || 12
+            ? `0${date.getMonth() + 1}`
+            : date.getMonth() + 1;
+        // Days part from the timestamp
+        let days =
+          date.getDate() === 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9
+            ? `0${date.getDate()}`
+            : date.getDate();
+        // Hours part from the timestamp
+        let hours = date.getHours();
+        // Minutes part from the timestamp
+        let minutes = date.getMinutes();
+        // Seconds part from the timestamp
+        let seconds = date.getSeconds();
 
-      // Will display time in 10:30:23 format
-      var formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
-      return formattedTime;
-    };
+        // Will display time in 10:30:23 format
+        let formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
+        return formattedTime;
+      };
 
     return Object.keys(disNameArray).map(async (item) => {
       return Object.keys(disNameArray[item]).map(async (ind) => {
