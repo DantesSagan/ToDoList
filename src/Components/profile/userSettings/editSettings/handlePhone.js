@@ -75,24 +75,32 @@ export default function HandlePhone() {
     return (
       <div>
         {currentUserID ? (
-          <div className={`${isInvalidPhone && 'opacity-60'}`}>
-            <input
-              aria-label='Enter your phone number'
-              type='tele'
-              placeholder={!currentDisplayPhone ? 'Phone' : currentDisplayPhone}
-              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-              onChange={({ target }) => setPhone(target.value)}
-              value={phone}
-            />
-            <button
-              disabled={isInvalidPhone}
-              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
-              type='submit'
-              onClick={handlePhone}
-            >
-              Change phone
-            </button>
-          </div>
+          <section className='border border-red-500 mb-2 p-1'>
+            {' '}
+            <h1 className='text-center underline text-3xl mb-2'>Phone</h1>
+            <div className='grid grid-rows-1 grid-flow-col gap-4'>
+              <input
+                placeholder={
+                  !currentDisplayPhone ? 'Gender' : currentDisplayPhone
+                }
+                className='col-span-3 text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                onChange={({ target }) => setPhone(target.value)}
+                type='text'
+                checked
+                value={phone}
+              />
+              <button
+                disabled={isInvalidPhone}
+                className={`bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+                  isInvalidPhone && 'opacity-60'
+                }`}
+                type='submit'
+                onClick={handlePhone}
+              >
+                Change phone
+              </button>
+            </div>{' '}
+          </section>
         ) : null}
       </div>
     );

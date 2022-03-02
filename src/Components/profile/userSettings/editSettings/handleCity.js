@@ -47,30 +47,31 @@ export default function HandleCity() {
     return (
       <div>
         {currentUserID ? (
-          <section>
-            <div className={`${isInvalidCity && 'opacity-60'}`}>
+          <section className='border border-red-500 mb-2 p-1'>
+            {' '}
+            <h1 className='text-center underline text-3xl mb-2'>City</h1>
+            <div className='grid grid-rows-1 grid-flow-col gap-4'>
               <input
-                aria-label='Enter your city'
-                type='text'
-                // if you didn't type city data in input field when you creating user
-                // you will see just string "City" and ontherwise value that you type in input
-                // or value that you type in when you create account
                 placeholder={
-                  !currentDisplayedCity ? 'City' : currentDisplayedCity
+                  !currentDisplayedCity ? 'Gender' : currentDisplayedCity
                 }
-                className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                className='col-span-3 text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
                 onChange={({ target }) => setCity(target.value)}
+                type='text'
+                checked
                 value={city}
               />
               <button
                 disabled={isInvalidCity}
-                className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+                className={`bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+                  isInvalidCity && 'opacity-60'
+                }`}
                 type='submit'
                 onClick={handleCity}
               >
                 Change city
               </button>
-            </div>
+            </div>{' '}
           </section>
         ) : null}
       </div>

@@ -48,13 +48,15 @@ export default function HandleGender() {
     return (
       <div>
         {currentUserID ? (
-          <section>
-            <div className={`${isInvalidGender && 'opacity-60'}`}>
+          <section className='border border-red-500 mb-2 p-1'>
+            {' '}
+            <h1 className='text-center underline text-3xl mb-2'>Gender</h1>
+            <div className='grid grid-rows-1 grid-flow-col gap-4'>
               <input
                 placeholder={
                   !currentDisplayGender ? 'Gender' : currentDisplayGender
                 }
-                className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                className='col-span-3 text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
                 onChange={({ target }) => setGender(target.value)}
                 type='text'
                 checked
@@ -62,13 +64,15 @@ export default function HandleGender() {
               />
               <button
                 disabled={isInvalidGender}
-                className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+                className={`bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+                  isInvalidGender && 'opacity-60'
+                }`}
                 type='submit'
                 onClick={handleGender}
               >
                 Change gender
               </button>
-            </div>
+            </div>{' '}
           </section>
         ) : null}
       </div>

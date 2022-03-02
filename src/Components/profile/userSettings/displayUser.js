@@ -12,7 +12,7 @@ import { CheckUserProfile } from './settings.checkUserProfile';
 
 export default function DisplayUser() {
   return (
-    <div  >
+    <div>
       <form
         className='container block mx-auto max-w-screen-sm item-center justify-center mb-28'
         method='POST'

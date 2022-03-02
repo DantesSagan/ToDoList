@@ -46,26 +46,32 @@ export default function HandleFullName() {
     return (
       <div>
         {currentUserID ? (
-          <div className={`${isInvalidFullName && 'opacity-60'}`}>
-            <input
-              aria-label='Enter your full name'
-              type='text'
-              placeholder={
-                !currentDisplayFullName ? 'Gender' : currentDisplayFullName
-              }
-              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-              onChange={({ target }) => setFullName(target.value)}
-              value={fullName}
-            />
-            <button
-              disabled={isInvalidFullName}
-              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
-              type='submit'
-              onClick={handleFullName}
-            >
-              Change full name
-            </button>
-          </div>
+          <section className='border border-red-500 mb-2 p-1'>
+            {' '}
+            <h1 className='text-center underline text-3xl mb-2'>Full Name</h1>
+            <div className='grid grid-rows-1 grid-flow-col gap-4'>
+              <input
+                placeholder={
+                  !currentDisplayFullName ? 'Gender' : currentDisplayFullName
+                }
+                className='col-span-3 text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                onChange={({ target }) => setFullName(target.value)}
+                type='text'
+                checked
+                value={fullName}
+              />
+              <button
+                disabled={isInvalidFullName}
+                className={`bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+                  isInvalidFullName && 'opacity-60'
+                }`}
+                type='submit'
+                onClick={handleFullName}
+              >
+                Change full name
+              </button>
+            </div>{' '}
+          </section>
         ) : null}
       </div>
     );

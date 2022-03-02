@@ -50,29 +50,33 @@ export default function HandleCountry() {
     return (
       <div>
         {currentUserID ? (
-          <section>
-            <div className={`${isInvalidCountry && 'opacity-60'}`}>
+          <section className='border border-red-500 mb-2 p-1'>
+            {' '}
+            <h1 className='text-center underline text-3xl mb-2'>Country</h1>
+            <div className='grid grid-rows-1 grid-flow-col gap-4'>
               <input
-                aria-label='Enter your Country'
-                type='text'
                 placeholder={
                   !currentDisplayedCountry ? 'Gender' : currentDisplayedCountry
                 }
-                className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                className='col-span-3 text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
                 onChange={({ target }) => setCountry(target.value)}
+                type='text'
+                checked
                 value={country}
-              />{' '}
+              />
               <button
                 disabled={isInvalidCountry}
-                className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
+                className={`bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+                  isInvalidCountry && 'opacity-60'
+                }`}
                 type='submit'
                 onClick={handleCountry}
               >
                 Change country
               </button>
-            </div>
+            </div>{' '}
           </section>
-        ) : null}{' '}
+        ) : null}
       </div>
     );
   });

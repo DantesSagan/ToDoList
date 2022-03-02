@@ -78,28 +78,32 @@ export default function HandleUsername() {
     return (
       <div>
         {currentUserID ? (
-          <div className={`${isInvalidUsername && 'opacity-60'}`}>
-            <input
-              minLength={4}
-              maxLength={30}
-              aria-label='Enter your username'
-              type='text'
-              placeholder={
-                !currentDisplayUsername ? 'Gender' : currentDisplayUsername
-              }
-              className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-              onChange={({ target }) => setUsername(target.value)}
-              value={username}
-            />
-            <button
-              disabled={isInvalidUsername}
-              className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold `}
-              type='submit'
-              onClick={handleUsername}
-            >
-              Change username
-            </button>
-          </div>
+          <section className='border border-red-500 mb-2 p-1'>
+            {' '}
+            <h1 className='text-center underline text-3xl mb-2'>Username</h1>
+            <div className='grid grid-rows-1 grid-flow-col gap-4'>
+              <input
+                placeholder={
+                  !currentDisplayUsername ? 'Gender' : currentDisplayUsername
+                }
+                className='col-span-3 text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                onChange={({ target }) => setUsername(target.value)}
+                type='text'
+                checked
+                value={username}
+              />
+              <button
+                disabled={isInvalidUsername}
+                className={`bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+                  isInvalidUsername && 'opacity-60'
+                }`}
+                type='submit'
+                onClick={handleUsername}
+              >
+                Change username
+              </button>
+            </div>{' '}
+          </section>
         ) : null}
       </div>
     );
