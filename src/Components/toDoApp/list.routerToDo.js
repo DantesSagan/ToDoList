@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Skeleton from '@material-ui/lab/Skeleton';
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
 import { getToDo } from '../../services/firebase';
+import { ToDoArr } from './toDoArr';
 
 export default function RouterToDo({
   toDoID,
@@ -50,7 +48,7 @@ export default function RouterToDo({
     // Month part from the timestamp
     let month =
       date.getMonth() + 1 === 10 || 11 || 12
-        ? `0${date.getMonth() + 1}` 
+        ? `0${date.getMonth() + 1}`
         : date.getMonth() + 1;
     // Days part from the timestamp
     let days =
@@ -64,125 +62,6 @@ export default function RouterToDo({
     console.log(formattedTime);
     return formattedTime;
   };
-
-  const toDoArr = Object.keys(disNameArray).map((item, index) => {
-    // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
-    return Object.keys(disNameArray[item]).map((ind) => {
-      return (
-        <div
-          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2'
-          key={index}
-          style={{ width: '600px' }}
-        >
-          {' '}
-          {user?.username === disNameArray[item][ind].displayName ? (
-            <div>
-              {disNameArray[item][ind].untilTime === formatTime() ||
-              disNameArray[item][ind].untilTime < formatTime() ? (
-                <Link to={`/todolist/${disNameArray[item][0].toDoID}`}>
-                  <p className='text-3xl p-4 title'>
-                    Задание просрочено!|Time is out for task - <br />
-                    <span className='bg-red-500 rounded-lg'>
-                      {disNameArray[item][ind].untilTime}
-                    </span>{' '}
-                    {` `}= {formatTime()}
-                  </p>
-                </Link>
-              ) : disNameArray[item][ind].untilTime === 0 ? (
-                <Link
-                  to={`/todolist/${disNameArray[item][0].toDoID}`}
-                  key={item.id}
-                >
-                  {' '}
-                  <div className='text-3xl font-bold p-4 title' key={item.id}>
-                    {disNameArray[item][0].title} <br key={item.id} />
-                  </div>
-                  <hr
-                    className='border border-red-600 ml-4 mr-4 m-2'
-                    key={item.id}
-                  />
-                  <div className='text-1xl p-4' key={item.id}>
-                    {disNameArray[item][0].doneToDo ? (
-                      <s className='opacity-50'>
-                        {disNameArray[item][0].toDo} <br key={item.id} />
-                      </s>
-                    ) : (
-                      <div>
-                        {' '}
-                        <div>
-                          {disNameArray[item][0].toDo instanceof Array ? (
-                            <ul>
-                              {Object.keys(disNameArray[item][0].toDo).map(
-                                (toDoIndex) => {
-                                  return (
-                                    <li className='p-1 hover:underline'>
-                                      {disNameArray[item][0].toDo[toDoIndex]}{' '}
-                                    </li>
-                                  );
-                                }
-                              )}
-                            </ul>
-                          ) : (
-                            disNameArray[item][0].toDo
-                          )}
-                        </div>{' '}
-                        <br key={item.id} />
-                      </div>
-                    )}
-                  </div>
-                  {` `}
-                </Link>
-              ) : (
-                <Link
-                  to={`/todolist/${disNameArray[item][0].toDoID}`}
-                  key={item.id}
-                >
-                  {' '}
-                  <div className='text-3xl font-bold p-4 title' key={item.id}>
-                    {disNameArray[item][0].title} <br key={item.id} />
-                  </div>
-                  <hr
-                    className='border border-red-600 ml-4 mr-4 m-2'
-                    key={item.id}
-                  />
-                  <div className='text-1xl p-4' key={item.id}>
-                    {disNameArray[item][0].doneToDo ? (
-                      <s className='opacity-50'>
-                        {disNameArray[item][0].toDo} <br key={item.id} />
-                      </s>
-                    ) : (
-                      <div>
-                        {' '}
-                        <div>
-                          {disNameArray[item][0].toDo instanceof Array ? (
-                            <ul>
-                              {Object.keys(disNameArray[item][0].toDo).map(
-                                (toDoIndex) => {
-                                  return (
-                                    <li className='p-1 hover:underline'>
-                                      {disNameArray[item][0].toDo[toDoIndex]}{' '}
-                                    </li>
-                                  );
-                                }
-                              )}
-                            </ul>
-                          ) : (
-                            disNameArray[item][0].toDo
-                          )}
-                        </div>{' '}
-                        <br key={item.id} />
-                      </div>
-                    )}
-                  </div>
-                  {` `}
-                </Link>
-              )}
-            </div>
-          ) : null}
-        </div>
-      );
-    });
-  });
 
   const toDoArray = [];
   Object.keys(disNameArray).map((item) => {
@@ -223,7 +102,11 @@ export default function RouterToDo({
       ) : (
         <div>
           {user?.username === toDoArray[length] ? (
-            toDoArr
+            <ToDoArr
+              disNameArray={disNameArray}
+              user={user}
+              formatTime={formatTime}
+            />
           ) : (
             <div className='text-3xl'>
               <svg

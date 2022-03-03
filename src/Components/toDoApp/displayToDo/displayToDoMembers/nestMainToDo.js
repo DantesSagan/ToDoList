@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
+import DeadLine from './mainComponents/deadLine';
+import NoDeadLine from './mainComponents/noDeadLine';
+import UntilDead from './mainComponents/untilDead';
 
 export default function NestMainToDo({ disNameArray, user }) {
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
@@ -61,116 +63,24 @@ export default function NestMainToDo({ disNameArray, user }) {
               <div>
                 {disNameArray[item][ind].untilTime === formatTime() ||
                 disNameArray[item][ind].untilTime < formatTime() ? (
-                  <Link
-                    to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
-                  >
-                    <div className='text-3xl p-4 m-2'>
-                      Задание просрочено! <br />
-                      Срок:
-                      <span className='bg-red-500 rounded-lg'>
-                        {disNameArray[item][ind].untilTime}
-                      </span>{' '}
-                      {` `}до, включительно {formatTime()}
-                    </div>
-                  </Link>
+                  <DeadLine
+                    disNameArray={disNameArray}
+                    item={item}
+                    ind={ind}
+                    formatTime={formatTime}
+                  />
                 ) : disNameArray[item][ind].untilTime === 0 ? (
-                  <Link
-                    to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
-                    key={item.id}
-                  >
-                    <div
-                      className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
-                      key={item.id}
-                    >
-                      {disNameArray[item][ind].title} <br key={item.id} />
-                    </div>
-                    <hr
-                      className='border border-red-600 ml-4 mr-4 '
-                      key={item.id}
-                    />
-                    <div
-                      className='text-1xl p-2 ml-2 hover:underline'
-                      key={item.id}
-                    >
-                      {disNameArray[item][ind].doneToDo ? (
-                        <s className='opacity-50 ml-5'>
-                          {disNameArray[item][ind].toDo}
-                        </s>
-                      ) : (
-                        <div className='ml-5'>
-                          {disNameArray[item][ind].toDo}
-                        </div>
-                      )}
-                      <br key={item.id} />
-                    </div>
-                    {` `}
-                  </Link>
+                  <NoDeadLine
+                    disNameArray={disNameArray}
+                    item={item}
+                    ind={ind}
+                  />
                 ) : (
-                  <Link
-                    to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
-                    key={item.id}
-                  >
-                    <div
-                      className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
-                      key={item.id}
-                    >
-                      {disNameArray[item][ind].title} <br key={item.id} />
-                    </div>
-                    <hr
-                      className='border border-red-600 ml-4 mr-4 '
-                      key={item.id}
-                    />
-                    <div
-                      className='text-1xl p-2 ml-2 hover:underline'
-                      key={item.id}
-                    >
-                      {disNameArray[item][ind].doneToDo ? (
-                        <s className='opacity-50 ml-5'>
-                          <div className='ml-5'>
-                            {disNameArray[item][ind].toDo instanceof Array ? (
-                              <ul>
-                                {Object.keys(disNameArray[item][ind].toDo).map(
-                                  (toDoIndex) => {
-                                    return (
-                                      <li className='p-1 hover:underline'>
-                                        {
-                                          disNameArray[item][ind].toDo[
-                                            toDoIndex
-                                          ]
-                                        }{' '}
-                                      </li>
-                                    );
-                                  }
-                                )}
-                              </ul>
-                            ) : (
-                              disNameArray[item][ind].toDo
-                            )}
-                          </div>
-                        </s>
-                      ) : (
-                        <div className='ml-5'>
-                          {disNameArray[item][ind].toDo instanceof Array ? (
-                            <ul>
-                              {Object.keys(disNameArray[item][ind].toDo).map(
-                                (toDoIndex) => {
-                                  return (
-                                    <li className='p-1 hover:underline'>
-                                      {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                                    </li>
-                                  );
-                                }
-                              )}
-                            </ul>
-                          ) : (
-                            disNameArray[item][ind].toDo
-                          )}
-                        </div>
-                      )}
-                      <br key={item.id} />
-                    </div>
-                    {` `}
-                  </Link>
+                  <UntilDead
+                    disNameArray={disNameArray}
+                    item={item}
+                    ind={ind}
+                  />
                 )}
               </div>
             ) : null}
