@@ -91,13 +91,13 @@ export default function GetNestedToDoArray({
             onClick={() => setClickToDo(!clickToDo)}
           >
             {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
-              <s className='opacity-50 ml-5 border-l-2 border-red-600'>
+              <s className='opacity-50 border-red-600'>
                 {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
                   <ul className='text-left'>
                     {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
                       (toDoIndex) => {
                         return (
-                          <li className='p-1 hover:underline'>
+                          <li className='p-1 hover:underline opacity-50'>
                             {
                               nestedToDoArray[itemsNested][index].toDo[
                                 toDoIndex
