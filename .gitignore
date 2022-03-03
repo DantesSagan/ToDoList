@@ -6,6 +6,9 @@
 # may be this file will be important but now it's not
 /src/Components/profile/toDoSettings/settings.handleEditToDo.js
 
+# firebase key
+/src/firebaseLibrary/firebaseLib.js
+
 # dependencies
 /node_modules
 /.pnp
