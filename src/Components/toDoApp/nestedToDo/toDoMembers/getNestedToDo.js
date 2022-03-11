@@ -142,25 +142,23 @@ export default function GetNestedToDo({
           onClick={() => setClickToDo(!clickToDo)}
         >
           {disNameArray[item][ind].doneToDo !== doneToDo ? (
-            <s className='opacity-50 border-l-2 border-red-600 rounded-lg'>
+            <s className=''>
               {' '}
-              <div className='ml-5'>
-                {disNameArray[item][ind].toDo instanceof Array ? (
-                  <ul className='text-left'>
-                    {Object.keys(disNameArray[item][ind].toDo).map(
-                      (toDoIndex) => {
-                        return (
-                          <li className='p-1 hover:underline'>
-                            {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                          </li>
-                        );
-                      }
-                    )}
-                  </ul>
-                ) : (
-                  disNameArray[item][ind].toDo
-                )}
-              </div>
+              {disNameArray[item][ind].toDo instanceof Array ? (
+                <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
+                  {Object.keys(disNameArray[item][ind].toDo).map(
+                    (toDoIndex) => {
+                      return (
+                        <li className='p-1 hover:underline'>
+                          {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+              ) : (
+                disNameArray[item][ind].toDo
+              )}
             </s>
           ) : (
             <div>

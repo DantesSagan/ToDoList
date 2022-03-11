@@ -30,7 +30,7 @@ export default function HandleSubStampToDo({
         let checkToDoID =
           nestedToDoArray[itemsNested][index].toDoID === docSub.id;
         console.log(checkToDoID);
-        
+
         return checkToDoID
           ? updateDoc(docSub.ref, {
               toDosArray: [
@@ -48,6 +48,7 @@ export default function HandleSubStampToDo({
             })
               .then(() => {
                 // navigate(ROUTES.DASHBOARD);
+                alert('DoneToDo changed successfully: ', untilTime);
                 console.log('DoneToDo changed successfully: ', untilTime);
               })
               .catch((error) => {

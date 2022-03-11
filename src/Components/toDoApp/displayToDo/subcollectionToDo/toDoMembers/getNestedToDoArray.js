@@ -87,17 +87,17 @@ export default function GetNestedToDoArray({
           </div>
         ) : (
           <div
-            className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white h-full cursor-pointer '
+            className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white cursor-pointer '
             onClick={() => setClickToDo(!clickToDo)}
           >
             {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
-              <s className='opacity-50 border-red-600'>
+              <s className=''>
                 {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
-                  <ul className='text-left'>
+                  <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
                     {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
                       (toDoIndex) => {
                         return (
-                          <li className='p-1 hover:underline opacity-50'>
+                          <li className='p-1 hover:underline'>
                             {
                               nestedToDoArray[itemsNested][index].toDo[
                                 toDoIndex
@@ -119,7 +119,7 @@ export default function GetNestedToDoArray({
                     {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
                       (toDoIndex) => {
                         return (
-                          <li className='p-1 hover:underline'>
+                          <li className='p-1 hover:underline '>
                             {
                               nestedToDoArray[itemsNested][index].toDo[
                                 toDoIndex
@@ -133,10 +133,8 @@ export default function GetNestedToDoArray({
                 ) : (
                   nestedToDoArray[itemsNested][index].toDo
                 )}
-                <br key={itemsNested.id} />
               </div>
             )}{' '}
-            <br />{' '}
           </div>
         )}
       </div>
