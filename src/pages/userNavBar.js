@@ -21,7 +21,7 @@ export default function UserNavBar() {
   //       navigate(ROUTES.NOT_FOUND);
   //     }
   //   }
-
+  // Just checking clone repo from another computer
   //   checkUserExists();
   // }, [navigate]);
 
