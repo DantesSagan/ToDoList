@@ -37,8 +37,8 @@ export default function SignUp() {
 
   return (
     <section className='bgLogin'>
-      <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up'>
-        <div className='flex flex-col w-2/4 border-t border-8 border-red-600'>
+      <div className='container flex mx-auto max-w-screen-sm items-center justify-center 2xl:h-screen 1xl:h-screen xl:h-screen lg:h-full md:h-full heightPages arrow-down arrow-up'>
+        <div className='flex flex-col 2xl:w-2/4 1xl:w-2/4 xl:w-2/4 lg:w-2/4 md:w-2/4 sm:w-2/4 border-t border-8 border-red-600 greetPages'>
           <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded'>
             <h1 className='flex justify-center w-full'>
               {/* <img

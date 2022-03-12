@@ -56,13 +56,13 @@ export default function Login() {
   // );
   return (
     <section className='bgLogin'>
-      <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up'>
+      <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up '>
         {/* <img
         src='/todolistred-removebg-preview.png'
         alt='todolist'
         className='float-right'
       /> */}
-        <div className='flex flex-col w-2/4 border-t border-8 border-red-600 '>
+        <div className='flex flex-col 2xl:w-2/4 1xl:w-2/4 xl:w-2/4 lg:w-2/4 md:w-2/4 sm:w-2/4 border-t border-8 border-red-600 greetPages'>
           <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
             {/* <button onClick={() => setLock(!lock)}>Console lock</button> */}
             {error && <p className='text-sm text-red-600 text-left'>{error}</p>}

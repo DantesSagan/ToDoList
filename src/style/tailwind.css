@@ -71,3 +71,37 @@
   opacity: 0.6;
   z-index: -1;
 }
+
+/* WIDTH */
+@media only screen and (max-width: 450px) {
+  .greetPages {
+    width: 325px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .greetPages {
+    width: 275px;
+  }
+}
+@media only screen and (max-width: 330px) {
+  .greetPages {
+    width: 265px;
+  }
+}
+
+/* HEIGHT */
+@media only screen and (max-width: 450px) {
+  .heightPages {
+    height: 66%
+  }
+}
+@media only screen and (max-width: 380px) {
+  .heightPages {
+    width: 275px;
+  }
+}
+@media only screen and (max-width: 330px) {
+  .heightPages {
+    width: 265px;
+  }
+}
