@@ -36,7 +36,7 @@ const ForgottenPassword = lazy(() =>
 export default function App() {
   const { user } = useAuthListener();
   return (
-    <div className='bg'>
+    <div className=''>
       <UserContext.Provider value={{ user }}>
         <BrowserRouter>
           <Suspense fallback={<Loader />}>

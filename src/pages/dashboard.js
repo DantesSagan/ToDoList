@@ -17,11 +17,13 @@ export default function Dashboard({ user: loggedInUser }) {
 
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
-      <UserNavBar />
-      <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg '>
-        <IndexToDo />
-      </div>
-      <Footer />
+      <section className='bgDashboard'>
+        <UserNavBar />
+        <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg '>
+          <IndexToDo />
+        </div>
+        <Footer />
+      </section>
     </LoggedInUserContext.Provider>
   );
 }

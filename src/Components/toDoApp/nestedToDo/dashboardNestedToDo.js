@@ -12,16 +12,18 @@ export default function DashboardDisplayNestedToDo({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
   useEffect(() => {
-    document.title = 'RouterToDoList';
+    document.title = 'Nested';
   }, []);
 
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
-      <UserNavBar />
-      <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
-        <IndexNestedToDo />
-      </div>
-      <Footer />
+      <section className='bgMainNested'>
+        <UserNavBar />
+        <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
+          <IndexNestedToDo />
+        </div>
+        <Footer />
+      </section>
     </LoggedInUserContext.Provider>
   );
 }

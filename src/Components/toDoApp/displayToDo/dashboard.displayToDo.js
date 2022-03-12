@@ -12,16 +12,18 @@ export default function DashboardDisplayToDo({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser?.uid);
 
   useEffect(() => {
-    document.title = 'RouterToDoList';
+    document.title = 'ToDoList';
   }, []);
 
   return (
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
-      <UserNavBar />
-      <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg '>
-        <IndexDisplayToDo />
-      </div>
-      <Footer />
+      <section className='bgRouterNested'>
+        <UserNavBar />
+        <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg '>
+          <IndexDisplayToDo />
+        </div>
+        <Footer />
+      </section>
     </LoggedInUserContext.Provider>
   );
 }

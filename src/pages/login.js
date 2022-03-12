@@ -55,125 +55,127 @@ export default function Login() {
   //     : console.log(`Unlocked value ${lock}`)
   // );
   return (
-    <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up'>
-      {/* <img
+    <section className='bgLogin'>
+      <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen arrow-down arrow-up'>
+        {/* <img
         src='/todolistred-removebg-preview.png'
         alt='todolist'
         className='float-right'
       /> */}
-      <div className='flex flex-col w-2/4 border-t border-8 border-red-600 '>
-        <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
-          {/* <button onClick={() => setLock(!lock)}>Console lock</button> */}
-          {error && <p className='text-sm text-red-600 text-left'>{error}</p>}
-          <form onSubmit={handleLogin} method='POST'>
-            <fieldset className='border border-gray-primary p-4'>
-              <legend className='block m-auto'>
-                {lock ? (
-                  // Locked value
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-12 w-12 transition duration-300'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='black'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth='2'
-                      d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
-                    />
-                  </svg>
-                ) : error ? (
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-12 w-12 border-red-600 border-2 rounded-lg bg-black transition duration-300'
-                    fill='red'
-                    viewBox='0 0 24 24'
-                    stroke='white'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M6 18L18 6M6 6l12 12'
-                    />
-                  </svg>
-                ) : (
-                  // Unlocked value when you type data into two valid email and password
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-12 w-12 transition duration-300'
-                    fill='red'
-                    viewBox='0 0 24 24'
-                    stroke='black'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth='2'
-                      d='M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z'
-                    />
-                  </svg>
-                )}
-              </legend>
-              <div className='text-3xl text-center text-black p-4 mb-6 border-b-2 border-red-600'>
-                Log-In
-              </div>
-              <input
-                aria-label='Enter your email address'
-                type='text'
-                placeholder='Email address (ex: Dantes@gmail.com)'
-                className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                onChange={({ target }) => setEmailAddress(target.value)}
-                value={emailAddress}
-              />
-              <input
-                aria-label='Enter your email password'
-                type='password'
-                placeholder='Password (ex: DanteskillsPushkin1837)'
-                className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                onChange={({ target }) => setPassword(target.value)}
-                value={password}
-              />
-              <button
-                disabled={isInvalid}
-                type='submit'
-                className={`bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold 
+        <div className='flex flex-col w-2/4 border-t border-8 border-red-600 '>
+          <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
+            {/* <button onClick={() => setLock(!lock)}>Console lock</button> */}
+            {error && <p className='text-sm text-red-600 text-left'>{error}</p>}
+            <form onSubmit={handleLogin} method='POST'>
+              <fieldset className='border border-gray-primary p-4'>
+                <legend className='block m-auto'>
+                  {lock ? (
+                    // Locked value
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='h-12 w-12 transition duration-300'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='black'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
+                      />
+                    </svg>
+                  ) : error ? (
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='h-12 w-12 border-red-600 border-2 rounded-lg bg-black transition duration-300'
+                      fill='red'
+                      viewBox='0 0 24 24'
+                      stroke='white'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M6 18L18 6M6 6l12 12'
+                      />
+                    </svg>
+                  ) : (
+                    // Unlocked value when you type data into two valid email and password
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='h-12 w-12 transition duration-300'
+                      fill='red'
+                      viewBox='0 0 24 24'
+                      stroke='black'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z'
+                      />
+                    </svg>
+                  )}
+                </legend>
+                <div className='text-3xl text-center text-black p-4 mb-6 border-b-2 border-red-600'>
+                  Log-In
+                </div>
+                <input
+                  aria-label='Enter your email address'
+                  type='text'
+                  placeholder='Email address (ex: Dantes@gmail.com)'
+                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                  onChange={({ target }) => setEmailAddress(target.value)}
+                  value={emailAddress}
+                />
+                <input
+                  aria-label='Enter your email password'
+                  type='password'
+                  placeholder='Password (ex: DanteskillsPushkin1837)'
+                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                  onChange={({ target }) => setPassword(target.value)}
+                  value={password}
+                />
+                <button
+                  disabled={isInvalid}
+                  type='submit'
+                  className={`bg-black hover:bg-red-600 text-white w-full rounded h-8 font-bold 
             ${isInvalid && 'opacity-50'}`}
+                >
+                  Login
+                </button>
+              </fieldset>
+            </form>
+          </div>
+          <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
+            <p className='text-sm'>
+              Don't have an account?{' '}
+              <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
+                Sign up
+              </Link>
+            </p>
+          </div>
+          <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
+            <p className='text-sm'>
+              Forgot{` `}
+              <Link
+                to={ROUTES.FORGOTTENPASSWORD}
+                className='font-bold text-blue-medium hover:underline'
               >
-                Login
-              </button>
-            </fieldset>
-          </form>
-        </div>
-        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
-          <p className='text-sm'>
-            Don't have an account?{' '}
-            <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
-              Sign up
-            </Link>
-          </p>
-        </div>
-        <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
-          <p className='text-sm'>
-            Forgot{` `}
-            <Link
-              to={ROUTES.FORGOTTENPASSWORD}
-              className='font-bold text-blue-medium hover:underline'
-            >
-              password
-            </Link>
-            {` `}or{` `}
-            <Link
-              to={ROUTES.FORGOTTENEMAIL}
-              className='font-bold text-blue-medium hover:underline'
-            >
-              email?
-            </Link>
-          </p>
+                password
+              </Link>
+              {` `}or{` `}
+              <Link
+                to={ROUTES.FORGOTTENEMAIL}
+                className='font-bold text-blue-medium hover:underline'
+              >
+                email?
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
