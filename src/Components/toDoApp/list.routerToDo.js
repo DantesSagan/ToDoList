@@ -75,7 +75,7 @@ export default function RouterToDo({
   const skeletonArray = Array(6).fill('');
 
   return (
-    <form className='justify-center text-2xl pl-0 pr-5 rounded-xl '>
+    <form className='justify-center text-1xl pl-0 pr-5 rounded-xl'>
       {/* And here this comparison check
         if current auth user strict-equal to username in created todo by current user so
         display const variable toDoArr

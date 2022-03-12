@@ -73,7 +73,7 @@ export default function NestedSubObj({
           // console.log('   checkParentID =>', checkParentID);
           return (
             <div
-              className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white'
+              className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white dashboardPage'
               key={itemsNested.id}
             >
               {/* with check especially toDoId pathname and username */}

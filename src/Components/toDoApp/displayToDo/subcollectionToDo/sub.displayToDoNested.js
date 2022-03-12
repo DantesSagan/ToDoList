@@ -113,9 +113,8 @@ export const DisplayTodoByIDNESTED = ({
           {checkTODOID && checkNestedID && checkName ? (
             <form
               method='POST'
-              className='justrify-center text-2xl border-l-2 border-red-600 pl-0 pr-5 rounded-xl border-r-2 shadow-inner'
+              className='justrify-center text-2xl border-l-2 border-red-600 pl-0 pr-5 rounded-xl border-r-2 shadow-inner dashboardPage'
               key={index}
-              style={{ width: '600px' }}
             >
               {nestedToDoArray[itemsNested][index].untilTime === formatTime() ||
               nestedToDoArray[itemsNested][index].untilTime < formatTime() ? (

@@ -45,7 +45,7 @@ export default function NestMainToDo({ disNameArray, user }) {
       //     : console.log('display')
       // );
       return (
-        <div className='' key={index.id}>
+        <div className='dashboardPage' key={index.id}>
           {/*
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser
@@ -55,7 +55,6 @@ export default function NestMainToDo({ disNameArray, user }) {
           <div
             className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white'
             key={index}
-            style={{ width: '600px' }}
           >
             {/* <div key={index}>{nestedDo}</div> */}
             {user?.username === disNameArray[item][ind].displayName &&

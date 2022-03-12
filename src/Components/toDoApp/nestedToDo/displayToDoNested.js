@@ -101,7 +101,7 @@ export const DisplayTodoByIDNESTED = ({
               setToDoSArray && (
                 <form
                   method='POST'
-                  className='justrify-center text-2xl border-l-2 border-r-2 border-red-600 pl-0 pr-5 rounded-xl  shadow-inner'
+                  className='justrify-center text-2xl border-l-2 border-r-2 border-red-600 pl-0 pr-5 rounded-xl  shadow-inner dashboardPage'
                   onSubmit={(event) => handleStamp(event)}
                   key={index}
                 >

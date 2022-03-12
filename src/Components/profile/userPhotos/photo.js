@@ -24,12 +24,12 @@ export default function Photo({ user }) {
   const dataFile = () => {
     if (selectFile) {
       return (
-        <div className='m-6'>
-          <div className='text-2xl'>
+        <div className='m-4'>
+          <div className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl'>
             Name of file: {` `} <br />
             <span className='font-bold'>{selectFile.name}</span>
           </div>
-          <div className='text-2xl'>
+          <div className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl'>
             Type of file: {` `} <br />
             <span className='text-xl font-bold'>{selectFile.type}</span>
           </div>
@@ -40,7 +40,7 @@ export default function Photo({ user }) {
   };
 
   return (
-    <div className='container block mx-auto max-w-screen-lg item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 grid'>
+    <div className='container block mx-auto item-center justify-center p-4 m-12 bg-white rounded-lg border-t border-4 border-red-600 dashboardPage profile'>
       <div className='grid grid-cols-2 gap-3'>
         <form
           className='p-4 grid'
@@ -50,7 +50,9 @@ export default function Photo({ user }) {
           }}
         >
           <div className='grid grid-cols-1 gap-3'>
-            <h1 className='text-4xl font-bold m-4'>Photo settings</h1>
+            <h1 className='2xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl font-bold m-4'>
+              Photo settings
+            </h1>
 
             <input
               id='file'
@@ -60,12 +62,12 @@ export default function Photo({ user }) {
             />
             <label
               for='file'
-              className='text-2xl mb-2 mt-2 border-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 p-2 w-1/3 rounded-lg hover:text-white'
+              className='2xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl mb-2 mt-2 border-2 border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 p-2 2xl:w-1/3 xl:w-1/3 lg:w-1/3 md:w-1/3 rounded-lg hover:text-white'
             >
               Select photo...
             </label>
             <button
-              className='p-4 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold w-2/6 transition'
+              className='p-2 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold 2xl:w-1/3 xl:w-1/3 lg:w-1/3 md:w-1/3 transition'
               onClick={handleSubmitPhoto}
             >
               Set photo
@@ -75,10 +77,10 @@ export default function Photo({ user }) {
         {dataFile()}{' '}
         <form className='p-4 border-l-4 border-red-600 '>
           <div className='grid grid-cols-1 gap-3'>
-            <h1 className='text-4xl font-bold m-4'>{`Delete photo profile: ${user?.username}`}</h1>
+            <h1 className='2xl:text-3xl xl:text-3xl lg:text-2xl md:text-2xl font-bold m-4'>{`Delete photo profile: ${user?.username}`}</h1>
             <button
               id='del'
-              className='p-4 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold w-2/6 transition'
+              className='p-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold 2xl:w-1/3 xl:w-1/3 lg:w-1/3 md:w-1/3 transition'
               onClick={delPhoto}
             >
               Delete photo

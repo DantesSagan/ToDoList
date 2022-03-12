@@ -72,36 +72,61 @@
   z-index: -1;
 }
 
-/* WIDTH */
+.dashboardPage {
+  width: 600px;
+}
+
+@media only screen and (max-width: 1450px) {
+  .heightPages {
+    height: 50%;
+  }
+}
 @media only screen and (max-width: 450px) {
+  .heightPages {
+    height: 66%;
+  }
   .greetPages {
     width: 325px;
   }
-}
-@media only screen and (max-width: 380px) {
-  .greetPages {
-    width: 275px;
+  .dashboardPage {
+    text-size: 20px;
+    width: 300px;
   }
-}
-@media only screen and (max-width: 330px) {
-  .greetPages {
-    width: 265px;
-  }
-}
-
-/* HEIGHT */
-@media only screen and (max-width: 450px) {
-  .heightPages {
-    height: 66%
+  .profile {
+    display: flex;
+    flex-direction: column;
   }
 }
 @media only screen and (max-width: 380px) {
   .heightPages {
     width: 275px;
   }
+  .greetPages {
+    width: 275px;
+  }
+  .dashboardPage {
+    text-size: 18px;
+    width: 280px;
+  }
+  .profile {
+    display: flex;
+    flex-direction: column;
+  }
 }
 @media only screen and (max-width: 330px) {
   .heightPages {
     width: 265px;
+  }
+  .greetPages {
+    width: 265px;
+  }
+  .dashboardPage {
+    text-size: 16px;
+    width: 250px;
+  }
+  .profile {
+    text-size: 12px;
+    display: flex;
+    flex-direction: column;
   }
 }

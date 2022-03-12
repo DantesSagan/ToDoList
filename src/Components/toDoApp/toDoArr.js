@@ -6,9 +6,8 @@ export const ToDoArr = ({ disNameArray, user, formatTime }) => {
     return Object.keys(disNameArray[item]).map((ind) => {
       return (
         <div
-          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2'
+          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage'
           key={index}
-          style={{ width: '600px' }}
         >
           {' '}
           {user?.username === disNameArray[item][ind].displayName ? (
