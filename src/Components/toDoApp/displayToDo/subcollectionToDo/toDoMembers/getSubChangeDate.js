@@ -9,7 +9,7 @@ export default function GetSubChangeDate({
   handleSubZeroStamp,
 }) {
   return (
-    <div className='p-4 rounded-lg'>
+    <div className='p-4 rounded-lg '>
       Wasted!
       <br />
       {changeDate ? (

@@ -53,7 +53,7 @@ export default function NestMainToDo({ disNameArray, user }) {
         */}
           {/* Nested toDoList in Parent toDoID and in current Parent URL pathname */}
           <div
-            className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white'
+            className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white bg-white rounded-xl hover:bg-red-600 shadow-inner'
             key={index}
           >
             {/* <div key={index}>{nestedDo}</div> */}

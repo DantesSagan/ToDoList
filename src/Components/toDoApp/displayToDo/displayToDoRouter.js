@@ -49,7 +49,7 @@ export default function DisplayTodoByID({
   // And again it's displaying nested subcollection when was call
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
   return (
-    <div className='border-l-2 border-solid border-red-600 rounded-xl'>
+    <div className='border-l-4 border-solid border-red-600 rounded-xl hover:border-4 hover:border-black borderHover'>
       {' '}
       {loading ? (
         <>

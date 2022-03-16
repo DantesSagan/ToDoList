@@ -39,7 +39,7 @@ export default function GetNestedToDo({
   // });
 
   return (
-    <div className='p-4 rounded-lg h-full'>
+    <div className='p-4 rounded-lg h-full '>
       {/* Delete toDo by toDoID */}
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -66,7 +66,7 @@ export default function GetNestedToDo({
         <div className='block'>
           <textarea
             defaultValue={disNameArray[item][ind].title}
-            className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
+            className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold '
             onChange={(e) => setTitle(e.target.value)}
           />
           <button
@@ -92,7 +92,7 @@ export default function GetNestedToDo({
           {disNameArray[item][ind].title} <br />
         </button>
       )}
-      <hr className='border border-red-600' />
+      <hr className='border border-red-600' id='hrr' />
       {/* Get - toDo - in toDosArray */}
       {/* Check to completed toDo */}
       <div className='pt-4'>
@@ -116,10 +116,9 @@ export default function GetNestedToDo({
         <div className='block'>
           <textarea
             placeholder='Write todos with commas for separate items.'
-            className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-lg font-bold'
+            className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-lg font-bold w-full'
             defaultValue={disNameArray[item][ind].toDo}
             onChange={(e) => setToDo(e.target.value)}
-            style={{ width: '600px' }}
           />
           <button
             className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${

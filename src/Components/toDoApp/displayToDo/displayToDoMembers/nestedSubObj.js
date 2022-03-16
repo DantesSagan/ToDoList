@@ -73,7 +73,7 @@ export default function NestedSubObj({
           // console.log('   checkParentID =>', checkParentID);
           return (
             <div
-              className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white dashboardPage'
+              className='justify-center text-1xl rounded-xl mt-2 hover:bg-red-600 hover:text-white dashboardPage bg-white rounded-xl hover:bg-red-600'
               key={itemsNested.id}
             >
               {/* with check especially toDoId pathname and username */}
@@ -100,10 +100,6 @@ export default function NestedSubObj({
                       to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
                       key={item.id}
                     >
-                      <hr
-                        className='border border-red-600 ml-4 mr-4 m-2'
-                        key={item.id}
-                      />
                       <div
                         className='text-1xl p-2 ml-2 hover:underline'
                         key={item.id}

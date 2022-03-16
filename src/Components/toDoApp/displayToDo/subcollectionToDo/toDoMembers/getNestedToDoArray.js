@@ -18,11 +18,11 @@ export default function GetNestedToDoArray({
   untilTime,
 }) {
   return (
-    <div className='p-4 rounded-lg'>
+    <div className='p-4 rounded-lg borderHover'>
       {/* Delete toDo by toDoID */}
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        className='h-8 w-8 cursor-pointer stroke ml-auto flex'
+        className='h-8 w-8 cursor-pointer stroke ml-auto flex '
         fill='black'
         viewBox='0 0 24 24'
         stroke='black'
@@ -41,7 +41,7 @@ export default function GetNestedToDoArray({
                      where you can change you title of current toDo
                     */}
 
-      <hr className='border-b-2 border-red-600 mt-6' />
+      <hr className='border border-red-600 mt-6' id='hrr' />
 
       {/* Get - toDo - in toDosArray */}
       {/* Check to completed toDo */}

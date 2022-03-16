@@ -76,8 +76,6 @@
   width: 600px;
 }
 
-
-
 @media only screen and (max-width: 1536px) {
   .heightPages {
     height: 100%;
@@ -131,4 +129,8 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+.borderHover:hover #hrr {
+  border: 1px solid black;
 }

@@ -6,7 +6,7 @@ export const ToDoArr = ({ disNameArray, user, formatTime }) => {
     return Object.keys(disNameArray[item]).map((ind) => {
       return (
         <div
-          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage'
+          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage borderHover'
           key={index}
         >
           {' '}
@@ -35,6 +35,7 @@ export const ToDoArr = ({ disNameArray, user, formatTime }) => {
                   <hr
                     className='border border-red-600 ml-4 mr-4 m-2'
                     key={item.id}
+                    id='hrr'
                   />
                   <div className='text-1xl p-4' key={item.id}>
                     {disNameArray[item][0].doneToDo ? (
@@ -79,6 +80,7 @@ export const ToDoArr = ({ disNameArray, user, formatTime }) => {
                   <hr
                     className='border border-red-600 ml-4 mr-4 m-2'
                     key={item.id}
+                    id='hrr'
                   />
                   <div className='text-1xl p-4' key={item.id}>
                     {disNameArray[item][0].doneToDo ? (
