@@ -8,7 +8,7 @@ export default function NoDeadLine({ disNameArray, item, ind }) {
       key={item.id}
     >
       <div
-        className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title bg-white rounded-xl hover:bg-red-600'
+        className='text-3xl font-bold p-2 ml-4 mr-4 hover:underline title'
         key={item.id}
       >
         {disNameArray[item][ind].title} <br key={item.id} />
