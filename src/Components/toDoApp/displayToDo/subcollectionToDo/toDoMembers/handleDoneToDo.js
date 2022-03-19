@@ -48,8 +48,9 @@ export default function HandleDoneSubToDo({
                 ],
               })
                 .then(() => {
+                  window.location.reload();
                   console.log(
-                    'DoneToDo changed successfully: ',
+                    'Sub DoneToDo changed successfully: ',
                     nestedToDoArray[itemsNested][index].doneToDo,
                     doneToDo
                   );
@@ -68,13 +69,14 @@ export default function HandleDoneSubToDo({
                     userId: nestedToDoArray[itemsNested][index].userId,
                     parentID: doc.id,
                     doneToDo: !doneToDo,
-                    untilTime: nestedToDoArray[itemsNested][index].untilTime,
+                    untilTime: 0,
                   },
                 ],
               })
                 .then(() => {
+                  window.location.reload();
                   console.log(
-                    'DoneToDo changed successfully: ',
+                    'SubDoneToDo changed successfully: ',
                     nestedToDoArray[itemsNested][index].doneToDo,
                     doneToDo
                   );

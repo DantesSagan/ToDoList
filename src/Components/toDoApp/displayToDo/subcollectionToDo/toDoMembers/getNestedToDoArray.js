@@ -63,80 +63,106 @@ export default function GetNestedToDoArray({
             />
           </svg>
         </div>
-        {clickToDo ? (
-          <div className='block cursor-pointer'>
-            <textarea
-              className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
-              defaultValue={nestedToDoArray[itemsNested][index].toDo}
-              onChange={(e) => setToDo(e.target.value)}
-            />
-            <button
-              className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
-                !toDo && 'opacity-25'
-              }`}
-              onClick={editSubToDo}
-            >
-              Edit Sub ToDo
-            </button>
-            <button
-              className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
-              onClick={() => setClickToDo(!clickToDo)}
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <div
-            className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white cursor-pointer '
-            onClick={() => setClickToDo(!clickToDo)}
-          >
-            {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
-              <s className=''>
-                {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
-                  <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
-                    {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
-                      (toDoIndex) => {
-                        return (
-                          <li className='p-1 hover:underline'>
-                            {
-                              nestedToDoArray[itemsNested][index].toDo[
-                                toDoIndex
-                              ]
-                            }{' '}
-                          </li>
-                        );
-                      }
-                    )}
-                  </ul>
-                ) : (
-                  nestedToDoArray[itemsNested][index].toDo
-                )}
-              </s>
-            ) : (
-              <div key={itemsNested.id}>
-                {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
-                  <ul className='text-left border-l-2 border-red-600 rounded-lg '>
-                    {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
-                      (toDoIndex) => {
-                        return (
-                          <li className='p-1 hover:underline '>
-                            {
-                              nestedToDoArray[itemsNested][index].toDo[
-                                toDoIndex
-                              ]
-                            }{' '}
-                          </li>
-                        );
-                      }
-                    )}
-                  </ul>
-                ) : (
-                  nestedToDoArray[itemsNested][index].toDo
-                )}
-              </div>
-            )}{' '}
-          </div>
-        )}
+        <section>
+          {nestedToDoArray[itemsNested][index].doneToDo === true ? (
+            <s className=''>
+              {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
+                <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50 m-2'>
+                  {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
+                    (toDoIndex) => {
+                      return (
+                        <li className='p-1 hover:underline'>
+                          {nestedToDoArray[itemsNested][index].toDo[toDoIndex]}{' '}
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+              ) : (
+                nestedToDoArray[itemsNested][index].toDo
+              )}
+            </s>
+          ) : (
+            <div>
+              {clickToDo ? (
+                <div className='block cursor-pointer'>
+                  <textarea
+                    className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
+                    defaultValue={nestedToDoArray[itemsNested][index].toDo}
+                    onChange={(e) => setToDo(e.target.value)}
+                  />
+                  <button
+                    className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
+                      !toDo && 'opacity-25'
+                    }`}
+                    onClick={editSubToDo}
+                  >
+                    Edit Sub ToDo
+                  </button>
+                  <button
+                    className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
+                    onClick={() => setClickToDo(!clickToDo)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white cursor-pointer '
+                  onClick={() => setClickToDo(!clickToDo)}
+                >
+                  {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
+                    <s className=''>
+                      {nestedToDoArray[itemsNested][index].toDo instanceof
+                      Array ? (
+                        <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
+                          {Object.keys(
+                            nestedToDoArray[itemsNested][index].toDo
+                          ).map((toDoIndex) => {
+                            return (
+                              <li className='p-1 hover:underline'>
+                                {
+                                  nestedToDoArray[itemsNested][index].toDo[
+                                    toDoIndex
+                                  ]
+                                }{' '}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : (
+                        nestedToDoArray[itemsNested][index].toDo
+                      )}
+                    </s>
+                  ) : (
+                    <div key={itemsNested.id}>
+                      {nestedToDoArray[itemsNested][index].toDo instanceof
+                      Array ? (
+                        <ul className='text-left border-l-2 border-red-600 rounded-lg '>
+                          {Object.keys(
+                            nestedToDoArray[itemsNested][index].toDo
+                          ).map((toDoIndex) => {
+                            return (
+                              <li className='p-1 hover:underline '>
+                                {
+                                  nestedToDoArray[itemsNested][index].toDo[
+                                    toDoIndex
+                                  ]
+                                }{' '}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : (
+                        nestedToDoArray[itemsNested][index].toDo
+                      )}
+                    </div>
+                  )}{' '}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
       </div>
 
       {/* Get - createdAt - in toDosArray */}

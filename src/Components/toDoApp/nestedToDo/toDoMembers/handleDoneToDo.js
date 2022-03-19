@@ -18,7 +18,7 @@ export default function HandleDoneToDo({
       collection(firebaseLib.firestore(), 'todos')
     );
     // First of all when you click to handleDoneToDo will displayed not doneToDo state (true state)
-    // And push true state to doneToDo 
+    // And push true state to doneToDo
     // if else you click to handleDoneToDo when doneToDo equal true will be displayed
     // false state and push false boolean state to firebase cloud
     disNameArray[item][ind].doneToDo === true
@@ -40,8 +40,9 @@ export default function HandleDoneToDo({
                 ],
               })
                 .then(() => {
+                  window.location.reload();
                   console.log(
-                    'DoneToDo changed successfully: ',
+                    'Nested DoneToDo changed successfully: ',
                     disNameArray[item][ind].doneToDo
                   );
                 })
@@ -63,13 +64,14 @@ export default function HandleDoneToDo({
                     toDoID: disNameArray[item][ind].toDoID,
                     userId: disNameArray[item][ind].userId,
                     doneToDo: !doneToDo,
-                    untilTime: disNameArray[item][ind].untilTime,
+                    untilTime: 0,
                   },
                 ],
               })
                 .then(() => {
+                  window.location.reload();
                   console.log(
-                    'DoneToDo changed successfully: ',
+                    'Nested DoneToDo changed successfully: ',
                     disNameArray[item][ind].doneToDo
                   );
                 })
