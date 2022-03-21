@@ -145,10 +145,6 @@ export default function NestedSubObj({
                       to={`/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`}
                       key={item.id}
                     >
-                      <hr
-                        className='border border-red-600 ml-4 mr-4 m-2'
-                        key={item.id}
-                      />
                       <div
                         className='text-1xl p-2 ml-2 hover:underline'
                         key={item.id}
