@@ -174,6 +174,16 @@ export default function Login() {
               </Link>
             </p>
           </div>
+          <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
+            <p className='text-sm'>
+              <Link
+                to={ROUTES.ABOUT}
+                className='font-bold text-blue-medium hover:underline'
+              >
+                About
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </section>

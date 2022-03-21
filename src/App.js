@@ -33,6 +33,7 @@ const ForgottenEmail = lazy(() =>
 const ForgottenPassword = lazy(() =>
   import('./pages/handles/handle.ForgottenPassword')
 );
+const About = lazy(() => import('./pages/about'));
 export default function App() {
   const { user } = useAuthListener();
   return (
@@ -43,6 +44,7 @@ export default function App() {
             <Routes>
               <Route path={ROUTES.LOGIN} element={<Login />} />
               <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
+              <Route path={ROUTES.ABOUT} element={<About />} />
               <Route
                 path={ROUTES.FORGOTTENEMAIL}
                 element={<ForgottenEmail />}

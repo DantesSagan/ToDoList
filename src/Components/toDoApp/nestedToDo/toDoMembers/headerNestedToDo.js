@@ -45,7 +45,10 @@ export default function HeaderNestedToDo({ toDosArray, setToDoSArray }) {
           {checkName && compareID ? (
             <div className='mb-6 border-b-2 border-red-600 rounded-lg'>
               {user && (
-                <div className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'>
+                <div
+                  className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'
+                  style={{ backdropFilter: 'blur(15px)' }}
+                >
                   <div className='flex items-center'>
                     <i className='text-3xl'>
                       Welcome - <strong>{user?.username}</strong>
