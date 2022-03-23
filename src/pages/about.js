@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section className='relative h-screen text-center mx-auto profile bgAbout'>
       <div
-        className='absolute inset-0 inset-y-44'
+        className='absolute inset-0 inset-y-44 lg:inset-y-24'
         style={{ backdropFilter: 'blur(2px)' }}
       >
         <h1 className='text-3xl font-bold'>About page</h1>
