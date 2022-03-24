@@ -2,6 +2,7 @@
 
 # custom firebase edit
 /src/Components/toDoApp/doubleOfToDo.js
+/todolist
 
 # may be this file will be important but now it's not
 /src/Components/profile/toDoSettings/settings.handleEditToDo.js
