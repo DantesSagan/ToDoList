@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import FirebaseContext from '../context/firebaseContext';
 import * as ROUTES from '../constants/routes';
+import Loader from '../fallback/loader';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ export default function Login() {
       /> */}
         <div className='flex flex-col 2xl:w-2/4 1xl:w-2/4 xl:w-2/4 lg:w-2/4 md:w-2/4 sm:w-2/4 border-t border-8 border-red-600 greetPages'>
           <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
+            <Loader />
             {/* <button onClick={() => setLock(!lock)}>Console lock</button> */}
             {error && <p className='text-sm text-red-600 text-left'>{error}</p>}
             <form onSubmit={handleLogin} method='POST'>
