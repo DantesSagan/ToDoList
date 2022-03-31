@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section className='relative h-screen text-center mx-auto profile bgAbout'>
       <div
-        className='absolute inset-0 inset-y-44 lg:inset-y-24'
+        className='absolute inset-0 inset-y-44 lg:inset-y-24 lg:text-1xl'
         style={{ backdropFilter: 'blur(2px)' }}
       >
         <h1 className='text-3xl font-bold'>About page</h1>
@@ -22,7 +22,6 @@ export default function About() {
         <br />
         <h3 className='text-2xl font-bold'>Used frameworks and libraries</h3>
         <ol className='text-center text-lg list-decimal inline-block'>
-          <li></li>
           <li className='text-left'>React.js</li>
           <li className='text-left'>Firebase</li>
           <li className='text-left'>React-router-dom</li>
