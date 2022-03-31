@@ -1,16 +1,27 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export const ToDoArr = ({ disNameArray, user, formatTime }) => {
+  const [checkIsDone, setCheckIsDone] = useState(false);
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return Object.keys(disNameArray[item]).map((ind) => {
+      const sortingByAsc = disNameArray[item][ind].doneToDo === true;
+      console.log(sortingByAsc);
+      <button onClick={() => setCheckIsDone(!checkIsDone)}>
+        Filter by dont === true
+      </button>;
+
+      const doneEqualToTrue = checkIsDone
+        ? user?.username === disNameArray[item][ind].displayName && sortingByAsc
+        : user?.username === disNameArray[item][ind].displayName;
+
       return (
         <div
           className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage borderHover'
           key={index}
         >
-          {' '}
-          {user?.username === disNameArray[item][ind].displayName ? (
+          {doneEqualToTrue && (
             <div>
               {disNameArray[item][ind].untilTime === formatTime() ||
               disNameArray[item][ind].untilTime < formatTime() ? (
@@ -115,7 +126,7 @@ export const ToDoArr = ({ disNameArray, user, formatTime }) => {
                 </Link>
               )}
             </div>
-          ) : null}
+          )}
         </div>
       );
     });

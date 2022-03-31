@@ -1,6 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Skeleton from '@material-ui/lab/Skeleton';
+import {
+  collection,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
+import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
 import { getToDo } from '../../services/firebase';
 import { ToDoArr } from './toDoArr';
@@ -12,34 +22,7 @@ export default function RouterToDo({
   user,
   setToDoSArray,
 }) {
-  // const [welcome, setWelcome] = useState(false);
-  // const [pagination, setPagination] = useState(1);
-  // const PaginationToDo = async () => {
-  //   const toDoArrKeys = Object.keys(disNameArray).map(async (item) => {
-  //     const first = query(
-  //       collection(firebaseLib.firestore(), 'todos'),
-  //       orderBy(disNameArray[item][0].createdAt),
-  //       limit(3)
-  //     );
-  //     const docSnap = await getDocs(first);
-  //     return docSnap.forEach((item) => {
-  //       return item;
-  //     });
-  //   });
-  //   return toDoArrKeys;
-  // };
-
   const [loading, setLoading] = useState(true);
-
-  const disNameArray = Object.keys(toDosArray).map((item) => {
-    return toDosArray[item].toDosArray;
-  });
-
-  useEffect(() => {
-    getToDo(setToDoSArray).then((data) => {
-      setLoading(false);
-    });
-  }, []);
 
   const formatTime = () => {
     let date = new Date();
@@ -86,6 +69,34 @@ export default function RouterToDo({
     return formattedTime;
   };
 
+  const disNameArray = Object.keys(toDosArray).map((item) => {
+    return toDosArray[item].toDosArray;
+  });
+  const collectionRef = collection(firebaseLib.firestore(), 'todos');
+  const first = query(collectionRef, where('doneToDo', '==', true));
+
+  const getData = () => {
+    onSnapshot(first, (data) => {
+      console.log(
+        data.docs.map((item) => {
+          return item.data();
+        })
+      );
+      let todolist = [];
+      data.docs.map((item) => {
+        todolist.push(item.data());
+      });
+    });
+  };
+  console.log(first);
+
+  useEffect(() => {
+    getToDo(setToDoSArray).then((data) => {
+      setLoading(false);
+    });
+    getData();
+  }, []);
+
   const toDoArray = [];
   Object.keys(disNameArray).map((item) => {
     return toDoArray.push(disNameArray[item][0].displayName);
@@ -96,6 +107,36 @@ export default function RouterToDo({
   console.log(toDoArray[length] === user?.username);
   console.log(toDoArray[length]);
   const skeletonArray = Array(6).fill('');
+
+  const [checkIsDone, setCheckIsDone] = useState(true);
+  const Boolean = () =>
+    Object.keys(disNameArray).map((item, index) => {
+      // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
+      return Object.keys(disNameArray[item]).map((ind) => {
+        const sortingByAsc = disNameArray[item][ind].doneToDo === true;
+        console.log(sortingByAsc);
+        <button onClick={() => setCheckIsDone(!checkIsDone)}>
+          Filter by dont === true
+        </button>;
+
+        const doneEqualToTrue = checkIsDone
+          ? user?.username === disNameArray[item][ind].displayName &&
+            sortingByAsc
+          : user?.username === disNameArray[item][ind].displayName;
+
+        return (
+          <div
+            className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage borderHover'
+            key={index}
+          >
+            {' '}
+            <button onClick={() => setCheckIsDone(!checkIsDone)}>
+              Filter by done === true
+            </button>
+          </div>
+        );
+      });
+    });
 
   return (
     <form className='justify-center text-1xl pl-0 pr-5 rounded-xl'>
