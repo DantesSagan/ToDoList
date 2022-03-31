@@ -6,8 +6,10 @@ import useUser from '../../hooks/user';
 
 import * as ROUTES from '../../constants/routes';
 import { getNestedToDo } from '../../services/firebase';
+import { Skeleton } from '@material-ui/lab';
 
 export default function HeaderToDo() {
+  const [loading, setloading] = useState(false);
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ export default function HeaderToDo() {
 
   useEffect(() => {
     try {
-      getNestedToDo(setNestedArrayToDo);
+      getNestedToDo(setNestedArrayToDo).then((data)=>setloading(!loading));
     } catch (error) {
       setNestedArrayToDo([]);
       console.log(error);
@@ -37,18 +39,25 @@ export default function HeaderToDo() {
   //   });
   // });
   return (
-    <div
-      className='mb-6 border-b-2 border-red-600 rounded-lg'
-   
-    >
-      {user && (
-        <div className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'   style={{ backdropFilter: 'blur(15px)' }}>
+    <div className='mb-6 border-b-2 border-red-600 rounded-lg'>
+      {loading ? (
+        <div
+          className='flex border-l border-red-600 h-4 p-4 py-8 rounded-lg'
+          style={{ backdropFilter: 'blur(15px)' }}
+        >
           <div className='flex items-center'>
             <i className='text-3xl'>
               Welcome - <strong>{user?.username}</strong>
             </i>{' '}
           </div>{' '}
         </div>
+      ) : (
+        <Skeleton
+          animation='wave'
+          variant='text'
+          height={100}
+          className='flex p-4 rounded-lg'
+        />
       )}
       <div className='grid grid-rows-1 grid-flow-col gap-4'>
         <div className='grid justify-items-start mt-6'>
