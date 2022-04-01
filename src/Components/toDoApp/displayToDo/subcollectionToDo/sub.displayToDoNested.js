@@ -64,8 +64,6 @@ export const DisplayTodoByIDNESTED = ({
           29 ||
           30 ||
           31
-            ? `${date.getDate()}`
-            : date.getDate()
             ? `0${date.getDate()}`
             : date.getDate();
 

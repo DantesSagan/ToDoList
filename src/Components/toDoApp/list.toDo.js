@@ -23,6 +23,7 @@ export default function ListOfToDo({
   const [checkIsDone, setCheckIsDone] = useState(true);
   const [checkIsNotDone, setCheckIsNotDone] = useState(true);
   const [filter, setFilter] = useState(true);
+  
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 

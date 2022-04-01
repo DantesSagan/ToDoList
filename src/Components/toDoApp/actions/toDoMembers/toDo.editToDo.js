@@ -49,33 +49,32 @@ export default function ToDoEditToDo({
           ? `0${date.getMonth() + 1}`
           : date.getMonth() + 1;
       // Days part from the timestamp
-     let days =
-       date.getDate() === 10 ||
-       11 ||
-       12 ||
-       13 ||
-       14 ||
-       15 ||
-       16 ||
-       17 ||
-       18 ||
-       19 ||
-       20 ||
-       21 ||
-       22 ||
-       23 ||
-       24 ||
-       25 ||
-       26 ||
-       27 ||
-       28 ||
-       29 ||
-       30 ||
-       31
-         ? `${date.getDate()}`
-         : date.getDate()
-         ? `0${date.getDate()}`
-         : date.getDate();
+      let days =
+        date.getDate() === 10 ||
+        11 ||
+        12 ||
+        13 ||
+        14 ||
+        15 ||
+        16 ||
+        17 ||
+        18 ||
+        19 ||
+        20 ||
+        21 ||
+        22 ||
+        23 ||
+        24 ||
+        25 ||
+        26 ||
+        27 ||
+        28 ||
+        29 ||
+        30 ||
+        31
+          ? `0${date.getDate()}`
+          : date.getDate();
+
       // Hours part from the timestamp
       let hours = date.getHours();
       // Minutes part from the timestamp

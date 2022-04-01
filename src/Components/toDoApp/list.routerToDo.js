@@ -57,8 +57,6 @@ export default function RouterToDo({
       29 ||
       30 ||
       31
-        ? `${date.getDate()}`
-        : date.getDate()
         ? `0${date.getDate()}`
         : date.getDate();
 
@@ -107,7 +105,6 @@ export default function RouterToDo({
   console.log(toDoArray[length] === user?.username);
   console.log(toDoArray[length]);
   const skeletonArray = Array(6).fill('');
-
 
   return (
     <form className='justify-center text-1xl pl-0 pr-5 rounded-xl'>

@@ -11,7 +11,9 @@ import ToDoEditToDo from '../actions/toDoMembers/toDo.editToDo';
 
 import DeleteToDo from '../actions/deleteToDo';
 import TitleEditToDo from '../actions/toDoMembers/title.editToDo';
-import Checking from '../actions/checkUserTodo';
+
+import DisplayTodoByIDFalse from './actionSubCollection/displayToDoRouterFalse';
+import DisplayTodoByIDTrue from './actionSubCollection/displayToDoRouterTrue';
 
 export default function ListOfDisplayToDo({
   title,
@@ -25,12 +27,19 @@ export default function ListOfDisplayToDo({
   setToDoSArray,
   firebaseLib,
 }) {
+  const [checkIsDone, setCheckIsDone] = useState(true);
+  const [checkIsNotDone, setCheckIsNotDone] = useState(true);
+  const [filter, setFilter] = useState(true);
+
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
   const [arrayID, setArrayID] = useState([]);
 
+const isInvalidOne = checkIsDone === false;
+const isInvalidTwo = checkIsNotDone === false;
+  
   const { deleteToDo } = DeleteToDo();
   const { editToDoList } = ToDoEditToDo({
     setToDoSArray,
@@ -66,22 +75,103 @@ export default function ListOfDisplayToDo({
 
   return (
     <div className='h-screen '>
-      <DisplayTodoByID
-        toDosArray={toDosArray}
-        user={user}
-        deleteToDo={deleteToDo}
-        title={title}
-        setTitle={setTitle}
-        toDo={toDo}
-        setToDo={setToDo}
-        editToDoList={editToDoList}
-        editTitle={editTitle}
-        setToDoSArray={setToDoSArray}
-        nestedArrayToDo={nestedArrayToDo}
-        setNestedArrayToDo={setNestedArrayToDo}
-        arrayID={arrayID}
-        setArrayID={setArrayID}
-      />
+      {' '}
+      {filter ? (
+        <button
+          type='button'
+          id='dropdownDefault'
+          onClick={() => setFilter(!filter)}
+          className='inline-flex items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400'
+        >
+          Filter
+        </button>
+      ) : (
+        <div
+          className='inline-flex items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2'
+          id='dropdown'
+        >
+          <button
+            className=' items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400'
+            onClick={() => {
+              setFilter(!filter);
+            }}
+          >
+            Cancel
+          </button>
+          <ul className='p-4' aria-labelledby='dropdownDefault'>
+            <button
+              disabled={isInvalidTwo}
+              className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
+                isInvalidTwo && 'opacity-50'
+              }`}
+              onClick={() => setCheckIsDone(!checkIsDone)}
+            >
+              Filter by done
+            </button>
+            <button
+              disabled={isInvalidOne}
+              className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
+                isInvalidOne && 'opacity-50'
+              }`}
+              onClick={() => setCheckIsNotDone(!checkIsNotDone)}
+            >
+              Filter by NOT done
+            </button>
+          </ul>
+        </div>
+      )}
+      {checkIsDone === false ? (
+        <DisplayTodoByIDTrue
+          toDosArray={toDosArray}
+          user={user}
+          deleteToDo={deleteToDo}
+          title={title}
+          setTitle={setTitle}
+          toDo={toDo}
+          setToDo={setToDo}
+          editToDoList={editToDoList}
+          editTitle={editTitle}
+          setToDoSArray={setToDoSArray}
+          nestedArrayToDo={nestedArrayToDo}
+          setNestedArrayToDo={setNestedArrayToDo}
+          arrayID={arrayID}
+          setArrayID={setArrayID}
+        />
+      ) : checkIsNotDone === false ? (
+        <DisplayTodoByIDFalse
+          toDosArray={toDosArray}
+          user={user}
+          deleteToDo={deleteToDo}
+          title={title}
+          setTitle={setTitle}
+          toDo={toDo}
+          setToDo={setToDo}
+          editToDoList={editToDoList}
+          editTitle={editTitle}
+          setToDoSArray={setToDoSArray}
+          nestedArrayToDo={nestedArrayToDo}
+          setNestedArrayToDo={setNestedArrayToDo}
+          arrayID={arrayID}
+          setArrayID={setArrayID}
+        />
+      ) : (
+        <DisplayTodoByID
+          toDosArray={toDosArray}
+          user={user}
+          deleteToDo={deleteToDo}
+          title={title}
+          setTitle={setTitle}
+          toDo={toDo}
+          setToDo={setToDo}
+          editToDoList={editToDoList}
+          editTitle={editTitle}
+          setToDoSArray={setToDoSArray}
+          nestedArrayToDo={nestedArrayToDo}
+          setNestedArrayToDo={setNestedArrayToDo}
+          arrayID={arrayID}
+          setArrayID={setArrayID}
+        />
+      )}
     </div>
   );
 }
