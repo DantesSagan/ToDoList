@@ -1,21 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Skeleton from '@material-ui/lab/Skeleton';
-import {
-  collection,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+
 import React, { useEffect, useState } from 'react';
-import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
-import { getToDo } from '../../services/firebase';
-import { ToDoArr } from './toDoArr';
+import { getToDo } from '../../../../services/firebase';
+import { ToDoArr } from '../../toDoArr';
+import { ToDoArrTrue } from './toDoArr';
 
-export default function RouterToDo({
+export default function RouterToDoTrue({
   toDoID,
   title,
   toDosArray,
@@ -72,29 +64,11 @@ export default function RouterToDo({
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
-  const collectionRef = collection(firebaseLib.firestore(), 'todos');
-  const first = query(collectionRef, where('doneToDo', '==', true));
-
-  const getData = () => {
-    onSnapshot(first, (data) => {
-      console.log(
-        data.docs.map((item) => {
-          return item.data();
-        })
-      );
-      let todolist = [];
-      data.docs.map((item) => {
-        todolist.push(item.data());
-      });
-    });
-  };
-  console.log(first);
 
   useEffect(() => {
     getToDo(setToDoSArray).then((data) => {
       setLoading(false);
     });
-    getData();
   }, []);
 
   const toDoArray = [];
@@ -107,7 +81,6 @@ export default function RouterToDo({
   console.log(toDoArray[length] === user?.username);
   console.log(toDoArray[length]);
   const skeletonArray = Array(6).fill('');
-
 
   return (
     <form className='justify-center text-1xl pl-0 pr-5 rounded-xl'>
@@ -137,7 +110,7 @@ export default function RouterToDo({
       ) : (
         <div>
           {user?.username === toDoArray[length] ? (
-            <ToDoArr
+            <ToDoArrTrue
               disNameArray={disNameArray}
               user={user}
               formatTime={formatTime}

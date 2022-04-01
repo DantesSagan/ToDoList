@@ -1,22 +1,21 @@
 import { Link } from 'react-router-dom';
 
-export const ToDoArr = ({ disNameArray, user, formatTime }) => {
+export const ToDoArrFalse = ({ disNameArray, user, formatTime }) => {
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return Object.keys(disNameArray[item]).map((ind) => {
-      const sortingByAsc = disNameArray[item][ind].doneToDo === true;
+      const sortingByAsc = disNameArray[item][ind].doneToDo === false;
       console.log(sortingByAsc);
-  
 
-      const doneEqualToTrue =
-        user?.username === disNameArray[item][ind].displayName;
+      const doneEqualToFalse =
+        user?.username === disNameArray[item][ind].displayName && sortingByAsc;
 
       return (
         <div
           className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage borderHover'
           key={index}
         >
-          {doneEqualToTrue && (
+          {doneEqualToFalse && (
             <div>
               {disNameArray[item][ind].untilTime === formatTime() ||
               disNameArray[item][ind].untilTime < formatTime() ? (

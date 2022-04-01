@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 
-export const ToDoArr = ({ disNameArray, user, formatTime }) => {
+export const ToDoArrTrue = ({ disNameArray, user, formatTime }) => {
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return Object.keys(disNameArray[item]).map((ind) => {
       const sortingByAsc = disNameArray[item][ind].doneToDo === true;
       console.log(sortingByAsc);
-  
 
       const doneEqualToTrue =
-        user?.username === disNameArray[item][ind].displayName;
+        user?.username === disNameArray[item][ind].displayName && sortingByAsc;
 
       return (
         <div
