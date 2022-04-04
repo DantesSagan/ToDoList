@@ -1,21 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Skeleton from '@material-ui/lab/Skeleton';
-import {
-  collection,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+
 import React, { useEffect, useState } from 'react';
-import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
 
-import { getToDo } from '../../services/firebase';
-import { ToDoArr } from './toDoArr';
+import { getToDo } from '../../../../services/firebase';
+import { ToDoArr } from '../../toDoArr';
+import { ToDoArrTrue } from './toDoArr';
 
-export default function RouterToDo({
+export default function RouterToDoTrue({
   toDoID,
   title,
   toDosArray,
@@ -67,38 +59,63 @@ export default function RouterToDo({
     return formattedTime;
   };
 
+  const formatTimeCreatedAt = () => {
+    let date = new Date();
+    // Year part from the timestamp
+    let year = date.getFullYear();
+    // Month part from the timestamp
+    let month =
+      date.getMonth() + 1 === 10 || 11 || 12
+        ? `0${date.getMonth() + 1}`
+        : date.getMonth() + 1;
+    // Days part from the timestamp
+    let days =
+      date.getDate() === 10 ||
+      11 ||
+      12 ||
+      13 ||
+      14 ||
+      15 ||
+      16 ||
+      17 ||
+      18 ||
+      19 ||
+      20 ||
+      21 ||
+      22 ||
+      23 ||
+      24 ||
+      25 ||
+      26 ||
+      27 ||
+      28 ||
+      29 ||
+      30 ||
+      31
+        ? `0${date.getDate()}`
+        : date.getDate();
+
+    // Hours part from the timestamp
+    let hours = date.getHours();
+    // Minutes part from the timestamp
+    let minutes = date.getMinutes();
+    // Seconds part from the timestamp
+    let seconds = date.getSeconds();
+
+    // Will display time in 10:30:23 format
+    let formattedTime = `${year}-${month}-${days}, ${hours}:${minutes}:${seconds}`;
+    return formattedTime;
+  };
+
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
-  const collectionRef = collection(firebaseLib.firestore(), 'users');
-  const first = query(
-    collectionRef,
-    where('dateCreated', '<=', 1642257759964),
-    orderBy('dateCreated')
-  );
-
-  const getData = () => {
-    onSnapshot(first, (data) => {
-      console.log(
-        data.docs.map((item) => {
-          return item.data();
-        })
-      );
-      let todolist = [];
-      data.docs.map((item) => {
-        todolist.push(item.data());
-      });
-    });
-  };
 
   useEffect(() => {
     getToDo(setToDoSArray).then((data) => {
       setLoading(false);
     });
-    getData();
   }, []);
-
-  console.log(first);
 
   const toDoArray = [];
   Object.keys(disNameArray).map((item) => {
@@ -137,12 +154,13 @@ export default function RouterToDo({
           })}
         </>
       ) : (
-        <div className='h-full'>
+        <div>
           {user?.username === toDoArray[length] ? (
-            <ToDoArr
+            <ToDoArrTrue
               disNameArray={disNameArray}
               user={user}
               formatTime={formatTime}
+              formatTimeCreatedAt={formatTimeCreatedAt}
             />
           ) : (
             <div className='text-3xl'>

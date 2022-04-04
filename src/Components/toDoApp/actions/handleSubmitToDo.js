@@ -93,7 +93,7 @@ export default function HandleSubmitToDo({
           let seconds = date.getSeconds();
 
           // Will display time in 10:30:23 format
-          let formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
+          let formattedTime = `${year}-${month}-${days}, ${hours}:${minutes}:${seconds}`;
           return formattedTime;
         };
         await setDoc(editRef, {

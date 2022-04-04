@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { firebaseLib } from '../../../firebaseLibrary/firebaseLib';
+import RedFlag from './toDoMembers/flags/flag.red';
 import GetChangeDate from './toDoMembers/getChangeDate';
 import GetNestedToDo from './toDoMembers/getNestedToDo';
 import HandleStampToDo from './toDoMembers/handleChangeTimeStamp';
@@ -23,6 +24,9 @@ export const DisplayTodoByIDNESTED = ({
   const [doneToDo, setDoneToDo] = useState(false);
   const [changeDate, setChangeDate] = useState(false);
   const [untilTime, setUntilTime] = useState(Number);
+  const colorsArray = ['red', 'green', 'gray'];
+  const [flags, setFlags] = useState(colorsArray);
+  const [colors, setColors] = useState('');
 
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
@@ -79,7 +83,6 @@ export const DisplayTodoByIDNESTED = ({
             ? `0${date.getDate()}`
             : date.getDate();
 
-
         // Will display time in 2022-10-03 || 2077-03-20 format
         let formattedTime = `${year}-${month}-${days}`;
 
@@ -111,6 +114,14 @@ export const DisplayTodoByIDNESTED = ({
         item,
         ind,
       });
+
+      const { redFlagToDoList } = RedFlag({
+        setToDoSArray,
+        toDosArray,
+        firebaseLib,
+        colors,
+      });
+
       return (
         <div className='' key={index}>
           {/* 
@@ -167,6 +178,11 @@ export const DisplayTodoByIDNESTED = ({
                       disNameArray={disNameArray}
                       item={item}
                       ind={ind}
+                      redFlagToDoList={redFlagToDoList}
+                      flags={flags}
+                      setFlags={setFlags}
+                      colors={colors}
+                      setColors={setColors}
                     />
                   ) : (
                     // This is component for getting nested to do with all functionalities
@@ -195,6 +211,11 @@ export const DisplayTodoByIDNESTED = ({
                       disNameArray={disNameArray}
                       item={item}
                       ind={ind}
+                      redFlagToDoList={redFlagToDoList}
+                      flags={flags}
+                      setFlags={setFlags}
+                      colors={colors}
+                      setColors={setColors}
                     />
                   )}
                 </form>

@@ -19,16 +19,18 @@ export default function ListOfToDo({
   title,
   toDoID,
   setToDoSArray,
+  firebaseLib,
 }) {
   const [checkIsDone, setCheckIsDone] = useState(true);
   const [checkIsNotDone, setCheckIsNotDone] = useState(true);
   const [filter, setFilter] = useState(true);
-  
+
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
 
-  const isInvalidOne = checkIsDone === false
+  const isInvalidOne = checkIsDone === false;
   const isInvalidTwo = checkIsNotDone === false;
+
   return (
     <section>
       {filter ? (

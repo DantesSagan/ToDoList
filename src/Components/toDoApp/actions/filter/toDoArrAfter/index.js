@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
-export const ToDoArr = ({
+export const ToDoArrAfter = ({
   disNameArray,
   user,
   formatTime,
-  redFlagToDoList,
+  formatTimeCreatedAt,
 }) => {
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
@@ -13,11 +13,11 @@ export const ToDoArr = ({
       console.log(sortingByAsc);
 
       const doneEqualToTrue =
-        user?.username === disNameArray[item][ind].displayName;
+        user?.username === disNameArray[item][ind].displayName && sortingByAsc;
 
       return (
         <div
-          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage borderHover transition duration-300'
+          className='justify-center bg-white rounded-xl hover:bg-red-600 hover:text-white shadow-inner mb-2 dashboardPage borderHover'
           key={index}
         >
           {doneEqualToTrue && (
@@ -39,77 +39,8 @@ export const ToDoArr = ({
                   key={item.id}
                 >
                   {' '}
-                  <div className='grid grid-rows-1 grid-flow-col gap-4'>
-                    <div className='text-3xl font-bold p-4 title' key={item.id}>
-                      {disNameArray[item][0].title} <br key={item.id} />{' '}
-                    </div>
-                    <div
-                      id='flags'
-                      className='m-auto p-4  rounded-lg transition duration-300'
-                    >
-                      <section className='inline-block'>
-                        <button className='buttonM dropdown text-white'>
-                          Importance
-                          <div className='dropdown-content border-2 hover:border-red-600 p-2 '>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='h-12 w-12 svg'
-                              fill='red'
-                              viewBox='0 0 24 24'
-                              stroke='white'
-                              strokeWidth='2'
-                              onClick={(event) => {
-                                event.preventDefault();
-                                console.log('Youre click the button');
-                                redFlagToDoList();
-                              }}
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                              />
-                            </svg>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='h-12 w-12 svg mt-2'
-                              fill='green'
-                              viewBox='0 0 24 24'
-                              stroke='white'
-                              strokeWidth='2'
-                              onClick={(event) => {
-                                event.preventDefault();
-                                console.log('Youre click the button 2');
-                              }}
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                              />
-                            </svg>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='h-12 w-12 svg mt-2'
-                              fill='gray'
-                              viewBox='0 0 24 24'
-                              stroke='white'
-                              strokeWidth='2'
-                              onClick={(event) => {
-                                event.preventDefault();
-                                console.log('Youre click the button 3');
-                              }}
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                              />
-                            </svg>
-                          </div>
-                        </button>
-                      </section>
-                    </div>
+                  <div className='text-3xl font-bold p-4 title' key={item.id}>
+                    {disNameArray[item][0].title} <br key={item.id} />
                   </div>
                   <hr
                     className='border border-red-600 ml-4 mr-4 m-2'
@@ -189,20 +120,6 @@ export const ToDoArr = ({
                         <br key={item.id} />
                       </div>
                     )}
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      class='h-6 w-6'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
-                      stroke-width='2'
-                    >
-                      <path
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                      />
-                    </svg>
                   </div>
                   {` `}
                 </Link>

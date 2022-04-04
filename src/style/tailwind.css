@@ -167,3 +167,98 @@
     transform: rotate(360deg);
   }
 }
+
+/* For SVG flags */
+
+/* .CLASS */
+
+.dropdown {
+  display: inline-block;
+  padding: 10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  border-radius: 15px;
+}
+
+.buttonM {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  color: black;
+  background-color: 'white';
+  transition: 0.2s;
+}
+
+.buttonM:hover {
+  background-position: right center;
+  color: black;
+  text-shadow: -1px 0 black, 0 0px black, 1px 0 black, 0 -1px black;
+  outline: 5px solid tomato;
+}
+
+.button {
+  cursor: pointer;
+  margin: 10px;
+  padding: 5px 25px;
+  text-align: center;
+  transition: 0.2s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+}
+.button:hover {
+  outline: thick double white;
+  background-color: 'white';
+  background-position: right center;
+  color: white;
+  text-shadow: -1px 0 black, 0 0px black, 1px 0 black, 0 -1px black;
+}
+
+/* #ID */
+
+#flags {
+  text-align: center;
+  display: block;
+}
+
+.gridCol {
+  font-size: 1.5em;
+  background-image: linear-gradient(
+    45deg,
+    #ff9a9e 0%,
+    #fad0c4 99%,
+    #fad0c4 100%
+  );
+}
+
+.arrowScroll {
+  transition: all 0.2s ease-out;
+  height: '100px';
+  width: '100px';
+  cursor: 'pointer';
+  padding: '5px';
+  position: 'fixed';
+  right: '100px';
+  bottom: '100px';
+}
+.svg {
+  border: 2px solid white;
+  border-radius: 30px;
+  transition: 0.2s;
+  padding: 5px;
+}
+.svg:hover {
+  border: 2px solid red;
+  border-radius: 30px;
+  transition: 0.2s;
+  padding: 5px;
+}
