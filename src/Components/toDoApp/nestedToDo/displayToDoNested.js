@@ -34,7 +34,7 @@ export const DisplayTodoByIDNESTED = ({
 
   //  Get - toDosArray - in toDosArray - yep it's seem's like pointless but it work's
   return Object.keys(disNameArray).map((item, index) => {
-    console.log(disNameArray);
+    // console.log(disNameArray);
     // Get - disNameArray[item] - and nested indexes within it for each result of its callback
     return Object.keys(disNameArray[item]).map((ind) => {
       // this is comparison for checking pathname of url from link to this page
@@ -86,7 +86,7 @@ export const DisplayTodoByIDNESTED = ({
         // Will display time in 2022-10-03 || 2077-03-20 format
         let formattedTime = `${year}-${month}-${days}`;
 
-        console.log(formattedTime);
+        // console.log(formattedTime);
         return formattedTime;
       };
 

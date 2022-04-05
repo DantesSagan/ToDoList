@@ -36,6 +36,7 @@ export default function HandleDoneToDo({
                     userId: disNameArray[item][ind].userId,
                     doneToDo: doneToDo,
                     untilTime: disNameArray[item][ind].untilTime,
+                    importance: disNameArray[item][ind].importance,
                   },
                 ],
               })

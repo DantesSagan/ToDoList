@@ -40,7 +40,7 @@ export default function DisplayTodoByID({
       console.log(error);
     }
   }, []);
-  console.log(new Date());
+  // console.log(new Date());
 
   const skeletonArray = Array(1).fill('');
   const skeletonArrayNest = Array(8).fill('');

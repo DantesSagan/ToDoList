@@ -45,14 +45,14 @@ export default function RedFlag({
 
         // This is check if currentURL and RouterPath strict-equal
         // So do confirm what u want to change in toDoList
-        if (checkPathIDToDoList) {
-          window.confirm(
-            `Are you sure you want to edit this toDo = ${disNameArray[item][ind].importance}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
-          );
-        } else {
-          console.log('error change');
-          return null;
-        }
+        // if (checkPathIDToDoList) {
+        //   window.confirm(
+        //     `Are you sure you want to edit this toDo = ${disNameArray[item][ind].importance}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+        //   );
+        // } else {
+        //   console.log('error change');
+        //   return null;
+        // }
 
         return comparisonName && checkPathIDToDoList
           ? getDocTodos.forEach((doc) => {

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import IndexDeadLine from './deadlineData';
+import IndexHeader from './headerEditToDo';
+import IndexTasks from './taskData';
 
 export default function GetNestedToDo({
   setUntilTime,
@@ -31,6 +34,7 @@ export default function GetNestedToDo({
   setColors,
 }) {
   const [array, setArray] = useState([]);
+  const [submit, setSubmit] = useState(true);
   // console.log(
   //   disNameArray[item][ind].doneToDo !== doneToDo
   //     ? console.log('Not a toDo')
@@ -42,6 +46,48 @@ export default function GetNestedToDo({
   // const nestedToDoUL = Object.keys(disNameArray).map((toDoIndex) => {
   //   return toDoArray.push(disNameArray[item][ind].toDo[toDoIndex]);
   // });
+
+  const HandleConfirm = (color) => {
+    return (
+      <div>
+        {submit ? (
+          <div>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                array.push(color);
+                redFlagToDoList();
+                console.log('Color red with existed importance');
+              }}
+            >
+              yes
+            </button>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                console.log('Color canceled');
+                setSubmit(!submit);
+                return null;
+              }}
+            >
+              no
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                console.log('Color canceled');
+                setSubmit(!submit);
+                return null;
+              }}
+            ></button>
+          </div>
+        )}
+      </div>
+    );
+  };
   useEffect(() => {
     async function SendColors() {
       const response = await setColors(array);
@@ -53,21 +99,17 @@ export default function GetNestedToDo({
   return (
     <div className='p-4 rounded-lg h-full '>
       {/* Delete toDo by toDoID */}
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        className='h-8 w-8 cursor-pointer stroke flex ml-auto'
-        fill='black'
-        viewBox='0 0 24 24'
-        stroke='black'
-        onClick={deleteToDo}
-      >
-        <path
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          strokeWidth='2'
-          d='M6 18L18 6M6 6l12 12'
-        />
-      </svg>
+      <IndexHeader
+        disNameArray={disNameArray}
+        item={item}
+        ind={ind}
+        flags={flags}
+        array={array}
+        redFlagToDoList={redFlagToDoList}
+        colors={colors}
+        deleteToDo={deleteToDo}
+      />
+
       {/* Get - title - in toDosArray */}
       {/* 
                 By default state - true - and if you clicking on a title of a toDoList 
@@ -108,206 +150,6 @@ export default function GetNestedToDo({
             >
               {disNameArray[item][ind].title} <br key={item.id} />{' '}
             </div>
-            <div
-              id='flags'
-              className='m-auto p-4  rounded-lg transition duration-300'
-            >
-              <section className='inline-block'>
-                {disNameArray[item][ind].importance ? (
-                  <button className='buttonM dropdown text-white'>
-                    {disNameArray[item][ind].importance[0] === 'red' ? (
-                      <svg
-                        values={flags}
-                        xmlns='http://www.w3.org/2000/svg'
-                        className='h-12 w-12 svg'
-                        fill='red'
-                        viewBox='0 0 24 24'
-                        stroke='black'
-                        strokeWidth='2'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                        />
-                      </svg>
-                    ) : disNameArray[item][ind].importance[0] === 'green' ? (
-                      <svg
-                        values={flags}
-                        xmlns='http://www.w3.org/2000/svg'
-                        className='h-12 w-12 svg'
-                        fill='green'
-                        viewBox='0 0 24 24'
-                        stroke='black'
-                        strokeWidth='2'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                        />
-                      </svg>
-                    ) : disNameArray[item][ind].importance[0] === 'gray' ? (
-                      <svg
-                        values={flags}
-                        xmlns='http://www.w3.org/2000/svg'
-                        className='h-12 w-12 svg'
-                        fill='gray'
-                        viewBox='0 0 24 24'
-                        stroke='black'
-                        strokeWidth='2'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                        />
-                      </svg>
-                    ) : null}
-                    <div className='dropdown-content border-2 hover:border-red-600 p-2 '>
-                      {flags[0] === 'red' ? (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-12 w-12 svg mt-2'
-                          fill='red'
-                          viewBox='0 0 24 24'
-                          stroke='white'
-                          strokeWidth='2'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            array.push('red');
-                            redFlagToDoList();
-                            console.log('Youre click the button');
-                          }}
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                          />
-                        </svg>
-                      ) : null}
-                      {flags[1] === 'green' ? (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-12 w-12 svg mt-2'
-                          fill='green'
-                          viewBox='0 0 24 24'
-                          stroke='white'
-                          strokeWidth='2'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            array.push('green');
-                            redFlagToDoList();
-                            console.log('Youre click the button');
-                          }}
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                          />
-                        </svg>
-                      ) : null}
-                      {flags[2] === 'gray' ? (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-12 w-12 svg mt-2'
-                          fill='gray'
-                          viewBox='0 0 24 24'
-                          stroke='white'
-                          strokeWidth='2'
-                          onClick={(event) => {
-                            event.preventDefault();
-                           array.push('gray');
-                            redFlagToDoList();
-                            console.log('Youre click the button');
-                          }}
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                          />
-                        </svg>
-                      ) : null}
-                    </div>
-                  </button>
-                ) : (
-                  <button className='buttonM dropdown text-white'>
-                    Importance
-                    <div className='dropdown-content border-2 hover:border-red-600 p-2 '>
-                      {flags[0] === 'red' ? (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-12 w-12 svg mt-2'
-                          fill='red'
-                          viewBox='0 0 24 24'
-                          stroke='white'
-                          strokeWidth='2'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            array.push('red');
-                            redFlagToDoList();
-                            console.log('Youre click the red button');
-                          }}
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                          />
-                        </svg>
-                      ) : null}
-                      {flags[1] === 'green' ? (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-12 w-12 svg mt-2'
-                          fill='green'
-                          viewBox='0 0 24 24'
-                          stroke='white'
-                          strokeWidth='2'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            array.push('green');
-                            redFlagToDoList();
-                            console.log('Youre click the button');
-                          }}
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                          />
-                        </svg>
-                      ) : null}
-                      {flags[2] === 'gray' ? (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-12 w-12 svg mt-2'
-                          fill='gray'
-                          viewBox='0 0 24 24'
-                          stroke='white'
-                          strokeWidth='2'
-                          onClick={(event) => {
-                            event.preventDefault();
-                            array.push('gray');
-                            redFlagToDoList();
-                            console.log('Youre click the button');
-                          }}
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                          />
-                        </svg>
-                      ) : null}
-                    </div>
-                  </button>
-                )}
-              </section>
-            </div>
           </div>
           <br />
         </button>
@@ -332,97 +174,17 @@ export default function GetNestedToDo({
           />
         </svg>
       </div>
-      <section>
-        {disNameArray[item][ind].doneToDo === true ? (
-          <s className=''>
-            {' '}
-            {disNameArray[item][ind].toDo instanceof Array ? (
-              <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
-                {Object.keys(disNameArray[item][ind].toDo).map((toDoIndex) => {
-                  return (
-                    <li className='p-1 hover:underline'>
-                      {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              disNameArray[item][ind].toDo
-            )}
-          </s>
-        ) : (
-          <div>
-            {clickToDo ? (
-              <div className='block'>
-                <textarea
-                  placeholder='Write todos with commas for separate items.'
-                  className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-lg font-bold w-full'
-                  defaultValue={disNameArray[item][ind].toDo}
-                  onChange={(e) => setToDo(e.target.value)}
-                />
-                <button
-                  className={`block p-2 bg-green-600 w-2/5 h-full m-2 text-white hover:bg-green-400 rounded-lg ${
-                    !toDo && 'opacity-25'
-                  }`}
-                  onClick={editToDoList}
-                >
-                  EditToDo
-                </button>
-                <button
-                  className='block p-2 bg-red-600 rounded-lg w-2/5 h-full m-2 text-white hover:bg-red-400'
-                  onClick={() => setClickToDo(!clickToDo)}
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <button
-                className='text-xl font-bold p-2 rounded-lg hover:bg-red-400 hover:text-white'
-                onClick={() => setClickToDo(!clickToDo)}
-              >
-                {disNameArray[item][ind].doneToDo !== doneToDo ? (
-                  <s className=''>
-                    {' '}
-                    {disNameArray[item][ind].toDo instanceof Array ? (
-                      <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
-                        {Object.keys(disNameArray[item][ind].toDo).map(
-                          (toDoIndex) => {
-                            return (
-                              <li className='p-1 hover:underline'>
-                                {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                              </li>
-                            );
-                          }
-                        )}
-                      </ul>
-                    ) : (
-                      disNameArray[item][ind].toDo
-                    )}
-                  </s>
-                ) : (
-                  <div>
-                    {disNameArray[item][ind].toDo instanceof Array ? (
-                      <ul className='text-left border-l-2 border-red-600 rounded-lg'>
-                        {Object.keys(disNameArray[item][ind].toDo).map(
-                          (toDoIndex) => {
-                            return (
-                              <li className='p-1 hover:underline'>
-                                {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                              </li>
-                            );
-                          }
-                        )}
-                      </ul>
-                    ) : (
-                      disNameArray[item][ind].toDo
-                    )}
-                  </div>
-                )}{' '}
-              </button>
-            )}
-          </div>
-        )}
-      </section>
+      <IndexTasks
+        disNameArray={disNameArray}
+        item={item}
+        ind={ind}
+        clickToDo={clickToDo}
+        setToDo={setToDo}
+        toDo={toDo}
+        editToDoList={editToDoList}
+        setClickToDo={setClickToDo}
+        doneToDo={doneToDo}
+      />
 
       {/* Get - createdAt - in toDosArray */}
       <div className='text-sm font-bold p-2'>
@@ -434,52 +196,14 @@ export default function GetNestedToDo({
       </div>
       {/* Change deadline data */}
       <br />
-      <div className='border-2 border-red-600 p-2 rounded-lg shadow-inner'>
-        {/* Hidded button and if you click you will see deadline change button */}
-        {changeDate ? (
-          <div>
-            <label htmlFor='until'>Change deadline!</label>
-            <input
-              className='text-2xl p-2 ml-4   border-solid border-red-200 transition ease-in-out hover:bg-red-400  focus:ring focus:outline-none focus:ring-red-600 pb-2 rounded-lg hover:text-white'
-              onChange={(e) => setUntilTime(e.target.value)}
-              type='date'
-              id='until'
-              name='trip-start'
-              value={untilTime}
-              min='2021-12-31'
-              max='2078-12-31'
-            />
-            <br />
-            <button
-              onClick={(event) => handleStamp(event)}
-              className='p-2 rounded-lg bg-black text-white hover:bg-white hover:border-2 hover:border-red-600 border-2 hover:text-black'
-            >
-              Change date
-            </button>{' '}
-            <button
-              onClick={() => setChangeDate(!changeDate)}
-              className='p-2 rounded-lg bg-black text-white hover:bg-white hover:border-2 hover:border-red-600 border-2 hover:text-black'
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <div>
-            <button
-              onClick={handleZeroStamp}
-              className='p-2 rounded-lg bg-black text-white hover:bg-white hover:border-2 hover:border-red-600 border-2 hover:text-black'
-            >
-              Without deadline
-            </button>
-            <button
-              onClick={() => setChangeDate(!changeDate)}
-              className='p-2 rounded-lg bg-black text-white hover:bg-white hover:border-2 hover:border-red-600 border-2 hover:text-black'
-            >
-              Change deadline!
-            </button>
-          </div>
-        )}
-      </div>
+      <IndexDeadLine
+        changeDate={changeDate}
+        setUntilTime={setUntilTime}
+        untilTime={untilTime}
+        handleStamp={handleStamp}
+        setChangeDate={setChangeDate}
+        handleZeroStamp={handleZeroStamp}
+      />
       {/* Get - displayName - in toDosArray */}
       <div className='text-sm font-bold p-2 underline'>
         {disNameArray[item][ind].displayName} <br />
