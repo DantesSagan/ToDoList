@@ -1,11 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export const ToDoArr = ({
-  disNameArray,
-  user,
-  formatTime,
-  redFlagToDoList,
-}) => {
+export const ToDoArr = ({ disNameArray, user, formatTime }) => {
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return Object.keys(disNameArray[item]).map((ind) => {
@@ -49,64 +44,61 @@ export const ToDoArr = ({
                     >
                       <section className='inline-block'>
                         <button className='buttonM dropdown text-white'>
-                          Importance
-                          <div className='dropdown-content border-2 hover:border-red-600 p-2 '>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='h-12 w-12 svg'
-                              fill='red'
-                              viewBox='0 0 24 24'
-                              stroke='white'
-                              strokeWidth='2'
-                              onClick={(event) => {
-                                event.preventDefault();
-                                console.log('Youre click the button');
-                                redFlagToDoList();
-                              }}
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                              />
-                            </svg>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='h-12 w-12 svg mt-2'
-                              fill='green'
-                              viewBox='0 0 24 24'
-                              stroke='white'
-                              strokeWidth='2'
-                              onClick={(event) => {
-                                event.preventDefault();
-                                console.log('Youre click the button 2');
-                              }}
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                              />
-                            </svg>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='h-12 w-12 svg mt-2'
-                              fill='gray'
-                              viewBox='0 0 24 24'
-                              stroke='white'
-                              strokeWidth='2'
-                              onClick={(event) => {
-                                event.preventDefault();
-                                console.log('Youre click the button 3');
-                              }}
-                            >
-                              <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
-                              />
-                            </svg>
-                          </div>
+                          {disNameArray[item][ind].importance ? (
+                            <div>
+                              {disNameArray[item][ind].importance[0] ===
+                              'red' ? (
+                                <svg
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  className='h-12 w-12 svg'
+                                  fill='red'
+                                  viewBox='0 0 24 24'
+                                  stroke='black'
+                                  strokeWidth='2'
+                                >
+                                  <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
+                                  />
+                                </svg>
+                              ) : disNameArray[item][ind].importance[0] ===
+                                'green' ? (
+                                <svg
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  className='h-12 w-12 svg'
+                                  fill='green'
+                                  viewBox='0 0 24 24'
+                                  stroke='black'
+                                  strokeWidth='2'
+                                >
+                                  <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
+                                  />
+                                </svg>
+                              ) : disNameArray[item][ind].importance[0] ===
+                                'gray' ? (
+                                <svg
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  className='h-12 w-12 svg'
+                                  fill='gray'
+                                  viewBox='0 0 24 24'
+                                  stroke='black'
+                                  strokeWidth='2'
+                                >
+                                  <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
+                                  />
+                                </svg>
+                              ) : (
+                                <div> Importance </div>
+                              )}
+                            </div>
+                          ) : null}
                         </button>
                       </section>
                     </div>

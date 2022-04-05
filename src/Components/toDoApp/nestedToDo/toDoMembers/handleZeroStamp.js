@@ -32,6 +32,7 @@ export default function HandleZeroStamp({
               userId: disNameArray[item][ind].userId,
               doneToDo: disNameArray[item][ind].doneToDo,
               untilTime: 0,
+              importance: disNameArray[item][ind].importance
             },
           ],
         })

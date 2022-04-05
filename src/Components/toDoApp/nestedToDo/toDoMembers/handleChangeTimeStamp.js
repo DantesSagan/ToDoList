@@ -34,6 +34,7 @@ export default function HandleStampToDo({
               userId: disNameArray[item][ind].userId,
               doneToDo: disNameArray[item][ind].doneToDo,
               untilTime: untilTime,
+              importance: disNameArray[item][ind].importance,
             },
           ],
         })

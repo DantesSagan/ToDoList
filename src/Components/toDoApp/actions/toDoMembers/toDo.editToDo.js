@@ -135,6 +135,7 @@ export default function ToDoEditToDo({
                         toDoID: disNameArray[item][ind].toDoID,
                         doneToDo: disNameArray[item][ind].doneToDo,
                         untilTime: disNameArray[item][ind].untilTime,
+                        importance: disNameArray[item][ind].importance,
                       },
                     ],
                   })

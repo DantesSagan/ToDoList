@@ -66,6 +66,7 @@ export default function HandleDoneToDo({
                     userId: disNameArray[item][ind].userId,
                     doneToDo: !doneToDo,
                     untilTime: 0,
+                    importance: disNameArray[item][ind].importance,
                   },
                 ],
               })
