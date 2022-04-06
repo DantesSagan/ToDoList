@@ -70,12 +70,7 @@ export default function DisplayTodoByID({
           })}
         </>
       ) : (
-        <NestMainToDo
-          disNameArray={disNameArray}
-          nestedToDoArray={nestedToDoArray}
-          user={user}
-          arrayID={arrayID}
-        />
+        <NestMainToDo disNameArray={disNameArray} user={user} />
       )}{' '}
       {loading ? (
         <>

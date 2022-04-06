@@ -21,6 +21,7 @@ export default function HeaderToDo() {
     } catch (error) {
       setNestedArrayToDo([]);
       console.log(error);
+      return null
     }
   }, []);
 
@@ -28,7 +29,7 @@ export default function HeaderToDo() {
     return nestedArrayToDo[item].toDosArray;
   });
   console.log(nestedToDoArray);
-  console.log(ROUTES.SUBCOLLECTION);
+  // console.log(ROUTES.SUBCOLLECTION);
   // return Object.keys(nestedToDoArray).map((itemsNested) => {
   //   // console.log(nestedArrayToDo);
   //   //  4th

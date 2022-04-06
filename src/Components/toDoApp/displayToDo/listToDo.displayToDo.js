@@ -37,9 +37,9 @@ export default function ListOfDisplayToDo({
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
   const [arrayID, setArrayID] = useState([]);
 
-const isInvalidOne = checkIsDone === false;
-const isInvalidTwo = checkIsNotDone === false;
-  
+  const isInvalidOne = checkIsDone === false;
+  const isInvalidTwo = checkIsNotDone === false;
+
   const { deleteToDo } = DeleteToDo();
   const { editToDoList } = ToDoEditToDo({
     setToDoSArray,
@@ -67,7 +67,6 @@ const isInvalidTwo = checkIsNotDone === false;
     try {
       getNestedToDo(setNestedArrayToDo, setArrayID);
     } catch (error) {
-      setNestedArrayToDo([]);
       console.log(error);
     }
     getToDo(setToDoSArray);

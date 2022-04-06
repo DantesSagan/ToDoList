@@ -5,7 +5,7 @@ export const ToDoArr = ({ disNameArray, user, formatTime }) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return Object.keys(disNameArray[item]).map((ind) => {
       const sortingByAsc = disNameArray[item][ind].doneToDo === true;
-      console.log(sortingByAsc);
+      // console.log(sortingByAsc);
 
       const doneEqualToTrue =
         user?.username === disNameArray[item][ind].displayName;

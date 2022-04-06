@@ -98,7 +98,7 @@ export default function RouterToDo({
     getData();
   }, []);
 
-  console.log(first);
+  // console.log(first);
 
   const toDoArray = [];
   Object.keys(disNameArray).map((item) => {
@@ -107,8 +107,8 @@ export default function RouterToDo({
 
   // In this case this will be find index of array = toDoArray by current auth user
   const length = toDoArray.indexOf(user?.username);
-  console.log(toDoArray[length] === user?.username);
-  console.log(toDoArray[length]);
+  // console.log(toDoArray[length] === user?.username);
+  // console.log(toDoArray[length]);
   const skeletonArray = Array(6).fill('');
 
   return (

@@ -55,7 +55,7 @@ export default function RouterToDoTrue({
     // Will display time in 2022-10-03 || 2077-03-20 format
     let formattedTime = `${year}-${month}-${days}`;
 
-    console.log(formattedTime);
+    // console.log(formattedTime);
     return formattedTime;
   };
 
@@ -76,8 +76,8 @@ export default function RouterToDoTrue({
 
   // In this case this will be find index of array = toDoArray by current auth user
   const length = toDoArray.indexOf(user?.username);
-  console.log(toDoArray[length] === user?.username);
-  console.log(toDoArray[length]);
+  // console.log(toDoArray[length] === user?.username);
+  // console.log(toDoArray[length]);
   const skeletonArray = Array(6).fill('');
 
   return (
