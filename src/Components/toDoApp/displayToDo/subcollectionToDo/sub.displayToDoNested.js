@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { firebaseLib } from '../../../../firebaseLibrary/firebaseLib';
+import FlagsSub from './actions/flags';
 import GetNestedToDoArray from './toDoMembers/getNestedToDoArray';
 import GetSubChangeDate from './toDoMembers/getSubChangeDate';
 import HandleDoneSubToDo from './toDoMembers/handleDoneToDo';
@@ -14,12 +15,21 @@ export const DisplayTodoByIDNESTED = ({
   editSubToDo,
   nestedArrayToDo,
   arrayID,
+  setNestedArrayToDo,
+  setArrayID,
+  flags,
+  setFlags,
+  colors,
+  setColors,
+  handleSubFlags,
 }) => {
   // const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
   const [doneToDo, setDoneToDo] = useState(false);
   const [changeDate, setChangeDate] = useState(false);
+  // Deadline value
   const [untilTime, setUntilTime] = useState(Number);
+  // Flags - importance
 
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
     return nestedArrayToDo[item].toDosArray;
@@ -166,6 +176,11 @@ export const DisplayTodoByIDNESTED = ({
                   doneToDo={doneToDo}
                   setUntilTime={setUntilTime}
                   untilTime={untilTime}
+                  handleSubFlags={handleSubFlags}
+                  flags={flags}
+                  setFlags={setFlags}
+                  colors={colors}
+                  setColors={setColors}
                 />
               ) : (
                 <GetNestedToDoArray
@@ -186,6 +201,11 @@ export const DisplayTodoByIDNESTED = ({
                   doneToDo={doneToDo}
                   setUntilTime={setUntilTime}
                   untilTime={untilTime}
+                  handleSubFlags={handleSubFlags}
+                  flags={flags}
+                  setFlags={setFlags}
+                  colors={colors}
+                  setColors={setColors}
                 />
               )}
             </form>

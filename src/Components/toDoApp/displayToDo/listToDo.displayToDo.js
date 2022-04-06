@@ -74,7 +74,7 @@ const isInvalidTwo = checkIsNotDone === false;
   }, []);
 
   return (
-    <div className='h-screen '>
+    <div>
       {' '}
       {filter ? (
         <button

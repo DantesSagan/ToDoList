@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import IndexSubHeader from '../actions/headerSub';
+
 export default function GetNestedToDoArray({
   deleteSubToDo,
   handleDoneToDoSub,
@@ -16,25 +19,37 @@ export default function GetNestedToDoArray({
   doneToDo,
   setUntilTime,
   untilTime,
+  colors,
+  setColors,
+  flags,
+  setFlags,
+  handleSubFlags,
 }) {
+  const [array, setArray] = useState([]);
+
+  useEffect(() => {
+    async function SendColors() {
+      const response = await setColors(array);
+      return response;
+    }
+    SendColors();
+  }, []);
+
   return (
     <div className='p-4 rounded-lg borderHover'>
       {/* Delete toDo by toDoID */}
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        className='h-8 w-8 cursor-pointer stroke ml-auto flex '
-        fill='black'
-        viewBox='0 0 24 24'
-        stroke='black'
-        onClick={deleteSubToDo}
-      >
-        <path
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          strokeWidth='2'
-          d='M6 18L18 6M6 6l12 12'
-        />
-      </svg>
+      <IndexSubHeader
+        nestedToDoArray={nestedToDoArray}
+        itemsNested={itemsNested}
+        index={index}
+        colors={colors}
+        setColors={setColors}
+        flags={flags}
+        setFlags={setFlags}
+        handleSubFlags={handleSubFlags}
+        array={array}
+        deleteSubToDo={deleteSubToDo}
+      />
       {/* 
                     By default state - true - and if you clicking on a title of a toDoList 
                     state will changed to false and you will see textarea,

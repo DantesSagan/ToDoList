@@ -32,7 +32,7 @@ export default function ListOfToDo({
   const isInvalidTwo = checkIsNotDone === false;
 
   return (
-    <section>
+    <section >
       {filter ? (
         <button
           type='button'

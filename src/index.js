@@ -1,16 +1,17 @@
+import { createRoot } from 'react-dom/client';
 import 'flowbite';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
 
 import FirebaseContext from './context/firebaseContext';
 import { firebaseLib, FieldValue } from './firebaseLibrary/firebaseLib';
 import './style/tailwind.css';
 
-ReactDOM.render(
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(
   <FirebaseContext.Provider value={{ firebaseLib, FieldValue }}>
     <App />
-  </FirebaseContext.Provider>,
-  document.getElementById('root')
+  </FirebaseContext.Provider>
 );

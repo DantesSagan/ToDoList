@@ -11,6 +11,7 @@ import { DisplayTodoByIDNESTED } from './sub.displayToDoNested';
 import EditSubToDo from './actions/sub.editSubToDo';
 import DeleteSubToDo from './actions/sub.deleteSubToDo';
 import Skeleton from '@material-ui/lab/Skeleton';
+import FlagsSub from './actions/flags';
 
 export default function ListOfSubDisplayToDo({
   title,
@@ -32,6 +33,14 @@ export default function ListOfSubDisplayToDo({
 
   const [loading, setLoading] = useState(true);
 
+  const colorsArray = ['red', 'green', 'gray'];
+  const [flags, setFlags] = useState(colorsArray);
+  const [colors, setColors] = useState('');
+
+  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
+    return nestedArrayToDo[item].toDosArray;
+  });
+
   const { deleteSubToDo } = DeleteSubToDo({
     setNestedArrayToDo,
     arrayID,
@@ -52,6 +61,14 @@ export default function ListOfSubDisplayToDo({
     arrayID,
     setArrayID,
     nestedArrayToDo,
+  });
+
+  const { handleSubFlags } = FlagsSub({
+    firebaseLib,
+    nestedToDoArray,
+    colors,
+    setNestedArrayToDo,
+    setArrayID,
   });
 
   useEffect(() => {
@@ -103,6 +120,12 @@ export default function ListOfSubDisplayToDo({
           setNestedArrayToDo={setNestedArrayToDo}
           arrayID={arrayID}
           loading={loading}
+          setArrayID={setArrayID}
+          handleSubFlags={handleSubFlags}
+          flags={flags}
+          setFlags={setFlags}
+          colors={colors}
+          setColors={setColors}
         />
       )}
     </div>

@@ -23,7 +23,9 @@ export const DisplayTodoByIDNESTED = ({
   const [clickToDo, setClickToDo] = useState(false);
   const [doneToDo, setDoneToDo] = useState(false);
   const [changeDate, setChangeDate] = useState(false);
+  // Deadline value
   const [untilTime, setUntilTime] = useState(Number);
+  // Flags - importance
   const colorsArray = ['red', 'green', 'gray'];
   const [flags, setFlags] = useState(colorsArray);
   const [colors, setColors] = useState('');

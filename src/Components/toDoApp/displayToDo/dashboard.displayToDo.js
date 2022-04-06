@@ -19,7 +19,7 @@ export default function DashboardDisplayToDo({ user: loggedInUser }) {
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <section className='bgRouterNested'>
         <UserNavBar />
-        <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg '>
+        <div className='grid grid-cols-1 gap-4 justify-between mx-auto max-w-screen-lg'>
           <IndexDisplayToDo />
         </div>
         <Footer />
