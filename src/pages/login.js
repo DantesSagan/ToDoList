@@ -65,7 +65,9 @@ export default function Login() {
         <div className='flex flex-col 2xl:w-2/4 1xl:w-2/4 xl:w-2/4 lg:w-2/4 md:w-2/4 sm:w-2/4 border-t border-8 border-red-600 greetPages'>
           <div className='flex flex-col items-center bg-white p-4 border border-gray-primary rounded pb-8'>
             {/* <button onClick={() => setLock(!lock)}>Console lock</button> */}
-            {error && <p className='text-sm text-red-600 text-left'>{error}</p>}
+            {error && (
+              <p className='text-sm text-red-600 text-left'>{error}</p>
+            )}{' '}
             <form onSubmit={handleLogin} method='POST'>
               <fieldset className='border border-gray-primary p-4'>
                 <legend className='block m-auto'>
@@ -118,25 +120,72 @@ export default function Login() {
                     </svg>
                   )}
                 </legend>
-                <div className='text-3xl text-center text-black p-4 mb-6 border-b-2 border-red-600'>
+                <div className='text-3xl text-center text-black p-4 mb-8 border-b-2 border-red-600'>
                   Log-In
                 </div>
-                <input
-                  aria-label='Enter your email address'
-                  type='text'
-                  placeholder='Email address (ex: Dantes@gmail.com)'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setEmailAddress(target.value)}
-                  value={emailAddress}
-                />
-                <input
-                  aria-label='Enter your email password'
-                  type='password'
-                  placeholder='Password (ex: DanteskillsPushkin1837)'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setPassword(target.value)}
-                  value={password}
-                />
+                <div className='relative mb-4'>
+                  <input
+                    id='email'
+                    name='email'
+                    placeholder='dantes@gmail.com'
+                    type='text'
+                    className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                    onChange={({ target }) => setEmailAddress(target.value)}
+                    value={emailAddress}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='email'
+                  >
+                    Email address
+                  </label>
+                </div>
+                <div className='relative'>
+                  <input
+                    required
+                    id='password'
+                    name='password'
+                    type='password'
+                    placeholder='Password (ex: DanteskillsPushkin1837)'
+                    className='peer text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                    onChange={({ target }) => setPassword(target.value)}
+                    value={password}
+                  />{' '}
+                  <label
+                    className='absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='password'
+                  >
+                    Password
+                  </label>
+                </div>
                 <button
                   disabled={isInvalid}
                   type='submit'

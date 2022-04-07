@@ -72,75 +72,243 @@ export default function SignUp() {
                 <div className='text-3xl text-center text-black p-4 mb-6 border-b-2 border-red-600'>
                   Sign-Up Form
                 </div>
-                {/* SET GENDER */}
-                <input
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setGender(target.value)}
-                  type='text'
-                  placeholder='Pick you gender/sex/ground or wh u like'
-                  value={gender}
-                />
-                {/* SET CITY */}
-                <input
-                  aria-label='Enter your city'
-                  type='text'
-                  placeholder='City'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setCity(target.value)}
-                  value={city}
-                />
-                {/* SET COUNTRY */}
-                <input
-                  aria-label='Enter your Country'
-                  type='text'
-                  placeholder='Country'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setCountry(target.value)}
-                  value={country}
-                />
-                {/* SET PHONE */}
-                <input
-                  aria-label='Enter your phone number'
-                  type='tele'
-                  placeholder='Phone Number'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setPhone(target.value)}
-                  value={phone}
-                />
-                {/* SET USERNAME */}
-                <input
-                  minLength={4}
-                  maxLength={30}
-                  required
-                  aria-label='Enter your username'
-                  type='text'
-                  placeholder='Username'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setUsername(target.value)}
-                  value={username}
-                />
-                {/* SET FULLNAME */}
-                <input
-                  required
-                  aria-label='Enter your full name'
-                  type='text'
-                  placeholder='Full name'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setFullName(target.value)}
-                  value={fullName}
-                />
-                {/* SET EMAIL ADDRESS */}
-                <input
-                  minLength={12}
-                  maxLength={50}
-                  required
-                  aria-label='Enter your email address'
-                  type='email'
-                  placeholder='Email address'
-                  className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-                  onChange={({ target }) => setEmailAddress(target.value)}
-                  value={emailAddress}
-                />
+                <div className='relative mb-2'>
+                  {/* SET GENDER */}
+                  <input
+                    id='gender'
+                    name='gender'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setGender(target.value)}
+                    type='text'
+                    placeholder='Pick you gender/sex/ground or wh u like'
+                    value={gender}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='gender'
+                  >
+                    Gender
+                  </label>
+                </div>
+                <div className='relative mb-2'>
+                  {' '}
+                  {/* SET CITY */}
+                  <input
+                    id='city'
+                    name='city'
+                    aria-label='Enter your city'
+                    type='text'
+                    placeholder='City'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setCity(target.value)}
+                    value={city}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='city'
+                  >
+                    City
+                  </label>
+                </div>
+
+                <div className='relative mb-2'>
+                  {' '}
+                  {/* SET COUNTRY */}
+                  <input
+                    id='country'
+                    name='country'
+                    aria-label='Enter your Country'
+                    type='text'
+                    placeholder='Country'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setCountry(target.value)}
+                    value={country}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='country'
+                  >
+                    Country
+                  </label>
+                </div>
+                <div className='relative mb-2'>
+                  {' '}
+                  {/* SET PHONE */}
+                  <input
+                    id='phone'
+                    name='phone'
+                    aria-label='Enter your phone'
+                    type='text'
+                    placeholder='phone'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setPhone(target.value)}
+                    value={phone}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='phone'
+                  >
+                    Phone
+                  </label>
+                </div>
+                <div className='relative mb-2'>
+                  {' '}
+                  {/* SET USERNAME */}
+                  <input
+                    id='username'
+                    name='username'
+                    aria-label='Enter your Username'
+                    type='text'
+                    placeholder='Username'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setUsername(target.value)}
+                    value={username}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='username'
+                  >
+                    Username
+                  </label>
+                </div>
+                <div className='relative mb-2'>
+                  {' '}
+                  {/* SET FULLNAME */}
+                  <input
+                    id='fullName'
+                    name='fullName'
+                    aria-label='Enter your Fullname'
+                    type='text'
+                    placeholder='Fulname'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setFullName(target.value)}
+                    value={fullName}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='fullName'
+                  >
+                    FullName
+                  </label>
+                </div>
+                <div className='relative mb-2'>
+                  {' '}
+                  {/* SET EMAIL ADDRESS */}
+                  <input
+                    id='emailAddress'
+                    name='emailAddress'
+                    aria-label='Enter your Email Address'
+                    type='text'
+                    placeholder='Email address'
+                    className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
+                    onChange={({ target }) => setEmailAddress(target.value)}
+                    value={emailAddress}
+                  />
+                  <label
+                    className='absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+                    for='emailAddress'
+                  >
+                    Email Address
+                  </label>
+                </div>
                 {/* SET PASSWORD */}
                 <div
                   className={`border-t border-4 border-red-600 p-1 ${
