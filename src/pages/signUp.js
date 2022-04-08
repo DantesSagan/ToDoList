@@ -282,7 +282,7 @@ export default function SignUp() {
                     id='emailAddress'
                     name='emailAddress'
                     aria-label='Enter your Email Address'
-                    type='text'
+                    type='email'
                     placeholder='Email address'
                     className='peer select-none placeholder-transparent text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
                     onChange={({ target }) => setEmailAddress(target.value)}

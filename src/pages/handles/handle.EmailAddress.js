@@ -107,61 +107,150 @@ export default function HandleForgotEmail() {
     <div>
       {' '}
       <div className='border-2 border-red-600 rounded-lg p-1'>
-        <h1 className='text-2xl font-bold text-center border-b-2 border-red-600'>
+        <h1 className='text-2xl font-bold text-center border-b-2 border-red-600 mb-6'>
           Enter you data for check.
         </h1>{' '}
-        <h1 className='text-1xl font-bold'>Last used nick</h1>{' '}
-        <input
-          minLength={6}
-          maxLength={50}
-          aria-label='Enter your nickName'
-          type='text'
-          placeholder='Enter your Nickname'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-          onChange={({ target }) => setNickName(target.value)}
-          value={nickName}
-        />
-        <h1 className='text-1xl font-bold'>Last used email</h1>{' '}
-        {/* Sign in for 1 sec to update email insert current email address */}
-        <input
-          minLength={6}
-          maxLength={50}
-          aria-label='Enter your email address'
-          type='email'
-          placeholder='Change you email address'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-          onChange={({ target }) => setCheckEmailAddress(target.value)}
-          value={checkEmailAddress}
-        />
-        <h1 className='text-1xl font-bold'>Last used password</h1>
+        <div className='relative mb-4'>
+          <input
+            minLength={6}
+            maxLength={50}
+            id='nick'
+            name='nick'
+            placeholder='dantes@gmail.com'
+            type='text'
+            className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+            onChange={({ target }) => setNickName(target.value)}
+            value={nickName}
+          />
+          <label
+            className='absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+            for='nick'
+          >
+            Last used nick
+          </label>
+        </div>
+        {/* Sign in for 1 sec to update email insert current email address */}{' '}
+        <div className='relative mb-4'>
+          <input
+            minLength={6}
+            maxLength={50}
+            id='email'
+            name='email'
+            placeholder='dantes@gmail.com'
+            type='text'
+            className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+            onChange={({ target }) => setCheckEmailAddress(target.value)}
+            value={checkEmailAddress}
+          />
+          <label
+            className='absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+            for='email'
+          >
+            Last used email
+          </label>
+        </div>
         {/* Sign in for 1 sec to update email to insert current password for auth  */}
-        <input
-          minLength={6}
-          maxLength={30}
-          aria-label='Enter your password'
-          type='password'
-          placeholder='Enter your password'
-          className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-          onChange={({ target }) => setPassword(target.value)}
-          value={password}
-        />
+        <div className='relative mb-4'>
+          <input
+            minLength={6}
+            maxLength={30}
+            id='password'
+            name='password'
+            placeholder='dantes@gmail.com'
+            type='text'
+            className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+            onChange={({ target }) => setPassword(target.value)}
+            value={password}
+          />
+          <label
+            className='absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+            for='password'
+          >
+            Last used password
+          </label>
+        </div>
       </div>
       {/* This is input for change current emailAddress for new address that 
       was added in this input
       */}{' '}
-      <h1 className='text-2xl font-bold text-center mb-2'>Enter new email</h1>{' '}
-      <input
-        minLength={6}
-        maxLength={50}
-        aria-label='Enter your email address'
-        type='email'
-        placeholder='Change you email address'
-        className='float-left text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
-        onChange={({ target }) => setEmailAddress(target.value)}
-        value={emailAddress}
-      />
+      <h1 className='text-2xl font-bold text-center mb-6'>Enter new email</h1>{' '}
+      <div className='relative mb-4'>
+        <input
+          minLength={6}
+          maxLength={50}
+          id='email'
+          name='email'
+          placeholder='dantes@gmail.com'
+          type='text'
+          className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+          onChange={({ target }) => setEmailAddress(target.value)}
+          value={emailAddress}
+        />
+        <label
+          className='absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                '
+          for='email'
+        >
+          New email address
+        </label>
+      </div>
       <button
-        className={`float-right bg-black hover:bg-red-600 text-white m-3 p-1 rounded-lg font-bold ${
+        className={`w-full bg-black hover:bg-red-600 text-white mt-2 mb-2 p-2 rounded-lg font-bold ${
           isInvalidEmailAddress && 'opacity-60'
         }`}
         type='submit'

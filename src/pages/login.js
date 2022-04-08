@@ -16,7 +16,7 @@ export default function Login() {
   const [lock, setLock] = useState(true);
 
   const [toggle, setToggle] = useState(true);
-  const [type, setType] = useState('');
+  const [type, setType] = useState('password');
 
   const isInvalid = password === '' || emailAddress === '';
 
@@ -151,8 +151,6 @@ export default function Login() {
                 peer-focus:-top-6
                 peer-focus:text-gray-600
                 peer-focus:text-sm
-                peer-focus:outline-none
-                peer-focus:border-red-300
                 select-none
                 pointer-events-none
                 '
