@@ -134,7 +134,7 @@ export default function Login() {
                     name='email'
                     placeholder='dantes@gmail.com'
                     type='text'
-                    className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-b-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                    className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
                     onChange={({ target }) => setEmailAddress(target.value)}
                     value={emailAddress}
                   />
@@ -151,6 +151,8 @@ export default function Login() {
                 peer-focus:-top-6
                 peer-focus:text-gray-600
                 peer-focus:text-sm
+                peer-focus:outline-none
+                peer-focus:border-red-300
                 select-none
                 pointer-events-none
                 '
@@ -168,7 +170,7 @@ export default function Login() {
                       name='password'
                       type={type}
                       placeholder='Password (ex: DanteskillsPushkin1837)'
-                      className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-b-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                      className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
                       onChange={({ target }) => setPassword(target.value)}
                       value={password}
                     />{' '}
@@ -192,7 +194,7 @@ export default function Login() {
                             setToggle(!toggle);
                           }}
                         >
-                          <VisibilityOff color='red' />
+                          <VisibilityOff />
                         </Button>
                       ) : (
                         <Button
@@ -248,7 +250,7 @@ export default function Login() {
           <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
             <p className='text-sm'>
               Don't have an account?{' '}
-              <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
+              <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium hover:underline'>
                 Sign up
               </Link>
             </p>
