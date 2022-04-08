@@ -132,6 +132,9 @@
     display: flex;
     flex-direction: column;
   }
+  .eyePass {
+    margin-left: 144px;
+  }
 }
 @media only screen and (max-width: 330px) {
   .heightPages {
@@ -150,8 +153,21 @@
     display: flex;
     flex-direction: column;
   }
+  .eyePass {
+    margin-left: 128px;
+  }
 }
 
+@media only screen and (max-width: 280px) {
+  .eyePass {
+    margin-left: 96px;
+  }
+}
+@media only screen and (max-width: 250px) {
+  .eyePass {
+    margin-left: 80px;
+  }
+}
 .borderHover:hover #hrr {
   border: 1px solid black;
 }

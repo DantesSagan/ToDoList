@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import FirebaseContext from '../context/firebaseContext';
 import * as ROUTES from '../constants/routes';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,6 +14,9 @@ export default function Login() {
 
   const [error, setError] = useState('');
   const [lock, setLock] = useState(true);
+
+  const [toggle, setToggle] = useState(true);
+  const [type, setType] = useState('');
 
   const isInvalid = password === '' || emailAddress === '';
 
@@ -129,7 +134,7 @@ export default function Login() {
                     name='email'
                     placeholder='dantes@gmail.com'
                     type='text'
-                    className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                    className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-b-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
                     onChange={({ target }) => setEmailAddress(target.value)}
                     value={emailAddress}
                   />
@@ -155,18 +160,60 @@ export default function Login() {
                   </label>
                 </div>
                 <div className='relative'>
-                  <input
-                    required
-                    id='password'
-                    name='password'
-                    type='password'
-                    placeholder='Password (ex: DanteskillsPushkin1837)'
-                    className='peer text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2 placeholder-transparent select-none'
-                    onChange={({ target }) => setPassword(target.value)}
-                    value={password}
-                  />{' '}
-                  <label
-                    className='absolute
+                  <div className='grid grid-rows-1 grid-flow-col gap-1'>
+                    {' '}
+                    <input
+                      required
+                      id='password'
+                      name='password'
+                      type={type}
+                      placeholder='Password (ex: DanteskillsPushkin1837)'
+                      className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-b-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                      onChange={({ target }) => setPassword(target.value)}
+                      value={password}
+                    />{' '}
+                    <div
+                      className='ml-40 mt-1 eyePass absolute
+                transition-all
+                peer-placeholder-shown:top-0
+                peer-placeholder-shown:left-0'
+                    >
+                      {toggle ? (
+                        <Button
+                          style={{
+                            maxWidth: '80px',
+                            minWidth: '30px',
+                          }}
+                          size='small'
+                          variant='text'
+                          aria-label='toggle password visibility'
+                          onClick={() => {
+                            setType('text');
+                            setToggle(!toggle);
+                          }}
+                        >
+                          <VisibilityOff color='red' />
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{
+                            maxWidth: '80px',
+                            minWidth: '30px',
+                          }}
+                          size='small'
+                          variant='text'
+                          aria-label='toggle password invisible'
+                          onClick={() => {
+                            setType('password');
+                            setToggle(!toggle);
+                          }}
+                        >
+                          <Visibility />
+                        </Button>
+                      )}
+                    </div>{' '}
+                    <label
+                      className='absolute
                 left-0
                 -top-6
                 text-gray-600
@@ -181,10 +228,11 @@ export default function Login() {
                 select-none
                 pointer-events-none
                 '
-                    for='password'
-                  >
-                    Password
-                  </label>
+                      for='password'
+                    >
+                      Password
+                    </label>
+                  </div>
                 </div>
                 <button
                   disabled={isInvalid}
