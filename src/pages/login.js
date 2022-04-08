@@ -144,6 +144,7 @@ export default function Login() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -168,7 +169,7 @@ export default function Login() {
                       name='password'
                       type={type}
                       placeholder='Password (ex: DanteskillsPushkin1837)'
-                      className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none'
+                      className='peer focus:outline-none focus:border-red-600 text-sm text-gray-900 w-full mr-3 py-5 px-4 h-2 border-2 border-gray-primary rounded mb-2 placeholder-transparent select-none transition duration-300'
                       onChange={({ target }) => setPassword(target.value)}
                       value={password}
                     />{' '}
@@ -218,6 +219,7 @@ export default function Login() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -248,7 +250,10 @@ export default function Login() {
           <div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
             <p className='text-sm'>
               Don't have an account?{' '}
-              <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium hover:underline'>
+              <Link
+                to={ROUTES.SIGN_UP}
+                className='font-bold text-blue-medium hover:underline'
+              >
                 Sign up
               </Link>
             </p>

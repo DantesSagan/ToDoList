@@ -110,6 +110,7 @@ export default function HandleForgotPassword() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -142,6 +143,7 @@ export default function HandleForgotPassword() {
             <div
               className='ml-48 mt-1 eyePass absolute
                 transition-all
+                duration-200
                 peer-placeholder-shown:top-0
                 peer-placeholder-shown:left-0'
             >
@@ -185,6 +187,7 @@ export default function HandleForgotPassword() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -223,6 +226,7 @@ export default function HandleForgotPassword() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -256,6 +260,7 @@ export default function HandleForgotPassword() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2

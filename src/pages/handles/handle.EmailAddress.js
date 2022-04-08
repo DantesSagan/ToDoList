@@ -128,6 +128,7 @@ export default function HandleForgotEmail() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -162,6 +163,7 @@ export default function HandleForgotEmail() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -196,6 +198,7 @@ export default function HandleForgotEmail() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
@@ -234,6 +237,7 @@ export default function HandleForgotEmail() {
                 -top-6
                 text-gray-600
                 transition-all
+                duration-200
                 text-sm
                 peer-placeholder-shown:text-base
                 peer-placeholder-shown:top-2
