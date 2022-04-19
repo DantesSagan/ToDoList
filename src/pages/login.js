@@ -52,6 +52,23 @@ export default function Login() {
     document.title = 'Login - ToDoList';
   }, []);
 
+  const loginStyle = `absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                duration-200
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                `;
+
   // console.log(
   //   lock
   //     ? console.log(`Locked value ${lock}`)
@@ -138,25 +155,7 @@ export default function Login() {
                     onChange={({ target }) => setEmailAddress(target.value)}
                     value={emailAddress}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-6
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-6
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='email'
-                  >
+                  <label className={loginStyle} for='email'>
                     Email address
                   </label>
                 </div>
@@ -213,25 +212,7 @@ export default function Login() {
                         </Button>
                       )}
                     </div>{' '}
-                    <label
-                      className='absolute
-                left-0
-                -top-6
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-6
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                      for='password'
-                    >
+                    <label className={loginStyle} for='password'>
                       Password
                     </label>
                   </div>

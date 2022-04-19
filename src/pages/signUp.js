@@ -35,6 +35,22 @@ export default function SignUp() {
     document.title = 'Sign Up - ToDoList';
   }, []);
 
+  const signUpStyles = `absolute
+                left-0
+                -top-5
+                text-gray-600
+                transition-all
+                duration-200
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-5
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none`;
+
   return (
     <section className='bgLogin'>
       <div className='container flex mx-auto max-w-screen-sm items-center justify-center h-screen heightPages arrow-down arrow-up'>
@@ -83,25 +99,7 @@ export default function SignUp() {
                     placeholder='Pick you gender/sex/ground or wh u like'
                     value={gender}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='gender'
-                  >
+                  <label className={signUpStyles} for='gender'>
                     Gender
                   </label>
                 </div>
@@ -118,25 +116,7 @@ export default function SignUp() {
                     onChange={({ target }) => setCity(target.value)}
                     value={city}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='city'
-                  >
+                  <label className={signUpStyles} for='city'>
                     City
                   </label>
                 </div>
@@ -154,25 +134,7 @@ export default function SignUp() {
                     onChange={({ target }) => setCountry(target.value)}
                     value={country}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='country'
-                  >
+                  <label className={signUpStyles} for='country'>
                     Country
                   </label>
                 </div>
@@ -189,25 +151,7 @@ export default function SignUp() {
                     onChange={({ target }) => setPhone(target.value)}
                     value={phone}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='phone'
-                  >
+                  <label className={signUpStyles} for='phone'>
                     Phone
                   </label>
                 </div>
@@ -224,25 +168,7 @@ export default function SignUp() {
                     onChange={({ target }) => setUsername(target.value)}
                     value={username}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='username'
-                  >
+                  <label className={signUpStyles} for='username'>
                     Username
                   </label>
                 </div>
@@ -259,25 +185,7 @@ export default function SignUp() {
                     onChange={({ target }) => setFullName(target.value)}
                     value={fullName}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='fullName'
-                  >
+                  <label className={signUpStyles} for='fullName'>
                     FullName
                   </label>
                 </div>
@@ -294,25 +202,7 @@ export default function SignUp() {
                     onChange={({ target }) => setEmailAddress(target.value)}
                     value={emailAddress}
                   />
-                  <label
-                    className='absolute
-                left-0
-                -top-5
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-5
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-                    for='emailAddress'
-                  >
+                  <label className={signUpStyles} for='emailAddress'>
                     Email Address
                   </label>
                 </div>

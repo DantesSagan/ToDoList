@@ -103,6 +103,23 @@ export default function HandleForgotEmail() {
     }
   };
 
+  const emailStyle = `absolute
+                left-0
+                -top-6
+                text-gray-600
+                transition-all
+                duration-200
+                text-sm
+                peer-placeholder-shown:text-base
+                peer-placeholder-shown:top-2
+                peer-placeholder-shown:left-3
+                peer-focus:-top-6
+                peer-focus:text-gray-600
+                peer-focus:text-sm
+                select-none
+                pointer-events-none
+                `;
+
   return (
     <div>
       {' '}
@@ -122,25 +139,7 @@ export default function HandleForgotEmail() {
             onChange={({ target }) => setNickName(target.value)}
             value={nickName}
           />
-          <label
-            className='absolute
-                left-0
-                -top-6
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-6
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-            for='nick'
-          >
+          <label className={emailStyle} for='nick'>
             Last used nick
           </label>
         </div>
@@ -157,25 +156,7 @@ export default function HandleForgotEmail() {
             onChange={({ target }) => setCheckEmailAddress(target.value)}
             value={checkEmailAddress}
           />
-          <label
-            className='absolute
-                left-0
-                -top-6
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-6
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-            for='email'
-          >
+          <label className={emailStyle} for='email'>
             Last used email
           </label>
         </div>
@@ -192,25 +173,7 @@ export default function HandleForgotEmail() {
             onChange={({ target }) => setPassword(target.value)}
             value={password}
           />
-          <label
-            className='absolute
-                left-0
-                -top-6
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-6
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-            for='password'
-          >
+          <label className={emailStyle} for='password'>
             Last used password
           </label>
         </div>
@@ -231,25 +194,7 @@ export default function HandleForgotEmail() {
           onChange={({ target }) => setEmailAddress(target.value)}
           value={emailAddress}
         />
-        <label
-          className='absolute
-                left-0
-                -top-6
-                text-gray-600
-                transition-all
-                duration-200
-                text-sm
-                peer-placeholder-shown:text-base
-                peer-placeholder-shown:top-2
-                peer-placeholder-shown:left-3
-                peer-focus:-top-6
-                peer-focus:text-gray-600
-                peer-focus:text-sm
-                select-none
-                pointer-events-none
-                '
-          for='email'
-        >
+        <label className={emailStyle} for='email'>
           New email address
         </label>
       </div>
