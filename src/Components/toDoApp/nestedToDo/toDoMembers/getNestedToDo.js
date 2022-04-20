@@ -148,10 +148,9 @@ export default function GetNestedToDo({
               className='text-3xl font-bold p-4 title col-span-3'
               key={item.id}
             >
-              {disNameArray[item][ind].title} <br key={item.id} />{' '}
+              {disNameArray[item][ind].title}{' '}
             </div>
           </div>
-          <br />
         </button>
       )}
       <hr className='border border-red-600' id='hrr' />

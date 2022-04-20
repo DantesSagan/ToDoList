@@ -106,6 +106,7 @@ export default function HandleSubmitToDo({
             userId: userAuth,
             untilTime: untilTime,
             doneToDo: false,
+            importance: ['white'],
           }),
         })
           .then(() => {

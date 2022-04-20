@@ -26,7 +26,7 @@ export const DisplayTodoByIDNESTED = ({
   // Deadline value
   const [untilTime, setUntilTime] = useState(Number);
   // Flags - importance
-  const colorsArray = ['red', 'green', 'gray'];
+  const colorsArray = ['red', 'green', 'gray', 'white'];
   const [flags, setFlags] = useState(colorsArray);
   const [colors, setColors] = useState('');
 

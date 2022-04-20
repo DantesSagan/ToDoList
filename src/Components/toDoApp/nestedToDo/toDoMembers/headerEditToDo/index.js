@@ -64,6 +64,22 @@ export default function IndexHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
+              ) : disNameArray[item][ind].importance[0] === 'white' ? (
+                <svg
+                  values={flags}
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-12 w-12 svg'
+                  fill='white'
+                  viewBox='0 0 24 24'
+                  stroke='gray'
+                  strokeWidth='2'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
+                  />
+                </svg>
               ) : null}
               <div className='dropdown-content p-2'>
                 {flags[0] === 'red' ? (
@@ -146,6 +162,37 @@ export default function IndexHeader({
                         array.push('gray');
                         redFlagToDoList();
                         console.log('Color gray with existed importance');
+                      } else {
+                        console.log('error change');
+                        return null;
+                      }
+                    }}
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
+                    />
+                  </svg>
+                ) : null}
+                {flags[3] === 'white' ? (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-12 w-12 svg mt-2'
+                    fill='white'
+                    viewBox='0 0 24 24'
+                    stroke='gray'
+                    strokeWidth='2'
+                    onClick={(event) => {
+                      event.preventDefault();
+                      if (
+                        window.confirm(
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                        )
+                      ) {
+                        array.push('white');
+                        redFlagToDoList();
+                        console.log('Color white with existed importance');
                       } else {
                         console.log('error change');
                         return null;
@@ -245,6 +292,37 @@ export default function IndexHeader({
                         array.push('gray');
                         redFlagToDoList();
                         console.log('Color gray with existed importance');
+                      } else {
+                        console.log('error change');
+                        return null;
+                      }
+                    }}
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
+                    />
+                  </svg>
+                ) : null}
+                {flags[3] === 'white' ? (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='h-12 w-12 svg mt-2'
+                    fill='white'
+                    viewBox='0 0 24 24'
+                    stroke='gray'
+                    strokeWidth='2'
+                    onClick={(event) => {
+                      event.preventDefault();
+                      if (
+                        window.confirm(
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                        )
+                      ) {
+                        array.push('white');
+                        redFlagToDoList();
+                        console.log('Color white with existed importance');
                       } else {
                         console.log('error change');
                         return null;
