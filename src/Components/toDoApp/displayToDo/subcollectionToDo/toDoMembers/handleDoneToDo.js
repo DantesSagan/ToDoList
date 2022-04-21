@@ -52,6 +52,7 @@ export default function HandleDoneSubToDo({
                   ],
                 })
                   .then(() => {
+                    window.location.reload()
                     console.log(
                       'Sub DoneToDo changed successfully: ',
                       nestedToDoArray[itemsNested][index].doneToDo,
@@ -79,6 +80,7 @@ export default function HandleDoneSubToDo({
                   ],
                 })
                   .then(() => {
+                    window.location.reload();
                     console.log(
                       'SubDoneToDo changed successfully: ',
                       nestedToDoArray[itemsNested][index].doneToDo,

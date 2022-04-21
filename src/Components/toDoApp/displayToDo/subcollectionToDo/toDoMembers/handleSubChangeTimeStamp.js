@@ -42,11 +42,13 @@ export default function HandleSubStampToDo({
                   parentID: nestedToDoArray[itemsNested][index].parentID,
                   userId: nestedToDoArray[itemsNested][index].userId,
                   doneToDo: nestedToDoArray[itemsNested][index].doneToDo,
+                  importance: nestedToDoArray[itemsNested][index].importance,
                   untilTime: untilTime,
                 },
               ],
             })
               .then(() => {
+                window.location.reload();
                 // navigate(ROUTES.DASHBOARD);
                 alert('DoneToDo changed successfully: ', untilTime);
                 console.log('DoneToDo changed successfully: ', untilTime);

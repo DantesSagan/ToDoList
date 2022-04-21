@@ -39,11 +39,13 @@ export default function HandleSubZeroStamp({
                   parentID: nestedToDoArray[itemsNested][index].parentID,
                   userId: nestedToDoArray[itemsNested][index].userId,
                   doneToDo: nestedToDoArray[itemsNested][index].doneToDo,
+                  importance: nestedToDoArray[itemsNested][index].importance,
                   untilTime: 0,
                 },
               ],
             })
               .then(() => {
+                window.location.reload();
                 // navigate(ROUTES.DASHBOARD);
                 alert('DoneToDo changed successfully: ', untilTime);
                 console.log('DoneToDo changed successfully: ', untilTime);

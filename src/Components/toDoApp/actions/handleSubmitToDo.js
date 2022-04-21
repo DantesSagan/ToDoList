@@ -82,20 +82,16 @@ export default function HandleSubmitToDo({
             29 ||
             30 ||
             31
-              ? `0${date.getDate()}`
-              : date.getDate();
+              ? date.getDate()
+              : `0${date.getDate()}`;
 
-          // Hours part from the timestamp
-          let hours = date.getHours();
-          // Minutes part from the timestamp
-          let minutes = date.getMinutes();
-          // Seconds part from the timestamp
-          let seconds = date.getSeconds();
+          // Will display time in 2022-10-03 || 2077-03-20 format
+          let formattedTime = `${year}-${month}-${days}`;
 
-          // Will display time in 10:30:23 format
-          let formattedTime = `${year}-${month}-${days}, ${hours}:${minutes}:${seconds}`;
+          console.log(formattedTime);
           return formattedTime;
         };
+        
         await setDoc(editRef, {
           toDosArray: arrayUnion({
             displayName: displayName,

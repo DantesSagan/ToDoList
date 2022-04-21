@@ -60,41 +60,36 @@ export default function EditSubToDo({
           ? `0${date.getMonth() + 1}`
           : date.getMonth() + 1;
       // Days part from the timestamp
-     let days =
-       date.getDate() === 10 ||
-       11 ||
-       12 ||
-       13 ||
-       14 ||
-       15 ||
-       16 ||
-       17 ||
-       18 ||
-       19 ||
-       20 ||
-       21 ||
-       22 ||
-       23 ||
-       24 ||
-       25 ||
-       26 ||
-       27 ||
-       28 ||
-       29 ||
-       30 ||
-       31
-         ? `0${date.getDate()}`
-         : date.getDate();
+      let days =
+        date.getDate() === 10 ||
+        11 ||
+        12 ||
+        13 ||
+        14 ||
+        15 ||
+        16 ||
+        17 ||
+        18 ||
+        19 ||
+        20 ||
+        21 ||
+        22 ||
+        23 ||
+        24 ||
+        25 ||
+        26 ||
+        27 ||
+        28 ||
+        29 ||
+        30 ||
+        31
+          ? date.getDate()
+          : `0${date.getDate()}`;
 
-      // Hours part from the timestamp
-      let hours = date.getHours();
-      // Minutes part from the timestamp
-      let minutes = date.getMinutes();
-      // Seconds part from the timestamp
-      let seconds = date.getSeconds();
+      // Will display time in 2022-10-03 || 2077-03-20 format
+      let formattedTime = `${year}-${month}-${days}`;
 
-      // Will display time in 10:30:23 format
-      let formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
+      console.log(formattedTime);
       return formattedTime;
     };
 
@@ -172,6 +167,10 @@ export default function EditSubToDo({
                             doneToDo:
                               nestedToDoArray[itemsNested][index].doneToDo,
                             parentID: docParent.id,
+                            importance:
+                              nestedToDoArray[itemsNested][index].importance,
+                            untilTime:
+                              nestedToDoArray[itemsNested][index].untilTime,
                           },
                         ],
                       })

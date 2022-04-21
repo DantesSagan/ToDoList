@@ -65,8 +65,8 @@ export default function HandleSubmitSubToDo({
         29 ||
         30 ||
         31
-          ? `0${date.getDate()}`
-          : date.getDate();
+          ? `${date.getDate()}`
+          : `0${date.getDate()}`;
 
       // Hours part from the timestamp
       let hours = date.getHours();
@@ -79,7 +79,6 @@ export default function HandleSubmitSubToDo({
       let formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
       return formattedTime;
     };
-
     return Object.keys(disNameArray).map(async (item) => {
       return Object.keys(disNameArray[item]).map(async (ind) => {
         // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray

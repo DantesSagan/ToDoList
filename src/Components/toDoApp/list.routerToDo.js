@@ -57,16 +57,16 @@ export default function RouterToDo({
       29 ||
       30 ||
       31
-        ? `0${date.getDate()}`
-        : date.getDate();
+        ? date.getDate()
+        : `0${date.getDate()}`;
 
     // Will display time in 2022-10-03 || 2077-03-20 format
     let formattedTime = `${year}-${month}-${days}`;
-
+    
     console.log(formattedTime);
     return formattedTime;
   };
-
+  console.log(formatTime());
   const disNameArray = Object.keys(toDosArray).map((item) => {
     return toDosArray[item].toDosArray;
   });
