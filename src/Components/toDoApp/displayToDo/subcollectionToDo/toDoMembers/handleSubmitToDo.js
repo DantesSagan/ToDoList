@@ -144,6 +144,7 @@ export default function HandleSubmitSubToDo({
                       parentID: disNameArray[item][ind].toDoID,
                       untilTime: untilTime,
                       doneToDo: false,
+                      importance: ['white'],
                     }),
                   })
                     .then(() => {

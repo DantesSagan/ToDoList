@@ -33,7 +33,7 @@ export default function ListOfSubDisplayToDo({
 
   const [loading, setLoading] = useState(true);
 
-  const colorsArray = ['red', 'green', 'gray'];
+  const colorsArray = ['red', 'green', 'gray', 'white'];
   const [flags, setFlags] = useState(colorsArray);
   const [colors, setColors] = useState('');
 
