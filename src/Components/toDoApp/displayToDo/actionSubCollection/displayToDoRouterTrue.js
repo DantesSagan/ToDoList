@@ -50,7 +50,7 @@ export default function DisplayTodoByIDTrue({
   // And again it's displaying nested subcollection when was call
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
   return (
-    <div className='border-l-4 border-solid border-red-600 rounded-xl hover:border-4 hover:border-black borderHover'>
+    <div className='hover:border-l-4 hover:border-black border-l-4 border-solid border-red-600 rounded-xl  borderHover transition duration-300'>
       {' '}
       {loading ? (
         <>

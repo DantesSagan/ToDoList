@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import Loader from '../../../../fallback/loader';
 import { firebaseLib } from '../../../../firebaseLibrary/firebaseLib';
 import FlagsSub from './actions/flags';
 import GetNestedToDoArray from './toDoMembers/getNestedToDoArray';
@@ -23,6 +24,8 @@ export const DisplayTodoByIDNESTED = ({
   setColors,
   handleSubFlags,
 }) => {
+  const [isPending, startTransition] = useTransition();
+
   // const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
   const [doneToDo, setDoneToDo] = useState(false);
@@ -91,6 +94,7 @@ export const DisplayTodoByIDNESTED = ({
         nestedToDoArray,
         itemsNested,
         index,
+        startTransition,
       });
 
       const { handleSubStamp } = HandleSubStampToDo({
@@ -181,6 +185,7 @@ export const DisplayTodoByIDNESTED = ({
                   setFlags={setFlags}
                   colors={colors}
                   setColors={setColors}
+                  isPending={isPending}
                 />
               ) : (
                 <GetNestedToDoArray
@@ -206,6 +211,7 @@ export const DisplayTodoByIDNESTED = ({
                   setFlags={setFlags}
                   colors={colors}
                   setColors={setColors}
+                  isPending={isPending}
                 />
               )}
             </form>

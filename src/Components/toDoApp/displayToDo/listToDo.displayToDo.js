@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useTransition } from 'react';
 import useUser from '../../../hooks/user';
 
 import UserContext from '../../../context/user';
@@ -14,6 +14,8 @@ import TitleEditToDo from '../actions/toDoMembers/title.editToDo';
 
 import DisplayTodoByIDFalse from './actionSubCollection/displayToDoRouterFalse';
 import DisplayTodoByIDTrue from './actionSubCollection/displayToDoRouterTrue';
+import Loader from '../../../fallback/loader';
+import LoaderTest from '../../../fallback/loaderTest';
 
 export default function ListOfDisplayToDo({
   title,
@@ -27,6 +29,8 @@ export default function ListOfDisplayToDo({
   setToDoSArray,
   firebaseLib,
 }) {
+  const [isPending, startTransition] = useTransition();
+
   const [checkIsDone, setCheckIsDone] = useState(true);
   const [checkIsNotDone, setCheckIsNotDone] = useState(true);
   const [filter, setFilter] = useState(true);
@@ -72,9 +76,28 @@ export default function ListOfDisplayToDo({
     getToDo(setToDoSArray);
   }, []);
 
+  const pendingIsDone = (e) => {
+    e.preventDefault();
+
+    startTransition(() => {
+      getNestedToDo(setNestedArrayToDo, setArrayID);
+      getToDo(setToDoSArray);
+      setCheckIsDone(!checkIsDone);
+    });
+  };
+
+  const pendingIsNotDone = (e) => {
+    e.preventDefault();
+
+    startTransition(() => {
+      getNestedToDo(setNestedArrayToDo, setArrayID);
+      getToDo(setToDoSArray);
+      setCheckIsNotDone(!checkIsNotDone);
+    });
+  };
+
   return (
     <div>
-      {' '}
       {filter ? (
         <button
           type='button'
@@ -103,7 +126,7 @@ export default function ListOfDisplayToDo({
               className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
                 isInvalidTwo && 'opacity-50'
               }`}
-              onClick={() => setCheckIsDone(!checkIsDone)}
+              onClick={pendingIsDone}
             >
               Filter by done
             </button>
@@ -112,13 +135,14 @@ export default function ListOfDisplayToDo({
               className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
                 isInvalidOne && 'opacity-50'
               }`}
-              onClick={() => setCheckIsNotDone(!checkIsNotDone)}
+              onClick={pendingIsNotDone}
             >
               Filter by NOT done
             </button>
           </ul>
         </div>
-      )}
+      )}{' '}
+      {isPending && <LoaderTest />}
       {checkIsDone === false ? (
         <DisplayTodoByIDTrue
           toDosArray={toDosArray}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import LoaderTest from '../../../../../fallback/loaderTest';
 import IndexSubHeader from '../actions/headerSub';
 
 export default function GetNestedToDoArray({
@@ -24,6 +25,7 @@ export default function GetNestedToDoArray({
   flags,
   setFlags,
   handleSubFlags,
+  isPending,
 }) {
   const [array, setArray] = useState([]);
 
@@ -62,21 +64,25 @@ export default function GetNestedToDoArray({
       {/* Check to completed toDo */}
       <div className='rounded-lg'>
         <div className='pt-4'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='h-6 w-6 cursor-pointer border-2 border-solid border-black rounded-2xl hover:bg-gray-300 '
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
-            onClick={handleDoneToDoSub}
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              d='M5 13l4 4L19 7'
-            />
-          </svg>
+          {isPending ? (
+            <LoaderTest />
+          ) : (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-6 w-6 cursor-pointer border-2 border-solid border-black rounded-2xl hover:bg-gray-300 '
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              onClick={handleDoneToDoSub}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M5 13l4 4L19 7'
+              />
+            </svg>
+          )}
         </div>
         <section>
           {nestedToDoArray[itemsNested][index].doneToDo === true ? (

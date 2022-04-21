@@ -1,6 +1,7 @@
 import { getDocs, updateDoc, collection } from 'firebase/firestore';
 
 export default function HandleDoneSubToDo({
+  startTransition,
   setDoneToDo,
   doneToDo,
   firebaseLib,
@@ -11,80 +12,84 @@ export default function HandleDoneSubToDo({
   const handleDoneToDoSub = async (event) => {
     event.preventDefault();
 
-    // UPDATE STATE WHEN A DATA WAS EDIT SUCCESSFULLY
-    setDoneToDo(!doneToDo);
+    startTransition(async () => {
+      // UPDATE STATE WHEN A DATA WAS EDIT SUCCESSFULLY
+      setDoneToDo(!doneToDo);
 
-    const querySnapshot = await getDocs(
-      collection(firebaseLib.firestore(), 'todos')
-    );
-
-    return querySnapshot.forEach(async (doc) => {
-      let getID = doc.id;
-      const querySnapshotSub = await getDocs(
-        collection(firebaseLib.firestore(), 'todos', getID, 'nestedToDo')
+      const querySnapshot = await getDocs(
+        collection(firebaseLib.firestore(), 'todos')
       );
 
-      return querySnapshotSub.forEach((docSub) => {
-        let checkToDoID =
-          nestedToDoArray[itemsNested][index].toDoID === docSub.id;
-        // let checkParentID =
-        //   doc.id === nestedToDoArray[itemsNested][index].parentID;
+      return querySnapshot.forEach(async (doc) => {
+        let getID = doc.id;
+        const querySnapshotSub = await getDocs(
+          collection(firebaseLib.firestore(), 'todos', getID, 'nestedToDo')
+        );
 
-        return checkToDoID
-          ? nestedToDoArray[itemsNested][index].doneToDo === true
-            ? updateDoc(docSub.ref, {
-                toDosArray: [
-                  {
-                    displayName:
-                      nestedToDoArray[itemsNested][index].displayName,
-                    createdAt: nestedToDoArray[itemsNested][index].createdAt,
-                    toDo: nestedToDoArray[itemsNested][index].toDo,
-                    toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                    userId: nestedToDoArray[itemsNested][index].userId,
-                    parentID: doc.id,
-                    doneToDo: doneToDo,
-                    untilTime: nestedToDoArray[itemsNested][index].untilTime,
-                  },
-                ],
-              })
-                .then(() => {
-                  window.location.reload();
-                  console.log(
-                    'Sub DoneToDo changed successfully: ',
-                    nestedToDoArray[itemsNested][index].doneToDo,
-                    doneToDo
-                  );
+        return querySnapshotSub.forEach((docSub) => {
+          let checkToDoID =
+            nestedToDoArray[itemsNested][index].toDoID === docSub.id;
+          // let checkParentID =
+          //   doc.id === nestedToDoArray[itemsNested][index].parentID;
+
+          return checkToDoID
+            ? nestedToDoArray[itemsNested][index].doneToDo === true
+              ? updateDoc(docSub.ref, {
+                  toDosArray: [
+                    {
+                      displayName:
+                        nestedToDoArray[itemsNested][index].displayName,
+                      createdAt: nestedToDoArray[itemsNested][index].createdAt,
+                      toDo: nestedToDoArray[itemsNested][index].toDo,
+                      toDoID: nestedToDoArray[itemsNested][index].toDoID,
+                      userId: nestedToDoArray[itemsNested][index].userId,
+                      parentID: doc.id,
+                      doneToDo: doneToDo,
+                      untilTime: nestedToDoArray[itemsNested][index].untilTime,
+                      importance:
+                        nestedToDoArray[itemsNested][index].importance,
+                    },
+                  ],
                 })
-                .catch((error) => {
-                  console.error('Error with city changed: ', error);
+                  .then(() => {
+                    console.log(
+                      'Sub DoneToDo changed successfully: ',
+                      nestedToDoArray[itemsNested][index].doneToDo,
+                      doneToDo
+                    );
+                  })
+                  .catch((error) => {
+                    console.error('Error with city changed: ', error);
+                  })
+              : updateDoc(docSub.ref, {
+                  toDosArray: [
+                    {
+                      displayName:
+                        nestedToDoArray[itemsNested][index].displayName,
+                      createdAt: nestedToDoArray[itemsNested][index].createdAt,
+                      toDo: nestedToDoArray[itemsNested][index].toDo,
+                      toDoID: nestedToDoArray[itemsNested][index].toDoID,
+                      userId: nestedToDoArray[itemsNested][index].userId,
+                      parentID: doc.id,
+                      doneToDo: !doneToDo,
+                      untilTime: 0,
+                      importance:
+                        nestedToDoArray[itemsNested][index].importance,
+                    },
+                  ],
                 })
-            : updateDoc(docSub.ref, {
-                toDosArray: [
-                  {
-                    displayName:
-                      nestedToDoArray[itemsNested][index].displayName,
-                    createdAt: nestedToDoArray[itemsNested][index].createdAt,
-                    toDo: nestedToDoArray[itemsNested][index].toDo,
-                    toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                    userId: nestedToDoArray[itemsNested][index].userId,
-                    parentID: doc.id,
-                    doneToDo: !doneToDo,
-                    untilTime: 0,
-                  },
-                ],
-              })
-                .then(() => {
-                  window.location.reload();
-                  console.log(
-                    'SubDoneToDo changed successfully: ',
-                    nestedToDoArray[itemsNested][index].doneToDo,
-                    doneToDo
-                  );
-                })
-                .catch((error) => {
-                  console.error('Error with city changed: ', error);
-                })
-          : null;
+                  .then(() => {
+                    console.log(
+                      'SubDoneToDo changed successfully: ',
+                      nestedToDoArray[itemsNested][index].doneToDo,
+                      doneToDo
+                    );
+                  })
+                  .catch((error) => {
+                    console.error('Error with city changed: ', error);
+                  })
+            : null;
+        });
       });
     });
   };
