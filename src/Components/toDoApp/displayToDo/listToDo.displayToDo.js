@@ -70,10 +70,10 @@ export default function ListOfDisplayToDo({
   useEffect(() => {
     try {
       getNestedToDo(setNestedArrayToDo, setArrayID);
+      getToDo(setToDoSArray);
     } catch (error) {
       console.log(error);
     }
-    getToDo(setToDoSArray);
   }, []);
 
   const pendingIsDone = (e) => {

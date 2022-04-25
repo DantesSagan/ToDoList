@@ -88,7 +88,7 @@ export default function NestedSubObj({
             nestedToDoArray[itemsNested][index].parentID;
 
           // console.log('docidPARENT=>', toDoDOC[indDoc]);
-          // console.log(' checkTODOID =>', checkTODOID);
+          console.log(' checkTODOID =>', checkTODOID);
           // console.log('   checkNestedID =>', checkNestedID);
           // console.log('   checkName =>', checkName);
           // console.log('   checkParentID =>', checkParentID);
