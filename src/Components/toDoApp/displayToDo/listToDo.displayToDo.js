@@ -68,12 +68,14 @@ export default function ListOfDisplayToDo({
   // const { comparison } = Checking({ user });
   // console.log(comparison);
   useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo, setArrayID);
-      getToDo(setToDoSArray);
-    } catch (error) {
-      console.log(error);
-    }
+    setTimeout(() => {
+      try {
+        getNestedToDo(setNestedArrayToDo, setArrayID);
+        getToDo(setToDoSArray);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 500);
   }, []);
 
   const pendingIsDone = (e) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
@@ -31,14 +32,15 @@ export default function DisplayTodoByID({
   // Problem was in nested scope object function
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo, setArrayID).then((data) => {
-        setLoading(false);
-      });
-    } catch (error) {
-      setNestedArrayToDo([]);
-      console.log(error);
-    }
+    setTimeout(() => {
+      try {
+        getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
+          setLoading(false)
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }, 500);
   }, []);
   // console.log(new Date());
 
@@ -56,7 +58,6 @@ export default function DisplayTodoByID({
           {skeletonArray.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.900' }}
                 animation='wave'
                 variant='rect'
                 height={200}
@@ -77,7 +78,6 @@ export default function DisplayTodoByID({
           {skeletonArrayNest.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.900' }}
                 animation='wave'
                 variant='rect'
                 height={60}

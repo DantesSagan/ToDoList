@@ -64,9 +64,11 @@ export default function RouterToDoTrue({
   });
 
   useEffect(() => {
-    getToDo(setToDoSArray).then((data) => {
-      setLoading(false);
-    });
+    setTimeout(() => {
+      getToDo(setToDoSArray).then((data) => {
+        setLoading(false);
+      });
+    }, 500);
   }, []);
 
   const toDoArray = [];
@@ -92,7 +94,6 @@ export default function RouterToDoTrue({
           {skeletonArray.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.800' }}
                 animation='wave'
                 variant='rect'
                 height={200}

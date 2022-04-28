@@ -62,7 +62,7 @@ export default function RouterToDo({
 
     // Will display time in 2022-10-03 || 2077-03-20 format
     let formattedTime = `${year}-${month}-${days}`;
-    
+
     console.log(formattedTime);
     return formattedTime;
   };
@@ -92,10 +92,12 @@ export default function RouterToDo({
   };
 
   useEffect(() => {
-    getToDo(setToDoSArray).then((data) => {
-      setLoading(false);
-    });
-    getData();
+    setTimeout(() => {
+      getToDo(setToDoSArray).then((data) => {
+        setLoading(false);
+      });
+      getData();
+    }, 500);
   }, []);
 
   // console.log(first);
@@ -123,7 +125,6 @@ export default function RouterToDo({
           {skeletonArray.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.800' }}
                 animation='wave'
                 variant='rect'
                 height={200}

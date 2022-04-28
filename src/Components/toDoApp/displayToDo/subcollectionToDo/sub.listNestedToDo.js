@@ -72,15 +72,17 @@ export default function ListOfSubDisplayToDo({
   });
 
   useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo, setArrayID).then((doc) => {
-        setLoading(false);
-      });
-    } catch (error) {
-      setNestedArrayToDo([]);
-      console.log(error);
-    }
-    getToDo(setToDoSArray);
+    setTimeout(() => {
+      try {
+        getNestedToDo(setNestedArrayToDo, setArrayID).then((doc) => {
+          setLoading(false);
+        });
+      } catch (error) {
+        setNestedArrayToDo([]);
+        console.log(error);
+      }
+      getToDo(setToDoSArray);
+    }, 500);
   }, []);
 
   const skeletonArray = Array(1).fill('');
@@ -92,7 +94,6 @@ export default function ListOfSubDisplayToDo({
           {skeletonArray.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.900' }}
                 animation='wave'
                 variant='rect'
                 height={250}

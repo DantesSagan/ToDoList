@@ -54,9 +54,11 @@ export default function ListOfNestedDisplayToDo({
   // const { comparison } = Checking({ user });
   // console.log(comparison);
   useEffect(() => {
-    getToDo(setToDoSArray).then((doc) => {
-      setLoading(!loading);
-    });
+    setTimeout(() => {
+      getToDo(setToDoSArray).then((doc) => {
+        setLoading(!loading);
+      });
+    }, 500);
   }, []);
 
   const skeletonArray = Array(1).fill('');
@@ -68,7 +70,6 @@ export default function ListOfNestedDisplayToDo({
           {skeletonArray.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.800' }}
                 animation='wave'
                 variant='rect'
                 height={250}

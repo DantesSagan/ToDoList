@@ -16,13 +16,15 @@ export default function HeaderToDo() {
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
 
   useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo).then((data)=>setloading(!loading));
-    } catch (error) {
-      setNestedArrayToDo([]);
-      console.log(error);
-      return null
-    }
+    setTimeout(() => {
+      try {
+        getNestedToDo(setNestedArrayToDo).then((data) => setloading(!loading));
+      } catch (error) {
+        setNestedArrayToDo([]);
+        console.log(error);
+        return null;
+      }
+    }, 500);
   }, []);
 
   const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {

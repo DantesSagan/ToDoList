@@ -32,14 +32,16 @@ export default function DisplayTodoByIDFalse({
   // Problem was in nested scope object function
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo, setArrayID).then((data) => {
-        setLoading(false);
-      });
-    } catch (error) {
-      setNestedArrayToDo([]);
-      console.log(error);
-    }
+    setTimeout(() => {
+      try {
+        getNestedToDo(setNestedArrayToDo, setArrayID).then((data) => {
+          setLoading(false);
+        });
+      } catch (error) {
+        setNestedArrayToDo([]);
+        console.log(error);
+      }
+    }, 500);
   }, []);
   console.log(new Date());
 
@@ -57,7 +59,6 @@ export default function DisplayTodoByIDFalse({
           {skeletonArray.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.900' }}
                 animation='wave'
                 variant='rect'
                 height={200}
@@ -83,7 +84,6 @@ export default function DisplayTodoByIDFalse({
           {skeletonArrayNest.map((fall) => {
             return (
               <Skeleton
-                sx={{ bgcolor: 'red.900' }}
                 animation='wave'
                 variant='rect'
                 height={60}
