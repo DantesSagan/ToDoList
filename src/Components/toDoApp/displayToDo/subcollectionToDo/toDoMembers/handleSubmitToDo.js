@@ -6,6 +6,7 @@ import {
   getDocs,
   setDoc,
 } from 'firebase/firestore';
+import { formatTime } from '../../../indexConst';
 
 export default function HandleSubmitSubToDo({
   toDo,
@@ -32,53 +33,7 @@ export default function HandleSubmitSubToDo({
       return toDosArray[item].toDosArray;
     });
 
-    const formatTime = () => {
-      let date = new Date();
-      // Year part from the timestamp
-      let year = date.getFullYear();
-      // Month part from the timestamp
-      let month =
-        date.getMonth() + 1 === 10 || 11 || 12
-          ? `0${date.getMonth() + 1}`
-          : date.getMonth() + 1;
-      // Days part from the timestamp
-      let days =
-        date.getDate() === 10 ||
-        11 ||
-        12 ||
-        13 ||
-        14 ||
-        15 ||
-        16 ||
-        17 ||
-        18 ||
-        19 ||
-        20 ||
-        21 ||
-        22 ||
-        23 ||
-        24 ||
-        25 ||
-        26 ||
-        27 ||
-        28 ||
-        29 ||
-        30 ||
-        31
-          ? `${date.getDate()}`
-          : `0${date.getDate()}`;
-
-      // Hours part from the timestamp
-      let hours = date.getHours();
-      // Minutes part from the timestamp
-      let minutes = date.getMinutes();
-      // Seconds part from the timestamp
-      let seconds = date.getSeconds();
-
-      // Will display time in 10:30:23 format
-      let formattedTime = `Posted time toDo: ${year} year, ${month} month, ${days} day, ${hours}:${minutes}:${seconds}`;
-      return formattedTime;
-    };
+    
     return Object.keys(disNameArray).map(async (item) => {
       return Object.keys(disNameArray[item]).map(async (ind) => {
         // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray

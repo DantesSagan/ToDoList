@@ -1,11 +1,7 @@
 import { Link } from 'react-router-dom';
+import { formatTime } from '../../../indexConst';
 
-export const ToDoArrAfter = ({
-  disNameArray,
-  user,
-  formatTime,
-  formatTimeCreatedAt,
-}) => {
+export const ToDoArrAfter = ({ disNameArray, user, formatTimeCreatedAt }) => {
   return Object.keys(disNameArray).map((item, index) => {
     // console.log(getNestedToDo(setToDoSArray, disNameArray, item));
     return Object.keys(disNameArray[item]).map((ind) => {

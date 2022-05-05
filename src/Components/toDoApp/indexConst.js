@@ -59,3 +59,21 @@ export default function IndexConst() {
     setArrayID,
   };
 }
+export const formatTime = () => {
+  let date = new Date();
+
+  let monthData = date.getMonth() + 1;
+  // Year part from the timestamp
+  let year = date.getFullYear();
+  // Month part from the timestamp
+  let month = monthData < 10 ? `0${monthData}` : monthData;
+  // Days part from the timestamp
+  let day = date.getDate();
+  let days = day < 10 ? `0${day}` : day;
+
+  // Will display time in 2022-10-03 || 2077-03-20 format
+  let formattedTime = `${year}-${month}-${days}`;
+
+  console.log(formattedTime);
+  return formattedTime;
+};

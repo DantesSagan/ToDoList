@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { formatTime } from '../../../../indexConst';
 
 export default function NestedSubObjFalse({
   disNameArray,
@@ -7,48 +8,6 @@ export default function NestedSubObjFalse({
   user,
   arrayID,
 }) {
-const formatTime = () => {
-  let date = new Date();
-  // Year part from the timestamp
-  let year = date.getFullYear();
-  // Month part from the timestamp
-  let month =
-    date.getMonth() + 1 === 10 || 11 || 12
-      ? `0${date.getMonth() + 1}`
-      : date.getMonth() + 1;
-  // Days part from the timestamp
-  let days =
-    date.getDate() === 10 ||
-    11 ||
-    12 ||
-    13 ||
-    14 ||
-    15 ||
-    16 ||
-    17 ||
-    18 ||
-    19 ||
-    20 ||
-    21 ||
-    22 ||
-    23 ||
-    24 ||
-    25 ||
-    26 ||
-    27 ||
-    28 ||
-    29 ||
-    30 ||
-    31
-      ? date.getDate()
-      : `0${date.getDate()}`;
-
-  // Will display time in 2022-10-03 || 2077-03-20 format
-  let formattedTime = `${year}-${month}-${days}`;
-
-  console.log(formattedTime);
-  return formattedTime;
-};
 
   // getting nested subcollection toDo from the same router path in a parent toDo
   //   1st
