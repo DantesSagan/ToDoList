@@ -15,11 +15,13 @@ export default function DisplayTodoByID({
   setNestedArrayToDo,
   arrayID,
   setArrayID,
+  loading,
+  setLoading,
+  loadingNested,
+  setLoadingNested,
 }) {
   // const [clickTitle, setClickTitle] = useState(false);
   // const [clickToDo, setClickToDo] = useState(false);
-
-  const [loading, setLoading] = useState(true);
 
   const disNameArray = toDosArray;
 
@@ -30,7 +32,7 @@ export default function DisplayTodoByID({
   useEffect(() => {
     try {
       getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
-        setLoading(false)
+        setLoadingNested(false)
       );
     } catch (error) {
       console.log(error);
@@ -67,7 +69,7 @@ export default function DisplayTodoByID({
       ) : (
         <NestMainToDo disNameArray={disNameArray} user={user} />
       )}{' '}
-      {loading ? (
+      {loadingNested ? (
         <>
           {skeletonArrayNest.map((fall) => {
             return (
