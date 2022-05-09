@@ -1,15 +1,12 @@
 import { getDocs, updateDoc, collection } from 'firebase/firestore';
 // import { useNavigate } from 'react-router-dom';
 
-import * as ROUTES from '../../../../../constants/routes';
-
 export default function HandleSubStampToDo({
   untilTime,
   setUntilTime,
   firebaseLib,
   nestedToDoArray,
   itemsNested,
-  index,
 }) {
   // const navigate = useNavigate();
 
@@ -28,24 +25,23 @@ export default function HandleSubStampToDo({
       );
       return querySnapshotSub.forEach((docSub) => {
         let checkToDoID =
-          nestedToDoArray[itemsNested][index].toDoID === docSub.id;
+          nestedToDoArray[itemsNested].toDosArray.toDoID === docSub.id;
         console.log(checkToDoID);
 
         return checkToDoID
           ? updateDoc(docSub.ref, {
-              toDosArray: [
-                {
-                  displayName: nestedToDoArray[itemsNested][index].displayName,
-                  createdAt: nestedToDoArray[itemsNested][index].createdAt,
-                  toDo: nestedToDoArray[itemsNested][index].toDo,
-                  toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                  parentID: nestedToDoArray[itemsNested][index].parentID,
-                  userId: nestedToDoArray[itemsNested][index].userId,
-                  doneToDo: nestedToDoArray[itemsNested][index].doneToDo,
-                  importance: nestedToDoArray[itemsNested][index].importance,
-                  untilTime: untilTime,
-                },
-              ],
+              toDosArray: {
+                displayName:
+                  nestedToDoArray[itemsNested].toDosArray.displayName,
+                createdAt: nestedToDoArray[itemsNested].toDosArray.createdAt,
+                toDo: nestedToDoArray[itemsNested].toDosArray.toDo,
+                toDoID: nestedToDoArray[itemsNested].toDosArray.toDoID,
+                parentID: nestedToDoArray[itemsNested].toDosArray.parentID,
+                userId: nestedToDoArray[itemsNested].toDosArray.userId,
+                doneToDo: nestedToDoArray[itemsNested].toDosArray.doneToDo,
+                importance: nestedToDoArray[itemsNested].toDosArray.importance,
+                untilTime: untilTime,
+              },
             })
               .then(() => {
                 window.location.reload();

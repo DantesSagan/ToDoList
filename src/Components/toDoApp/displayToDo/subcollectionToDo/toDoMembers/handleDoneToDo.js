@@ -28,34 +28,34 @@ export default function HandleDoneSubToDo({
 
         return querySnapshotSub.forEach((docSub) => {
           let checkToDoID =
-            nestedToDoArray[itemsNested][index].toDoID === docSub.id;
+            nestedToDoArray[itemsNested].toDosArray.toDoID === docSub.id;
           // let checkParentID =
-          //   doc.id === nestedToDoArray[itemsNested][index].parentID;
+          //   doc.id === nestedToDoArray[itemsNested].toDosArray.parentID;
 
           return checkToDoID
-            ? nestedToDoArray[itemsNested][index].doneToDo === true
+            ? nestedToDoArray[itemsNested].toDosArray.doneToDo === true
               ? updateDoc(docSub.ref, {
-                  toDosArray: [
-                    {
-                      displayName:
-                        nestedToDoArray[itemsNested][index].displayName,
-                      createdAt: nestedToDoArray[itemsNested][index].createdAt,
-                      toDo: nestedToDoArray[itemsNested][index].toDo,
-                      toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                      userId: nestedToDoArray[itemsNested][index].userId,
-                      parentID: doc.id,
-                      doneToDo: doneToDo,
-                      untilTime: nestedToDoArray[itemsNested][index].untilTime,
-                      importance:
-                        nestedToDoArray[itemsNested][index].importance,
-                    },
-                  ],
+                  toDosArray: {
+                    displayName:
+                      nestedToDoArray[itemsNested].toDosArray.displayName,
+                    createdAt:
+                      nestedToDoArray[itemsNested].toDosArray.createdAt,
+                    toDo: nestedToDoArray[itemsNested].toDosArray.toDo,
+                    toDoID: nestedToDoArray[itemsNested].toDosArray.toDoID,
+                    userId: nestedToDoArray[itemsNested].toDosArray.userId,
+                    parentID: doc.id,
+                    doneToDo: doneToDo,
+                    untilTime:
+                      nestedToDoArray[itemsNested].toDosArray.untilTime,
+                    importance:
+                      nestedToDoArray[itemsNested].toDosArray.importance,
+                  },
                 })
                   .then(() => {
-                    window.location.reload()
+                    window.location.reload();
                     console.log(
                       'Sub DoneToDo changed successfully: ',
-                      nestedToDoArray[itemsNested][index].doneToDo,
+                      nestedToDoArray[itemsNested].toDosArray.doneToDo,
                       doneToDo
                     );
                   })
@@ -63,27 +63,26 @@ export default function HandleDoneSubToDo({
                     console.error('Error with city changed: ', error);
                   })
               : updateDoc(docSub.ref, {
-                  toDosArray: [
-                    {
-                      displayName:
-                        nestedToDoArray[itemsNested][index].displayName,
-                      createdAt: nestedToDoArray[itemsNested][index].createdAt,
-                      toDo: nestedToDoArray[itemsNested][index].toDo,
-                      toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                      userId: nestedToDoArray[itemsNested][index].userId,
-                      parentID: doc.id,
-                      doneToDo: !doneToDo,
-                      untilTime: 0,
-                      importance:
-                        nestedToDoArray[itemsNested][index].importance,
-                    },
-                  ],
+                  toDosArray: {
+                    displayName:
+                      nestedToDoArray[itemsNested].toDosArray.displayName,
+                    createdAt:
+                      nestedToDoArray[itemsNested].toDosArray.createdAt,
+                    toDo: nestedToDoArray[itemsNested].toDosArray.toDo,
+                    toDoID: nestedToDoArray[itemsNested].toDosArray.toDoID,
+                    userId: nestedToDoArray[itemsNested].toDosArray.userId,
+                    parentID: doc.id,
+                    doneToDo: !doneToDo,
+                    untilTime: 0,
+                    importance:
+                      nestedToDoArray[itemsNested].toDosArray.importance,
+                  },
                 })
                   .then(() => {
                     window.location.reload();
                     console.log(
                       'SubDoneToDo changed successfully: ',
-                      nestedToDoArray[itemsNested][index].doneToDo,
+                      nestedToDoArray[itemsNested].toDosArray.doneToDo,
                       doneToDo
                     );
                   })

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getNestedToDo, getToDo } from '../../../../services/firebase';
+import { getNestedToDo } from '../../../../services/firebase';
 
 import IndexConst from '../../indexConst';
 import ListOfSubDisplayToDo from './sub.listNestedToDo';

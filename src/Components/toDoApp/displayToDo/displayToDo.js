@@ -14,15 +14,15 @@ export const DisplayTodoByUser = ({
 
   //  Get - displayName - in toDosArray
   const disName = Object.keys(disNameArray).map((item) => {
-    console.log(disNameArray[item][0].toDoID);
-    
-    return disNameArray[item][0].toDoID ? (
+    console.log(disNameArray[item].toDosArray.toDoID);
+
+    return disNameArray[item].toDosArray.toDoID ? (
       <div>
         {/* 
           Check if user is logged in and strict-equlity to ref in toDo displayName
           And finally display it what strict-equal to currentAuthUser
           */}
-        {user?.username === disNameArray[item][0].displayName ? (
+        {user?.username === disNameArray[item].toDosArray.displayName ? (
           <form className='justrify-center text-2xl border border-red-300 pl-0 pr-5 bg-white rounded-xl '>
             <div className='m-4 p-4 shadow-inner rounded-lg'>
               {/* Delete toDo by toDoID */}
@@ -44,7 +44,7 @@ export const DisplayTodoByUser = ({
 
               {/* Get - title - in toDosArray */}
               <div className='text-2xl font-bold p-2'>
-                {disNameArray[item][0].title} <br />
+                {disNameArray[item].toDosArray.title} <br />
                 <textarea
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -53,7 +53,7 @@ export const DisplayTodoByUser = ({
               <hr className='border border-red-600' />
               {/* Get - toDo - in toDosArray */}
               <div className='text-2xl font-bold p-2'>
-                {disNameArray[item][0].toDo} <br />
+                {disNameArray[item].toDosArray.toDo} <br />
                 <textarea
                   value={toDo}
                   onChange={(e) => setToDo(e.target.value)}
@@ -73,11 +73,11 @@ export const DisplayTodoByUser = ({
               </div>
               {/* Get - createdAt - in toDosArray */}
               <div className='text-sm'>
-                {disNameArray[item][0].createdAt} <br />
+                {disNameArray[item].toDosArray.createdAt} <br />
               </div>
               {/* Get - displayName - in toDosArray */}
               <div className='text-sm font-bold p-2 underline'>
-                {disNameArray[item][0].displayName} <br />
+                {disNameArray[item].toDosArray.displayName} <br />
               </div>
             </div>
           </form>

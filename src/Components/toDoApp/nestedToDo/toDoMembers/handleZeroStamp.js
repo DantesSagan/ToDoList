@@ -19,22 +19,20 @@ export default function HandleZeroStamp({
     );
 
     querySnapshot.forEach((doc) => {
-      if (disNameArray[item][ind].toDoID === doc.id) {
-        console.log(disNameArray[item][ind].toDoID === doc.id);
+      if (disNameArray[item].toDosArray.toDoID === doc.id) {
+        console.log(disNameArray[item].toDosArray.toDoID === doc.id);
         updateDoc(doc.ref, {
-          toDosArray: [
-            {
-              displayName: disNameArray[item][ind].displayName,
-              createdAt: disNameArray[item][ind].createdAt,
-              title: disNameArray[item][ind].title,
-              toDo: disNameArray[item][ind].toDo,
-              toDoID: disNameArray[item][ind].toDoID,
-              userId: disNameArray[item][ind].userId,
-              doneToDo: disNameArray[item][ind].doneToDo,
-              untilTime: 0,
-              importance: disNameArray[item][ind].importance
-            },
-          ],
+          toDosArray: {
+            displayName: disNameArray[item].toDosArray.displayName,
+            createdAt: disNameArray[item].toDosArray.createdAt,
+            title: disNameArray[item].toDosArray.title,
+            toDo: disNameArray[item].toDosArray.toDo,
+            toDoID: disNameArray[item].toDosArray.toDoID,
+            userId: disNameArray[item].toDosArray.userId,
+            doneToDo: disNameArray[item].toDosArray.doneToDo,
+            untilTime: 0,
+            importance: disNameArray[item].toDosArray.importance,
+          },
         })
           .then(() => {
             navigate(ROUTES.DASHBOARD);

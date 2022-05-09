@@ -37,9 +37,7 @@ export default function ListOfSubDisplayToDo({
   const [flags, setFlags] = useState(colorsArray);
   const [colors, setColors] = useState('');
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
-  });
+  const nestedToDoArray = nestedArrayToDo
 
   const { deleteSubToDo } = DeleteSubToDo({
     setNestedArrayToDo,
@@ -95,7 +93,7 @@ export default function ListOfSubDisplayToDo({
             return (
               <Skeleton
                 animation='wave'
-                variant='rect'
+                variant='rectangular'
                 height={250}
                 width={600}
                 className='rounded-lg mb-2'
@@ -133,5 +131,5 @@ export default function ListOfSubDisplayToDo({
   );
 }
 ListOfSubDisplayToDo.propTypes = {
-  toDosArray: PropTypes.array.isRequired,
+  toDosArray: PropTypes.object.isRequired,
 };

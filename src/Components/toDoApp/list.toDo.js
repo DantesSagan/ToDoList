@@ -1,29 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useUser from '../../hooks/user';
 
 import UserContext from '../../context/user';
 
-// import { firebaseLib } from '../../firebaseLibrary/firebaseLib';
-// import { updateDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
-// import { DisplayTodoByUser } from './displayToDo/displayToDo';
-// import { getAuth } from 'firebase/auth';
 import RouterToDo from './list.routerToDo';
-import RouterToDoTrue from './actions/filter/list.routerToDoTrue';
-import RouterToDoFalse from './actions/filter/list.routerToDoFalse';
-import { useNavigate } from 'react-router-dom';
+import { DoneToDoByFalse, DoneToDoByTrue } from '../../services/firebase-sort';
+import { getToDo } from '../../services/firebase';
 
 export default function ListOfToDo({
   toDosArray,
   title,
   toDoID,
   setToDoSArray,
-  firebaseLib,
 }) {
   const [checkIsDone, setCheckIsDone] = useState(true);
   const [checkIsNotDone, setCheckIsNotDone] = useState(true);
   const [filter, setFilter] = useState(true);
+
+  const [loading, setLoading] = useState(true);
 
   const { user: loggedIn } = useContext(UserContext);
   const { user } = useUser(loggedIn?.uid);
@@ -31,8 +26,14 @@ export default function ListOfToDo({
   const isInvalidOne = checkIsDone === false;
   const isInvalidTwo = checkIsNotDone === false;
 
+  useEffect(() => {
+    getToDo(setToDoSArray).then((data) => {
+      setLoading(false);
+    });
+  }, []);
+
   return (
-    <section >
+    <section>
       {filter ? (
         <button
           type='button'
@@ -51,6 +52,11 @@ export default function ListOfToDo({
             className=' items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400'
             onClick={() => {
               setFilter(!filter);
+              setCheckIsNotDone(true);
+              setCheckIsDone(true);
+              getToDo(setToDoSArray).then((data) => {
+                setLoading(false);
+              });
             }}
           >
             Cancel
@@ -61,7 +67,12 @@ export default function ListOfToDo({
               className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
                 isInvalidTwo && 'opacity-50'
               }`}
-              onClick={() => setCheckIsDone(!checkIsDone)}
+              onClick={() => {
+                DoneToDoByTrue(setToDoSArray).then((data) => {
+                  setLoading(false);
+                });
+                setCheckIsDone(!checkIsDone);
+              }}
             >
               Filter by done
             </button>
@@ -70,7 +81,12 @@ export default function ListOfToDo({
               className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
                 isInvalidOne && 'opacity-50'
               }`}
-              onClick={() => setCheckIsNotDone(!checkIsNotDone)}
+              onClick={() => {
+                setCheckIsNotDone(!checkIsNotDone);
+                DoneToDoByFalse(setToDoSArray).then((data) => {
+                  setLoading(false);
+                });
+              }}
             >
               Filter by NOT done
             </button>
@@ -78,34 +94,15 @@ export default function ListOfToDo({
         </div>
       )}
 
-      {checkIsDone === false ? (
-        <RouterToDoTrue
-          toDoID={toDoID}
-          title={title}
-          toDosArray={toDosArray}
-          user={user}
-          setToDoSArray={setToDoSArray}
-        />
-      ) : checkIsNotDone === false ? (
-        <RouterToDoFalse
-          toDoID={toDoID}
-          title={title}
-          toDosArray={toDosArray}
-          user={user}
-          setToDoSArray={setToDoSArray}
-        />
-      ) : (
-        <RouterToDo
-          toDoID={toDoID}
-          title={title}
-          toDosArray={toDosArray}
-          user={user}
-          setToDoSArray={setToDoSArray}
-        />
-      )}
+      <RouterToDo
+        toDoID={toDoID}
+        title={title}
+        toDosArray={toDosArray}
+        user={user}
+        setToDoSArray={setToDoSArray}
+        loading={loading}
+        setLoading={setLoading}
+      />
     </section>
   );
 }
-ListOfToDo.propTypes = {
-  toDosArray: PropTypes.array.isRequired,
-};

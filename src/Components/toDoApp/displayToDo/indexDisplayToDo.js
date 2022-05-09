@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getNestedToDo } from '../../../services/firebase';
 import HeaderToDo from '../header.toDo';
 

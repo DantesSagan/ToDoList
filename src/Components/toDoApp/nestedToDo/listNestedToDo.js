@@ -71,7 +71,7 @@ export default function ListOfNestedDisplayToDo({
             return (
               <Skeleton
                 animation='wave'
-                variant='rect'
+                variant='rectangular'
                 height={250}
                 width={600}
                 className='rounded-lg mb-2'

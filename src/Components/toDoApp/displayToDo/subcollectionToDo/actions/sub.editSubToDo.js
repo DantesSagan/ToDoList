@@ -36,9 +36,7 @@ export default function EditSubToDo({
     getToDo(setToDoSArray);
   }, []);
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
-  });
+  const nestedToDoArray = nestedArrayToDo;
 
   console.log(nestedToDoArray);
 
@@ -51,108 +49,96 @@ export default function EditSubToDo({
     ]);
     setToDo('');
 
-
     return Object.keys(nestedToDoArray).map(async (itemsNested) => {
-      return Object.keys(nestedToDoArray[itemsNested]).map(async (index) => {
-        // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
-        let comparisonName =
-          user?.username === nestedToDoArray[itemsNested][index].displayName;
+      // Need to create comparison what will be strict-equal by router toDoID in compar with toDoID in toDosArray
+      let comparisonName =
+        user?.username === nestedToDoArray[itemsNested].toDosArray.displayName;
 
-        // This is check if currentURL and RouterPath strict-equal
-        // To undestand what u want to change
-        let getCurrentUrl = window.location.pathname;
-        let getRouterPathToDo = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
+      // This is check if currentURL and RouterPath strict-equal
+      // To undestand what u want to change
+      let getCurrentUrl = window.location.pathname;
+      let getRouterPathToDo = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested].toDosArray.toDoID}`;
 
-        let checkPathID = getCurrentUrl === getRouterPathToDo;
+      let checkPathID = getCurrentUrl === getRouterPathToDo;
 
-        const getDocTodos = await getDocs(
-          collection(firebaseLib.firestore(), 'todos')
+      const getDocTodos = await getDocs(
+        collection(firebaseLib.firestore(), 'todos')
+      );
+
+      if (checkPathID) {
+        console.log('Edit subToDo confirm');
+        window.confirm(
+          `Are you sure you want to edit this toDo =
+                  ${nestedToDoArray[itemsNested].toDosArray.toDo}?`
         );
+      } else {
+        console.log('error change, ошибка в подтверждении редактировании toDo');
+        return null;
+      }
+      return checkPathID
+        ? getDocTodos.forEach(async (docParent) => {
+            // In this case need to compare two equal parameters for findex user who create toDo
+            // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
+            // So updateDoc of toDoList otherwise - no
+            let auth = getAuth();
+            let userAuth = auth.currentUser.uid;
+            let getID = docParent.id;
 
-        if (checkPathID) {
-          console.log('Edit subToDo confirm');
-          window.confirm(
-            `Are you sure you want to edit this toDo =
-                  ${nestedToDoArray[itemsNested][index].toDo}?`
-          );
-        } else {
-          console.log(
-            'error change, ошибка в подтверждении редактировании toDo'
-          );
-          return null;
-        }
-        return checkPathID
-          ? getDocTodos.forEach(async (docParent) => {
-              // In this case need to compare two equal parameters for findex user who create toDo
-              // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
-              // So updateDoc of toDoList otherwise - no
-              let auth = getAuth();
-              let userAuth = auth.currentUser.uid;
-              let getID = docParent.id;
+            let checkID =
+              getID === nestedToDoArray[itemsNested].toDosArray.parentID;
 
-              let checkID =
-                getID === nestedToDoArray[itemsNested][index].parentID;
+            const getDocSub = await getDocs(
+              collection(firebaseLib.firestore(), 'todos', getID, 'nestedToDo')
+            );
 
-              const getDocSub = await getDocs(
-                collection(
-                  firebaseLib.firestore(),
-                  'todos',
-                  getID,
-                  'nestedToDo'
-                )
-              );
+            return (
+              comparisonName &&
+              checkID &&
+              checkPathID &&
+              getDocSub.forEach((docSub) => {
+                let comparisonID =
+                  docSub.id === nestedToDoArray[itemsNested].toDosArray.toDoID;
 
-              return (
-                comparisonName &&
-                checkID &&
-                checkPathID &&
-                getDocSub.forEach((docSub) => {
-                  let comparisonID =
-                    docSub.id === nestedToDoArray[itemsNested][index].toDoID;
+                // This is check if currentURL and RouterPath strict-equal
+                // So do confirm what u want to change in toDoList
 
-                  // This is check if currentURL and RouterPath strict-equal
-                  // So do confirm what u want to change in toDoList
-
-                  return comparisonID && comparisonName
-                    ? updateDoc(docSub.ref, {
-                        toDosArray: [
-                          {
-                            displayName:
-                              nestedToDoArray[itemsNested][index].displayName,
-                            createdAt: formatTime(),
-                            toDo: commaToDo,
-                            userId: userAuth,
-                            toDoID: nestedToDoArray[itemsNested][index].toDoID,
-                            doneToDo:
-                              nestedToDoArray[itemsNested][index].doneToDo,
-                            parentID: docParent.id,
-                            importance:
-                              nestedToDoArray[itemsNested][index].importance,
-                            untilTime:
-                              nestedToDoArray[itemsNested][index].untilTime,
-                          },
-                        ],
+                return comparisonID && comparisonName
+                  ? updateDoc(docSub.ref, {
+                      toDosArray: {
+                        displayName:
+                          nestedToDoArray[itemsNested].toDosArray.displayName,
+                        createdAt: formatTime(),
+                        toDo: commaToDo,
+                        userId: userAuth,
+                        toDoID: nestedToDoArray[itemsNested].toDosArray.toDoID,
+                        doneToDo:
+                          nestedToDoArray[itemsNested].toDosArray.doneToDo,
+                        parentID: docParent.id,
+                        importance:
+                          nestedToDoArray[itemsNested].toDosArray.importance,
+                        untilTime:
+                          nestedToDoArray[itemsNested].toDosArray.untilTime,
+                      },
+                    })
+                      .then(() => {
+                        console.log(
+                          'Document updated with displayName: ',
+                          displayName
+                        );
+                        alert('Array updated was successfully: ', toDo);
                       })
-                        .then(() => {
-                          console.log(
-                            'Document updated with displayName: ',
-                            displayName
-                          );
-                          alert('Array updated was successfully: ', toDo);
-                        })
-                        .catch((error) => {
-                          console.error('Array updated error: ', error);
-                          alert('Array updated error: ', error);
-                        })
-                        .then(() => {
-                          window.location.reload();
-                        })
-                    : console.log('Something wrong with edit doc data');
-                })
-              );
-            })
-          : null;
-      });
+                      .catch((error) => {
+                        console.error('Array updated error: ', error);
+                        alert('Array updated error: ', error);
+                      })
+                      .then(() => {
+                        window.location.reload();
+                      })
+                  : console.log('Something wrong with edit doc data');
+              })
+            );
+          })
+        : null;
     });
   };
 

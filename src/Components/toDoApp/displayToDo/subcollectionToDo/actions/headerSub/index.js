@@ -14,9 +14,10 @@ export default function IndexSubHeader({
     <div className='grid grid-rows-1 grid-flow-col gap-4'>
       <div id='flags' className='mr-auto rounded-lg transition duration-300 '>
         <section className='inline-block'>
-          {nestedToDoArray[itemsNested][index].importance ? (
+          {nestedToDoArray[itemsNested].toDosArray.importance ? (
             <button className='buttonM dropdown text-white'>
-              {nestedToDoArray[itemsNested][index].importance[0] === 'red' ? (
+              {nestedToDoArray[itemsNested].toDosArray.importance[0] ===
+              'red' ? (
                 <svg
                   values={flags}
                   xmlns='http://www.w3.org/2000/svg'
@@ -32,7 +33,7 @@ export default function IndexSubHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
-              ) : nestedToDoArray[itemsNested][index].importance[0] ===
+              ) : nestedToDoArray[itemsNested].toDosArray.importance[0] ===
                 'green' ? (
                 <svg
                   values={flags}
@@ -49,7 +50,7 @@ export default function IndexSubHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
-              ) : nestedToDoArray[itemsNested][index].importance[0] ===
+              ) : nestedToDoArray[itemsNested].toDosArray.importance[0] ===
                 'gray' ? (
                 <svg
                   values={flags}
@@ -66,7 +67,7 @@ export default function IndexSubHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
-              ) : nestedToDoArray[itemsNested][index].importance[0] ===
+              ) : nestedToDoArray[itemsNested].toDosArray.importance[0] ===
                 'white' ? (
                 <svg
                   values={flags}
@@ -97,7 +98,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[0]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[0]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('red');
@@ -128,7 +129,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[1]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[1]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('green');
@@ -159,7 +160,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('gray');
@@ -190,7 +191,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[3]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[3]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('white');
@@ -227,7 +228,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('red');
@@ -258,7 +259,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('green');
@@ -289,7 +290,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('gray');
@@ -320,7 +321,7 @@ export default function IndexSubHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[3]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested][index].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[3]}? Вы уверены, что хотите поменять список дел ${nestedToDoArray[itemsNested].toDosArray.title}?`
                         )
                       ) {
                         array.push('white');

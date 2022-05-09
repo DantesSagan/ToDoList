@@ -36,15 +36,15 @@ export default function GetNestedToDo({
   const [array, setArray] = useState([]);
   const [submit, setSubmit] = useState(true);
   // console.log(
-  //   disNameArray[item][ind].doneToDo !== doneToDo
+  //   disNameArray[item].toDosArray.doneToDo !== doneToDo
   //     ? console.log('Not a toDo')
   //     : console.log('ToDo by defalt')
   // );
-  // console.log(disNameArray[item][ind].toDo instanceof Array);
+  // console.log(disNameArray[item].toDosArray.toDo instanceof Array);
 
   // const toDoArray = [];
   // const nestedToDoUL = Object.keys(disNameArray).map((toDoIndex) => {
-  //   return toDoArray.push(disNameArray[item][ind].toDo[toDoIndex]);
+  //   return toDoArray.push(disNameArray[item].toDosArray.toDo[toDoIndex]);
   // });
 
   const HandleConfirm = (color) => {
@@ -102,7 +102,6 @@ export default function GetNestedToDo({
       <IndexHeader
         disNameArray={disNameArray}
         item={item}
-        ind={ind}
         flags={flags}
         array={array}
         redFlagToDoList={redFlagToDoList}
@@ -119,7 +118,7 @@ export default function GetNestedToDo({
       {clickTitle ? (
         <div className='block'>
           <textarea
-            defaultValue={disNameArray[item][ind].title}
+            defaultValue={disNameArray[item].toDosArray.title}
             className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold '
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -148,7 +147,7 @@ export default function GetNestedToDo({
               className='text-3xl font-bold p-4 title col-span-3'
               key={item.id}
             >
-              {disNameArray[item][ind].title}{' '}
+              {disNameArray[item].toDosArray.title}{' '}
             </div>
           </div>
         </button>
@@ -176,7 +175,6 @@ export default function GetNestedToDo({
       <IndexTasks
         disNameArray={disNameArray}
         item={item}
-        ind={ind}
         clickToDo={clickToDo}
         setToDo={setToDo}
         toDo={toDo}
@@ -187,10 +185,10 @@ export default function GetNestedToDo({
 
       {/* Get - createdAt - in toDosArray */}
       <div className='text-sm font-bold p-2'>
-        {disNameArray[item][ind].createdAt} <br />
+        {disNameArray[item].toDosArray.createdAt} <br />
       </div>
       <div className='text-sm font-bold p-2 border border-ted-400'>
-        Until this time - {disNameArray[item][ind].untilTime}
+        Until this time - {disNameArray[item].toDosArray.untilTime}
         <br />
       </div>
       {/* Change deadline data */}
@@ -205,7 +203,7 @@ export default function GetNestedToDo({
       />
       {/* Get - displayName - in toDosArray */}
       <div className='text-sm font-bold p-2 underline'>
-        {disNameArray[item][ind].displayName} <br />
+        {disNameArray[item].toDosArray.displayName} <br />
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function UntilDead({ disNameArray, item, ind }) {
+export default function UntilDead({ disNameArray, item }) {
   return (
     <Link
-      to={`/todolist/nested/${disNameArray[item][ind].toDoID}`}
+      to={`/todolist/nested/${disNameArray[item].toDosArray.toDoID}`}
       key={item.id}
     >
       <div className='grid grid-rows-1 grid-flow-col gap-4'>
@@ -12,7 +12,7 @@ export default function UntilDead({ disNameArray, item, ind }) {
           className='text-3xl font-bold p-6 ml-4 mr-4 hover:underline title'
           key={item.id}
         >
-          {disNameArray[item][ind].title} <br key={item.id} />{' '}
+          {disNameArray[item].toDosArray.title} <br key={item.id} />{' '}
         </div>
         <div
           id='flags'
@@ -20,9 +20,9 @@ export default function UntilDead({ disNameArray, item, ind }) {
         >
           <section className='inline-block'>
             <button className='buttonM dropdown text-white'>
-              {disNameArray[item][ind].importance ? (
+              {disNameArray[item].toDosArray.importance ? (
                 <div>
-                  {disNameArray[item][ind].importance[0] === 'red' ? (
+                  {disNameArray[item].toDosArray.importance[0] === 'red' ? (
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-12 w-12 svg'
@@ -37,7 +37,8 @@ export default function UntilDead({ disNameArray, item, ind }) {
                         d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                       />
                     </svg>
-                  ) : disNameArray[item][ind].importance[0] === 'green' ? (
+                  ) : disNameArray[item].toDosArray.importance[0] ===
+                    'green' ? (
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-12 w-12 svg'
@@ -52,7 +53,7 @@ export default function UntilDead({ disNameArray, item, ind }) {
                         d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                       />
                     </svg>
-                  ) : disNameArray[item][ind].importance[0] === 'gray' ? (
+                  ) : disNameArray[item].toDosArray.importance[0] === 'gray' ? (
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-12 w-12 svg'
@@ -67,7 +68,8 @@ export default function UntilDead({ disNameArray, item, ind }) {
                         d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                       />
                     </svg>
-                  ) : disNameArray[item][ind].importance[0] === 'white' ? (
+                  ) : disNameArray[item].toDosArray.importance[0] ===
+                    'white' ? (
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       className='h-12 w-12 svg'
@@ -93,40 +95,42 @@ export default function UntilDead({ disNameArray, item, ind }) {
       </div>
       <hr className='border border-red-600 ml-4 mr-4 ' key={item.id} id='hrr' />
       <div className='text-1xl p-2 ml-2 hover:underline' key={item.id}>
-        {disNameArray[item][ind].doneToDo ? (
+        {disNameArray[item].toDosArray.doneToDo ? (
           <s className='opacity-50 ml-5'>
             <div className='opacity-50 ml-5'>
-              {disNameArray[item][ind].toDo instanceof Array ? (
+              {disNameArray[item].toDosArray.toDo instanceof Array ? (
                 <ul>
-                  {Object.keys(disNameArray[item][ind].toDo).map(
+                  {Object.keys(disNameArray[item].toDosArray.toDo).map(
                     (toDoIndex) => {
                       return (
                         <li className='p-1 hover:underline'>
-                          {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                          {disNameArray[item].toDosArray.toDo[toDoIndex]}{' '}
                         </li>
                       );
                     }
                   )}
                 </ul>
               ) : (
-                disNameArray[item][ind].toDo
+                disNameArray[item].toDosArray.toDo
               )}
             </div>
           </s>
         ) : (
           <div className='ml-5'>
-            {disNameArray[item][ind].toDo instanceof Array ? (
+            {disNameArray[item].toDosArray.toDo instanceof Array ? (
               <ul>
-                {Object.keys(disNameArray[item][ind].toDo).map((toDoIndex) => {
-                  return (
-                    <li className='p-1 hover:underline'>
-                      {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                    </li>
-                  );
-                })}
+                {Object.keys(disNameArray[item].toDosArray.toDo).map(
+                  (toDoIndex) => {
+                    return (
+                      <li className='p-1 hover:underline'>
+                        {disNameArray[item].toDosArray.toDo[toDoIndex]}{' '}
+                      </li>
+                    );
+                  }
+                )}
               </ul>
             ) : (
-              disNameArray[item][ind].toDo
+              disNameArray[item].toDosArray.toDo
             )}
           </div>
         )}

@@ -14,9 +14,9 @@ export default function IndexHeader({
     <div className='grid grid-rows-1 grid-flow-col gap-4'>
       <div id='flags' className='mr-auto rounded-lg transition duration-300 '>
         <section className='inline-block'>
-          {disNameArray[item][ind].importance ? (
+          {disNameArray[item].toDosArray.importance ? (
             <button className='buttonM dropdown text-white'>
-              {disNameArray[item][ind].importance[0] === 'red' ? (
+              {disNameArray[item].toDosArray.importance[0] === 'red' ? (
                 <svg
                   values={flags}
                   xmlns='http://www.w3.org/2000/svg'
@@ -32,7 +32,7 @@ export default function IndexHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
-              ) : disNameArray[item][ind].importance[0] === 'green' ? (
+              ) : disNameArray[item].toDosArray.importance[0] === 'green' ? (
                 <svg
                   values={flags}
                   xmlns='http://www.w3.org/2000/svg'
@@ -48,7 +48,7 @@ export default function IndexHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
-              ) : disNameArray[item][ind].importance[0] === 'gray' ? (
+              ) : disNameArray[item].toDosArray.importance[0] === 'gray' ? (
                 <svg
                   values={flags}
                   xmlns='http://www.w3.org/2000/svg'
@@ -64,7 +64,7 @@ export default function IndexHeader({
                     d='M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9'
                   />
                 </svg>
-              ) : disNameArray[item][ind].importance[0] === 'white' ? (
+              ) : disNameArray[item].toDosArray.importance[0] === 'white' ? (
                 <svg
                   values={flags}
                   xmlns='http://www.w3.org/2000/svg'
@@ -94,7 +94,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[0]}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[0]}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('red');
@@ -125,7 +125,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[1]}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[1]}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('green');
@@ -156,7 +156,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('gray');
@@ -187,7 +187,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('white');
@@ -224,7 +224,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('red');
@@ -255,7 +255,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('green');
@@ -286,7 +286,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${flags[2]}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('gray');
@@ -317,7 +317,7 @@ export default function IndexHeader({
                       event.preventDefault();
                       if (
                         window.confirm(
-                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
+                          `Are you sure you want to edit this toDo = ${colors}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
                         )
                       ) {
                         array.push('white');

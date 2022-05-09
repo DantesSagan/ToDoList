@@ -21,26 +21,20 @@ export default function DisplayTodoByID({
 
   const [loading, setLoading] = useState(true);
 
-  const disNameArray = Object.keys(toDosArray).map((item) => {
-    return toDosArray[item].toDosArray;
-  });
+  const disNameArray = toDosArray;
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
-  });
+  const nestedToDoArray = nestedArrayToDo;
 
   // Problem was in nested scope object function
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
-    setTimeout(() => {
-      try {
-        getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
-          setLoading(false)
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }, 500);
+    try {
+      getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
+        setLoading(false)
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
   // console.log(new Date());
 
@@ -59,7 +53,7 @@ export default function DisplayTodoByID({
             return (
               <Skeleton
                 animation='wave'
-                variant='rect'
+                variant='rectangular'
                 height={200}
                 width={600}
                 className='rounded-lg mb-2'
@@ -79,7 +73,7 @@ export default function DisplayTodoByID({
             return (
               <Skeleton
                 animation='wave'
-                variant='rect'
+                variant='rectangular'
                 height={60}
                 width={600}
                 className='rounded-lg mb-2'
@@ -103,6 +97,6 @@ export default function DisplayTodoByID({
 }
 
 DisplayTodoByID.propTypes = {
-  nestedArrayToDo: PropTypes.array.isRequired,
+  nestedArrayToDo: PropTypes.object.isRequired,
   nestedToDoArray: PropTypes.object.isRequired,
 };

@@ -1,6 +1,6 @@
 import { useState, useTransition } from 'react';
-import Loader from '../../../../fallback/loader';
 import { firebaseLib } from '../../../../firebaseLibrary/firebaseLib';
+import { formatTime } from '../../indexConst';
 import FlagsSub from './actions/flags';
 import GetNestedToDoArray from './toDoMembers/getNestedToDoArray';
 import GetSubChangeDate from './toDoMembers/getSubChangeDate';
@@ -34,190 +34,140 @@ export const DisplayTodoByIDNESTED = ({
   const [untilTime, setUntilTime] = useState(Number);
   // Flags - importance
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
-  });
+  const nestedToDoArray = nestedArrayToDo;
 
   return Object.keys(nestedToDoArray).map((itemsNested) => {
     // console.log(nestedArrayToDo);
     //  4th
-    return Object.keys(nestedToDoArray[itemsNested]).map((index) => {
-      // console.log(nestedToDoArray, '27');
+    // console.log(nestedToDoArray, '27');
 
-    const formatTime = () => {
-      let date = new Date();
-      // Year part from the timestamp
-      let year = date.getFullYear();
-      // Month part from the timestamp
-      let month =
-        date.getMonth() + 1 === 10 || 11 || 12
-          ? `0${date.getMonth() + 1}`
-          : date.getMonth() + 1;
-      // Days part from the timestamp
-      let days =
-        date.getDate() === 10 ||
-        11 ||
-        12 ||
-        13 ||
-        14 ||
-        15 ||
-        16 ||
-        17 ||
-        18 ||
-        19 ||
-        20 ||
-        21 ||
-        22 ||
-        23 ||
-        24 ||
-        25 ||
-        26 ||
-        27 ||
-        28 ||
-        29 ||
-        30 ||
-        31
-          ? date.getDate()
-          : `0${date.getDate()}`;
 
-      // Will display time in 2022-10-03 || 2077-03-20 format
-      let formattedTime = `${year}-${month}-${days}`;
+    const { handleDoneToDoSub } = HandleDoneSubToDo({
+      setDoneToDo,
+      doneToDo,
+      firebaseLib,
+      nestedToDoArray,
+      itemsNested,
+      startTransition,
+    });
 
-      console.log(formattedTime);
-      return formattedTime;
-    };
+    const { handleSubStamp } = HandleSubStampToDo({
+      untilTime,
+      setUntilTime,
+      firebaseLib,
+      nestedToDoArray,
+      itemsNested,
+    });
 
-      const { handleDoneToDoSub } = HandleDoneSubToDo({
-        setDoneToDo,
-        doneToDo,
-        firebaseLib,
-        nestedToDoArray,
-        itemsNested,
-        index,
-        startTransition,
-      });
+    const { handleSubZeroStamp } = HandleSubZeroStamp({
+      untilTime,
+      setUntilTime,
+      firebaseLib,
+      nestedToDoArray,
+      itemsNested,
+    });
 
-      const { handleSubStamp } = HandleSubStampToDo({
-        untilTime,
-        setUntilTime,
-        firebaseLib,
-        nestedToDoArray,
-        itemsNested,
-        index,
-      });
+    // Check if parent toDoID is equal to current window.location.pathname of URL
+    // And if it true so display current nestedToDo in subcollection
+    let currentUrl = window.location.pathname;
+    let todoURL = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested].toDosArray.toDoID}`;
+    let checkTODOID = currentUrl === todoURL;
 
-      const { handleSubZeroStamp } = HandleSubZeroStamp({
-        untilTime,
-        setUntilTime,
-        firebaseLib,
-        nestedToDoArray,
-        itemsNested,
-        index,
-      });
+    // Check subcollection nestedToDo document ID and comparison it with
+    // nestedToDo subcollection toDoID
+    let checkNestedID =
+      arrayID[itemsNested] === nestedToDoArray[itemsNested].toDosArray.toDoID;
 
-      // Check if parent toDoID is equal to current window.location.pathname of URL
-      // And if it true so display current nestedToDo in subcollection
-      let currentUrl = window.location.pathname;
-      let todoURL = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
-      let checkTODOID = currentUrl === todoURL;
+    // Check current authentication user in provider data and comparison with
+    // nestedToDo displayName
+    //  in - subcollection - toDo
+    //  in - parent - toDo
+    let checkName =
+      user?.username === nestedToDoArray[itemsNested].toDosArray.displayName;
 
-      // Check subcollection nestedToDo document ID and comparison it with
-      // nestedToDo subcollection toDoID
-      let checkNestedID =
-        arrayID[itemsNested] === nestedToDoArray[itemsNested][index].toDoID;
+    // console.log('docidPARENT=>', toDoDOC[indDoc]);
+    // console.log(' checkTODOID =>', checkTODOID);
+    // console.log('   checkNestedID =>', checkNestedID);
+    // console.log('   checkName =>', checkName);
+    // console.log('   checkParentID =>', checkParentID);
 
-      // Check current authentication user in provider data and comparison with
-      // nestedToDo displayName
-      //  in - subcollection - toDo
-      //  in - parent - toDo
-      let checkName =
-        user?.username === nestedToDoArray[itemsNested][index].displayName;
-
-      // console.log('docidPARENT=>', toDoDOC[indDoc]);
-      // console.log(' checkTODOID =>', checkTODOID);
-      // console.log('   checkNestedID =>', checkNestedID);
-      // console.log('   checkName =>', checkName);
-      // console.log('   checkParentID =>', checkParentID);
-      return (
-        <div key={index}>
-          {/* 
+    return (
+      <div>
+        {/* 
               Check if user is logged in and strict-equlity to ref in toDo displayName
               And finally display it what strict-equal to currentAuthUser 
               And additionally checking if current route path strict-equal to toDoID
               */}
-          {checkTODOID && checkNestedID && checkName ? (
-            <form
-              method='POST'
-              className='justrify-center text-2xl border-l-4 border-red-600 pl-0 pr-5 rounded-xl border-r-4 shadow-inner dashboardPage  bg-white rounded-xl  hover:border-white transition duration-300'
-              key={index}
-            >
-              {nestedToDoArray[itemsNested][index].untilTime === formatTime() ||
-              nestedToDoArray[itemsNested][index].untilTime < formatTime() ? (
-                <GetSubChangeDate
-                  changeDate={changeDate}
-                  setChangeDate={setChangeDate}
-                  setUntilTime={setUntilTime}
-                  untilTime={untilTime}
-                  handleSubStamp={handleSubStamp}
-                  handleSubZeroStamp={handleSubZeroStamp}
-                />
-              ) : nestedToDoArray[itemsNested][index].untilTime === 0 ? (
-                <GetNestedToDoArray
-                  deleteSubToDo={deleteSubToDo}
-                  handleDoneToDoSub={handleDoneToDoSub}
-                  handleSubStamp={handleSubStamp}
-                  handleSubZeroStamp={handleSubZeroStamp}
-                  clickToDo={clickToDo}
-                  nestedToDoArray={nestedToDoArray}
-                  itemsNested={itemsNested}
-                  index={index}
-                  setToDo={setToDo}
-                  toDo={toDo}
-                  editSubToDo={editSubToDo}
-                  setClickToDo={setClickToDo}
-                  changeDate={changeDate}
-                  setChangeDate={setChangeDate}
-                  doneToDo={doneToDo}
-                  setUntilTime={setUntilTime}
-                  untilTime={untilTime}
-                  handleSubFlags={handleSubFlags}
-                  flags={flags}
-                  setFlags={setFlags}
-                  colors={colors}
-                  setColors={setColors}
-                  isPending={isPending}
-                />
-              ) : (
-                <GetNestedToDoArray
-                  deleteSubToDo={deleteSubToDo}
-                  handleDoneToDoSub={handleDoneToDoSub}
-                  handleSubStamp={handleSubStamp}
-                  handleSubZeroStamp={handleSubZeroStamp}
-                  clickToDo={clickToDo}
-                  nestedToDoArray={nestedToDoArray}
-                  itemsNested={itemsNested}
-                  index={index}
-                  setToDo={setToDo}
-                  toDo={toDo}
-                  editSubToDo={editSubToDo}
-                  setClickToDo={setClickToDo}
-                  changeDate={changeDate}
-                  setChangeDate={setChangeDate}
-                  doneToDo={doneToDo}
-                  setUntilTime={setUntilTime}
-                  untilTime={untilTime}
-                  handleSubFlags={handleSubFlags}
-                  flags={flags}
-                  setFlags={setFlags}
-                  colors={colors}
-                  setColors={setColors}
-                  isPending={isPending}
-                />
-              )}
-            </form>
-          ) : null}
-        </div>
-      );
-    });
+        {checkTODOID && checkNestedID && checkName ? (
+          <form
+            method='POST'
+            className='justrify-center text-2xl border-l-4 border-red-600 pl-0 pr-5 rounded-xl border-r-4 shadow-inner dashboardPage  bg-white rounded-xl  hover:border-white transition duration-300'
+          >
+            {nestedToDoArray[itemsNested].toDosArray.untilTime ===
+              formatTime() ||
+            nestedToDoArray[itemsNested].toDosArray.untilTime < formatTime() ? (
+              <GetSubChangeDate
+                changeDate={changeDate}
+                setChangeDate={setChangeDate}
+                setUntilTime={setUntilTime}
+                untilTime={untilTime}
+                handleSubStamp={handleSubStamp}
+                handleSubZeroStamp={handleSubZeroStamp}
+              />
+            ) : nestedToDoArray[itemsNested].toDosArray.untilTime === 0 ? (
+              <GetNestedToDoArray
+                deleteSubToDo={deleteSubToDo}
+                handleDoneToDoSub={handleDoneToDoSub}
+                handleSubStamp={handleSubStamp}
+                handleSubZeroStamp={handleSubZeroStamp}
+                clickToDo={clickToDo}
+                nestedToDoArray={nestedToDoArray}
+                itemsNested={itemsNested}
+                setToDo={setToDo}
+                toDo={toDo}
+                editSubToDo={editSubToDo}
+                setClickToDo={setClickToDo}
+                changeDate={changeDate}
+                setChangeDate={setChangeDate}
+                doneToDo={doneToDo}
+                setUntilTime={setUntilTime}
+                untilTime={untilTime}
+                handleSubFlags={handleSubFlags}
+                flags={flags}
+                setFlags={setFlags}
+                colors={colors}
+                setColors={setColors}
+                isPending={isPending}
+              />
+            ) : (
+              <GetNestedToDoArray
+                deleteSubToDo={deleteSubToDo}
+                handleDoneToDoSub={handleDoneToDoSub}
+                handleSubStamp={handleSubStamp}
+                handleSubZeroStamp={handleSubZeroStamp}
+                clickToDo={clickToDo}
+                nestedToDoArray={nestedToDoArray}
+                itemsNested={itemsNested}
+                setToDo={setToDo}
+                toDo={toDo}
+                editSubToDo={editSubToDo}
+                setClickToDo={setClickToDo}
+                changeDate={changeDate}
+                setChangeDate={setChangeDate}
+                doneToDo={doneToDo}
+                setUntilTime={setUntilTime}
+                untilTime={untilTime}
+                handleSubFlags={handleSubFlags}
+                flags={flags}
+                setFlags={setFlags}
+                colors={colors}
+                setColors={setColors}
+                isPending={isPending}
+              />
+            )}
+          </form>
+        ) : null}
+      </div>
+    );
   });
 };

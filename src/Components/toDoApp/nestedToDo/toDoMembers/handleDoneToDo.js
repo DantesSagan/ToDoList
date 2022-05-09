@@ -6,7 +6,6 @@ export default function HandleDoneToDo({
   firebaseLib,
   disNameArray,
   item,
-  ind,
 }) {
   const handleDoneToDo = async (event) => {
     event.preventDefault();
@@ -21,30 +20,28 @@ export default function HandleDoneToDo({
     // And push true state to doneToDo
     // if else you click to handleDoneToDo when doneToDo equal true will be displayed
     // false state and push false boolean state to firebase cloud
-    disNameArray[item][ind].doneToDo === true
+    disNameArray[item].toDosArray.doneToDo === true
       ? querySnapshot.forEach((doc) => {
           console.log(doc.id, ' => ', doc.data());
-          return disNameArray[item][ind].toDoID === doc.id
+          return disNameArray[item].toDosArray.toDoID === doc.id
             ? updateDoc(doc.ref, {
-                toDosArray: [
-                  {
-                    displayName: disNameArray[item][ind].displayName,
-                    createdAt: disNameArray[item][ind].createdAt,
-                    title: disNameArray[item][ind].title,
-                    toDo: disNameArray[item][ind].toDo,
-                    toDoID: disNameArray[item][ind].toDoID,
-                    userId: disNameArray[item][ind].userId,
-                    doneToDo: doneToDo,
-                    untilTime: disNameArray[item][ind].untilTime,
-                    importance: disNameArray[item][ind].importance,
-                  },
-                ],
+                toDosArray: {
+                  displayName: disNameArray[item].toDosArray.displayName,
+                  createdAt: disNameArray[item].toDosArray.createdAt,
+                  title: disNameArray[item].toDosArray.title,
+                  toDo: disNameArray[item].toDosArray.toDo,
+                  toDoID: disNameArray[item].toDosArray.toDoID,
+                  userId: disNameArray[item].toDosArray.userId,
+                  doneToDo: doneToDo,
+                  untilTime: disNameArray[item].toDosArray.untilTime,
+                  importance: disNameArray[item].toDosArray.importance,
+                },
               })
                 .then(() => {
                   window.location.reload();
                   console.log(
                     'Nested DoneToDo changed successfully: ',
-                    disNameArray[item][ind].doneToDo
+                    disNameArray[item].toDosArray.doneToDo
                   );
                 })
                 .catch((error) => {
@@ -54,27 +51,25 @@ export default function HandleDoneToDo({
         })
       : querySnapshot.forEach((doc) => {
           console.log(doc.id, ' => ', doc.data());
-          return disNameArray[item][ind].toDoID === doc.id
+          return disNameArray[item].toDosArray.toDoID === doc.id
             ? updateDoc(doc.ref, {
-                toDosArray: [
-                  {
-                    displayName: disNameArray[item][ind].displayName,
-                    createdAt: disNameArray[item][ind].createdAt,
-                    title: disNameArray[item][ind].title,
-                    toDo: disNameArray[item][ind].toDo,
-                    toDoID: disNameArray[item][ind].toDoID,
-                    userId: disNameArray[item][ind].userId,
-                    doneToDo: !doneToDo,
-                    untilTime: 0,
-                    importance: disNameArray[item][ind].importance,
-                  },
-                ],
+                toDosArray: {
+                  displayName: disNameArray[item].toDosArray.displayName,
+                  createdAt: disNameArray[item].toDosArray.createdAt,
+                  title: disNameArray[item].toDosArray.title,
+                  toDo: disNameArray[item].toDosArray.toDo,
+                  toDoID: disNameArray[item].toDosArray.toDoID,
+                  userId: disNameArray[item].toDosArray.userId,
+                  doneToDo: !doneToDo,
+                  untilTime: 0,
+                  importance: disNameArray[item].toDosArray.importance,
+                },
               })
                 .then(() => {
                   window.location.reload();
                   console.log(
                     'Nested DoneToDo changed successfully: ',
-                    disNameArray[item][ind].doneToDo
+                    disNameArray[item].toDosArray.doneToDo
                   );
                 })
                 .catch((error) => {

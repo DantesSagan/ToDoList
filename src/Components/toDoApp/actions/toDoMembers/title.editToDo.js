@@ -32,78 +32,71 @@ export default function TitleEditToDo({
     setToDoSArray([...toDosArray, { displayName, title, createdAt, toDoID }]);
     setTitle('');
 
-    const disNameArray = Object.keys(toDosArray).map((item) => {
-      return toDosArray[item].toDosArray;
-    });
+    const disNameArray = toDosArray;
 
     const getDocTodos = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
     );
 
-
     return Object.keys(disNameArray).map((item) => {
-      return Object.keys(disNameArray[item]).map((ind) => {
-        let comparisonName =
-          user?.username === disNameArray[item][ind].displayName;
-        let getCurrentUrl = window.location.pathname;
-        let getRouterPathToDo = `/todolist/nested/${disNameArray[item][ind].toDoID}`;
+      let comparisonName =
+        user?.username === disNameArray[item].toDosArray.displayName;
+      let getCurrentUrl = window.location.pathname;
+      let getRouterPathToDo = `/todolist/nested/${disNameArray[item].toDosArray.toDoID}`;
 
-        let checkPathIDTitle = getCurrentUrl === getRouterPathToDo;
-        if (checkPathIDTitle) {
-          window.confirm(
-            `Are you sure you want to edit this toDo = ${disNameArray[item][ind].title}? Вы уверены, что хотите поменять список дел ${disNameArray[item][ind].title}?`
-          );
-        } else {
-          console.log('error change');
-          return null;
-        }
-        return comparisonName && checkPathIDTitle
-          ? getDocTodos.forEach((doc) => {
-              // In this case need to compare two equal parameters for find user who create toDo
-              // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
-              // So updateDoc of toDoList otherwise - no
-              let auth = getAuth();
-              let userAuth = auth.currentUser.uid;
+      let checkPathIDTitle = getCurrentUrl === getRouterPathToDo;
+      if (checkPathIDTitle) {
+        window.confirm(
+          `Are you sure you want to edit this toDo = ${disNameArray[item].toDosArray.title}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
+        );
+      } else {
+        console.log('error change');
+        return null;
+      }
+      return comparisonName && checkPathIDTitle
+        ? getDocTodos.forEach((doc) => {
+            // In this case need to compare two equal parameters for find user who create toDo
+            // And second compare with if - user - IS loggedIn and this - currentUser - strict-equal to displayName in toDosArray
+            // So updateDoc of toDoList otherwise - no
+            let auth = getAuth();
+            let userAuth = auth.currentUser.uid;
 
-              let checkDockID = doc.id === disNameArray[item][ind].toDoID;
-              let checkUserName =
-                user?.username === disNameArray[item][ind].displayName;
+            let checkDockID = doc.id === disNameArray[item].toDosArray.toDoID;
+            let checkUserName =
+              user?.username === disNameArray[item].toDosArray.displayName;
 
-              return checkDockID && checkUserName
-                ? updateDoc(doc.ref, {
-                    toDosArray: [
-                      {
-                        displayName: disNameArray[item][ind].displayName,
-                        createdAt: formatTime(),
-                        title: commaTitle,
-                        toDo: disNameArray[item][ind].toDo,
-                        userId: userAuth,
-                        toDoID: disNameArray[item][ind].toDoID,
-                        doneToDo: disNameArray[item][ind].doneToDo,
-                        untilTime: disNameArray[item][ind].untilTime,
-                        importance: disNameArray[item][ind].importance,
-                      },
-                    ],
+            return checkDockID && checkUserName
+              ? updateDoc(doc.ref, {
+                  toDosArray: {
+                    displayName: disNameArray[item].toDosArray.displayName,
+                    createdAt: formatTime(),
+                    title: commaTitle,
+                    toDo: disNameArray[item].toDosArray.toDo,
+                    userId: userAuth,
+                    toDoID: disNameArray[item].toDosArray.toDoID,
+                    doneToDo: disNameArray[item].toDosArray.doneToDo,
+                    untilTime: disNameArray[item].toDosArray.untilTime,
+                    importance: disNameArray[item].toDosArray.importance,
+                  },
+                })
+                  .then(() => {
+                    console.log('Document updated with title: ', title);
+                    console.log(
+                      'Document updated with displayName: ',
+                      displayName
+                    );
+                    alert('Array updated was successfully: ', toDosArray);
                   })
-                    .then(() => {
-                      console.log('Document updated with title: ', title);
-                      console.log(
-                        'Document updated with displayName: ',
-                        displayName
-                      );
-                      alert('Array updated was successfully: ', toDosArray);
-                    })
-                    .catch((error) => {
-                      console.error('Array updated error: ', error);
-                      alert('Array updated error: ', error);
-                    })
-                    .then(() => {
-                      window.location.reload();
-                    })
-                : console.log('Something wrong with edit doc data');
-            })
-          : null;
-      });
+                  .catch((error) => {
+                    console.error('Array updated error: ', error);
+                    alert('Array updated error: ', error);
+                  })
+                  .then(() => {
+                    window.location.reload();
+                  })
+              : console.log('Something wrong with edit doc data');
+          })
+        : null;
     });
   };
   return {

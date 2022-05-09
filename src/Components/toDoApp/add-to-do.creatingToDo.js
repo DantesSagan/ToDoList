@@ -161,7 +161,7 @@ export default function FormToDo({
 }
 
 FormToDo.propTypes = {
-  toDosArray: PropTypes.array.isRequired,
+  toDosArray: PropTypes.object.isRequired,
   toDo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };

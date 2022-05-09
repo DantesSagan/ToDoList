@@ -24,25 +24,12 @@ export default function HandleSubmitToDo({
     const commaToDo = toDo.split(',');
     event.preventDefault();
 
-    const checkExistingID = Object.keys(toDosArray).map((item) => {
-      return toDosArray[item].toDosArray;
-    });
-    return Object.keys(checkExistingID).map(async (item) => {
-      if (checkExistingID[item][0].toDoID === toDoID) {
+    const disNameArray = toDosArray;
+    return Object.keys(disNameArray).map(async (item) => {
+      if (disNameArray[item].toDosArray.toDoID === toDoID) {
         console.log('Error this toDoID existing, try again');
       } else {
         const editRef = doc(firebaseLib.firestore(), 'todos', toDoID);
-        setToDoSArray([
-          ...toDosArray,
-          {
-            displayName,
-            commaTitle,
-            commaToDo,
-            createdAt,
-            toDoID,
-            untilTime,
-          },
-        ]);
         setToDo('');
         setTitle('');
 
@@ -50,10 +37,9 @@ export default function HandleSubmitToDo({
         //   return Math.max(Math.random() * (max - min) + min).toFixed(0);
         // }
         // let resultID = getRandomNumber(2000000000000, 5);
-      
-        
+
         await setDoc(editRef, {
-          toDosArray: arrayUnion({
+          toDosArray: {
             displayName: displayName,
             createdAt: formatTime(),
             title: commaTitle,
@@ -63,7 +49,7 @@ export default function HandleSubmitToDo({
             untilTime: untilTime,
             doneToDo: false,
             importance: ['white'],
-          }),
+          },
         })
           .then(() => {
             console.log('Document written with title: ', commaTitle);
@@ -77,7 +63,7 @@ export default function HandleSubmitToDo({
             window.location.reload();
           });
       }
-      return checkExistingID[item][0].toDoID;
+      return disNameArray[item].toDosArray.toDoID;
     });
   };
   return {

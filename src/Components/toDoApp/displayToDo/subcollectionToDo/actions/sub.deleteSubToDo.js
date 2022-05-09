@@ -33,9 +33,7 @@ export default function DeleteSubToDo({
     getToDo(setToDoSArray);
   }, []);
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
-  });
+  const nestedToDoArray = nestedArrayToDo;
 
   const deleteSubToDo = async (event) => {
     event.preventDefault();
@@ -43,95 +41,88 @@ export default function DeleteSubToDo({
     return Object.keys(nestedToDoArray).map(async (itemsNested) => {
       // console.log(nestedArrayToDo);
       //  4th
-      return Object.keys(nestedToDoArray[itemsNested]).map(async (index) => {
-        // Need to create comparison what will be strict-equal
-        // by router toDoID in compar with toDoID in toDosArray
-        let comparisonName =
-          user?.username === nestedToDoArray[itemsNested][index].displayName;
+      // Need to create comparison what will be strict-equal
+      // by router toDoID in compar with toDoID in toDosArray
+      let comparisonName =
+        user?.username === nestedToDoArray[itemsNested].toDosArray.displayName;
 
-        // This is check if currentURL and RouterPath strict-equal
-        // To undestand what u want to delete in current equl parameters of URL
-        let getCurrentUrl = window.location.pathname;
-        let getRouterPathToDo = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested][index].toDoID}`;
+      // This is check if currentURL and RouterPath strict-equal
+      // To undestand what u want to delete in current equl parameters of URL
+      let getCurrentUrl = window.location.pathname;
+      let getRouterPathToDo = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested].toDosArray.toDoID}`;
 
-        let checkPathID = getCurrentUrl === getRouterPathToDo;
-        // This is check if currentURL and RouterPath strict-equal
-        // So do confirm what u want to delete whole toDoList with all data in it
+      let checkPathID = getCurrentUrl === getRouterPathToDo;
+      // This is check if currentURL and RouterPath strict-equal
+      // So do confirm what u want to delete whole toDoList with all data in it
 
-        const getDocSubToDoOnes = await getDocs(
-          collection(firebaseLib.firestore(), 'todos')
-        );
+      const getDocSubToDoOnes = await getDocs(
+        collection(firebaseLib.firestore(), 'todos')
+      );
 
-        return checkPathID
-          ? getDocSubToDoOnes.forEach(async (getDoc) => {
-              let getID = getDoc.id;
+      return checkPathID
+        ? getDocSubToDoOnes.forEach(async (getDoc) => {
+            let getID = getDoc.id;
 
-              let checkID =
-                getID === nestedToDoArray[itemsNested][index].parentID;
+            let checkID =
+              getID === nestedToDoArray[itemsNested].toDosArray.parentID;
 
-              const getDocTodos = await getDocs(
-                collection(
-                  firebaseLib.firestore(),
-                  'todos',
-                  getID,
-                  'nestedToDo'
-                )
-              );
+            const getDocTodos = await getDocs(
+              collection(firebaseLib.firestore(), 'todos', getID, 'nestedToDo')
+            );
 
-              return comparisonName && checkPathID && checkID
-                ? getDocTodos.forEach((doc) => {
-                    let comparisonID =
-                      doc.id === nestedToDoArray[itemsNested][index].toDoID;
-                    // In this case need to compare two equal parameters
-                    // for find user who create toDo
-                    // And second compare with if - user - IS loggedIn
-                    // and this - currentUser - strict-equal to displayName in toDosArray
-                    // So updateDoc of toDoList otherwise - no
-                    const confirm = window.confirm(
-                      `Are you sure you want to delete this toDo = 
-            ${nestedToDoArray[itemsNested][index].toDo}? `
+            return comparisonName && checkPathID && checkID
+              ? getDocTodos.forEach((doc) => {
+                  let comparisonID =
+                    doc.id === nestedToDoArray[itemsNested].toDosArray.toDoID;
+                  // In this case need to compare two equal parameters
+                  // for find user who create toDo
+                  // And second compare with if - user - IS loggedIn
+                  // and this - currentUser - strict-equal to displayName in toDosArray
+                  // So updateDoc of toDoList otherwise - no
+                  const confirm = window.confirm(
+                    `Are you sure you want to delete this toDo = 
+            ${nestedToDoArray[itemsNested].toDosArray.toDo}? `
+                  );
+                  if (
+                    confirm &&
+                    checkPathID &&
+                    checkID &&
+                    comparisonID &&
+                    comparisonName
+                  ) {
+                    console.log('Deleted');
+                  } else {
+                    console.log(
+                      'error change, ошибка в подтверждении удаления toDo'
                     );
-                    if (
-                      confirm &&
-                      checkPathID &&
-                      checkID &&
-                      comparisonID &&
-                      comparisonName
-                    ) {
-                      console.log('Deleted');
-                    } else {
-                      console.log(
-                        'error change, ошибка в подтверждении удаления toDo'
-                      );
-                      return null;
-                    }
-                    return comparisonID ? (
-                      deleteDoc(doc.ref)
-                        .then(() => {
-                          console.log(
-                            `Subcollection toDo was deleted successfully: 
-                        ${nestedToDoArray[itemsNested][index].toDoID}`
-                          );
-                          alert(
-                            `Subcollection toDo was deleted successfully: 
-                        ${nestedToDoArray[itemsNested][index].toDo}`
-                          );
-                        })
-                        .catch((error) => {
-                          console.error(`ToDo deleted error: ${error}`);
-                          alert(`ToDo deleted error: ${error}`);
-                        })
-                        .then(() => {
-                          navigate(ROUTES.DASHBOARD);
-                        })
-                    ) : (
-                      <div>{`Cannot delete this ${nestedToDoArray[itemsNested][index].toDo}`}</div>
-                    );
-                  })
-                : null;
-            })
-          : null;
-      });
+                    return null;
+                  }
+                  return comparisonID ? (
+                    deleteDoc(doc.ref)
+                      .then(() => {
+                        console.log(
+                          `Subcollection toDo was deleted successfully: 
+                        ${nestedToDoArray[itemsNested].toDosArray.toDoID}`
+                        );
+                        alert(
+                          `Subcollection toDo was deleted successfully: 
+                        ${nestedToDoArray[itemsNested].toDosArray.toDo}`
+                        );
+                      })
+                      .catch((error) => {
+                        console.error(`ToDo deleted error: ${error}`);
+                        alert(`ToDo deleted error: ${error}`);
+                      })
+                      .then(() => {
+                        navigate(ROUTES.DASHBOARD);
+                      })
+                  ) : (
+                    <div>{`Cannot delete this ${nestedToDoArray[itemsNested].toDosArray.toDo}`}</div>
+                  );
+                })
+              : null;
+          })
+        : null;
     });
   };
   return { deleteSubToDo };

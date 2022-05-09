@@ -3,7 +3,6 @@ import React from 'react';
 export default function IndexTasks({
   disNameArray,
   item,
-  ind,
   clickToDo,
   setToDo,
   toDo,
@@ -13,21 +12,23 @@ export default function IndexTasks({
 }) {
   return (
     <section>
-      {disNameArray[item][ind].doneToDo === true ? (
+      {disNameArray[item].toDosArray.doneToDo === true ? (
         <s className=''>
           {' '}
-          {disNameArray[item][ind].toDo instanceof Array ? (
+          {disNameArray[item].toDosArray.toDo instanceof Array ? (
             <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
-              {Object.keys(disNameArray[item][ind].toDo).map((toDoIndex) => {
-                return (
-                  <li className='p-1 hover:underline'>
-                    {disNameArray[item][ind].toDo[toDoIndex]}{' '}
-                  </li>
-                );
-              })}
+              {Object.keys(disNameArray[item].toDosArray.toDo).map(
+                (toDoIndex) => {
+                  return (
+                    <li className='p-1 hover:underline'>
+                      {disNameArray[item].toDosArray.toDo[toDoIndex]}{' '}
+                    </li>
+                  );
+                }
+              )}
             </ul>
           ) : (
-            disNameArray[item][ind].toDo
+            disNameArray[item].toDosArray.toDo
           )}
         </s>
       ) : (
@@ -37,7 +38,7 @@ export default function IndexTasks({
               <textarea
                 placeholder='Write todos with commas for separate items.'
                 className='text-sm text-gray-base h-36 mr-3 m-3 py-5 px-4 rounded-lg font-bold w-full'
-                defaultValue={disNameArray[item][ind].toDo}
+                defaultValue={disNameArray[item].toDosArray.toDo}
                 onChange={(e) => setToDo(e.target.value)}
               />
               <button
@@ -60,41 +61,41 @@ export default function IndexTasks({
               className='text-xl font-bold p-2 rounded-lg hover:bg-red-400 hover:text-white'
               onClick={() => setClickToDo(!clickToDo)}
             >
-              {disNameArray[item][ind].doneToDo !== doneToDo ? (
+              {disNameArray[item].toDosArray.doneToDo !== doneToDo ? (
                 <s className=''>
                   {' '}
-                  {disNameArray[item][ind].toDo instanceof Array ? (
+                  {disNameArray[item].toDosArray.toDo instanceof Array ? (
                     <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
-                      {Object.keys(disNameArray[item][ind].toDo).map(
+                      {Object.keys(disNameArray[item].toDosArray.toDo).map(
                         (toDoIndex) => {
                           return (
                             <li className='p-1 hover:underline'>
-                              {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                              {disNameArray[item].toDosArray.toDo[toDoIndex]}{' '}
                             </li>
                           );
                         }
                       )}
                     </ul>
                   ) : (
-                    disNameArray[item][ind].toDo
+                    disNameArray[item].toDosArray.toDo
                   )}
                 </s>
               ) : (
                 <div>
-                  {disNameArray[item][ind].toDo instanceof Array ? (
+                  {disNameArray[item].toDosArray.toDo instanceof Array ? (
                     <ul className='text-left border-l-2 border-red-600 rounded-lg'>
-                      {Object.keys(disNameArray[item][ind].toDo).map(
+                      {Object.keys(disNameArray[item].toDosArray.toDo).map(
                         (toDoIndex) => {
                           return (
                             <li className='p-1 hover:underline'>
-                              {disNameArray[item][ind].toDo[toDoIndex]}{' '}
+                              {disNameArray[item].toDosArray.toDo[toDoIndex]}{' '}
                             </li>
                           );
                         }
                       )}
                     </ul>
                   ) : (
-                    disNameArray[item][ind].toDo
+                    disNameArray[item].toDosArray.toDo
                   )}
                 </div>
               )}{' '}

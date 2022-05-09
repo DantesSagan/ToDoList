@@ -85,22 +85,26 @@ export default function GetNestedToDoArray({
           )}
         </div>
         <section>
-          {nestedToDoArray[itemsNested][index].doneToDo === true ? (
+          {nestedToDoArray[itemsNested].toDosArray.doneToDo === true ? (
             <s className=''>
-              {nestedToDoArray[itemsNested][index].toDo instanceof Array ? (
+              {nestedToDoArray[itemsNested].toDosArray.toDo instanceof Array ? (
                 <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50 m-2'>
-                  {Object.keys(nestedToDoArray[itemsNested][index].toDo).map(
-                    (toDoIndex) => {
-                      return (
-                        <li className='p-1 hover:underline'>
-                          {nestedToDoArray[itemsNested][index].toDo[toDoIndex]}{' '}
-                        </li>
-                      );
-                    }
-                  )}
+                  {Object.keys(
+                    nestedToDoArray[itemsNested].toDosArray.toDo
+                  ).map((toDoIndex) => {
+                    return (
+                      <li className='p-1 hover:underline'>
+                        {
+                          nestedToDoArray[itemsNested].toDosArray.toDo[
+                            toDoIndex
+                          ]
+                        }{' '}
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : (
-                nestedToDoArray[itemsNested][index].toDo
+                nestedToDoArray[itemsNested].toDosArray.toDo
               )}
             </s>
           ) : (
@@ -109,7 +113,7 @@ export default function GetNestedToDoArray({
                 <div className='block cursor-pointer'>
                   <textarea
                     className='text-sm text-gray-base w-full mr-3 m-3 py-5 px-4 rounded-lg font-bold'
-                    defaultValue={nestedToDoArray[itemsNested][index].toDo}
+                    defaultValue={nestedToDoArray[itemsNested].toDosArray.toDo}
                     onChange={(e) => setToDo(e.target.value)}
                   />
                   <button
@@ -132,18 +136,19 @@ export default function GetNestedToDoArray({
                   className='text-xl font-bold rounded-lg p-2 hover:bg-red-400 hover:text-white cursor-pointer '
                   onClick={() => setClickToDo(!clickToDo)}
                 >
-                  {nestedToDoArray[itemsNested][index].doneToDo !== doneToDo ? (
+                  {nestedToDoArray[itemsNested].toDosArray.doneToDo !==
+                  doneToDo ? (
                     <s className=''>
-                      {nestedToDoArray[itemsNested][index].toDo instanceof
+                      {nestedToDoArray[itemsNested].toDosArray.toDo instanceof
                       Array ? (
                         <ul className='text-left border-l-2 border-red-600 rounded-lg opacity-50'>
                           {Object.keys(
-                            nestedToDoArray[itemsNested][index].toDo
+                            nestedToDoArray[itemsNested].toDosArray.toDo
                           ).map((toDoIndex) => {
                             return (
                               <li className='p-1 hover:underline'>
                                 {
-                                  nestedToDoArray[itemsNested][index].toDo[
+                                  nestedToDoArray[itemsNested].toDosArray.toDo[
                                     toDoIndex
                                   ]
                                 }{' '}
@@ -152,21 +157,21 @@ export default function GetNestedToDoArray({
                           })}
                         </ul>
                       ) : (
-                        nestedToDoArray[itemsNested][index].toDo
+                        nestedToDoArray[itemsNested].toDosArray.toDo
                       )}
                     </s>
                   ) : (
                     <div key={itemsNested.id}>
-                      {nestedToDoArray[itemsNested][index].toDo instanceof
+                      {nestedToDoArray[itemsNested].toDosArray.toDo instanceof
                       Array ? (
                         <ul className='text-left border-l-2 border-red-600 rounded-lg '>
                           {Object.keys(
-                            nestedToDoArray[itemsNested][index].toDo
+                            nestedToDoArray[itemsNested].toDosArray.toDo
                           ).map((toDoIndex) => {
                             return (
                               <li className='p-1 hover:underline '>
                                 {
-                                  nestedToDoArray[itemsNested][index].toDo[
+                                  nestedToDoArray[itemsNested].toDosArray.toDo[
                                     toDoIndex
                                   ]
                                 }{' '}
@@ -175,7 +180,7 @@ export default function GetNestedToDoArray({
                           })}
                         </ul>
                       ) : (
-                        nestedToDoArray[itemsNested][index].toDo
+                        nestedToDoArray[itemsNested].toDosArray.toDo
                       )}
                     </div>
                   )}{' '}
@@ -188,10 +193,10 @@ export default function GetNestedToDoArray({
 
       {/* Get - createdAt - in toDosArray */}
       <div className='text-sm m-2 mt-4 font-bold'>
-        {nestedToDoArray[itemsNested][index].createdAt} <br />
+        {nestedToDoArray[itemsNested].toDosArray.createdAt} <br />
       </div>
       <div className='text-sm font-bold p-2 border border-ted-400'>
-        Until this time - {nestedToDoArray[itemsNested][index].untilTime}
+        Until this time - {nestedToDoArray[itemsNested].toDosArray.untilTime}
         <br />
       </div>
       {/* Change deadline data */}
@@ -244,7 +249,7 @@ export default function GetNestedToDoArray({
       </div>
       {/* Get - displayName - in toDosArray */}
       <div className='text-sm font-bold underline m-2 '>
-        {nestedToDoArray[itemsNested][index].displayName} <br />
+        {nestedToDoArray[itemsNested].toDosArray.displayName} <br />
       </div>
     </div>
   );
