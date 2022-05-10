@@ -22,14 +22,13 @@ export default function NestedSubObj({
       // Check if parent toDoID is equal to current window.location.pathname of URL
       // And if it true so display current nestedToDo in subcollection
       let currentUrl = window.location.pathname;
-      let todoURL = `/todolist/${disNameArray[item].toDosArray.toDoID}`;
+      let todoURL = `/todolist/${nestedToDoArray[itemsNested].toDosArray.parentID}`;
       let checkTODOID = currentUrl === todoURL;
 
       // Check subcollection nestedToDo document ID and comparison it with
       // nestedToDo subcollection toDoID
       let checkNestedID =
         arrayID[itemsNested] === nestedToDoArray[itemsNested].toDosArray.toDoID;
-
       // Check current authentication user in provider data and comparison with
       // nestedToDo displayName
       //  in - subcollection - toDo

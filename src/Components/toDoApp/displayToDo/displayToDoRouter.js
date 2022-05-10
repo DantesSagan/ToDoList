@@ -4,7 +4,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 
 import { useEffect, useState } from 'react';
-import { getNestedToDo } from '../../../services/firebase';
+import { getNestedToDo, getToDo } from '../../../services/firebase';
 import NestedSubObj from './displayToDoMembers/nestedSubObj';
 import NestMainToDo from './displayToDoMembers/nestMainToDo';
 
@@ -19,6 +19,7 @@ export default function DisplayTodoByID({
   setLoading,
   loadingNested,
   setLoadingNested,
+  setToDoSArray,
 }) {
   // const [clickTitle, setClickTitle] = useState(false);
   // const [clickToDo, setClickToDo] = useState(false);
@@ -34,6 +35,7 @@ export default function DisplayTodoByID({
       getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
         setLoadingNested(false)
       );
+      getToDo(setToDoSArray).then(() => setLoading(false));
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +50,6 @@ export default function DisplayTodoByID({
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
   return (
     <form className='border-l-4  border-red-600 rounded-xl  hover:border-l-black borderHover transition duration-300'>
-      {' '}
       {loading ? (
         <>
           {skeletonArray.map((fall) => {
@@ -68,7 +69,7 @@ export default function DisplayTodoByID({
         </>
       ) : (
         <NestMainToDo disNameArray={disNameArray} user={user} />
-      )}{' '}
+      )}
       {loadingNested ? (
         <>
           {skeletonArrayNest.map((fall) => {

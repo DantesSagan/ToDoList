@@ -32,6 +32,33 @@ export default function ListOfToDo({
     });
   }, []);
 
+  const pendingTrue = (e) => {
+    e.preventDefault();
+
+    DoneToDoByTrue(setToDoSArray).then((data) => {
+      setLoading(false);
+    });
+    setCheckIsDone(!checkIsDone);
+  };
+
+  const pendingFalse = (e) => {
+    e.preventDefault();
+
+    setCheckIsNotDone(!checkIsNotDone);
+    DoneToDoByFalse(setToDoSArray).then((data) => {
+      setLoading(false);
+    });
+  };
+
+  const pendingDefault = (e) => {
+    e.preventDefault();
+    setCheckIsNotDone(true);
+    setCheckIsDone(true);
+    getToDo(setToDoSArray).then((data) => {
+      setLoading(false);
+    });
+  };
+
   return (
     <section>
       {filter ? (
@@ -45,52 +72,44 @@ export default function ListOfToDo({
         </button>
       ) : (
         <div
-          className='inline-flex items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2'
+          className='grid grid-rows-1 grid-flow-col gap-4 items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2'
           id='dropdown'
         >
           <button
             className=' items-center p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400'
             onClick={() => {
               setFilter(!filter);
-              setCheckIsNotDone(true);
-              setCheckIsDone(true);
-              getToDo(setToDoSArray).then((data) => {
-                setLoading(false);
-              });
             }}
           >
             Cancel
           </button>
-          <ul className='p-4' aria-labelledby='dropdownDefault'>
-            <button
-              disabled={isInvalidTwo}
-              className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
-                isInvalidTwo && 'opacity-50'
-              }`}
-              onClick={() => {
-                DoneToDoByTrue(setToDoSArray).then((data) => {
-                  setLoading(false);
-                });
-                setCheckIsDone(!checkIsDone);
-              }}
-            >
-              Filter by done
-            </button>
-            <button
-              disabled={isInvalidOne}
-              className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
-                isInvalidOne && 'opacity-50'
-              }`}
-              onClick={() => {
-                setCheckIsNotDone(!checkIsNotDone);
-                DoneToDoByFalse(setToDoSArray).then((data) => {
-                  setLoading(false);
-                });
-              }}
-            >
-              Filter by NOT done
-            </button>
-          </ul>
+          <button
+            disabled={isInvalidTwo}
+            className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
+              isInvalidTwo && 'opacity-50'
+            }`}
+            onClick={pendingTrue}
+          >
+            Filter by done
+          </button>
+          <button
+            disabled={isInvalidOne}
+            className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
+              isInvalidOne && 'opacity-50'
+            }`}
+            onClick={pendingFalse}
+          >
+            Filter by NOT done
+          </button>
+          <button
+            disabled={isInvalidOne}
+            className={`block p-2 bg-blue-600 text-bold  rounded-lg text-white m-2 hover:bg-blue-400 ${
+              isInvalidOne && 'opacity-50'
+            }`}
+            onClick={pendingDefault}
+          >
+            Default
+          </button>
         </div>
       )}
 

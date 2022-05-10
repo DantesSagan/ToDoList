@@ -74,3 +74,37 @@ export async function DoneSubToDoByTrue(setNestedArrayToDo, setArrayID) {
     return docId;
   });
 }
+
+export async function DoneSubToDoByFalse(setNestedArrayToDo, setArrayID) {
+  const nestedToDo = [];
+  const arrayToDoID = [];
+
+  const getDocTodosOne = await getDocs(
+    collection(firebaseLib.firestore(), 'todos')
+  );
+
+  return getDocTodosOne.forEach(async (getDoc) => {
+    let get = getDoc.id;
+
+    const docId = await firebaseLib
+      .firestore()
+      .collection('todos')
+      .doc(get)
+      .collection('nestedToDo')
+      .where('toDosArray.doneToDo', '==', false)
+      .get()
+      .then((serverUpdate) => {
+        serverUpdate.docs.forEach((doc) => {
+          nestedToDo.push(doc.data());
+          arrayToDoID.push(doc.id);
+        });
+        setArrayID(arrayToDoID);
+        setNestedArrayToDo(nestedToDo);
+      })
+      .catch((error) => {
+        console.error('Error to get document: ', error);
+      });
+
+    return docId;
+  });
+}

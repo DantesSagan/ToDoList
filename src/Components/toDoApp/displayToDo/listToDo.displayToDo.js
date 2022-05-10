@@ -14,7 +14,10 @@ import TitleEditToDo from '../actions/toDoMembers/title.editToDo';
 
 import Loader from '../../../fallback/loader';
 import LoaderTest from '../../../fallback/loaderTest';
-import { DoneSubToDoByTrue } from '../../../services/firebase-sort';
+import {
+  DoneSubToDoByFalse,
+  DoneSubToDoByTrue,
+} from '../../../services/firebase-sort';
 
 export default function ListOfDisplayToDo({
   title,
@@ -85,40 +88,40 @@ export default function ListOfDisplayToDo({
   const pendingIsDone = (e) => {
     e.preventDefault();
 
-    startTransition(() => {
-      setLoadingNested(true);
-      DoneSubToDoByTrue(setNestedArrayToDo, setArrayID).then(() => {
-        setLoadingNested(false);
-      });
-      setCheckIsDone(!checkIsDone);
+    setFilter(true);
+    setLoadingNested(true);
+    DoneSubToDoByTrue(setNestedArrayToDo, setArrayID).then(() => {
+      setLoadingNested(false);
     });
+    getToDo(setToDoSArray).then(() => setLoading(false));
+    setCheckIsDone(!checkIsDone);
   };
 
   const pendingIsNotDone = (e) => {
     e.preventDefault();
 
-    startTransition(() => {
-      setLoadingNested(true);
-      getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
-        setLoadingNested(false)
-      );
-      getToDo(setToDoSArray);
-      setCheckIsNotDone(!checkIsNotDone);
-    });
+    setFilter(true);
+    setLoadingNested(true);
+    DoneSubToDoByFalse(setNestedArrayToDo, setArrayID).then(() =>
+      setLoadingNested(false)
+    );
+    setLoading(true);
+    getToDo(setToDoSArray).then(() => setLoading(false));
+    setCheckIsNotDone(!checkIsNotDone);
   };
 
   const pendingDefault = (e) => {
     e.preventDefault();
 
-    startTransition(() => {
-      setLoadingNested(true);
-      getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
-        setLoadingNested(false)
-      );
-      getToDo(setToDoSArray).then(() => setLoading(false));
-      setCheckIsDone(true);
-      setCheckIsNotDone(true);
-    });
+    setFilter(true);
+    setLoadingNested(true);
+    getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
+      setLoadingNested(false)
+    );
+    setLoading(true);
+    getToDo(setToDoSArray).then(() => setLoading(false));
+    setCheckIsDone(true);
+    setCheckIsNotDone(true);
   };
 
   return (
@@ -177,7 +180,6 @@ export default function ListOfDisplayToDo({
           </button>
         </div>
       )}{' '}
-      {isPending && <LoaderTest />}
       <DisplayTodoByID
         toDosArray={toDosArray}
         user={user}
