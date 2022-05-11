@@ -27,9 +27,7 @@ export default function HeaderToDo() {
     }, 500);
   }, []);
 
-  const nestedToDoArray = Object.keys(nestedArrayToDo).map((item) => {
-    return nestedArrayToDo[item].toDosArray;
-  });
+  const nestedToDoArray = nestedArrayToDo;
   console.log(nestedToDoArray);
   // console.log(ROUTES.SUBCOLLECTION);
   // return Object.keys(nestedToDoArray).map((itemsNested) => {

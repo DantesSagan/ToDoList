@@ -1,5 +1,6 @@
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { firebaseLib } from '../../../../firebaseLibrary/firebaseLib';
+import { getNestedToDo, getToDo } from '../../../../services/firebase';
 import { formatTime } from '../../indexConst';
 import FlagsSub from './actions/flags';
 import GetNestedToDoArray from './toDoMembers/getNestedToDoArray';
@@ -23,9 +24,10 @@ export const DisplayTodoByIDNESTED = ({
   colors,
   setColors,
   handleSubFlags,
+  nestedToDoArray,
+  setLoading,
+  setToDoSArray,
 }) => {
-  const [isPending, startTransition] = useTransition();
-
   // const [clickTitle, setClickTitle] = useState(false);
   const [clickToDo, setClickToDo] = useState(false);
   const [doneToDo, setDoneToDo] = useState(false);
@@ -34,13 +36,18 @@ export const DisplayTodoByIDNESTED = ({
   const [untilTime, setUntilTime] = useState(Number);
   // Flags - importance
 
-  const nestedToDoArray = nestedArrayToDo;
+  useEffect(() => {
+    try {
+      getNestedToDo(setNestedArrayToDo, setArrayID);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return Object.keys(nestedToDoArray).map((itemsNested) => {
     // console.log(nestedArrayToDo);
     //  4th
     // console.log(nestedToDoArray, '27');
-
 
     const { handleDoneToDoSub } = HandleDoneSubToDo({
       setDoneToDo,
@@ -48,7 +55,6 @@ export const DisplayTodoByIDNESTED = ({
       firebaseLib,
       nestedToDoArray,
       itemsNested,
-      startTransition,
     });
 
     const { handleSubStamp } = HandleSubStampToDo({
@@ -98,7 +104,7 @@ export const DisplayTodoByIDNESTED = ({
               And finally display it what strict-equal to currentAuthUser 
               And additionally checking if current route path strict-equal to toDoID
               */}
-        {checkTODOID && checkNestedID && checkName ? (
+        {checkTODOID && checkNestedID && checkName && setNestedArrayToDo ? (
           <form
             method='POST'
             className='justrify-center text-2xl border-l-4 border-red-600 pl-0 pr-5 rounded-xl border-r-4 shadow-inner dashboardPage  bg-white rounded-xl  hover:border-white transition duration-300'
@@ -137,7 +143,6 @@ export const DisplayTodoByIDNESTED = ({
                 setFlags={setFlags}
                 colors={colors}
                 setColors={setColors}
-                isPending={isPending}
               />
             ) : (
               <GetNestedToDoArray
@@ -162,7 +167,6 @@ export const DisplayTodoByIDNESTED = ({
                 setFlags={setFlags}
                 colors={colors}
                 setColors={setColors}
-                isPending={isPending}
               />
             )}
           </form>

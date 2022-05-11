@@ -3,7 +3,7 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getNestedToDo, getToDo } from '../../../services/firebase';
 import NestedSubObj from './displayToDoMembers/nestedSubObj';
 import NestMainToDo from './displayToDoMembers/nestMainToDo';
@@ -31,18 +31,12 @@ export default function DisplayTodoByID({
   // Problem was in nested scope object function
   // And getNestedToDo doesn't invoke nestedToDo
   useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo, setArrayID).then(() =>
-        setLoadingNested(false)
-      );
-      getToDo(setToDoSArray).then(() => setLoading(false));
-    } catch (error) {
-      console.log(error);
-    }
+    getNestedToDo(setNestedArrayToDo, setArrayID);
+    getToDo(setToDoSArray);
   }, []);
   // console.log(new Date());
 
-  const skeletonArray = Array(1).fill('');
+  const skeletonArray = Array(8).fill('');
   const skeletonArrayNest = Array(8).fill('');
 
   // For now subcollection will calling only with console.log???
@@ -50,27 +44,15 @@ export default function DisplayTodoByID({
   // Need to fix that and reveal it on permanent display like parent toDoArray and forchild too === done
   return (
     <form className='border-l-4  border-red-600 rounded-xl  hover:border-l-black borderHover transition duration-300'>
-      {loading ? (
-        <>
-          {skeletonArray.map((fall) => {
-            return (
-              <Skeleton
-                animation='wave'
-                variant='rectangular'
-                height={200}
-                width={600}
-                className='rounded-lg mb-2'
-                key={fall.id}
-              >
-                {fall}
-              </Skeleton>
-            );
-          })}
-        </>
-      ) : (
-        <NestMainToDo disNameArray={disNameArray} user={user} />
-      )}
-      {loadingNested ? (
+      <NestMainToDo disNameArray={disNameArray} user={user} />
+      <NestedSubObj
+        disNameArray={disNameArray}
+        nestedToDoArray={nestedToDoArray}
+        user={user}
+        arrayID={arrayID}
+      />
+
+      {/* {loadingNested ? (
         <>
           {skeletonArrayNest.map((fall) => {
             return (
@@ -88,13 +70,8 @@ export default function DisplayTodoByID({
           })}
         </>
       ) : (
-        <NestedSubObj
-          disNameArray={disNameArray}
-          nestedToDoArray={nestedToDoArray}
-          user={user}
-          arrayID={arrayID}
-        />
-      )}
+     
+      )} */}
     </form>
   );
 }

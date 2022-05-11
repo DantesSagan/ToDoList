@@ -111,7 +111,7 @@ export async function getNestedToDo(setNestedArrayToDo, setArrayID) {
       .get()
       .then((getDoc) => {
         getDoc.docs.forEach((doc) => {
-          console.log(doc.id, '=>', doc.data());
+          // console.log(doc.id, '=>', doc.data());
           nestedToDo.push(doc.data());
           arrayToDoID.push(doc.id);
         });

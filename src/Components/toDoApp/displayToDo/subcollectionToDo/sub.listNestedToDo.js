@@ -31,13 +31,11 @@ export default function ListOfSubDisplayToDo({
   const [nestedArrayToDo, setNestedArrayToDo] = useState([]);
   const [arrayID, setArrayID] = useState([]);
 
-  const [loading, setLoading] = useState(true);
-
   const colorsArray = ['red', 'green', 'gray', 'white'];
   const [flags, setFlags] = useState(colorsArray);
   const [colors, setColors] = useState('');
 
-  const nestedToDoArray = nestedArrayToDo
+  const nestedToDoArray = nestedArrayToDo;
 
   const { deleteSubToDo } = DeleteSubToDo({
     setNestedArrayToDo,
@@ -69,64 +67,31 @@ export default function ListOfSubDisplayToDo({
     setArrayID,
   });
 
-  useEffect(() => {
-    setTimeout(() => {
-      try {
-        getNestedToDo(setNestedArrayToDo, setArrayID).then((doc) => {
-          setLoading(false);
-        });
-      } catch (error) {
-        setNestedArrayToDo([]);
-        console.log(error);
-      }
-      getToDo(setToDoSArray);
-    }, 500);
-  }, []);
-
   const skeletonArray = Array(1).fill('');
 
   return (
     <div className='h-screen'>
-      {loading ? (
-        <>
-          {skeletonArray.map((fall) => {
-            return (
-              <Skeleton
-                animation='wave'
-                variant='rectangular'
-                height={250}
-                width={600}
-                className='rounded-lg mb-2'
-                key={fall.id}
-              >
-                {fall}
-              </Skeleton>
-            );
-          })}
-        </>
-      ) : (
-        <DisplayTodoByIDNESTED
-          toDosArray={toDosArray}
-          user={user}
-          deleteSubToDo={deleteSubToDo}
-          title={title}
-          setTitle={setTitle}
-          toDo={toDo}
-          setToDo={setToDo}
-          editSubToDo={editSubToDo}
-          setToDoSArray={setToDoSArray}
-          nestedArrayToDo={nestedArrayToDo}
-          setNestedArrayToDo={setNestedArrayToDo}
-          arrayID={arrayID}
-          loading={loading}
-          setArrayID={setArrayID}
-          handleSubFlags={handleSubFlags}
-          flags={flags}
-          setFlags={setFlags}
-          colors={colors}
-          setColors={setColors}
-        />
-      )}
+      <DisplayTodoByIDNESTED
+        toDosArray={toDosArray}
+        user={user}
+        deleteSubToDo={deleteSubToDo}
+        title={title}
+        setTitle={setTitle}
+        toDo={toDo}
+        setToDo={setToDo}
+        editSubToDo={editSubToDo}
+        setToDoSArray={setToDoSArray}
+        nestedArrayToDo={nestedArrayToDo}
+        setNestedArrayToDo={setNestedArrayToDo}
+        arrayID={arrayID}
+        setArrayID={setArrayID}
+        handleSubFlags={handleSubFlags}
+        flags={flags}
+        setFlags={setFlags}
+        colors={colors}
+        setColors={setColors}
+        nestedToDoArray={nestedToDoArray}
+      />
     </div>
   );
 }

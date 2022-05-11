@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState, useTransition } from 'react';
 import useUser from '../../../hooks/user';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import UserContext from '../../../context/user';
 
@@ -124,6 +125,8 @@ export default function ListOfDisplayToDo({
     setCheckIsNotDone(true);
   };
 
+  const skeletonArray = Array(8).fill('');
+
   return (
     <div>
       {filter ? (
@@ -180,25 +183,46 @@ export default function ListOfDisplayToDo({
           </button>
         </div>
       )}{' '}
-      <DisplayTodoByID
-        toDosArray={toDosArray}
-        user={user}
-        deleteToDo={deleteToDo}
-        title={title}
-        setTitle={setTitle}
-        toDo={toDo}
-        setToDo={setToDo}
-        editToDoList={editToDoList}
-        editTitle={editTitle}
-        setToDoSArray={setToDoSArray}
-        nestedArrayToDo={nestedArrayToDo}
-        setNestedArrayToDo={setNestedArrayToDo}
-        arrayID={arrayID}
-        setArrayID={setArrayID}
-        loading={loading}
-        loadingNested={loadingNested}
-        setLoadingNested
-      />
+      {loading && loadingNested ? (
+        <>
+          {skeletonArray.map((fall) => {
+            return (
+              <Skeleton
+                animation='wave'
+                variant='rectangular'
+                height={200}
+                width={600}
+                className='rounded-lg mb-2'
+                key={fall.id}
+              >
+                {fall}
+              </Skeleton>
+            );
+          })}
+        </>
+      ) : (
+        <div>
+          <DisplayTodoByID
+            toDosArray={toDosArray}
+            user={user}
+            deleteToDo={deleteToDo}
+            title={title}
+            setTitle={setTitle}
+            toDo={toDo}
+            setToDo={setToDo}
+            editToDoList={editToDoList}
+            editTitle={editTitle}
+            setToDoSArray={setToDoSArray}
+            nestedArrayToDo={nestedArrayToDo}
+            setNestedArrayToDo={setNestedArrayToDo}
+            arrayID={arrayID}
+            setArrayID={setArrayID}
+            loading={loading}
+            loadingNested={loadingNested}
+            setLoadingNested
+          />
+        </div>
+      )}
     </div>
   );
 }

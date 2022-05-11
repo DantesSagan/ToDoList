@@ -19,16 +19,6 @@ export default function HeaderSubToDo({
   const { user } = useUser(loggedIn?.uid);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    try {
-      getNestedToDo(setNestedArrayToDo, setArrayID);
-    } catch (error) {
-      setNestedArrayToDo([]);
-      console.log(error);
-    }
-    // getToDo(setToDoSArray);
-  }, []);
-
   // const disNameArray = Object.keys(toDosArray).map((item) => {
   //   return toDosArray[item].toDosArray;
   // });
@@ -39,17 +29,14 @@ export default function HeaderSubToDo({
   return Object.keys(nestedToDoArray).map((itemsNested) => {
     // console.log(nestedArrayToDo);
     //  4th
-    let toDoNestedID = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested].toDosArray.toDoID}`;
-
-    let checkNestedID =
-      arrayID[itemsNested] === nestedToDoArray[itemsNested].toDosArray.toDoID;
-
     let currentPath = window.location.pathname;
+    let toDoNestedID = `/todolist/nested/subcollection/${nestedToDoArray[itemsNested].toDosArray.toDoID}`;
+    let compareID = toDoNestedID === currentPath;
 
     let checkName =
       user?.username === nestedToDoArray[itemsNested].toDosArray.displayName;
-
-    let compareID = toDoNestedID === currentPath;
+    let checkNestedID =
+      arrayID[itemsNested] === nestedToDoArray[itemsNested].toDosArray.toDoID;
 
     // return Object.keys(disNameArray).map((item) => {
     //   // Get - disNameArray[item] - and nested indexes within it for each result of its callback
