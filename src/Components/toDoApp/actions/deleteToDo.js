@@ -24,9 +24,7 @@ export default function DeleteToDo() {
   const deleteToDo = async (event) => {
     event.preventDefault();
 
-    const disNameArray = Object.keys(toDosArray).map((item) => {
-      return toDosArray[item].toDosArray;
-    });
+    const disNameArray = toDosArray;
 
     const getDocTodos = await getDocs(
       collection(firebaseLib.firestore(), 'todos')
@@ -48,7 +46,7 @@ export default function DeleteToDo() {
       // So do confirm what u want to delete whole toDoList with all data in it
       if (checkPathID) {
         window.confirm(
-          `Are you sure you want to delete this toDo = ${disNameArray[item].toDosArray.title}? Вы уверены, что хотите поменять список дел ${disNameArray[item][0].title}?`
+          `Are you sure you want to delete this toDo = ${disNameArray[item].toDosArray.title}? Вы уверены, что хотите поменять список дел ${disNameArray[item].toDosArray.title}?`
         );
       } else {
         console.log('error change, ошибка в подтверждении удаления toDo');

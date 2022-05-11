@@ -8,9 +8,7 @@ export const DisplayTodoByUser = ({
   setToDo,
   editToDo,
 }) => {
-  const disNameArray = Object.keys(toDosArray).map((item) => {
-    return toDosArray[item].toDosArray;
-  });
+  const disNameArray = toDosArray;
 
   //  Get - displayName - in toDosArray
   const disName = Object.keys(disNameArray).map((item) => {

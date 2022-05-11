@@ -125,28 +125,3 @@ export async function getNestedToDo(setNestedArrayToDo, setArrayID) {
     return refNested;
   });
 }
-
-export async function deleteTodo() {
-  const batch = firebaseLib.firestore().batch();
-  const getTodos = await firebaseLib
-    .firestore()
-    .collection('todos')
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        batch.delete(doc.ref);
-        console.log(doc.ref);
-      });
-    });
-
-  await batch
-    .commit()
-    .then((docRef) => {
-      console.log('Document was deleted with ID: ', docRef);
-      alert('Document was deleted with ID: ', docRef);
-    })
-    .catch((error) => {
-      console.error('Error deleting document: ', error);
-    });
-  return getTodos;
-}
